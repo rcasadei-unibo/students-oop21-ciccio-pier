@@ -1,4 +1,4 @@
-package utility;
+package it.unibo.cicciopier.utility;
 
 /**
  * A simple 2d Vector class
