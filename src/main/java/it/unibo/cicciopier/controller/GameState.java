@@ -1,7 +1,7 @@
 package it.unibo.cicciopier.controller;
 
 /**
- * An enum that represents the state of the game.
+ * Represents the state of the game.
  */
 public enum GameState {
     /**

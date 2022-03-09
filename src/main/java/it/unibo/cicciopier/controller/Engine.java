@@ -11,6 +11,7 @@ public interface Engine {
 
     /**
      * Load game resources and window.
+     *
      * @throws Exception error
      */
     void load() throws Exception;
@@ -26,25 +27,30 @@ public interface Engine {
      */
     void update();
 
-    /** Get the game loop.
+    /**
+     * Get the game loop.
+     *
      * @return the loop
      */
     Loop getLoop();
 
     /**
      * Get the current game state.
+     *
      * @return the game state
      */
     GameState getState();
 
     /**
      * Get the world loader for the current level.
+     *
      * @return the world loader
      */
     WorldLoader getWorldLoader();
 
     /**
      * Get the game world for the current level.
+     *
      * @return the world
      */
     World getWorld();

@@ -10,12 +10,14 @@ public interface WorldLoader {
 
     /**
      * The file name of the map to load.
+     *
      * @return the file name
      */
     String getLevelName();
 
     /**
      * Load world map in memory and set basic world elements.
+     *
      * @throws Exception if file is invalid or doesn't exist.
      */
     void load() throws Exception;
@@ -48,6 +50,7 @@ public interface WorldLoader {
 
     /**
      * Get the created {@link World}.
+     *
      * @return the world
      */
     World getWorld();

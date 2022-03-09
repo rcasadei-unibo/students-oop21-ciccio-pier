@@ -9,6 +9,7 @@ public interface View {
 
     /**
      * Load game window.
+     *
      * @throws Exception error
      */
     void load() throws Exception;
@@ -25,6 +26,7 @@ public interface View {
 
     /**
      * Get the game engine.
+     *
      * @return the game engine
      */
     Engine getEngine();
