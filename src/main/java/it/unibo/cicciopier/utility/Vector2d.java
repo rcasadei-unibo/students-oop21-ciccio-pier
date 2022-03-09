@@ -4,8 +4,8 @@ package it.unibo.cicciopier.utility;
  * A simple 2d Vector class
  */
 public class Vector2d {
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
     /**
      * Default constructor sets x,y to 0
@@ -19,80 +19,23 @@ public class Vector2d {
      * @param x coordinate of the cartesian plane
      * @param y coordinate of the cartesian plane
      */
-    public Vector2d(final int x, final int y) {
+    public Vector2d(final double x, final double y) {
         this.x = x;
         this.y = y;
     }
-
-    /**
-     * Set the variables
-     *
-     * @param x coordinate
-     * @param y coordinate
-     */
-    public void set(final int x, final int y) {
-        this.x = x;
-        this.y = y;
-    }
-
 
     /**
      * @return x coordinate
      */
     public int getX() {
-        return this.x;
+        return (int) Math.round(this.x);
     }
 
     /**
      * @return y coordinate
      */
     public int getY() {
-        return this.y;
-    }
-
-    /**
-     * @return The squared length of the vector
-     */
-    public int getMagnitudeSq() {
-        return (int) (Math.pow(this.x, 2) + Math.pow(this.y, 2));
-    }
-
-    /**
-     * @return the length of the vector
-     */
-    public int getMagnitude() {
-        return (int) Math.sqrt(this.getMagnitudeSq());
-    }
-
-    /**
-     * Get the angle of the vector in radians
-     *
-     * @return angle
-     */
-    public int getAngle() {
-        return (int) Math.atan2(this.y, this.x);
-    }
-
-    /**
-     * Set the length of a vector
-     *
-     * @param length desired to be
-     */
-    public void setMagnitude(final int length) {
-        this.normalize();
-        this.scale(length);
-    }
-
-    /**
-     * Set the maximus length that the vector can get
-     *
-     * @param max length of the vector
-     */
-    public void setLimiter(final int max) {
-        if (this.getMagnitudeSq() > Math.pow(max, 2)) {
-            this.normalize();
-            this.scale(max);
-        }
+        return (int) Math.round(this.y);
     }
 
     /**
@@ -106,10 +49,24 @@ public class Vector2d {
     }
 
     /**
+     * @return The squared length of the vector
+     */
+    public double getMagnitudeSq() {
+        return Math.pow(this.x, 2) + Math.pow(this.y, 2);
+    }
+
+    /**
+     * @return the length of the vector
+     */
+    public double getMagnitude() {
+        return Math.sqrt(this.getMagnitudeSq());
+    }
+
+    /**
      * Set the length of the vector to 1
      */
     public void normalize() {
-        final int length = (int) Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+        final double length = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
 
         this.x /= length;
         this.y /= length;
@@ -120,9 +77,51 @@ public class Vector2d {
      *
      * @param scalar to multiply
      */
-    public void scale(final int scalar) {
+    public void scale(final double scalar) {
         this.x *= scalar;
         this.y *= scalar;
+    }
+
+    /**
+     * Set the maximus length that the vector can get
+     *
+     * @param max length of the vector
+     */
+    public void setLimiter(final double max) {
+        if (this.getMagnitudeSq() > Math.pow(max, 2)) {
+            this.normalize();
+            this.scale(max);
+        }
+    }
+
+    /**
+     * Set the length of a vector
+     *
+     * @param length desired to be
+     */
+    public void setMagnitude(final int length) {
+        this.normalize();
+        this.scale(length);
+    }
+
+    /**
+     * Set the variables
+     *
+     * @param x coordinate
+     * @param y coordinate
+     */
+    public void set(final double x, final double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Get the angle of the vector in radians
+     *
+     * @return angle
+     */
+    public double getAngle() {
+        return Math.atan2(this.y, this.x);
     }
 
     /**
@@ -134,8 +133,8 @@ public class Vector2d {
         final double x0 = this.x;
         final double y0 = this.y;
 
-        this.x = (int) (x0 * Math.cos(radiant) - y0 * Math.sin(radiant));
-        this.y = (int) (x0 * Math.sin(radiant) + y0 * Math.cos(radiant));
+        this.x = x0 * Math.cos(radiant) - y0 * Math.sin(radiant);
+        this.y = x0 * Math.sin(radiant) + y0 * Math.cos(radiant);
     }
 
     /**
@@ -147,8 +146,8 @@ public class Vector2d {
         final double x0 = this.x;
         final double y0 = this.y;
 
-        this.x = (int) (x0 * Math.cos(degree) - y0 * Math.sin(degree));
-        this.y = (int) (x0 * Math.sin(degree) + y0 * Math.cos(degree));
+        this.x = x0 * Math.cos(degree) - y0 * Math.sin(degree);
+        this.y = x0 * Math.sin(degree) + y0 * Math.cos(degree);
     }
 
     /**
@@ -190,8 +189,8 @@ public class Vector2d {
      * @return a vector
      */
     public Vector2d scaleVector(final double scalar) {
-        final int x = (int) (this.x * scalar);
-        final int y = (int) (this.y * scalar);
+        final double x = this.x * scalar;
+        final double y = this.y * scalar;
 
         return new Vector2d(x, y);
     }
@@ -212,11 +211,10 @@ public class Vector2d {
      * @param v2 second vector
      * @return a vector
      */
-    public int euclidDistance(final Vector2d v2) {
+    public double euclidDistance(final Vector2d v2) {
         final double first = Math.pow(this.x - v2.getX(), 2);
         final double second = Math.pow(this.y - v2.getY(), 2);
 
-        return (int) Math.sqrt(first + second);
+        return Math.sqrt(first + second);
     }
-
 }
