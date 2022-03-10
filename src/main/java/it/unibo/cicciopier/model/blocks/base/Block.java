@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.model.blocks;
+package it.unibo.cicciopier.model.blocks.base;
 
 import it.unibo.cicciopier.model.GameObject;
 import it.unibo.cicciopier.model.World;

@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.model.blocks;
+package it.unibo.cicciopier.model.blocks.base;
 
 /**
  * Represents the block types.
