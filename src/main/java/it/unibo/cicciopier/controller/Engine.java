@@ -22,6 +22,21 @@ public interface Engine {
     void start();
 
     /**
+     * Pause/Unpause the game.
+     */
+    void pause();
+
+    /**
+     * Restart the game.
+     */
+    void restart();
+
+    /**
+     * Stop the game.
+     */
+    void stop();
+
+    /**
      * Update the game one time.
      * Used in game loop.
      */
