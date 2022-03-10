@@ -2,11 +2,11 @@ package it.unibo.cicciopier.model;
 
 import it.unibo.cicciopier.model.blocks.BlockFactory;
 import it.unibo.cicciopier.model.blocks.base.Block;
-import it.unibo.cicciopier.model.blocks.base.BlockType;
 import it.unibo.cicciopier.model.entities.EntityFactory;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.model.entities.base.Entity;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -70,14 +70,14 @@ public interface World extends Iterable<Block> {
      *
      * @param x    pos x
      * @param y    pos y
-     * @param type the new block type
+     * @param block the new block
      */
-    void setBlock(final int x, final int y, final BlockType type);
+    void setBlock(final int x, final int y, final Block block);
 
     /**
      * Get a list containing the entities of this world.
      *
-     * @return the entities
+     * @return the list
      */
     List<Entity> getEntities();
 
@@ -99,5 +99,13 @@ public interface World extends Iterable<Block> {
      * Reset the world.
      */
     void clear();
+
+    /**
+     * Get an iterator containing the blocks of this world.
+     *
+     * @return the iterator
+     */
+    @Override
+    Iterator<Block> iterator();
 
 }

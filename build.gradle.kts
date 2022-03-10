@@ -20,18 +20,23 @@ repositories {
 
 dependencies {
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
+    val jaxbVersion = "3.0.2"
+    implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
+    implementation("com.sun.xml.bind:jaxb-core:$jaxbVersion")
+    implementation("com.sun.xml.bind:jaxb-impl:$jaxbVersion")
+    implementation("org.mapeditor:libtiled:1.4.2")
 
     /*
      * Simple Logging Facade for Java (SLF4J) with Apache Log4j
      * See: http://www.slf4j.org/
      */
-    val slf4jVersion = "1.7.30"
+    val slf4jVersion = "1.7.36"
     // when dependencies share the same version, grouping in a val helps to keep them in sync
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
     runtimeOnly("org.slf4j:slf4j-log4j12:$slf4jVersion")
 
     // JUnit API and testing engine
-    val jUnitVersion = "5.7.1"
+    val jUnitVersion = "5.8.2"
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
 }
