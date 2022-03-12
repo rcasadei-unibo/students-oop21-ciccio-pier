@@ -12,7 +12,7 @@ public enum EntityType {
     private final int maxHp;
     private final int attackDamage;
 
-    EntityType(int width, int height, int maxHp, int attackDamage) {
+    EntityType(final int width, final int height, final int maxHp, final int attackDamage) {
         this.width = width;
         this.height = height;
         this.maxHp = maxHp;
