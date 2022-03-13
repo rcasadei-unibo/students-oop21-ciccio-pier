@@ -9,14 +9,14 @@ import it.unibo.cicciopier.utility.Vector2d;
 public interface MovingEntity extends Entity {
 
     /**
-     * Returns the Entity position
-     * @return Entity's position's 2dVector
+     * Returns the Entity movement
+     * @return Entity's movement's 2dVector
      */
     Vector2d getVel();
 
     /**
-     * Sets the Entity position
-     * @param vel New Entity's position
+     * Sets the Entity movement
+     * @param vel Entity's new movement
      */
     void setVel(final Vector2d vel);
 
