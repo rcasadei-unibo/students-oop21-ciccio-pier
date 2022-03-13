@@ -3,13 +3,16 @@ package it.unibo.cicciopier.model.entities;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.model.entities.enemies.boss.Laser;
+import it.unibo.cicciopier.model.entities.enemies.boss.Missile;
 
-public class EntityFactoryImpl implements EntityFactory{
+public class EntityFactoryImpl implements EntityFactory {
 
     private final World world;
 
     /**
      * Constructor for this class
+     *
      * @param world The game's world
      */
     public EntityFactoryImpl(final World world) {
@@ -21,7 +24,7 @@ public class EntityFactoryImpl implements EntityFactory{
      */
     @Override
     public Player createPlayer() {
-        return new PlayerImpl(EntityType.PLAYER,this.world);
+        return new PlayerImpl(EntityType.PLAYER, this.world);
     }
 
     /**
@@ -32,6 +35,10 @@ public class EntityFactoryImpl implements EntityFactory{
         switch (type) {
             case PLAYER:
                 return this.createPlayer();
+            case MISSILE:
+                return new Missile(EntityType.MISSILE, this.world);
+            case LASER:
+                return new Laser(EntityType.LASER, this.world);
             default:
                 return null;
         }

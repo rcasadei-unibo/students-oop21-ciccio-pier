@@ -7,7 +7,15 @@ public enum EntityType {
     /**
      * Represents the Player
      */
-    PLAYER(32, 64, 100, 100);
+    PLAYER(32, 64, 100, 100),
+    /**
+     * Represents the Missile that the enemy's will lunch
+     */
+    MISSILE(20,50,0,50),
+    /**
+     * Represents the laser that the boss will attack with
+     */
+    LASER(0,0,0,20);
 
     private final int width;
     private final int height;
