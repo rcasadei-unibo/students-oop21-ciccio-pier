@@ -13,7 +13,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      * @param type The Entity's type
      * @param world The game's world
      */
-    protected SimpleMovingEntity(EntityType type, World world) {
+    protected SimpleMovingEntity(final EntityType type, final World world) {
         super(type, world);
         this.vel = new Vector2d(0,0);
     }
@@ -30,7 +30,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      * {@inheritDoc}
      */
     @Override
-    public void setVel(Vector2d vel) {
+    public void setVel(final Vector2d vel) {
         this.vel = vel;
     }
 
@@ -38,7 +38,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      * {@inheritDoc}
      */
     @Override
-    public boolean checkCollision(GameObject object) {
+    public boolean checkCollision(final GameObject object) {
         return this.getBounds().intersects(object.getBounds());
     }
 }

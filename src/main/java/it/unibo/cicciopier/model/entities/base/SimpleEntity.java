@@ -14,7 +14,7 @@ public abstract class SimpleEntity extends SimpleGameObject implements Entity {
      * @param type The Entity's type
      * @param world The game's world
      */
-    protected SimpleEntity(EntityType type, World world) {
+    protected SimpleEntity(final EntityType type, final World world) {
         super();
         this.type = type;
         this.world = world;

@@ -4,9 +4,9 @@ import it.unibo.cicciopier.model.World;
 
 public abstract class SimpleLivingEntity extends SimpleMovingEntity implements LivingEntity{
 
-    private boolean jumping;
     private final int maxHp;
     private int hp;
+    private boolean jumping;
     private boolean dead;
 
     /**
@@ -14,7 +14,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * @param type The Entity's type
      * @param world The game's world
      */
-    public SimpleLivingEntity(EntityType type, World world) {
+    public SimpleLivingEntity(final EntityType type, final World world) {
         super(type, world);
         this.jumping = false;
         this.maxHp = this.getType().getMaxHp();
@@ -42,7 +42,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * {@inheritDoc}
      */
     @Override
-    public void damage(int amount) {
+    public void damage(final int amount) {
         this.hp -= amount;
         if (this.hp <= 0 ) {
             this.hp = 0;
@@ -54,7 +54,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * {@inheritDoc}
      */
     @Override
-    public void heal(int amount) {
+    public void heal(final int amount) {
         this.hp += amount;
         if (this.hp > this.maxHp){
             this.hp = this.maxHp;

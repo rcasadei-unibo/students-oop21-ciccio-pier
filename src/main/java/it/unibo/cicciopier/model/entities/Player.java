@@ -23,13 +23,13 @@ public interface Player extends LivingEntity {
      * Gives stamina to the Player
      * @param amount The stamina's amount
      */
-    void addStamina(int amount);
+    void addStamina(final int amount);
 
     /**
      * Removes stamina from the Player
      * @param amount The stamina's amount
      */
-    void decreaseStamina(int amount);
+    void decreaseStamina(final int amount);
 
     /**
      * The player attacks, prioritizing the nearest enemy
