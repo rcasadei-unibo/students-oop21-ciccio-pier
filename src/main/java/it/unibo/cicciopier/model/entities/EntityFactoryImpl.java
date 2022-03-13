@@ -36,9 +36,9 @@ public class EntityFactoryImpl implements EntityFactory {
             case PLAYER:
                 return this.createPlayer();
             case MISSILE:
-                return new Missile(EntityType.MISSILE, this.world);
+                return new Missile(this.world);
             case LASER:
-                return new Laser(EntityType.LASER, this.world);
+                return new Laser(this.world);
             default:
                 return null;
         }

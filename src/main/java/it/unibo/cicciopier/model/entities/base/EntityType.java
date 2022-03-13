@@ -9,13 +9,13 @@ public enum EntityType {
      */
     PLAYER(32, 64, 100, 100),
     /**
-     * Represents the Missile that the enemy's will lunch
+     * Represents the Missile that the enemy will launch
      */
-    MISSILE(20,50,0,50),
+    MISSILE(20, 50, 0, 50),
     /**
-     * Represents the laser that the boss will attack with
+     * Represents the laser that the Boss will shoot
      */
-    LASER(0,0,0,20);
+    LASER(0, 0, 0, 20);
 
     private final int width;
     private final int height;
@@ -24,9 +24,10 @@ public enum EntityType {
 
     /**
      * Entity's types constructor
-     * @param width The Entity's width
-     * @param height The Entity's height
-     * @param maxHp The Entity's total hp
+     *
+     * @param width        The Entity's width
+     * @param height       The Entity's height
+     * @param maxHp        The Entity's total hp
      * @param attackDamage The Entity's attack damage
      */
     EntityType(final int width, final int height, final int maxHp, final int attackDamage) {
@@ -38,6 +39,7 @@ public enum EntityType {
 
     /**
      * Returns the Entity width
+     *
      * @return Entity's width
      */
     public int getWidth() {
@@ -46,6 +48,7 @@ public enum EntityType {
 
     /**
      * Returns the Entity height
+     *
      * @return Entity's height
      */
     public int getHeight() {
@@ -54,6 +57,7 @@ public enum EntityType {
 
     /**
      * Returns the Entity total hp
+     *
      * @return Entity's maximum hp
      */
     public int getMaxHp() {
@@ -62,6 +66,7 @@ public enum EntityType {
 
     /**
      * Returns the Entity attack damage
+     *
      * @return Entity's damage
      */
     public int getAttackDamage() {

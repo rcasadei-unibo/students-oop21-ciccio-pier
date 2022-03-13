@@ -19,10 +19,12 @@ public class Laser extends SimpleMovingEntity {
     private boolean isMaxDistance;
 
     /**
-     * {@inheritDoc}
+     * Constructor for this class, create a laser instance
+     *
+     * @param world {@link World}
      */
-    public Laser(final EntityType type, final World world) {
-        super(type, world);
+    public Laser(final World world) {
+        super(EntityType.LASER, world);
         this.initialTime = System.nanoTime();
         this.seek();
     }

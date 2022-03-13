@@ -22,10 +22,12 @@ public class Missile extends SimpleMovingEntity {
     private final long initialTime;
 
     /**
-     * {@inheritDoc}
+     * Constructor for this class, create a Missile instance
+     *
+     * @param world {@link World}
      */
-    public Missile(final EntityType type, final World world) {
-        super(type, world);
+    public Missile(final World world) {
+        super(EntityType.MISSILE, world);
         this.setVel(new Vector2d(0, -10));
         this.accel = new Vector2d();
         this.maxTravelDistance = (int) (Math.random() * Missile.MAX_DISTANCE);
