@@ -60,4 +60,12 @@ public abstract class SimpleEntity extends SimpleGameObject implements Entity {
     public void remove() {
         this.removed = true;
     }
+
+    /**
+     * World's getter
+     * @return The game's world
+     */
+    protected World getWorld(){
+        return this.world;
+    }
 }
