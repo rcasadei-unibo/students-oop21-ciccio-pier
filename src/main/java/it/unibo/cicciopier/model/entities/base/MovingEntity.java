@@ -9,13 +9,14 @@ import it.unibo.cicciopier.utility.Vector2d;
 public interface MovingEntity extends Entity {
 
     /**
-     * @return A @{@link Vector2d} representing the Entity movement
+     * Returns the Entity position
+     * @return Entity's position's 2dVector
      */
     Vector2d getVel();
 
     /**
-     * Sets the Entity movement
-     * @param vel A {@link Vector2d} representing how the Entity has moved
+     * Sets the Entity position
+     * @param vel New Entity's position
      */
     void setVel(final Vector2d vel);
 
@@ -25,13 +26,15 @@ public interface MovingEntity extends Entity {
     void jump();
 
     /**
-     * @return True, if the Entity is currently jumping
+     * Checks if the Entity is jumping
+     * @return If Entity is still jumping
      */
     boolean isJumping();
 
     /**
-     * @param object {@link GameObject}
-     * @return True, if the Entity is colliding
+     * Checks the collision between Entity and another GameObject
+     * @param object The GameObject to check
+     * @return If they are colliding
      */
     boolean checkCollision(final GameObject object);
 }

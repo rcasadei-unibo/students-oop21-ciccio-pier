@@ -1,7 +1,7 @@
 package it.unibo.cicciopier.model.entities.base;
 
 /**
- * An {@link Enum} representing an Entity with its details
+ * Represents a type of Entity with its details
  */
 public enum EntityType {
 
@@ -20,28 +20,32 @@ public enum EntityType {
     }
 
     /**
-     * @return An {@link Integer} representing the Entity width
+     * Returns the Entity width
+     * @return Entity's width
      */
     public int getWidth() {
         return this.width;
     }
 
     /**
-     * @return An {@link Integer} representing the Entity height
+     * Returns the Entity height
+     * @return Entity's height
      */
     public int getHeight() {
         return this.height;
     }
 
     /**
-     * @return An {@link Integer} representing the Entity maximum amount of HP
+     * Returns the Entity total hp
+     * @return Entity's maximum hp
      */
     public int getMaxHp() {
         return this.maxHp;
     }
 
     /**
-     * @return An {@link Integer} representing amount of damage the Entity deals
+     * Returns the Entity attack damage
+     * @return Entity's damage
      */
     public int getAttackDamage() {
         return this.attackDamage;

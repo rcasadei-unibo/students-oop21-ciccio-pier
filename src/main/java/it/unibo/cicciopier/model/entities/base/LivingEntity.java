@@ -6,29 +6,32 @@ package it.unibo.cicciopier.model.entities.base;
 public interface LivingEntity extends MovingEntity {
 
     /**
-     * @return An {@link Integer} representing the Entity current HP
+     * Returns the Entity hp
+     * @return Entity's current hp
      */
     int getHp();
 
     /**
-     * @return An {@link Integer} representing the Entity maximum HP
+     * Returns the Entity total hp
+     * @return Entity's maximum hp
      */
     int getMaxHp();
 
     /**
      * Deals damage to the Entity
-     * @param amount An {@link Integer} representing the damage the Entity has received
+     * @param amount damage
      */
     void damage(final int amount);
 
     /**
      * Heals the Entity
-     * @param amount An {@link Integer} representing the healing the Entity has received
+     * @param amount heal
      */
     void heal(final int amount);
 
     /**
-     * @return True, if the Entity has died
+     * Checks if Entity is dead
+     * @return If Entity died
      */
     boolean isDead();
 

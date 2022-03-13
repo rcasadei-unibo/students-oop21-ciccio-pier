@@ -8,12 +8,14 @@ import it.unibo.cicciopier.model.GameObject;
 public interface Entity extends GameObject {
 
     /**
-     * @return The {@link EntityType} of the Entity
+     * Returns the type of the Entity
+     * @return Entity's type
      */
     EntityType getType();
 
     /**
-     * @return If the Entity was removed
+     * Checks if Entity was removed
+     * @return If removed
      */
     boolean isRemoved();
 
