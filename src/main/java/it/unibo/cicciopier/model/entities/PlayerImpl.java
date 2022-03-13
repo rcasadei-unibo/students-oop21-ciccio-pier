@@ -11,7 +11,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player{
     private final int attackDamage;
     private int stamina;
 
-    public PlayerImpl(EntityType type, World world) {
+    public PlayerImpl(final EntityType type, final World world) {
         super(type, world);
         this.stamina = maxStamina;
         this.attackDamage = this.getType().getAttackDamage();
@@ -28,7 +28,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player{
     }
 
     @Override
-    public void addStamina(int amount) {
+    public void addStamina(final int amount) {
         this.stamina += amount;
         if (this.stamina > this.maxStamina){
             this.stamina = this.maxStamina;
@@ -36,7 +36,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player{
     }
 
     @Override
-    public void decreaseStamina(int amount) {
+    public void decreaseStamina(final int amount) {
         this.stamina -= amount;
         if (this.stamina < 0){
             this.stamina = 0;
