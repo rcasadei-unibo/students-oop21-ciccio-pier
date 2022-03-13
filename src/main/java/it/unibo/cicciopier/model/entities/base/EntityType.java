@@ -4,7 +4,9 @@ package it.unibo.cicciopier.model.entities.base;
  * Represents a type of Entity with its details
  */
 public enum EntityType {
-
+    /**
+     * Represents the Player
+     */
     PLAYER(32, 64, 100, 100);
 
     private final int width;
@@ -12,6 +14,13 @@ public enum EntityType {
     private final int maxHp;
     private final int attackDamage;
 
+    /**
+     * Entity's types constructor
+     * @param width The Entity's width
+     * @param height The Entity's height
+     * @param maxHp The Entity's total hp
+     * @param attackDamage The Entity's attack damage
+     */
     EntityType(final int width, final int height, final int maxHp, final int attackDamage) {
         this.width = width;
         this.height = height;
