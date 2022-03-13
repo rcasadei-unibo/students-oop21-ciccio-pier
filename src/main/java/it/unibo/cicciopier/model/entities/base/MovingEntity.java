@@ -21,17 +21,6 @@ public interface MovingEntity extends Entity {
     void setVel(final Vector2d vel);
 
     /**
-     * Makes the Entity jump
-     */
-    void jump();
-
-    /**
-     * Checks if the Entity is jumping
-     * @return If Entity is still jumping
-     */
-    boolean isJumping();
-
-    /**
      * Checks the collision between Entity and another GameObject
      * @param object The GameObject to check
      * @return If they are colliding
