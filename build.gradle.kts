@@ -20,10 +20,9 @@ repositories {
 
 dependencies {
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
-    val jaxbVersion = "3.0.2"
-    implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
-    implementation("com.sun.xml.bind:jaxb-core:$jaxbVersion")
-    implementation("com.sun.xml.bind:jaxb-impl:$jaxbVersion")
+    implementation("javax.xml.bind:jaxb-api:2.3.1")
+    implementation("com.sun.xml.bind:jaxb-core:2.3.0.1")
+    implementation("com.sun.xml.bind:jaxb-impl:2.3.1")
     implementation("org.mapeditor:libtiled:1.4.2")
 
     /*

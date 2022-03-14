@@ -72,7 +72,12 @@ public class TmxWorldLoader implements WorldLoader {
                 BlockType type = BlockType.AIR;
                 if (tile != null) {
                     int id = tile.getId();
-                    type = BlockType.values()[id];
+                    try {
+                        type = BlockType.values()[id];
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        LOGGER.error("Invalid block id \"{}\" in {}, skipping...", id, level);
+                        continue;
+                    }
                 }
                 Block b = this.getWorld().getBlockFactory().createBlock(type);
                 b.setPos(new Vector2d(tx * Block.SIZE, ty * Block.SIZE));
@@ -92,7 +97,13 @@ public class TmxWorldLoader implements WorldLoader {
         // get every object and create an entity from its type, then teleport it and add it to the world.
         for (MapObject object : layer) {
             String id = object.getType();
-            EntityType type = EntityType.valueOf(id);
+            EntityType type;
+            try {
+                type = EntityType.valueOf(id);
+            } catch (IllegalArgumentException e) {
+                LOGGER.error("Invalid entity type \"{}\" in {}, skipping...", id, level);
+                continue;
+            }
             Entity e = this.getWorld().getEntityFactory().createEntity(type);
             e.setPos(new Vector2d(object.getX(), object.getY()));
             this.getWorld().addEntity(e);

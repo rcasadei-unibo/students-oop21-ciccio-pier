@@ -4,6 +4,7 @@ import it.unibo.cicciopier.model.blocks.BlockFactory;
 import it.unibo.cicciopier.model.blocks.SimpleBlockFactory;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.EntityFactory;
+import it.unibo.cicciopier.model.entities.EntityFactoryImpl;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.model.entities.base.Entity;
 
@@ -31,8 +32,7 @@ public class GameWorld implements World {
      * {@link #setHeight(int)}, {@link #setWidth(int)} and {@link #clear()} must be called after this.
      */
     public GameWorld() {
-        // TODO create entity factory instance.
-        this.entityFactory = null;
+        this.entityFactory = new EntityFactoryImpl(this);
         this.blockFactory = new SimpleBlockFactory();
     }
 
