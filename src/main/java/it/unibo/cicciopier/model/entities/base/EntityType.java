@@ -15,7 +15,11 @@ public enum EntityType {
     /**
      * Represents the laser that the Boss will shoot
      */
-    LASER(0, 0, 0, 20);
+    LASER(0, 0, 0, 20),
+    /**
+     * Represents the projectile that will be launched by the boss
+     */
+    CANNON_BALL(16, 16, 0, 30);
 
     private final int width;
     private final int height;

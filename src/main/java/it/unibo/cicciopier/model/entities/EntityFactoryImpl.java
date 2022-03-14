@@ -3,6 +3,7 @@ package it.unibo.cicciopier.model.entities;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.model.entities.enemies.boss.CannonBall;
 import it.unibo.cicciopier.model.entities.enemies.boss.Laser;
 import it.unibo.cicciopier.model.entities.enemies.boss.Missile;
 
@@ -39,6 +40,8 @@ public class EntityFactoryImpl implements EntityFactory {
                 return new Missile(this.world);
             case LASER:
                 return new Laser(this.world);
+            case CANNON_BALL:
+                return new CannonBall(this.world);
             default:
                 return null;
         }

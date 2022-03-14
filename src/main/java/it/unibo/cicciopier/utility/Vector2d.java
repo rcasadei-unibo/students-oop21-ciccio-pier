@@ -99,7 +99,7 @@ public class Vector2d {
      *
      * @param length desired to be
      */
-    public void setMagnitude(final int length) {
+    public void setMagnitude(final double length) {
         this.normalize();
         this.scale(length);
     }
