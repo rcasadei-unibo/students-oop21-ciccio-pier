@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.model;
 
 import it.unibo.cicciopier.utility.Vector2d;
+import it.unibo.cicciopier.view.GameObjectView;
 
 import java.awt.*;
 
@@ -45,5 +46,12 @@ public interface GameObject {
     default Rectangle getBounds() {
         return new Rectangle(this.getPos().getX(), this.getPos().getY(), this.getWidth(), this.getHeight());
     }
+
+    /**
+     * Get the view of this game object.
+     *
+     * @return the view
+     */
+    GameObjectView getView();
 
 }
