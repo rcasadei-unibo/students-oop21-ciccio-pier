@@ -3,8 +3,11 @@ package it.unibo.cicciopier.model.entities;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
+import it.unibo.cicciopier.model.entities.enemies.boss.Missile;
+import it.unibo.cicciopier.utility.Vector2d;
+import it.unibo.cicciopier.view.GameObjectView;
 
-public class PlayerImpl extends SimpleLivingEntity implements Player{
+public class PlayerImpl extends SimpleLivingEntity implements Player {
 
     //TO DEFINE STAMINA AMOUNT
     private final int maxStamina = 100;
@@ -30,7 +33,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player{
     @Override
     public void addStamina(final int amount) {
         this.stamina += amount;
-        if (this.stamina > this.maxStamina){
+        if (this.stamina > this.maxStamina) {
             this.stamina = this.maxStamina;
         }
     }
@@ -38,7 +41,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player{
     @Override
     public void decreaseStamina(final int amount) {
         this.stamina -= amount;
-        if (this.stamina < 0){
+        if (this.stamina < 0) {
             this.stamina = 0;
         }
     }
@@ -56,5 +59,13 @@ public class PlayerImpl extends SimpleLivingEntity implements Player{
     @Override
     public void jump() {
         //TODO
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObjectView getView() {
+        return null;
     }
 }

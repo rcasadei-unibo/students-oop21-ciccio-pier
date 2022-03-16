@@ -4,6 +4,7 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
+import it.unibo.cicciopier.view.GameObjectView;
 
 /**
  * Create a simple cannon ball that will be shot by the Boss
@@ -44,5 +45,13 @@ public class CannonBall extends SimpleMovingEntity {
     public void tick() {
         this.getPos().add(this.getVel());
         this.getPos().add(CannonBall.GRAVITY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObjectView getView() {
+        return null;
     }
 }

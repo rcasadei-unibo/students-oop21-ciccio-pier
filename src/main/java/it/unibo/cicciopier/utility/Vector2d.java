@@ -217,4 +217,14 @@ public class Vector2d {
 
         return Math.sqrt(first + second);
     }
+
+    /**
+     * Get a clone of this Vector
+     *
+     * @return a Vector
+     */
+    @Override
+    public Vector2d clone() {
+        return new Vector2d(this.x, this.y);
+    }
 }

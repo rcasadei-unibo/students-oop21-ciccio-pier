@@ -4,6 +4,7 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
+import it.unibo.cicciopier.view.GameObjectView;
 
 /**
  * Create a simple missile that chase the player
@@ -15,7 +16,7 @@ public class Missile extends SimpleMovingEntity {
     private static final int MAX_ANGLE = 46; //in degree
     private static final int MAX_SPEED = 5;
     private static final double MAX_STEERING = 0.3d;
-    private static final int MAX_TIME = 2_000_000; //2 seconds
+    private static final int MAX_TIME = 2_000_000_000; //2 seconds
 
     private final int maxTravelDistance;
     private final int initialDistance;
@@ -105,5 +106,13 @@ public class Missile extends SimpleMovingEntity {
         this.getPos().add(this.getVel());
         //reset the accel vector
         this.accel.set(0, 0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObjectView getView() {
+        return null;
     }
 }

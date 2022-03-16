@@ -4,12 +4,13 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
+import it.unibo.cicciopier.view.GameObjectView;
 
 /**
  * Create a simple laser attack
  */
 public class Laser extends SimpleMovingEntity {
-    private static final int MAX_TIME = 2_000_000; //2 seconds
+    private static final int MAX_TIME = 2_000_000_000; //2 seconds
     private static final int MAX_DISTANCE = 100;
     private static final int MAX_SPEED = 6;
 
@@ -102,6 +103,14 @@ public class Laser extends SimpleMovingEntity {
      */
     public Vector2d getEndLine() {
         return this.endLine;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObjectView getView() {
+        return null;
     }
 }
 
