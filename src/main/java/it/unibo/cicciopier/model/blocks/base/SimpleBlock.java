@@ -2,11 +2,13 @@ package it.unibo.cicciopier.model.blocks.base;
 
 import it.unibo.cicciopier.model.SimpleGameObject;
 import it.unibo.cicciopier.view.GameObjectView;
+import it.unibo.cicciopier.view.blocks.BlockView;
 
 /**
  * Simple implementation of the interface {@link Block}.
  */
 public class SimpleBlock extends SimpleGameObject implements Block {
+    private final BlockView view;
     private BlockType type;
 
     /**
@@ -14,6 +16,7 @@ public class SimpleBlock extends SimpleGameObject implements Block {
      */
     public SimpleBlock(final BlockType type) {
         super();
+        this.view = new BlockView(this);
         this.type = type;
     }
 
@@ -38,6 +41,7 @@ public class SimpleBlock extends SimpleGameObject implements Block {
      */
     @Override
     public GameObjectView getView() {
-        return null;
+        return this.view;
     }
+
 }

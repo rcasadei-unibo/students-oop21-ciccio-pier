@@ -2,7 +2,6 @@ package it.unibo.cicciopier.view;
 
 import it.unibo.cicciopier.App;
 import it.unibo.cicciopier.model.blocks.base.Block;
-import it.unibo.cicciopier.model.blocks.base.BlockType;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.model.entities.base.Entity;
 
@@ -52,19 +51,7 @@ public class LevelView extends JPanel {
         this.cam.translate(p, g);
         // render blocks
         for (Block b : this.view.getEngine().getWorld()) {
-            if (b.getType() == BlockType.AIR) {
-                continue;
-            }
-            g.drawImage(this.texture,
-                    b.getPos().getX(),
-                    b.getPos().getY(),
-                    b.getPos().getX() + Block.SIZE,
-                    b.getPos().getY() + Block.SIZE,
-                    b.getType().getTextureX(),
-                    b.getType().getTextureY(),
-                    b.getType().getTextureX() + Block.SIZE,
-                    b.getType().getTextureY() + Block.SIZE,
-                    null);
+            b.getView().render(g);
         }
         // render entities
         for (Entity e : this.view.getEngine().getWorld().getEntities()) {

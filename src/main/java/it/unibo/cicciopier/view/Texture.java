@@ -1,59 +1,59 @@
 package it.unibo.cicciopier.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Simple enum to reunite all the textures
+ * Simple enum to reunite all the textures.
  */
 public enum Texture {
     /**
-     * Represents the texture of the blocks
+     * Represents the texture of the blocks.
      */
     BLOCK("/textures/blocks.png"),
     /**
-     * Represents the texture of the player
+     * Represents the texture of the player.
      */
     PLAYER("/textures/blocks.png");
 
-    private final String textureName;
+    private static final Logger LOGGER = LoggerFactory.getLogger(Texture.class);
+    private final String fileName;
     private BufferedImage img;
 
     /**
-     * Constructor for this Class
+     * Constructor for this Class.
      *
-     * @param textureName path to the texture
+     * @param fileName path to the texture
      */
-    Texture(final String textureName) {
-        this.textureName = textureName;
+    Texture(final String fileName) {
+        this.fileName = fileName;
     }
 
     /**
-     * Load the specific texture
+     * Load the specific texture.
      */
-    public void load() {
-        final InputStream is = getClass().getResourceAsStream(this.textureName);
-        try {
-            assert is != null;
-            this.img = ImageIO.read(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void load() throws IOException, IllegalArgumentException {
+        LOGGER.info("Loading texture {} from file {}...", this.name(), this.fileName);
+        final InputStream is = getClass().getResourceAsStream(this.fileName);
+        this.img = ImageIO.read(is);
     }
 
     /**
-     * Get the texture name
+     * Get the texture path.
      *
      * @return texture name
      */
-    public String getTextureName() {
-        return this.textureName;
+    public String getFileName() {
+        return this.fileName;
     }
 
     /**
-     * Get texture as a BufferImage
+     * Get texture as a BufferImage.
      *
      * @return texture
      */
