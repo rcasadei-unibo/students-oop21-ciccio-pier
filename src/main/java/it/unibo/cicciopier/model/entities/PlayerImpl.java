@@ -1,8 +1,10 @@
 package it.unibo.cicciopier.model.entities;
 
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
+import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 
 public class PlayerImpl extends SimpleLivingEntity implements Player {
@@ -11,6 +13,8 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private final int maxStamina = 100;
     private final int attackDamage;
     private int stamina;
+    //TESTING RENDER
+    private boolean test = true;
 
     /**
      * Constructor for this class
@@ -76,6 +80,12 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public void tick() {
         //TODO
+        //TESTING RENDER
+        if (this.test){
+            Entity e = this.getWorld().getEntityFactory().createEntity(EntityType.SHOOTING_PEA);
+            e.setPos(new Vector2d(64,64));     //SE SI DANNO COORDS A CASO SI HA BUG GRAFICO. PERCHE?
+            this.getWorld().addEntity(e);
+        }
     }
 
     /**

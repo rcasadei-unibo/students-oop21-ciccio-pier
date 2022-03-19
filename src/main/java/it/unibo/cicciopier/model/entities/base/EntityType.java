@@ -19,7 +19,11 @@ public enum EntityType {
     /**
      * Represents the projectile that will be launched by the boss
      */
-    CANNON_BALL(16, 16, 0, 30);
+    CANNON_BALL(16, 16, 0, 30),
+    /**
+     * Represents the enemy ShootingPea
+     */
+    SHOOTING_PEA(32,64,100,50);
 
     private final int width;
     private final int height;

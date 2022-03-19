@@ -55,8 +55,12 @@ public class LevelView extends JPanel {
         }
         // render entities
         for (Entity e : this.view.getEngine().getWorld().getEntities()) {
+            if (e.getView() == null) {
             g.setColor(Color.RED);
             g.drawRect(e.getPos().getX(), e.getPos().getY(), e.getWidth() - 1, e.getHeight() - 1);
+            } else {
+                e.getView().render(g);
+            }
         }
         // render player
         g.setColor(Color.BLACK);

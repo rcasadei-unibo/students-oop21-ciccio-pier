@@ -19,7 +19,11 @@ public enum Texture {
     /**
      * Represents the texture of the player.
      */
-    PLAYER("/textures/blocks.png");
+    PLAYER("/textures/blocks.png"),
+    /**
+     * Represents the texture of the ShootingPea
+     */
+    SHOOTING_PEA("/textures/shootingPea.png");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Texture.class);
     private final String fileName;
