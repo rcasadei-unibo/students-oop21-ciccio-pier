@@ -1,7 +1,6 @@
 package it.unibo.cicciopier.view.entities.enemies;
 
 import it.unibo.cicciopier.model.entities.base.EntityType;
-import it.unibo.cicciopier.model.entities.enemies.Enemy;
 import it.unibo.cicciopier.model.entities.enemies.ShootingPea;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;

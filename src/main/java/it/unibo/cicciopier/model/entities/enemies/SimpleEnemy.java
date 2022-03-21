@@ -14,7 +14,7 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
      * @param type The Entity's type
      * @param world The game's world
      */
-    public SimpleEnemy(final EntityType type, final World world) {
+    protected SimpleEnemy(final EntityType type, final World world) {
         super(type, world);
         this.attackDamage = this.getType().getAttackDamage();
     }
