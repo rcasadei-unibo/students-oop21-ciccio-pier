@@ -19,7 +19,11 @@ public enum Texture {
     /**
      * Represents the texture of the player.
      */
-    PLAYER("/textures/blocks.png");
+    PLAYER("/textures/blocks.png"),
+    /**
+     * Represents the texture of the Missile.
+     */
+    MISSILE("/textures/missile.png");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Texture.class);
     private final String fileName;
