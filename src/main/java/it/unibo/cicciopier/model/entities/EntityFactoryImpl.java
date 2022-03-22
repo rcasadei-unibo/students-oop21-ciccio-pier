@@ -42,6 +42,8 @@ public class EntityFactoryImpl implements EntityFactory {
                 return new Laser(this.world);
             case CANNON_BALL:
                 return new CannonBall(this.world);
+            case COIN:
+                return new Coin(this.world);
             default:
                 return null;
         }

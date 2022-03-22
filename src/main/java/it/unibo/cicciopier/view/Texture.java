@@ -23,7 +23,11 @@ public enum Texture {
     /**
      * Represents the texture of the Missile.
      */
-    MISSILE("/textures/missile.png");
+    MISSILE("/textures/missile.png"),
+    /**
+     * Represents the texture of the coin.
+     */
+    COIN("/textures/coin.png");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Texture.class);
     private final String fileName;
