@@ -21,9 +21,13 @@ public enum EntityType {
      */
     CANNON_BALL(16, 16, 0, 30),
     /**
-     * Represent a coin
+     * Represents a coin
      */
-    COIN(32,32,0,0);
+    COIN(32, 32, 0, 0),
+    /**
+     * Represents an explosion
+     */
+    EXPLOSION(1, 1, 0, 0);
 
     private final int width;
     private final int height;

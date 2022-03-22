@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.model.entities;
+package it.unibo.cicciopier.model.items;
 
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
@@ -7,7 +7,7 @@ import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.items.CoinView;
 
 /**
- * Create a a coin object
+ * Create a coin object
  */
 public class Coin extends SimpleMovingEntity {
     private static final int POINT = 10;
