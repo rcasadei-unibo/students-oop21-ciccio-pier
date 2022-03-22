@@ -10,7 +10,6 @@ import java.awt.*;
 public class ShootingPeaView implements GameObjectView {
 
     private final ShootingPea pea;
-    private ShootingPea.Statuses status;
 
     /**
      * Constructor for this class
@@ -30,15 +29,23 @@ public class ShootingPeaView implements GameObjectView {
         //QUANDO FACCIO UN'ANIMAZIONE, RENDERIZZO UNA LINEA CON UN LOOP,
         //IL LOOP DURA L'ANIMAZIONE, OGNI CICLO CONTROLLO ANCHE NON SIA
         //CAMBIATO LO STATUS. IN TAL CASO ESCO
-        this.status = this.pea.getStatus();
-        switch (this.status){
-            case IDLE: g.drawImage(Texture.SHOOTING_PEA.getTexture(),
-                    this.pea.getPos().getX(),
-                    this.pea.getPos().getY(),
-                    this.pea.getPos().getX()+ EntityType.SHOOTING_PEA.getWidth(),
-                    this.pea.getPos().getX()+ EntityType.SHOOTING_PEA.getHeight(),
-                    0,0,32,64,null);
-                    break;
+        switch (this.pea.getStatus()){
+            case IDLE:
+                g.drawImage(Texture.SHOOTING_PEA.getTexture(),
+                this.pea.getPos().getX(),
+                this.pea.getPos().getY(),
+                this.pea.getPos().getX()+ EntityType.SHOOTING_PEA.getWidth(),
+                this.pea.getPos().getY()+ EntityType.SHOOTING_PEA.getHeight(),
+                0,0,32,64,null);
+                break;
+            case WALKING:
+                g.drawImage(Texture.SHOOTING_PEA.getTexture(),
+                this.pea.getPos().getX(),
+                this.pea.getPos().getY(),
+                this.pea.getPos().getY()+ EntityType.SHOOTING_PEA.getWidth(),
+                this.pea.getPos().getX()+ EntityType.SHOOTING_PEA.getHeight(),
+                0,0,32,64,null);
+                break;
         }
     }
 }

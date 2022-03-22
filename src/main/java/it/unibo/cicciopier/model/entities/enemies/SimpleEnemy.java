@@ -4,6 +4,7 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.LivingEntity;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
+import it.unibo.cicciopier.utility.Vector2d;
 
 public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
 
@@ -33,5 +34,17 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     @Override
     public void attackPlayer() {
         this.getWorld().getPlayer().damage(this.attackDamage);
+    }
+
+    /**
+     * This method checks, in a given range, if the player is present
+     *
+     * @param range The maximum, inclusive radius of the range from the current position
+     * @return True if player is in range
+     */
+    protected boolean checkPlayerInRange(final int range){
+        int pivot = this.getPos().getY();
+        int playerPos = this.getWorld().getPlayer().getPos().getY();
+        return (playerPos >= pivot-range) && (playerPos <= pivot+range);
     }
 }

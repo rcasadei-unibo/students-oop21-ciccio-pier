@@ -8,8 +8,14 @@ import it.unibo.cicciopier.view.entities.enemies.ShootingPeaView;
 
 public class ShootingPea extends SimpleEnemy {
 
+    public static final int MAX_RIGHT_OFFSET = 10;
     private final GameObjectView view;
+    //Can't be final due to later initialization of the pos
+    private int leftPathOffset;
+    private boolean pathInitialized;
     private Statuses status;
+    //testing
+    private int tmp = 0;
 
     /**
      * Represents the entity's status and their respective frames
@@ -18,25 +24,27 @@ public class ShootingPea extends SimpleEnemy {
         /**
          * Represents the entity standing still
          */
-        IDLE(5),
+        IDLE(5,1),
         /**
          * Represents the entity shooting at the player
          */
-        SHOOTING(10),
+        SHOOTING(10,3),
         /**
          * Represents the entity walking
          */
-        WALKING(10);
+        WALKING(10,2);
 
         private final int frames;
+        private final int durationSeconds;
 
         /**
          * Constructor for the entity's statuses
          *
          * @param frames The number of frames for the status's animation
          */
-        Statuses(final int frames) {
+        Statuses(final int frames, final int seconds) {
             this.frames = frames;
+            this.durationSeconds = seconds;
         }
 
         /**
@@ -46,6 +54,15 @@ public class ShootingPea extends SimpleEnemy {
          */
         public int getFrames() {
             return this.frames;
+        }
+
+        /**
+         * Method to get the duration of the animation
+         *
+         * @return The duration, in seconds
+         */
+        public int getDuration(){
+            return this.durationSeconds;
         }
     }
 
@@ -74,6 +91,17 @@ public class ShootingPea extends SimpleEnemy {
     @Override
     public void tick() {
         //TODO : per contatto, fai danno con metodo ereditato. Spawn proiettile, individua inoltre un modo per aggrare?
+        if (!this.pathInitialized){
+            this.leftPathOffset = this.getPos().getX();
+            this.pathInitialized = true;
+        }
+        //testing
+        this.tmp++;
+        if (this.tmp == 200){
+                this.status = Statuses.WALKING;
+                this.tmp = 0;
+        }
+        System.out.println(this.status);
     }
 
     /**

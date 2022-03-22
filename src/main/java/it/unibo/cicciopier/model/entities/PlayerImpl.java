@@ -120,7 +120,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         //TESTING RENDER
         if (this.test){
             Entity e = this.getWorld().getEntityFactory().createEntity(EntityType.SHOOTING_PEA);
-            e.setPos(new Vector2d(64,64));     //SE SI DANNO COORDS A CASO SI HA BUG GRAFICO. PERCHE?
+            e.setPos(new Vector2d(this.getPos().getX()+32,this.getPos().getY()));
             this.getWorld().addEntity(e);
         }
     }
