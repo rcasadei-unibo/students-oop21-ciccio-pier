@@ -23,7 +23,19 @@ public enum Texture {
     /**
      * Represents the texture of the ShootingPea
      */
-    SHOOTING_PEA("/textures/shootingPea.png");
+    SHOOTING_PEA("/textures/shootingPea.png"),
+    /**
+     * Represents the texture of the Missile.
+     */
+    MISSILE("/textures/missile.png"),
+    /**
+     * Represents the texture of the coin.
+     */
+    COIN("/textures/coin.png"),
+    /**
+     * Represents the texture of an explosion.
+     */
+    EXPLOSION("/textures/explosion.png");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Texture.class);
     private final String fileName;
@@ -45,6 +57,7 @@ public enum Texture {
         LOGGER.info("Loading texture {} from file {}...", this.name(), this.fileName);
         final InputStream is = getClass().getResourceAsStream(this.fileName);
         this.img = ImageIO.read(is);
+        is.close();
     }
 
     /**

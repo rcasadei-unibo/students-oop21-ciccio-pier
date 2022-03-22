@@ -23,7 +23,15 @@ public enum EntityType {
     /**
      * Represents the enemy ShootingPea
      */
-    SHOOTING_PEA(32,64,100,50);
+    SHOOTING_PEA(32,64,100,50),
+    /**
+     * Represents a coin
+     */
+    COIN(32, 32, 0, 0),
+    /**
+     * Represents an explosion
+     */
+    EXPLOSION(1, 1, 0, 0);
 
     private final int width;
     private final int height;

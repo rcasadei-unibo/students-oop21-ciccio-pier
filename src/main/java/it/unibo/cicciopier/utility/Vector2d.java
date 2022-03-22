@@ -16,8 +16,10 @@ public class Vector2d {
     }
 
     /**
-     * @param x coordinate of the cartesian plane
-     * @param y coordinate of the cartesian plane
+     * Constructor with params x,y coordinate of the cartesian plane
+     *
+     * @param x coordinate
+     * @param y coordinate
      */
     public Vector2d(final double x, final double y) {
         this.x = x;
@@ -25,14 +27,18 @@ public class Vector2d {
     }
 
     /**
-     * @return x coordinate
+     * Get the X coordinate
+     *
+     * @return x
      */
     public int getX() {
         return (int) Math.round(this.x);
     }
 
     /**
-     * @return y coordinate
+     * Get the Y coordinate
+     *
+     * @return y
      */
     public int getY() {
         return (int) Math.round(this.y);
@@ -44,19 +50,23 @@ public class Vector2d {
      * @param v1 vector to add
      */
     public void add(final Vector2d v1) {
-        this.x += v1.getX();
-        this.y += v1.getY();
+        this.x += v1.getDoubleX();
+        this.y += v1.getDoubleY();
     }
 
     /**
-     * @return The squared length of the vector
+     * Get the squared length of the vector
+     *
+     * @return squared length
      */
     public double getMagnitudeSq() {
         return Math.pow(this.x, 2) + Math.pow(this.y, 2);
     }
 
     /**
-     * @return the length of the vector
+     * Get the length of the vector
+     *
+     * @return length
      */
     public double getMagnitude() {
         return Math.sqrt(this.getMagnitudeSq());
@@ -105,7 +115,7 @@ public class Vector2d {
     }
 
     /**
-     * Set the variables
+     * Set the variables x,y
      *
      * @param x coordinate
      * @param y coordinate
@@ -145,9 +155,11 @@ public class Vector2d {
     public void rotateInDegree(final double degree) {
         final double x0 = this.x;
         final double y0 = this.y;
+        final double straightAngle = 180d;
+        final double radiant = (Math.PI * degree) / straightAngle;
 
-        this.x = x0 * Math.cos(degree) - y0 * Math.sin(degree);
-        this.y = x0 * Math.sin(degree) + y0 * Math.cos(degree);
+        this.x = x0 * Math.cos(radiant) - y0 * Math.sin(radiant);
+        this.y = x0 * Math.sin(radiant) + y0 * Math.cos(radiant);
     }
 
     /**
@@ -226,5 +238,34 @@ public class Vector2d {
     @Override
     public Vector2d clone() {
         return new Vector2d(this.x, this.y);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "Vector2d{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
+
+    /**
+     * Get the X coordinate in double
+     *
+     * @return x
+     */
+    public double getDoubleX() {
+        return this.x;
+    }
+
+    /**
+     * Get the Y coordinate in double
+     *
+     * @return y
+     */
+    public double getDoubleY() {
+        return this.y;
     }
 }

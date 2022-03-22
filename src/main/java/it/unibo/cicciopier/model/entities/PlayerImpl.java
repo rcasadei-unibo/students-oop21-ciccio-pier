@@ -13,6 +13,8 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private final int maxStamina = 100;
     private final int attackDamage;
     private int stamina;
+    private int score;
+    private int coin;
     //TESTING RENDER
     private boolean test = true;
 
@@ -20,12 +22,47 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      * Constructor for this class
      *
      * @param world The game's world
-     * @param type The entity's type
+     * @param type  The entity's type
      */
     public PlayerImpl(final EntityType type, final World world) {
         super(type, world);
         this.stamina = maxStamina;
         this.attackDamage = this.getType().getAttackDamage();
+        this.score = 0;
+        this.coin = 0;
+        this.setVel(new Vector2d(0, 0));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getCoin() {
+        return coin;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addScore(final int score) {
+        this.score += score;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addCoin() {
+        this.coin++;
     }
 
     /**

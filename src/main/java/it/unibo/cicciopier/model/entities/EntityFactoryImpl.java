@@ -5,8 +5,10 @@ import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.enemies.ShootingPea;
 import it.unibo.cicciopier.model.entities.enemies.boss.CannonBall;
+import it.unibo.cicciopier.model.entities.enemies.boss.Explosion;
 import it.unibo.cicciopier.model.entities.enemies.boss.Laser;
 import it.unibo.cicciopier.model.entities.enemies.boss.Missile;
+import it.unibo.cicciopier.model.items.Coin;
 
 public class EntityFactoryImpl implements EntityFactory {
 
@@ -43,6 +45,10 @@ public class EntityFactoryImpl implements EntityFactory {
                 return new Laser(this.world);
             case CANNON_BALL:
                 return new CannonBall(this.world);
+            case COIN:
+                return new Coin(this.world);
+            case EXPLOSION:
+                return new Explosion(this.world);
             case SHOOTING_PEA:
                 return new ShootingPea(this.world);
             default:
