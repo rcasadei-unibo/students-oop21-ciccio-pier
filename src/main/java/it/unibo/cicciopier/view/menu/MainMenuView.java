@@ -13,18 +13,21 @@ import java.io.InputStream;
 
 public class MainMenuView extends JPanel implements View {
     private final Engine engine;
+    private static final int BUTTONHEIGHT = 322;
+    private static final int BUTTONSPACE = 15;
     private final String path = "/menuGraphics/menuBackground.png";
     private BufferedImage background;
     private final JFrame jframe = new JFrame("CICCIO PIER THE GAME");
-    private final JButton play = new JButton("Play");
-    private final JButton leaderboard = new JButton("Leaderboard");
-    private final JButton settings = new JButton("Settings");
+    private final PlayButton play = new PlayButton();
+    private final PlayButton leaderboard = new PlayButton();
+    private final PlayButton settings = new PlayButton();
     private final JButton quit = new JButton("Quit");
-    Dimension size = new Dimension(1536,768);
+    private final Dimension size = new Dimension(1536, 768);
 
 
     public MainMenuView(Engine engine) {
         this.engine = engine;
+        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
@@ -34,15 +37,32 @@ public class MainMenuView extends JPanel implements View {
     public void load() throws Exception {
         final InputStream is = getClass().getResourceAsStream(path);
         background = ImageIO.read(is);
+
+        this.setLayout(null);
         this.add(play);
         this.add(leaderboard);
         this.add(settings);
-        this.add(quit);
-        jframe.getContentPane().add(this);
-        jframe.pack();
-        jframe.setResizable(false);
-        jframe.setSize(size);
+       // this.add(quit);
 
+
+        Insets insets = this.getInsets();
+        Dimension sizeButton = play.getPreferredSize();
+        final int width = size.width / 2 - sizeButton.width / 2;
+        final int spacing = sizeButton.height + BUTTONSPACE;
+
+        play.setBounds(width, BUTTONHEIGHT, sizeButton.width, sizeButton.height);
+
+        leaderboard.setBounds(width, BUTTONHEIGHT + spacing, sizeButton.width, sizeButton.height);
+
+        settings.setBounds(width, BUTTONHEIGHT + spacing * 2, sizeButton.width, sizeButton.height);
+
+        //quit.setBounds(width, BUTTONHEIGHT + spacing *3, sizeButton.width, sizeButton.height);
+
+
+        this.jframe.getContentPane().add(this);
+        this.jframe.pack();
+        this.jframe.setResizable(false);
+        this.jframe.setSize(size);
 
 
     }
@@ -53,7 +73,7 @@ public class MainMenuView extends JPanel implements View {
     @Override
     public void start() {
 
-        this.setPreferredSize(size);
+        this.setPreferredSize(this.size);
         this.repaint();
         jframe.setVisible(true);
     }
@@ -65,8 +85,8 @@ public class MainMenuView extends JPanel implements View {
     public void render() {
 
 
-
     }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
