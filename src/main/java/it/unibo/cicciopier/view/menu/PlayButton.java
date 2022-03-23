@@ -15,6 +15,8 @@ public class PlayButton extends JComponent implements MouseListener {
     private final Dimension dimension = new Dimension(280, 106);
     ;
     private final MainMenuController mainMenuController = new MainMenuController();
+    private final String buttonImg = "/menuGraphics/buttons/playButton/playButton.png";
+    private final String pressedButtonImg = "/menuGraphics/buttons/playButton/playButtonPressed.png";
     private BufferedImage[] image;
     private int buttonStatus;
 
@@ -31,8 +33,8 @@ public class PlayButton extends JComponent implements MouseListener {
     }
 
     private void load() {
-        final InputStream button = getClass().getResourceAsStream("/menuGraphics/buttons/playButton/playButton.png");
-        final InputStream buttonPressed = getClass().getResourceAsStream("/menuGraphics/buttons/playButton/playButtonPressed.png");
+        final InputStream button = getClass().getResourceAsStream(buttonImg);
+        final InputStream buttonPressed = getClass().getResourceAsStream(pressedButtonImg);
         try {
             image[0] = ImageIO.read(button);
             image[1] = ImageIO.read(buttonPressed);
@@ -46,7 +48,6 @@ public class PlayButton extends JComponent implements MouseListener {
      */
     @Override
     public void paintComponent(Graphics g) {
-
 
         super.paintComponent(g);
         g.drawImage(image[this.buttonStatus], 0, 0, null);

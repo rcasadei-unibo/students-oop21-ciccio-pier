@@ -3,6 +3,7 @@ package it.unibo.cicciopier.view.menu;
 import it.unibo.cicciopier.App;
 import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.model.entities.Player;
+import it.unibo.cicciopier.view.StaticView;
 import it.unibo.cicciopier.view.View;
 
 import javax.imageio.ImageIO;
@@ -11,8 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
-public class MainMenuView extends JPanel implements View {
-    private final Engine engine;
+public class MainMenuView extends JPanel implements StaticView {
     private static final int BUTTONHEIGHT = 322;
     private static final int BUTTONSPACE = 15;
     private final String path = "/menuGraphics/menuBackground.png";
@@ -25,8 +25,7 @@ public class MainMenuView extends JPanel implements View {
     private final Dimension size = new Dimension(1536, 768);
 
 
-    public MainMenuView(Engine engine) {
-        this.engine = engine;
+    public MainMenuView() {
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -42,10 +41,8 @@ public class MainMenuView extends JPanel implements View {
         this.add(play);
         this.add(leaderboard);
         this.add(settings);
-       // this.add(quit);
+        // this.add(quit);
 
-
-        Insets insets = this.getInsets();
         Dimension sizeButton = play.getPreferredSize();
         final int width = size.width / 2 - sizeButton.width / 2;
         final int spacing = sizeButton.height + BUTTONSPACE;
@@ -82,24 +79,8 @@ public class MainMenuView extends JPanel implements View {
      * {@inheritDoc}
      */
     @Override
-    public void render() {
-
-
-    }
-
-    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
     }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Engine getEngine() {
-        return this.engine;
-    }
-
 }
