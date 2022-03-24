@@ -5,13 +5,13 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.blocks.base.BlockType;
 import it.unibo.cicciopier.utility.Vector2d;
+import it.unibo.cicciopier.view.Texture;
 
 import java.awt.*;
 
 public abstract class SimpleMovingEntity extends SimpleEntity implements MovingEntity {
+
     private Vector2d vel;
-    private final int blocksInWidth;
-    private final int blocksInHeight;
 
     /**
      * Constructor for this class
@@ -22,11 +22,6 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
     protected SimpleMovingEntity(final EntityType type, final World world) {
         super(type, world);
         this.vel = new Vector2d(0, 0);
-        //how many blocks to check under the player and up of the player
-        //plus one because what if the entity is in the middle
-        this.blocksInWidth = (int) Math.ceil(this.getType().getWidth() / (double) Block.SIZE) + 1;
-        //how many bocks to check on the side of the player
-        this.blocksInHeight = (int) Math.ceil(this.getType().getHeight() / (double) Block.SIZE);
     }
 
     /**
@@ -58,7 +53,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      *
      * @return a rectangle with offset of the velocity
      */
-    private Rectangle rectangleOffset() {
+    protected Rectangle rectangleOffset() {
         //get the entity pos with the offset of the velocity
         final Vector2d entityOffset = this.getPos().addVector(this.getVel());
 
@@ -71,111 +66,218 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
     }
 
     /**
-     * Check collision on the right hand side of the entity with blocks
+     * Check collision up of the entity with blocks
      *
-     * @return true if collides else false
+     * @return 1 if doesn't collide,
+     * 2 if collides with the beginning of the map in y direction,
+     * <p>
+     * n <= 0  if collides and return how much distance is left from the block or mapEnd
      */
-    public boolean rightCollision() {
+    protected int upCollision() {
         //create rectangle with offset of velocity
         final Rectangle entityHitBox = this.rectangleOffset();
+
+        //check if the player collides with the beginning of the map
+        if (entityHitBox.getY() < 0) {
+            return -this.getPos().getY();
+        } else if (entityHitBox.getY() == 0) {
+            return 2;
+        }
         //get the position of the entity in block position
-        final int posXInMatrix = (int) (Math.floor(this.rectangleOffset().getX() + this.getWidth()) / Block.SIZE);
-        final int posYInMatrix = (int) (Math.floor(this.rectangleOffset().getY()) / Block.SIZE);
+        final int upperLeftX = (int) (Math.floor(entityHitBox.getX()) / Block.SIZE);
+        final int upperLeftY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
+        Block block = this.getWorld().getBlock(upperLeftX, upperLeftY);
 
-        //check all the block on the right hand side of the entity
-        for (int i = 0; i < this.blocksInHeight; i++) {
-            Block block = this.getWorld().getBlock(posXInMatrix, posYInMatrix + i);
-
-            if (block.getType() == BlockType.AIR) {
-                //PlayerImpl.LOGGER.info("entro qua dentro");
-                continue;
-            }
+        if (block.getType() != BlockType.AIR) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
-                return true;
+                return (int) (block.getBounds().getMaxY() - this.getPos().getY());
             }
         }
-        return false;
+        final int upperRightX = (int) (Math.floor(entityHitBox.getMaxX()) / Block.SIZE);
+        final int upperRightY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
+        block = this.getWorld().getBlock(upperRightX, upperRightY);
+
+        if (block.getType() != BlockType.AIR) {
+            //check if they collide
+            if (entityHitBox.intersects(block.getBounds())) {
+                return (int) (block.getBounds().getMaxY() - this.getPos().getY());
+            }
+        }
+        final int middleBlocks = upperRightX - (upperLeftX + 2);
+
+        //collision check with the blocks in the middle
+        for (int i = 1; i <= middleBlocks; i++) {
+            block = this.getWorld().getBlock(upperLeftX + i, upperLeftY);
+
+            if (block.getType() != BlockType.AIR) {
+                //check if they collide
+                if (entityHitBox.intersects(block.getBounds())) {
+                    return (int) (block.getBounds().getMaxY() - this.getPos().getY());
+                }
+            }
+        }
+        return 1;
+    }
+
+    /**
+     * Check collision on the right hand side of the entity with blocks
+     *
+     * @return -1 if doesn't collide,
+     * -2 if collides with the beginning of the map in x direction,
+     * n >= 0  if collides and return how much distance is left from the block or mapEnd
+     */
+    protected int rightCollision() {
+        //create rectangle with offset of velocity
+        final Rectangle entityHitBox = this.rectangleOffset();
+
+        final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
+        //check if the player collide with the end of the map
+        if (entityHitBox.getMaxX() >= worldEndX) {
+            return worldEndX - (this.getPos().getX() + this.getWidth());
+        } else if (entityHitBox.getMaxX() == worldEndX) {
+            return -2;
+        }
+        final int upperRightX = (int) (Math.floor(entityHitBox.getMaxX()) / Block.SIZE);
+        final int upperRightY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
+        Block block = this.getWorld().getBlock(upperRightX, upperRightY);
+
+        if (block.getType() != BlockType.AIR) {
+            //check if they collide
+            if (entityHitBox.intersects(block.getBounds())) {
+                return (int) (block.getPos().getX() - this.getBounds().getMaxX());
+            }
+        }
+        final int lowerRightX = (int) (Math.floor(entityHitBox.getMaxX()) / Block.SIZE);
+        //get the block 1 block higher
+        final int lowerRightY = (int) (Math.floor(entityHitBox.getMaxY()) / Block.SIZE) - 1;
+        block = this.getWorld().getBlock(lowerRightX, lowerRightY);
+
+        if (block.getType() != BlockType.AIR) {
+            //check if they collide
+            if (entityHitBox.intersects(block.getBounds())) {
+                return (int) (block.getPos().getX() - this.getBounds().getMaxX());
+            }
+        }
+        final int middleBlocks = lowerRightY - (upperRightY + 2);
+
+        //collision check with the blocks in the middle
+        for (int i = 1; i <= middleBlocks; i++) {
+            block = this.getWorld().getBlock(upperRightX, upperRightY + i);
+            if (block.getType() != BlockType.AIR) {
+                //check if they collide
+                if (entityHitBox.intersects(block.getBounds())) {
+                    return (int) (block.getPos().getX() - this.getBounds().getMaxX());
+                }
+            }
+        }
+        return -1;
     }
 
     /**
      * Check collision on the left hand side of the entity with blocks
      *
-     * @return true if collides else false
+     * @return 1 if doesn't collide,
+     * 2 if collides with the beginning of the map,
+     * n <= 0  if collides and return how much distance is left from the block or mapEnd
      */
-    public boolean leftCollision() {
+    protected int leftCollision() {
         //create rectangle with offset of velocity
         final Rectangle entityHitBox = this.rectangleOffset();
+
+        //check if the player collides with the beginning of the map
+        if (entityHitBox.getX() < 0) {
+            return -this.getPos().getX();
+        } else if (entityHitBox.getX() == 0) {
+            return 2;
+        }
         //get the position of the entity in block position
-        final int posXInMatrix = (int) (Math.floor(this.rectangleOffset().getX()) / Block.SIZE);
-        final int posYInMatrix = (int) (Math.floor(this.rectangleOffset().getY()) / Block.SIZE);
+        final int upperLeftX = (int) (Math.floor(entityHitBox.getX()) / Block.SIZE);
+        final int upperLeftY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
+        Block block = this.getWorld().getBlock(upperLeftX, upperLeftY);
 
-        //check all the block on the right hand side of the entity
-        for (int i = 0; i < this.blocksInHeight; i++) {
-            final Block block = this.getWorld().getBlock(posXInMatrix, posYInMatrix + i);
-
-            if (block.getType() == BlockType.AIR) {
-                continue;
-            }
+        if (block.getType() != BlockType.AIR) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
-                return true;
+                return (int) (block.getBounds().getMaxX() - this.getPos().getX());
             }
         }
-        return false;
+        final int lowerLeftX = (int) (Math.floor(entityHitBox.getX()) / Block.SIZE);
+        //get the block 1 block higher
+        final int lowerLeftY = (int) (Math.floor(entityHitBox.getMaxY()) / Block.SIZE) - 1;
+        block = this.getWorld().getBlock(lowerLeftX, lowerLeftY);
+
+        if (block.getType() != BlockType.AIR) {
+            //check if they collide
+            if (entityHitBox.intersects(block.getBounds())) {
+                return (int) (block.getBounds().getMaxX() - this.getPos().getX());
+            }
+        }
+        final int middleBlocks = lowerLeftY - (upperLeftY + 1);
+
+        //collision check with the blocks in the middle
+        for (int i = 1; i <= middleBlocks; i++) {
+            block = this.getWorld().getBlock(upperLeftX, upperLeftY + i);
+            if (block.getType() != BlockType.AIR) {
+                //check if they collide
+                if (entityHitBox.intersects(block.getBounds())) {
+                    return (int) (block.getBounds().getMaxX() - this.getPos().getX());
+                }
+            }
+        }
+        return 1;
     }
 
     /**
      * Check collision on the bottom of the entity with blocks
      *
-     * @return true if collides else false
+     * @return -1 if doesn't collide,
+     * n >= 0  if collides and return how much distance is left from the block or mapEnd
      */
-    public boolean bottomCollision() {
+    protected int bottomCollision() {
         //create rectangle with offset of velocity
         final Rectangle entityHitBox = this.rectangleOffset();
+
+        final int worldEndY = this.getWorld().getHeight() * Block.SIZE;
+        //check if the player collide with the end of the map
+        if (entityHitBox.getMaxY() >= worldEndY) {
+            //remove the entity
+            this.remove();
+            return -1;
+        }
         //get the position of the entity in block position
-        final int posXInMatrix = (int) (Math.floor(this.rectangleOffset().getX()) / Block.SIZE);
-        final int posYInMatrix = (int) (Math.floor(this.rectangleOffset().getY() + this.getHeight()) / Block.SIZE);
+        final int lowerLeftX = (int) (Math.floor(entityHitBox.getX()) / Block.SIZE);
+        final int lowerLeftY = (int) (Math.floor(entityHitBox.getMaxY()) / Block.SIZE);
 
-        //check all the block on the right hand side of the entity
-        for (int i = 0; i < this.blocksInWidth; i++) {
-            final Block block = this.getWorld().getBlock(posXInMatrix + i, posYInMatrix);
-
-            if (block.getType() == BlockType.AIR) {
-                continue;
-            }
+        Block block = this.getWorld().getBlock(lowerLeftX, lowerLeftY);
+        if (block.getType() != BlockType.AIR) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
-                return true;
+                return (int) (block.getPos().getY() - this.getBounds().getMaxY());
             }
         }
-        return false;
-    }
+        final int lowerRightX = (int) (Math.floor(entityHitBox.getMaxX()) / Block.SIZE);
+        final int lowerRightY = (int) (Math.floor(entityHitBox.getMaxY()) / Block.SIZE);
+        block = this.getWorld().getBlock(lowerRightX, lowerRightY);
 
-    /**
-     * Check collision up of entity with blocks
-     *
-     * @return true if collides else false
-     */
-    public boolean upCollision() {
-        //create rectangle with offset of velocity
-        final Rectangle entityHitBox = this.rectangleOffset();
-        //get the position of the entity in block position
-        final int posXInMatrix = (int) (Math.floor(this.rectangleOffset().getX()) / Block.SIZE);
-        final int posYInMatrix = (int) (Math.floor(this.rectangleOffset().getY()) / Block.SIZE);
-
-        //check all the block on the right hand side of the entity
-        for (int i = 0; i < this.blocksInWidth; i++) {
-            final Block block = this.getWorld().getBlock(posXInMatrix + i, posYInMatrix);
-
-            if (block.getType() == BlockType.AIR) {
-                continue;
-            }
+        if (block.getType() != BlockType.AIR) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
-                return true;
+                return (int) (block.getPos().getY() - this.getBounds().getMaxY());
             }
         }
-        return false;
+        final int middleBlocks = (lowerRightX) - (lowerLeftX + 2);
+
+        for (int i = 1; i <= middleBlocks; i++) {
+
+            block = this.getWorld().getBlock(lowerLeftX + i, lowerLeftY);
+            if (block.getType() != BlockType.AIR) {
+                //check if they collide
+                if (entityHitBox.intersects(block.getBounds())) {
+                    return (int) (block.getPos().getY() - this.getBounds().getMaxY());
+                }
+            }
+        }
+        return -1;
     }
 }

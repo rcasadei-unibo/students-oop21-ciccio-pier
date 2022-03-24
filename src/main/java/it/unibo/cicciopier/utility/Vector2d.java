@@ -231,6 +231,24 @@ public class Vector2d {
     }
 
     /**
+     * Set the x value
+     *
+     * @param x new value
+     */
+    public void setX(final double x) {
+        this.x = x;
+    }
+
+    /**
+     * Set the y value
+     *
+     * @param y new value
+     */
+    public void setY(final double y) {
+        this.y = y;
+    }
+
+    /**
      * Get a clone of this Vector
      *
      * @return a Vector
