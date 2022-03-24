@@ -5,6 +5,7 @@ import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.EntityFactory;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.model.entities.base.Entity;
+import it.unibo.cicciopier.utility.Vector2d;
 
 import java.util.Iterator;
 import java.util.List;
@@ -68,8 +69,8 @@ public interface World extends Iterable<Block> {
     /**
      * Set the block at the specific coordinates.
      *
-     * @param x    pos x
-     * @param y    pos y
+     * @param x     pos x
+     * @param y     pos y
      * @param block the new block
      */
     void setBlock(final int x, final int y, final Block block);
@@ -80,6 +81,15 @@ public interface World extends Iterable<Block> {
      * @return the list
      */
     List<Entity> getEntities();
+
+    /**
+     * Get a list containing the entities in a certain range.
+     *
+     * @param pos    the starting position
+     * @param radius the radius
+     * @return the list
+     */
+    List<Entity> getEntitiesInRange(final Vector2d pos, final int radius);
 
     /**
      * Add an entity to this world.

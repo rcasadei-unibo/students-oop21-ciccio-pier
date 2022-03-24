@@ -7,11 +7,13 @@ import it.unibo.cicciopier.model.entities.EntityFactory;
 import it.unibo.cicciopier.model.entities.EntityFactoryImpl;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.model.entities.base.Entity;
+import it.unibo.cicciopier.utility.Vector2d;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 /**
  * Simple implementation of the interface {@link World}.
@@ -105,7 +107,15 @@ public class GameWorld implements World {
      **/
     @Override
     public List<Entity> getEntities() {
-        return new ArrayList<>(this.entities);
+        return this.entities;
+    }
+
+    /**
+     * {@inheritDoc}
+     **/
+    @Override
+    public List<Entity> getEntitiesInRange(final Vector2d pos, final int radius) {
+        return this.entities.stream().filter(e -> e.getPos().euclidDistance(pos) < radius).collect(Collectors.toList());
     }
 
     /**

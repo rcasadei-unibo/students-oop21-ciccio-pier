@@ -8,6 +8,7 @@ import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 
 public class PlayerImpl extends SimpleLivingEntity implements Player {
+    private static final int SPEED = 2;
 
     //TO DEFINE STAMINA AMOUNT
     private final int maxStamina = 100;
@@ -29,6 +30,14 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         this.score = 0;
         this.coin = 0;
         this.setVel(new Vector2d(0, 0));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSpeed() {
+        return SPEED;
     }
 
     /**
@@ -115,6 +124,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public void tick() {
         //TODO
+        this.move();
     }
 
     /**

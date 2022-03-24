@@ -121,7 +121,6 @@ public class TmxWorldLoader implements WorldLoader {
         // get the first object and teleport the player there.
         MapObject object = layer.iterator().next();
         this.world.getPlayer().setPos(new Vector2d(object.getX(), object.getY()));
-        this.world.getPlayer().setVel(new Vector2d(1, 0));
     }
 
     /**

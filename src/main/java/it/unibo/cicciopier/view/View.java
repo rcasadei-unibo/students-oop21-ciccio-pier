@@ -7,7 +7,6 @@ import it.unibo.cicciopier.controller.Engine;
  */
 public interface View extends StaticView {
 
-
     /**
      * Update the game window one time.
      */

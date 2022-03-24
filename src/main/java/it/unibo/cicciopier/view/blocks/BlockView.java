@@ -26,7 +26,7 @@ public class BlockView implements GameObjectView {
      * {@inheritDoc}
      */
     @Override
-    public void render(Graphics g) {
+    public void render(final Graphics g) {
         if (this.block.getType() == BlockType.AIR) {
             return;
         }

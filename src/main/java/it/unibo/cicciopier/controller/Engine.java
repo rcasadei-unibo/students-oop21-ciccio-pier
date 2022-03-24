@@ -57,6 +57,13 @@ public interface Engine {
     GameState getState();
 
     /**
+     * Get the input controller.
+     *
+     * @return the input controller
+     */
+    InputController getInput();
+
+    /**
      * Get the world loader for the current level.
      *
      * @return the world loader

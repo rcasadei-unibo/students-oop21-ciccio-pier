@@ -12,6 +12,7 @@ import java.util.Iterator;
  * Simple implementation of the interface {@link Engine}.
  */
 public class GameEngine implements Engine {
+    private final InputController input;
     private final WorldLoader loader;
     private final World world;
     private final View view;
@@ -24,6 +25,7 @@ public class GameEngine implements Engine {
      * @param level the file name of the world
      */
     public GameEngine(final String level) {
+        this.input = new InputController();
         this.world = new GameWorld();
         this.loader = new TmxWorldLoader(this.getWorld(), level);
         this.view = new GameView(this);
@@ -91,19 +93,41 @@ public class GameEngine implements Engine {
             return;
         }
         // for every entity check if it has to be removed, update it otherwise
-        Iterator<Entity> es = this.getWorld().getEntities().iterator();
-        while (es.hasNext()) {
-            Entity e = es.next();
+        Iterator<Entity> i = this.getWorld().getEntities().iterator();
+        while (i.hasNext()) {
+            Entity e = i.next();
             if (e.isRemoved()) {
-                es.remove();
+                i.remove();
                 continue;
             }
             e.tick();
         }
+        // process input
+        this.processInput();
         // update player
         this.getWorld().getPlayer().tick();
         // update view
         this.view.render();
+    }
+
+    /**
+     * Process the input handling.
+     */
+    private void processInput() {
+        int velX = 0;
+        if (this.getInput().isPressed(Input.RIGHT)) {
+            velX += this.getWorld().getPlayer().getSpeed();
+        }
+        if (this.getInput().isPressed(Input.LEFT)) {
+            velX -= this.getWorld().getPlayer().getSpeed();
+        }
+        this.getWorld().getPlayer().getVel().setX(velX);
+        if (this.getInput().isPressed(Input.JUMP)) {
+            this.getWorld().getPlayer().jump();
+        }
+        if (this.getInput().isPressed(Input.ATTACK)) {
+            this.getWorld().getPlayer().attackNearest();
+        }
     }
 
     /**
@@ -120,6 +144,14 @@ public class GameEngine implements Engine {
     @Override
     public GameState getState() {
         return this.state;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public InputController getInput() {
+        return this.input;
     }
 
     /**

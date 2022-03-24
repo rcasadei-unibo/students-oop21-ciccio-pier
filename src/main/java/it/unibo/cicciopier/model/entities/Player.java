@@ -8,6 +8,13 @@ import it.unibo.cicciopier.model.entities.base.LivingEntity;
 public interface Player extends LivingEntity {
 
     /**
+     * Get player speed.
+     *
+     * @return the speed
+     */
+    int getSpeed();
+
+    /**
      * Returns the Player current stamina
      *
      * @return Player's stamina
