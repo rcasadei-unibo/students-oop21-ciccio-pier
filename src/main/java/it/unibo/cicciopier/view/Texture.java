@@ -31,8 +31,47 @@ public enum Texture {
     /**
      * Represents the texture of an explosion.
      */
-    EXPLOSION("/textures/explosion.png");
-
+    EXPLOSION("/textures/explosion.png"),
+    /**
+     *
+     */
+    MENU_BACKGROUND("/menuGraphics/menuBackground.png"),
+    /**
+     *
+     */
+    PLAY_BUTTON("/menuGraphics/buttons/playButton/playButton.png"),
+    /**
+     *
+     */
+    PLAY_BUTTON_PRESSED("/menuGraphics/buttons/playButton/playButtonPressed.png"),
+    /**
+     *
+     */
+    SETTINGS_BUTTON("/menuGraphics/buttons/settingsButton/settingButton.png"),
+    /**
+     *
+     */
+    SETTINGS_BUTTON_HOVER("/menuGraphics/buttons/settingsButton/settingsButtonHover.png"),
+    /**
+     *
+     */
+    SETTINGS_BUTTON_PRESSED("/menuGraphics/buttons/settingsButton/settingsButtonPressed.png"),
+    /**
+     *
+     */
+    QUIT_BUTTON("/menuGraphics/buttons/quitButton/quitButton.png"),
+    /**
+     *
+     */
+    QUIT_BUTTON_PRESSED("/menuGraphics/buttons/quitButton/quitButtonPressed.png"),
+    /**
+     *
+     */
+    LEADERBOARD_BUTTON("/menuGraphics/buttons/leaderboardButton/leaderboardButton.png"),
+    /**
+     *
+     */
+    LEADERBOARD_BUTTON_PRESSED("/menuGraphics/buttons/leaderboardButton/leaderboardButtonPressed.png");
     private static final Logger LOGGER = LoggerFactory.getLogger(Texture.class);
     private final String fileName;
     private BufferedImage img;

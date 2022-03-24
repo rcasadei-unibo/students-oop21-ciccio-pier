@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.view.Texture;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,9 +14,9 @@ import java.io.InputStream;
 
 public class SettingsButton extends JComponent implements MouseListener {
 
-    private final Dimension dimension = new Dimension(256, 256);
+    private final Dimension dimension = new Dimension(85, 85);
     ;
-    private final MainMenuController mainMenuController = new MainMenuController();
+    private final MainMenuController mainMenuController;
     private BufferedImage[] image;
     private int buttonStatus;
 
@@ -24,22 +25,18 @@ public class SettingsButton extends JComponent implements MouseListener {
      */
     SettingsButton() {
         super();
+        this.mainMenuController = new MainMenuController();
         this.enableInputMethods(true);
         this.addMouseListener(this);
-        this.image = new BufferedImage[2];
         this.buttonStatus = 0;
+        this.image = new BufferedImage[3];
         this.load();
     }
 
     private void load() {
-        final InputStream button = getClass().getResourceAsStream("/menuGraphics/buttons/playButton/playButton.png");
-        final InputStream buttonPressed = getClass().getResourceAsStream("/menuGraphics/buttons/playButton/playButtonPressed.png");
-        try {
-            image[0] = ImageIO.read(button);
-            image[1] = ImageIO.read(buttonPressed);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    image[0] = Texture.SETTINGS_BUTTON.getTexture();
+    image[1] = Texture.SETTINGS_BUTTON_HOVER.getTexture();
+    image[2] = Texture.SETTINGS_BUTTON_PRESSED.getTexture();
     }
 
     /**
@@ -50,7 +47,7 @@ public class SettingsButton extends JComponent implements MouseListener {
 
 
         super.paintComponent(g);
-        g.drawImage(image[this.buttonStatus], 0, 0, null);
+        g.drawImage(image[buttonStatus],0,0,null);
     }
 
     /**
@@ -90,7 +87,7 @@ public class SettingsButton extends JComponent implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        buttonStatus = 1;
+        buttonStatus = 2;
         this.repaint();
     }
 
@@ -108,7 +105,8 @@ public class SettingsButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        buttonStatus = 1;
+        this.repaint();
     }
 
     /**
@@ -116,7 +114,8 @@ public class SettingsButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent e) {
-
+        buttonStatus = 0;
+        this.repaint();
     }
 }
 

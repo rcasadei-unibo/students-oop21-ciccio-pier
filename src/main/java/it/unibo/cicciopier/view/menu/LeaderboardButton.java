@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.view.Texture;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,9 +14,9 @@ import java.io.InputStream;
 
 public class LeaderboardButton extends JComponent implements MouseListener {
 
-    private final Dimension dimension = new Dimension(256, 256);
+    private final Dimension dimension = new Dimension(280, 106);
     ;
-    private final MainMenuController mainMenuController = new MainMenuController();
+    private final MainMenuController mainMenuController;
     private BufferedImage[] image;
     private int buttonStatus;
 
@@ -24,6 +25,7 @@ public class LeaderboardButton extends JComponent implements MouseListener {
      */
     LeaderboardButton() {
         super();
+        this.mainMenuController = new MainMenuController();
         this.enableInputMethods(true);
         this.addMouseListener(this);
         this.image = new BufferedImage[2];
@@ -32,14 +34,8 @@ public class LeaderboardButton extends JComponent implements MouseListener {
     }
 
     private void load() {
-        final InputStream button = getClass().getResourceAsStream("/menuGraphics/buttons/playButton/playButton.png");
-        final InputStream buttonPressed = getClass().getResourceAsStream("/menuGraphics/buttons/playButton/playButtonPressed.png");
-        try {
-            image[0] = ImageIO.read(button);
-            image[1] = ImageIO.read(buttonPressed);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        image[0] = Texture.LEADERBOARD_BUTTON.getTexture();
+        image[1] = Texture.LEADERBOARD_BUTTON_PRESSED.getTexture();
     }
 
     /**

@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.view.Texture;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,9 +15,7 @@ import java.io.InputStream;
 public class PlayButton extends JComponent implements MouseListener {
     private final Dimension dimension = new Dimension(280, 106);
     ;
-    private final MainMenuController mainMenuController = new MainMenuController();
-    private final String buttonImg = "/menuGraphics/buttons/playButton/playButton.png";
-    private final String pressedButtonImg = "/menuGraphics/buttons/playButton/playButtonPressed.png";
+    private final MainMenuController mainMenuController;
     private BufferedImage[] image;
     private int buttonStatus;
 
@@ -25,6 +24,7 @@ public class PlayButton extends JComponent implements MouseListener {
      */
     PlayButton() {
         super();
+        this.mainMenuController  = new MainMenuController();
         this.enableInputMethods(true);
         this.addMouseListener(this);
         this.image = new BufferedImage[2];
@@ -33,14 +33,8 @@ public class PlayButton extends JComponent implements MouseListener {
     }
 
     private void load() {
-        final InputStream button = getClass().getResourceAsStream(buttonImg);
-        final InputStream buttonPressed = getClass().getResourceAsStream(pressedButtonImg);
-        try {
-            image[0] = ImageIO.read(button);
-            image[1] = ImageIO.read(buttonPressed);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        image[0] = Texture.PLAY_BUTTON.getTexture();
+        image[1] = Texture.PLAY_BUTTON_PRESSED.getTexture();
     }
 
     /**

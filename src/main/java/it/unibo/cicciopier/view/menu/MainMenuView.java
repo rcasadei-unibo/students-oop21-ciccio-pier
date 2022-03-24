@@ -4,6 +4,7 @@ import it.unibo.cicciopier.App;
 import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.view.StaticView;
+import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.View;
 
 import javax.imageio.ImageIO;
@@ -15,45 +16,58 @@ import java.io.InputStream;
 public class MainMenuView extends JPanel implements StaticView {
     private static final int BUTTONHEIGHT = 322;
     private static final int BUTTONSPACE = 15;
-    private final String path = "/menuGraphics/menuBackground.png";
     private BufferedImage background;
-    private final JFrame jframe = new JFrame("CICCIO PIER THE GAME");
-    private final PlayButton play = new PlayButton();
-    private final PlayButton leaderboard = new PlayButton();
-    private final PlayButton settings = new PlayButton();
-    private final JButton quit = new JButton("Quit");
-    private final Dimension size = new Dimension(1536, 768);
+    private final JFrame jframe;
+    private final PlayButton play;
+    private final LeaderboardButton leaderboard;
+    private final SettingsButton settings;
+    private final QuitButton quit;
+    private final Dimension size;
 
 
     public MainMenuView() {
+        jframe = new JFrame("CICCIO PIER THE GAME");
+
+        play = new PlayButton();
+        leaderboard = new LeaderboardButton();
+        settings = new SettingsButton();
+        quit = new QuitButton();
+
+         size = new Dimension(1536, 768);
+
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void load() throws Exception {
-        final InputStream is = getClass().getResourceAsStream(path);
-        background = ImageIO.read(is);
+    public void load() {
+
+        background = Texture.MENU_BACKGROUND.getTexture();
 
         this.setLayout(null);
         this.add(play);
         this.add(leaderboard);
         this.add(settings);
-        // this.add(quit);
+        this.add(quit);
 
         Dimension sizeButton = play.getPreferredSize();
+        Dimension sizeSettings = settings.getPreferredSize();
         final int width = size.width / 2 - sizeButton.width / 2;
         final int spacing = sizeButton.height + BUTTONSPACE;
+        final int settingsWidth = size.width - sizeSettings.width - 60;
+        final int settingsOffset = 20;
 
         play.setBounds(width, BUTTONHEIGHT, sizeButton.width, sizeButton.height);
 
         leaderboard.setBounds(width, BUTTONHEIGHT + spacing, sizeButton.width, sizeButton.height);
 
-        settings.setBounds(width, BUTTONHEIGHT + spacing * 2, sizeButton.width, sizeButton.height);
+        quit.setBounds(width, BUTTONHEIGHT + spacing * 2, sizeButton.width, sizeButton.height);
 
-        //quit.setBounds(width, BUTTONHEIGHT + spacing *3, sizeButton.width, sizeButton.height);
+        settings.setBounds(settingsWidth, settingsOffset, sizeSettings.width, sizeSettings.height);
 
 
         this.jframe.getContentPane().add(this);

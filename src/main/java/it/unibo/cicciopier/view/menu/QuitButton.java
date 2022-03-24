@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.view.Texture;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,10 +14,10 @@ import java.io.InputStream;
 
 public class QuitButton extends JComponent implements MouseListener {
 
-    private final Dimension dimension = new Dimension(256, 256);
+    private final Dimension dimension = new Dimension(280, 106);
     ;
-    private final MainMenuController mainMenuController = new MainMenuController();
-    private BufferedImage[] image;
+    private final MainMenuController mainMenuController;
+    private final BufferedImage[] image;
     private int buttonStatus;
 
     /**
@@ -28,18 +29,13 @@ public class QuitButton extends JComponent implements MouseListener {
         this.addMouseListener(this);
         this.image = new BufferedImage[2];
         this.buttonStatus = 0;
+        this.mainMenuController = new MainMenuController();
         this.load();
     }
 
     private void load() {
-        final InputStream button = getClass().getResourceAsStream("/menuGraphics/buttons/playButton/playButton.png");
-        final InputStream buttonPressed = getClass().getResourceAsStream("/menuGraphics/buttons/playButton/playButtonPressed.png");
-        try {
-            image[0] = ImageIO.read(button);
-            image[1] = ImageIO.read(buttonPressed);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        image[0] = Texture.QUIT_BUTTON.getTexture();
+        image[1] = Texture.QUIT_BUTTON_PRESSED.getTexture();
     }
 
     /**
@@ -82,7 +78,7 @@ public class QuitButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        mainMenuController.exit();
     }
 
     /**

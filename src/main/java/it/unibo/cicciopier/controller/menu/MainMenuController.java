@@ -1,10 +1,15 @@
 package it.unibo.cicciopier.controller.menu;
 
+import it.unibo.cicciopier.view.menu.MainMenuView;
+
 import javax.swing.*;
 
 public class MainMenuController implements MenuController {
-    private MenuPanel currentLayout;
     private int volume;
+    private  MainMenuView menu;
+
+    public MainMenuController() {
+    }
 
     /**
      * {@inheritDoc}
@@ -12,7 +17,10 @@ public class MainMenuController implements MenuController {
     @Override
     public void init() {
         //TODO load volume settings from json
-        //TODO load view of the MAIN_MENU
+        menu = new MainMenuView();
+        menu.load();
+        menu.start();
+
     }
 
     /**
@@ -46,5 +54,8 @@ public class MainMenuController implements MenuController {
     @Override
     public void showGamesSelection() {
 
+    }
+   public void exit(){
+        System.exit(0);
     }
 }
