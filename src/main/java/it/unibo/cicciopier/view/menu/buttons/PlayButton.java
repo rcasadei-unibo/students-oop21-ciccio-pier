@@ -29,13 +29,10 @@ public class PlayButton extends JComponent implements MouseListener {
         this.addMouseListener(this);
         this.image = new BufferedImage[2];
         this.buttonStatus = 0;
-        this.load();
+        this.image[0] = Texture.PLAY_BUTTON.getTexture();
+        this.image[1] = Texture.PLAY_BUTTON_PRESSED.getTexture();
     }
 
-    private void load() {
-        image[0] = Texture.PLAY_BUTTON.getTexture();
-        image[1] = Texture.PLAY_BUTTON_PRESSED.getTexture();
-    }
 
     /**
      * {@inheritDoc}

@@ -31,12 +31,8 @@ public class QuitButton extends JComponent implements MouseListener {
         this.addMouseListener(this);
         this.image = new BufferedImage[2];
         this.buttonStatus = 0;
-        image[0] = Texture.QUIT_BUTTON.getTexture();
-        image[1] = Texture.QUIT_BUTTON_PRESSED.getTexture();
-    }
-
-    private void load() {
-
+        this.image[0] = Texture.QUIT_BUTTON.getTexture();
+        this.image[1] = Texture.QUIT_BUTTON_PRESSED.getTexture();
     }
 
     /**
@@ -87,7 +83,7 @@ public class QuitButton extends JComponent implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        buttonStatus = 1;
+        this.buttonStatus = 1;
         this.repaint();
     }
 
@@ -96,7 +92,7 @@ public class QuitButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        buttonStatus = 0;
+        this.buttonStatus = 0;
         this.repaint();
     }
 

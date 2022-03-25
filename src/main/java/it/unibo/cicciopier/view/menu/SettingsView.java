@@ -14,14 +14,6 @@ public class SettingsView implements StaticView {
      * {@inheritDoc}
      */
     @Override
-    public void load() throws Exception {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void start() {
 
     }

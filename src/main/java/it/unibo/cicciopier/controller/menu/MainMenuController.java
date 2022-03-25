@@ -10,15 +10,17 @@ import javax.swing.*;
 public class MainMenuController implements MenuController {
     private int volume;
     private  MainMenuView menu;
-    private LeaderboardMenuController leaderboardController;
-    private SettingsMenuController settingsController;
-    private LevelSelectionMenuController levelSelectionController;
+    private final LeaderboardMenuController leaderboardController;
+    private final SettingsMenuController settingsController;
+    private final LevelSelectionMenuController levelSelectionController;
+    private MenuController active;
 
     public MainMenuController() {
-        menu = new MainMenuView(this);
-        settingsController = new SettingsMenuController(this);
-        leaderboardController = new LeaderboardMenuController(this);
-        levelSelectionController = new LevelSelectionMenuController(this);
+        this.menu = new MainMenuView(this);
+        this.settingsController = new SettingsMenuController(this);
+        this.leaderboardController = new LeaderboardMenuController(this);
+        this.levelSelectionController = new LevelSelectionMenuController(this);
+        this.active = this;
     }
 
     /**
@@ -26,7 +28,9 @@ public class MainMenuController implements MenuController {
      */
     @Override
     public void show() {
+        active.hide();
         menu.start();
+        active = this;
     }
 
     /**
@@ -38,18 +42,21 @@ public class MainMenuController implements MenuController {
     }
 
     public void leaderboardAction() {
+        active.hide();
         leaderboardController.show();
-        this.hide();
+        active = leaderboardController;
     }
 
     public void playAction(){
+        active.hide();
         levelSelectionController.show();
-        this.hide();
+        active = levelSelectionController;
     }
 
     public void settingsAction(){
+        active.hide();
         settingsController.show();
-        this.hide();
+        active = settingsController;
     }
     public void quitAction(){
         System.exit(0);

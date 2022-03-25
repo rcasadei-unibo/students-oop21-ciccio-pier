@@ -13,11 +13,11 @@ public class LeaderboardMenuController implements MenuController{
 
     @Override
     public void show() {
-
+        this.leaderboardView.start();
     }
 
     @Override
     public void hide() {
-
+        this.leaderboardView.hideView();
     }
 }

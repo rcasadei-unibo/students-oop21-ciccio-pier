@@ -78,16 +78,6 @@ public class MainMenuView extends JPanel implements StaticView {
      * {@inheritDoc}
      */
     @Override
-    public void load() {
-
-
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void start() {
 
         this.jframe.setVisible(true);

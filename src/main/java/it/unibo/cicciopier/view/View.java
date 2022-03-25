@@ -8,6 +8,13 @@ import it.unibo.cicciopier.controller.Engine;
 public interface View extends StaticView {
 
     /**
+     * Load game window.
+     *
+     * @throws Exception error
+     */
+    void load() throws Exception;
+
+    /**
      * Update the game window one time.
      */
     void render();

@@ -36,7 +36,7 @@ public class LevelSelectionView extends JPanel implements StaticView {
         this.size = new Dimension(1536, 768);
         this.background = Texture.LEVEL_SELECTION_BACKGROUND.getTexture();
 
-       // this.setLayout(null);
+        this.setLayout(null);
         this.add(home);
         this.add(settings);
         for (LevelButton level : levels) {
@@ -46,11 +46,15 @@ public class LevelSelectionView extends JPanel implements StaticView {
         final Dimension sizeSettings = settings.getPreferredSize();
         final int settingsWidthOffset = this.size.width - sizeSettings.width - 60;
         final int homeWidthOffset = 60;
+        final Dimension levelButtonSize = levels[0].getPreferredSize();
         final int settingsHeightOffset = 20;
 
         settings.setBounds(settingsWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
         home.setBounds(homeWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
-
+        levels[0].setBounds(445, 600, levelButtonSize.width, levelButtonSize.height);
+        levels[1].setBounds(605, 390, levelButtonSize.width, levelButtonSize.height);
+        levels[2].setBounds(880, 390, levelButtonSize.width, levelButtonSize.height);
+        levels[3].setBounds(1030, 610, levelButtonSize.width, levelButtonSize.height);
 
         this.jframe.getContentPane().add(this);
         this.jframe.pack();
@@ -66,14 +70,6 @@ public class LevelSelectionView extends JPanel implements StaticView {
 
     public void hideView() {
         this.jframe.setVisible(false);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void load() {
-
     }
 
     /**

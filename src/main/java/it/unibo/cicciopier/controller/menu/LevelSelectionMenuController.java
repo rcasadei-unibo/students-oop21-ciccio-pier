@@ -27,7 +27,7 @@ public class LevelSelectionMenuController implements MenuController{
 
     @Override
     public void hide() {
-
+        levelSelectionView.hideView();
     }
 
 

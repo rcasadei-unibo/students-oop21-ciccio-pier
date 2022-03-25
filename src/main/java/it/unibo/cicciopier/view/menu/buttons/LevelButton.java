@@ -34,12 +34,8 @@ public class LevelButton extends JComponent implements MouseListener {
         this.button = button;
         this.pressedButton = pressedButton;
         this.image = new BufferedImage[2];
-        image[0] = this.button.getTexture();
-        image[1] = this.pressedButton.getTexture();
-    }
-
-    private void load() {
-
+        this.image[0] = this.button.getTexture();
+        this.image[1] = this.pressedButton.getTexture();
     }
 
     /**

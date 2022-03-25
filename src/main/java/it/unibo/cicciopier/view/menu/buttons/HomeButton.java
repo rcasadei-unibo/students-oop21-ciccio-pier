@@ -4,6 +4,7 @@ import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
 
 import javax.imageio.ImageIO;
+import javax.management.ObjectInstance;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -30,13 +31,10 @@ public class HomeButton extends JComponent implements MouseListener {
         this.addMouseListener(this);
         this.buttonStatus = 0;
         this.image = new BufferedImage[3];
-        this.load();
-    }
+        this.image[0] = Texture.HOME_BUTTON.getTexture();
+        this.image[1] = Texture.HOME_BUTTON_HOVER.getTexture();
+        this.image[2] = Texture.HOME_BUTTON_PRESSED.getTexture();
 
-    private void load() {
-        image[0] = Texture.HOME_BUTTON.getTexture();
-        image[1] = Texture.HOME_BUTTON_HOVER.getTexture();
-        image[2] = Texture.HOME_BUTTON_PRESSED.getTexture();
     }
 
     /**
@@ -79,7 +77,7 @@ public class HomeButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        mainMenuController.settingsAction();
+        mainMenuController.show();
     }
 
     /**
@@ -87,7 +85,7 @@ public class HomeButton extends JComponent implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        buttonStatus = 2;
+        this.buttonStatus = 2;
         this.repaint();
     }
 
@@ -96,7 +94,7 @@ public class HomeButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        buttonStatus = 0;
+        this.buttonStatus = 0;
         this.repaint();
     }
 
@@ -105,7 +103,7 @@ public class HomeButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-        buttonStatus = 1;
+        this.buttonStatus = 1;
         this.repaint();
     }
 
@@ -114,7 +112,7 @@ public class HomeButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent e) {
-        buttonStatus = 0;
+        this.buttonStatus = 0;
         this.repaint();
     }
 }

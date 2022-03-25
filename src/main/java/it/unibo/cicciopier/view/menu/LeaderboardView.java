@@ -2,19 +2,17 @@ package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.view.StaticView;
 
-public class LeaderboardView implements StaticView {
+import javax.swing.*;
+
+public class LeaderboardView extends JPanel implements StaticView {
+    private final JFrame jframe = new JFrame();
 
     public LeaderboardView() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void load() {
-
+    public void hideView() {
+        this.jframe.setVisible(false);
     }
-
     /**
      * {@inheritDoc}
      */
