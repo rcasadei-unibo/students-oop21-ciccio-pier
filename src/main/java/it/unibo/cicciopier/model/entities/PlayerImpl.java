@@ -142,8 +142,9 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         //TESTING RENDER
         if (this.test){
             Entity e = this.getWorld().getEntityFactory().createEntity(EntityType.SHOOTING_PEA);
-            e.setPos(new Vector2d(this.getPos().getX()+32,this.getPos().getY()));
+            e.setPos(new Vector2d(this.getPos().getX()+(32*5),this.getPos().getY()));
             this.getWorld().addEntity(e);
+            this.test = false;
         }
     }
 

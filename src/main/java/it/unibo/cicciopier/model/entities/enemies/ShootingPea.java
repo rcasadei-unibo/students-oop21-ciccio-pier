@@ -96,12 +96,11 @@ public class ShootingPea extends SimpleEnemy {
             this.pathInitialized = true;
         }
         //testing
-        this.tmp++;
-        if (this.tmp == 200){
-                this.status = Statuses.WALKING;
-                this.tmp = 0;
+        if (this.checkPlayerInRange(128)){
+            this.status = Statuses.WALKING;
+        } else {
+            this.status = Statuses.IDLE;
         }
-        System.out.println(this.status);
     }
 
     /**
