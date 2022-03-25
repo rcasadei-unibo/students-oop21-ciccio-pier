@@ -7,24 +7,28 @@ public interface LivingEntity extends MovingEntity {
 
     /**
      * Returns the Entity hp
+     *
      * @return Entity's current hp
      */
     int getHp();
 
     /**
      * Returns the Entity total hp
+     *
      * @return Entity's maximum hp
      */
     int getMaxHp();
 
     /**
      * Deals damage to the Entity
+     *
      * @param amount damage
      */
     void damage(final int amount);
 
     /**
      * Heals the Entity
+     *
      * @param amount heal
      */
     void heal(final int amount);
@@ -35,13 +39,15 @@ public interface LivingEntity extends MovingEntity {
     void jump();
 
     /**
-     * Checks if the Entity is jumping
-     * @return If Entity is still jumping
+     * Checks if the Entity is on the ground
+     *
+     * @return true if is on the ground else false
      */
-    boolean isJumping();
+    boolean isGround();
 
     /**
      * Checks if Entity is dead
+     *
      * @return If Entity died
      */
     boolean isDead();

@@ -69,8 +69,6 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      * Check collision up of the entity with blocks
      *
      * @return 1 if doesn't collide,
-     * 2 if collides with the beginning of the map in y direction,
-     * <p>
      * n <= 0  if collides and return how much distance is left from the block or mapEnd
      */
     protected int upCollision() {
@@ -78,10 +76,8 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final Rectangle entityHitBox = this.rectangleOffset();
 
         //check if the player collides with the beginning of the map
-        if (entityHitBox.getY() < 0) {
+        if (entityHitBox.getY() <= 0) {
             return -this.getPos().getY();
-        } else if (entityHitBox.getY() == 0) {
-            return 2;
         }
         //get the position of the entity in block position
         final int upperLeftX = (int) (Math.floor(entityHitBox.getX()) / Block.SIZE);
@@ -96,12 +92,15 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         }
         final int upperRightX = (int) (Math.floor(entityHitBox.getMaxX()) / Block.SIZE);
         final int upperRightY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
-        block = this.getWorld().getBlock(upperRightX, upperRightY);
 
-        if (block.getType() != BlockType.AIR) {
-            //check if they collide
-            if (entityHitBox.intersects(block.getBounds())) {
-                return (int) (block.getBounds().getMaxY() - this.getPos().getY());
+        final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
+        if (entityHitBox.getMaxX() <= (worldEndX - Block.SIZE)) {
+            block = this.getWorld().getBlock(upperRightX, upperRightY);
+            if (block.getType() != BlockType.AIR) {
+                //check if they collide
+                if (entityHitBox.intersects(block.getBounds())) {
+                    return (int) (block.getBounds().getMaxY() - this.getPos().getY());
+                }
             }
         }
         final int middleBlocks = upperRightX - (upperLeftX + 2);
@@ -124,19 +123,15 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      * Check collision on the right hand side of the entity with blocks
      *
      * @return -1 if doesn't collide,
-     * -2 if collides with the beginning of the map in x direction,
      * n >= 0  if collides and return how much distance is left from the block or mapEnd
      */
     protected int rightCollision() {
         //create rectangle with offset of velocity
         final Rectangle entityHitBox = this.rectangleOffset();
-
         final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
         //check if the player collide with the end of the map
         if (entityHitBox.getMaxX() >= worldEndX) {
             return worldEndX - (this.getPos().getX() + this.getWidth());
-        } else if (entityHitBox.getMaxX() == worldEndX) {
-            return -2;
         }
         final int upperRightX = (int) (Math.floor(entityHitBox.getMaxX()) / Block.SIZE);
         final int upperRightY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
@@ -150,7 +145,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         }
         final int lowerRightX = (int) (Math.floor(entityHitBox.getMaxX()) / Block.SIZE);
         //get the block 1 block higher
-        final int lowerRightY = (int) (Math.floor(entityHitBox.getMaxY()) / Block.SIZE) - 1;
+        final int lowerRightY = (int) (Math.floor(entityHitBox.getMaxY() - 2) / Block.SIZE);
         block = this.getWorld().getBlock(lowerRightX, lowerRightY);
 
         if (block.getType() != BlockType.AIR) {
@@ -159,7 +154,8 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
                 return (int) (block.getPos().getX() - this.getBounds().getMaxX());
             }
         }
-        final int middleBlocks = lowerRightY - (upperRightY + 2);
+
+        final int middleBlocks = lowerRightY - (upperRightY + 1);
 
         //collision check with the blocks in the middle
         for (int i = 1; i <= middleBlocks; i++) {
@@ -178,7 +174,6 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      * Check collision on the left hand side of the entity with blocks
      *
      * @return 1 if doesn't collide,
-     * 2 if collides with the beginning of the map,
      * n <= 0  if collides and return how much distance is left from the block or mapEnd
      */
     protected int leftCollision() {
@@ -186,11 +181,10 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final Rectangle entityHitBox = this.rectangleOffset();
 
         //check if the player collides with the beginning of the map
-        if (entityHitBox.getX() < 0) {
+        if (entityHitBox.getX() <= 0) {
             return -this.getPos().getX();
-        } else if (entityHitBox.getX() == 0) {
-            return 2;
         }
+
         //get the position of the entity in block position
         final int upperLeftX = (int) (Math.floor(entityHitBox.getX()) / Block.SIZE);
         final int upperLeftY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
@@ -204,7 +198,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         }
         final int lowerLeftX = (int) (Math.floor(entityHitBox.getX()) / Block.SIZE);
         //get the block 1 block higher
-        final int lowerLeftY = (int) (Math.floor(entityHitBox.getMaxY()) / Block.SIZE) - 1;
+        final int lowerLeftY = (int) (Math.floor(entityHitBox.getMaxY() - 2) / Block.SIZE);
         block = this.getWorld().getBlock(lowerLeftX, lowerLeftY);
 
         if (block.getType() != BlockType.AIR) {
@@ -218,6 +212,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         //collision check with the blocks in the middle
         for (int i = 1; i <= middleBlocks; i++) {
             block = this.getWorld().getBlock(upperLeftX, upperLeftY + i);
+
             if (block.getType() != BlockType.AIR) {
                 //check if they collide
                 if (entityHitBox.intersects(block.getBounds())) {
@@ -248,28 +243,32 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         //get the position of the entity in block position
         final int lowerLeftX = (int) (Math.floor(entityHitBox.getX()) / Block.SIZE);
         final int lowerLeftY = (int) (Math.floor(entityHitBox.getMaxY()) / Block.SIZE);
-
+        final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
         Block block = this.getWorld().getBlock(lowerLeftX, lowerLeftY);
+
         if (block.getType() != BlockType.AIR) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getY() - this.getBounds().getMaxY());
             }
         }
+
         final int lowerRightX = (int) (Math.floor(entityHitBox.getMaxX()) / Block.SIZE);
         final int lowerRightY = (int) (Math.floor(entityHitBox.getMaxY()) / Block.SIZE);
-        block = this.getWorld().getBlock(lowerRightX, lowerRightY);
 
-        if (block.getType() != BlockType.AIR) {
-            //check if they collide
-            if (entityHitBox.intersects(block.getBounds())) {
-                return (int) (block.getPos().getY() - this.getBounds().getMaxY());
+        if (entityHitBox.getMaxX() <= (worldEndX - Block.SIZE)) {
+            block = this.getWorld().getBlock(lowerRightX, lowerRightY);
+            if (block.getType() != BlockType.AIR) {
+                //check if they collide
+                if (entityHitBox.intersects(block.getBounds())) {
+                    return (int) (block.getPos().getY() - this.getBounds().getMaxY());
+                }
             }
         }
+
         final int middleBlocks = (lowerRightX) - (lowerLeftX + 2);
 
         for (int i = 1; i <= middleBlocks; i++) {
-
             block = this.getWorld().getBlock(lowerLeftX + i, lowerLeftY);
             if (block.getType() != BlockType.AIR) {
                 //check if they collide

@@ -9,7 +9,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
     private final Vector2d gravity;
     private final int maxHp;
     private int hp;
-    private boolean jumping;
+    private boolean ground;
     private boolean dead;
 
     /**
@@ -20,7 +20,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      */
     public SimpleLivingEntity(final EntityType type, final World world) {
         super(type, world);
-        this.jumping = false;
+        this.ground = false;
         this.maxHp = this.getType().getMaxHp();
         this.hp = this.maxHp;
         this.dead = false;
@@ -70,8 +70,8 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * {@inheritDoc}
      */
     @Override
-    public boolean isJumping() {
-        return this.jumping;
+    public boolean isGround() {
+        return this.ground;
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
             //check right collision
             final int rightOffset = this.rightCollision();
 
-            if (rightOffset == 0 || rightOffset == -2) {
+            if (rightOffset == 0) {
                 this.getVel().setX(0);
             } else if (rightOffset > 0) {
                 this.getVel().setX(rightOffset);
@@ -106,8 +106,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
         } else if (this.getVel().getX() < 0) {
             //check left collision
             final int leftOffset = this.leftCollision();
-
-            if (leftOffset == 0 || leftOffset == 2) {
+            if (leftOffset == 0) {
                 this.getVel().setX(0);
             } else if (leftOffset < 0) {
                 this.getVel().setX(leftOffset);
@@ -119,18 +118,23 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
 
             if (bottomOffset == 0) {
                 this.getVel().setY(0);
+                this.ground = true;
             } else if (bottomOffset > 0) {
                 this.getVel().setY(bottomOffset);
+            } else if (bottomOffset == -1) {
+                this.ground = false;
             }
+
         } else if (this.getVel().getY() < 0) {
             //check up collision
             final int upOffset = this.upCollision();
 
-            if (upOffset == 0 || upOffset == 2) {
+            if (upOffset == 0) {
                 this.getVel().setY(0);
             } else if (upOffset < 0) {
                 this.getVel().setY(upOffset);
             }
+            this.ground = false;
         }
         this.getPos().add(this.getVel());
         //add gravity to the entity
