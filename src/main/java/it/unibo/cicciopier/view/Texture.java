@@ -41,51 +41,51 @@ public enum Texture {
      */
     MENU_BACKGROUND("/menuGraphics/menuBackground.png"),
     /**
-     *
+     * Represents the background of the level selection menu
      */
     LEVEL_SELECTION_BACKGROUND("/menuGraphics/levelSelectionBackground.png"),
     /**
-     *
+     * Represents the button used to access the first level
      */
     LEVEL_BUTTON_1("/menuGraphics/buttons/levelButtons/levelButton1.png"),
     /**
-     *
+     * Represents the button used to access the first level while pressed
      */
     LEVEL_BUTTON_1_PRESSED("/menuGraphics/buttons/levelButtons/levelButton1Pressed.png"),
     /**
-     *
+     * Represents the button used to access the second level
      */
     LEVEL_BUTTON_2("/menuGraphics/buttons/levelButtons/levelButton2.png"),
     /**
-     *
+     * Represents the button used to access the second level while pressed
      */
     LEVEL_BUTTON_2_PRESSED("/menuGraphics/buttons/levelButtons/levelButton2Pressed.png"),
     /**
-     *
+     * Represents the button used to access the third level
      */
     LEVEL_BUTTON_3("/menuGraphics/buttons/levelButtons/levelButton3.png"),
     /**
-     *
+     * Represents the button used to access the third level while pressed
      */
     LEVEL_BUTTON_3_PRESSED("/menuGraphics/buttons/levelButtons/levelButton3Pressed.png"),
     /**
-     *
+     *  Represents the button used to access the boss level
      */
     LEVEL_BUTTON_BOSS("/menuGraphics/buttons/levelButtons/levelButtonBoss.png"),
     /**
-     *
+     *  Represents the button used to access the boss level while pressed
      */
     LEVEL_BUTTON_BOSS_PRESSED("/menuGraphics/buttons/levelButtons/levelButtonBossPressed.png"),
     /**
-     *
+     *  Represents the button used to access the main menu
      */
     HOME_BUTTON("/menuGraphics/buttons/homeButton/homeButton.png"),
     /**
-     *
+     *  Represents the button used to access the main menu while pressed
      */
     HOME_BUTTON_PRESSED("/menuGraphics/buttons/homeButton/homeButtonPressed.png"),
     /**
-     *
+     *   Represents the button used to access the main menu while hover it
      */
     HOME_BUTTON_HOVER("/menuGraphics/buttons/homeButton/homeButtonHover.png"),
     /**
