@@ -10,7 +10,7 @@ import it.unibo.cicciopier.view.items.CoinView;
  * Create a coin object
  */
 public class Coin extends SimpleMovingEntity {
-    private static final int POINT = 10;
+    private final Item coinItem;
     private final CoinView coinView;
 
     /**
@@ -20,6 +20,7 @@ public class Coin extends SimpleMovingEntity {
      */
     public Coin(final World world) {
         super(EntityType.COIN, world);
+        this.coinItem = Item.COIN;
         this.coinView = new CoinView(this);
     }
 
@@ -33,7 +34,7 @@ public class Coin extends SimpleMovingEntity {
             this.remove();
             //add score
             this.getWorld().getPlayer().addCoin();
-            this.getWorld().getPlayer().addScore(1);
+            this.getWorld().getPlayer().addScore(this.coinItem.getScore());
         }
     }
 

@@ -29,6 +29,10 @@ public enum Texture {
      */
     COIN("/textures/coin.png"),
     /**
+     * Represents the texture of the chicken
+     */
+    CHICKEN("/textures/chicken.png"),
+    /**
      * Represents the texture of an explosion.
      */
     EXPLOSION("/textures/explosion.png"),

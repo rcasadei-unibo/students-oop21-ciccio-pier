@@ -7,6 +7,7 @@ import it.unibo.cicciopier.model.entities.enemies.boss.CannonBall;
 import it.unibo.cicciopier.model.entities.enemies.boss.Explosion;
 import it.unibo.cicciopier.model.entities.enemies.boss.Laser;
 import it.unibo.cicciopier.model.entities.enemies.boss.Missile;
+import it.unibo.cicciopier.model.items.Chicken;
 import it.unibo.cicciopier.model.items.Coin;
 
 public class EntityFactoryImpl implements EntityFactory {
@@ -46,6 +47,8 @@ public class EntityFactoryImpl implements EntityFactory {
                 return new CannonBall(this.world);
             case COIN:
                 return new Coin(this.world);
+            case CHICKEN:
+                return new Chicken(this.world);
             case EXPLOSION:
                 return new Explosion(this.world);
             default:

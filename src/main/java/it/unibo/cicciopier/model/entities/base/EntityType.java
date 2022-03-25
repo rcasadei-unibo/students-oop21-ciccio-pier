@@ -25,6 +25,10 @@ public enum EntityType {
      */
     COIN(32, 32, 0, 0),
     /**
+     * Represents a fried chicken, an unhealthy food
+     */
+    CHICKEN(32,32,0,0),
+    /**
      * Represents an explosion
      */
     EXPLOSION(1, 1, 0, 0);
