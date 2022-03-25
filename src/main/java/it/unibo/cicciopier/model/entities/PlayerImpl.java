@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.model.entities;
 
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
@@ -19,6 +20,9 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private int coin;
     private int time;
     private boolean isReady;
+
+    //TESTING RENDER
+    private boolean test = true;
 
     /**
      * Constructor for this class
@@ -134,6 +138,13 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         }
         //TODO
         this.move();
+
+        //TESTING RENDER
+        if (this.test){
+            Entity e = this.getWorld().getEntityFactory().createEntity(EntityType.SHOOTING_PEA);
+            e.setPos(new Vector2d(this.getPos().getX()+32,this.getPos().getY()));
+            this.getWorld().addEntity(e);
+        }
     }
 
     /**

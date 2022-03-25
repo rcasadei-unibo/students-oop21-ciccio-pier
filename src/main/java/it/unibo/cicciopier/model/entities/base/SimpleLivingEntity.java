@@ -18,7 +18,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * @param type  The Entity's type
      * @param world The game's world
      */
-    public SimpleLivingEntity(final EntityType type, final World world) {
+    protected SimpleLivingEntity(final EntityType type, final World world) {
         super(type, world);
         this.ground = false;
         this.maxHp = this.getType().getMaxHp();

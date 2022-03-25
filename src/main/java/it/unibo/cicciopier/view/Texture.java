@@ -21,6 +21,10 @@ public enum Texture {
      */
     PLAYER("/textures/blocks.png"),
     /**
+     * Represents the texture of the ShootingPea
+     */
+    SHOOTING_PEA("/textures/shootingPea.png"),
+    /**
      * Represents the texture of the Missile.
      */
     MISSILE("/textures/missile.png"),
