@@ -5,27 +5,13 @@ import javax.swing.*;
 public interface MenuController {
 
     /**
-     * Initialize all menu views elements
+     * Shows the menu to the player
      */
-    void init();
+    void show();
 
     /**
-     * Load the leaderboard json and load the UI from the Leaderboard view
+     *  Hide the view from the player
      */
-    void showLeaderboard();
+    void hide();
 
-    /**
-     *  load the UI frm the main menu view
-     */
-    void showMainMenu();
-
-    /**
-     * load the UI from the Settings view
-     */
-    void showSettings();
-
-    /**
-     * load the UI from the level selection view
-     */
-    void showGamesSelection();
 }

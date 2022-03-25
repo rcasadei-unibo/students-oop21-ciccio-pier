@@ -1,17 +1,16 @@
 package it.unibo.cicciopier.view.menu;
 
-import it.unibo.cicciopier.App;
-import it.unibo.cicciopier.controller.Engine;
-import it.unibo.cicciopier.model.entities.Player;
+import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.StaticView;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.View;
+import it.unibo.cicciopier.view.menu.buttons.LeaderboardButton;
+import it.unibo.cicciopier.view.menu.buttons.PlayButton;
+import it.unibo.cicciopier.view.menu.buttons.QuitButton;
+import it.unibo.cicciopier.view.menu.buttons.SettingsButton;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 
 public class MainMenuView extends JPanel implements StaticView {
     private static final int BUTTONHEIGHT = 322;
@@ -25,27 +24,15 @@ public class MainMenuView extends JPanel implements StaticView {
     private final Dimension size;
 
 
-    public MainMenuView() {
+    public MainMenuView(MainMenuController mainMenuController) {
         jframe = new JFrame("CICCIO PIER THE GAME");
 
-        play = new PlayButton();
-        leaderboard = new LeaderboardButton();
-        settings = new SettingsButton();
-        quit = new QuitButton();
+        this.play = new PlayButton(mainMenuController);
+        this.leaderboard = new LeaderboardButton(mainMenuController);
+        this.settings = new SettingsButton(mainMenuController);
+        this.quit = new QuitButton(mainMenuController);
 
-         size = new Dimension(1536, 768);
-
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void load() {
-
+        size = new Dimension(1536, 768);
         background = Texture.MENU_BACKGROUND.getTexture();
 
         this.setLayout(null);
@@ -54,8 +41,8 @@ public class MainMenuView extends JPanel implements StaticView {
         this.add(settings);
         this.add(quit);
 
-        Dimension sizeButton = play.getPreferredSize();
-        Dimension sizeSettings = settings.getPreferredSize();
+        final Dimension sizeButton = play.getPreferredSize();
+        final Dimension sizeSettings = settings.getPreferredSize();
         final int width = size.width / 2 - sizeButton.width / 2;
         final int spacing = sizeButton.height + BUTTONSPACE;
         final int settingsWidth = size.width - sizeSettings.width - 60;
@@ -75,6 +62,25 @@ public class MainMenuView extends JPanel implements StaticView {
         this.jframe.setResizable(false);
         this.jframe.setSize(size);
 
+        this.setPreferredSize(this.size);
+        this.repaint();
+
+        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+    }
+
+    public void hideView(){
+        this.jframe.setVisible(false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void load() {
+
+
 
     }
 
@@ -84,9 +90,7 @@ public class MainMenuView extends JPanel implements StaticView {
     @Override
     public void start() {
 
-        this.setPreferredSize(this.size);
-        this.repaint();
-        jframe.setVisible(true);
+        this.jframe.setVisible(true);
     }
 
     /**

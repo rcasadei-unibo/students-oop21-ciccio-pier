@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.view.menu;
+package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
@@ -12,30 +12,34 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class LeaderboardButton extends JComponent implements MouseListener {
+public class LevelButton extends JComponent implements MouseListener {
 
-    private final Dimension dimension = new Dimension(280, 106);
-    ;
+    private final Dimension dimension;
     private final MainMenuController mainMenuController;
-    private BufferedImage[] image;
+    private final BufferedImage[] image;
     private int buttonStatus;
+    private final Texture button;
+    private final Texture pressedButton;
 
     /**
      * This constructor calls the fathers constructor and adds the implementation of a mouse listener
      */
-    LeaderboardButton() {
+    public LevelButton(final MainMenuController mainMenuController, final Texture button, final Texture pressedButton) {
         super();
-        this.mainMenuController = new MainMenuController();
+        this.dimension = new Dimension(90, 90);
+        this.mainMenuController = mainMenuController;
         this.enableInputMethods(true);
         this.addMouseListener(this);
-        this.image = new BufferedImage[2];
         this.buttonStatus = 0;
-        this.load();
+        this.button = button;
+        this.pressedButton = pressedButton;
+        this.image = new BufferedImage[2];
+        image[0] = this.button.getTexture();
+        image[1] = this.pressedButton.getTexture();
     }
 
     private void load() {
-        image[0] = Texture.LEADERBOARD_BUTTON.getTexture();
-        image[1] = Texture.LEADERBOARD_BUTTON_PRESSED.getTexture();
+
     }
 
     /**
@@ -46,7 +50,7 @@ public class LeaderboardButton extends JComponent implements MouseListener {
 
 
         super.paintComponent(g);
-        g.drawImage(image[this.buttonStatus], 0, 0, null);
+        g.drawImage(image[buttonStatus],0,0,null);
     }
 
     /**
@@ -78,7 +82,7 @@ public class LeaderboardButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        mainMenuController.settingsAction();
     }
 
     /**
@@ -104,7 +108,6 @@ public class LeaderboardButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     /**
@@ -112,7 +115,8 @@ public class LeaderboardButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent e) {
-
+        buttonStatus = 0;
+        this.repaint();
     }
 }
 

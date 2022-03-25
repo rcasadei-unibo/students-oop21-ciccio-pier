@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.view.menu;
+package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
@@ -14,8 +14,7 @@ import java.io.InputStream;
 
 public class SettingsButton extends JComponent implements MouseListener {
 
-    private final Dimension dimension = new Dimension(85, 85);
-    ;
+    private final Dimension dimension;
     private final MainMenuController mainMenuController;
     private BufferedImage[] image;
     private int buttonStatus;
@@ -23,9 +22,10 @@ public class SettingsButton extends JComponent implements MouseListener {
     /**
      * This constructor calls the fathers constructor and adds the implementation of a mouse listener
      */
-    SettingsButton() {
+    public SettingsButton(MainMenuController mainMenuController) {
         super();
-        this.mainMenuController = new MainMenuController();
+        this.dimension = new Dimension(85, 85);
+        this.mainMenuController = mainMenuController;
         this.enableInputMethods(true);
         this.addMouseListener(this);
         this.buttonStatus = 0;
@@ -79,7 +79,7 @@ public class SettingsButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        mainMenuController.settingsAction();
     }
 
     /**

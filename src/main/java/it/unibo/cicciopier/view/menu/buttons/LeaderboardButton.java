@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.view.menu;
+package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
@@ -12,7 +12,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class PlayButton extends JComponent implements MouseListener {
+public class LeaderboardButton extends JComponent implements MouseListener {
+
     private final Dimension dimension = new Dimension(280, 106);
     ;
     private final MainMenuController mainMenuController;
@@ -22,9 +23,9 @@ public class PlayButton extends JComponent implements MouseListener {
     /**
      * This constructor calls the fathers constructor and adds the implementation of a mouse listener
      */
-    PlayButton() {
+    public LeaderboardButton(MainMenuController mainMenuController) {
         super();
-        this.mainMenuController  = new MainMenuController();
+        this.mainMenuController = mainMenuController;
         this.enableInputMethods(true);
         this.addMouseListener(this);
         this.image = new BufferedImage[2];
@@ -33,8 +34,8 @@ public class PlayButton extends JComponent implements MouseListener {
     }
 
     private void load() {
-        image[0] = Texture.PLAY_BUTTON.getTexture();
-        image[1] = Texture.PLAY_BUTTON_PRESSED.getTexture();
+        image[0] = Texture.LEADERBOARD_BUTTON.getTexture();
+        image[1] = Texture.LEADERBOARD_BUTTON_PRESSED.getTexture();
     }
 
     /**
@@ -42,6 +43,7 @@ public class PlayButton extends JComponent implements MouseListener {
      */
     @Override
     public void paintComponent(Graphics g) {
+
 
         super.paintComponent(g);
         g.drawImage(image[this.buttonStatus], 0, 0, null);
@@ -76,7 +78,7 @@ public class PlayButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        mainMenuController.leaderboardAction();
     }
 
     /**
@@ -113,3 +115,5 @@ public class PlayButton extends JComponent implements MouseListener {
 
     }
 }
+
+

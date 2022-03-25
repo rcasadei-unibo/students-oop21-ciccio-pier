@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.view.menu;
+package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
@@ -12,30 +12,31 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class QuitButton extends JComponent implements MouseListener {
+public class HomeButton extends JComponent implements MouseListener {
 
-    private final Dimension dimension = new Dimension(280, 106);
-    ;
+    private final Dimension dimension;
     private final MainMenuController mainMenuController;
-    private final BufferedImage[] image;
+    private BufferedImage[] image;
     private int buttonStatus;
 
     /**
      * This constructor calls the fathers constructor and adds the implementation of a mouse listener
      */
-    QuitButton() {
+    public HomeButton(MainMenuController mainMenuController) {
         super();
+        this.dimension = new Dimension(85, 85);
+        this.mainMenuController = mainMenuController;
         this.enableInputMethods(true);
         this.addMouseListener(this);
-        this.image = new BufferedImage[2];
         this.buttonStatus = 0;
-        this.mainMenuController = new MainMenuController();
+        this.image = new BufferedImage[3];
         this.load();
     }
 
     private void load() {
-        image[0] = Texture.QUIT_BUTTON.getTexture();
-        image[1] = Texture.QUIT_BUTTON_PRESSED.getTexture();
+        image[0] = Texture.HOME_BUTTON.getTexture();
+        image[1] = Texture.HOME_BUTTON_HOVER.getTexture();
+        image[2] = Texture.HOME_BUTTON_PRESSED.getTexture();
     }
 
     /**
@@ -46,7 +47,7 @@ public class QuitButton extends JComponent implements MouseListener {
 
 
         super.paintComponent(g);
-        g.drawImage(image[this.buttonStatus], 0, 0, null);
+        g.drawImage(image[buttonStatus],0,0,null);
     }
 
     /**
@@ -78,7 +79,7 @@ public class QuitButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        mainMenuController.exit();
+        mainMenuController.settingsAction();
     }
 
     /**
@@ -86,7 +87,7 @@ public class QuitButton extends JComponent implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        buttonStatus = 1;
+        buttonStatus = 2;
         this.repaint();
     }
 
@@ -104,7 +105,8 @@ public class QuitButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        buttonStatus = 1;
+        this.repaint();
     }
 
     /**
@@ -112,7 +114,8 @@ public class QuitButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent e) {
-
+        buttonStatus = 0;
+        this.repaint();
     }
 }
 
