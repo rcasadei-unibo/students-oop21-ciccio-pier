@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MenuManagerView extends JFrame implements StaticView {
-    private final MainMenuController mainMenuController;
     private final MainMenuView mainMenuView;
     private final LevelSelectionView levelSelectionView;
     private final SettingsView settingsView;
@@ -18,13 +17,12 @@ public class MenuManagerView extends JFrame implements StaticView {
 
     public MenuManagerView(MainMenuController mainMenuController) {
         this.setName("CICCIO PIER THE GAME!");
-        this.mainMenuController = mainMenuController;
 
         this.mainMenuView = new MainMenuView(mainMenuController);
         this.levelSelectionView = new LevelSelectionView(mainMenuController);
         this.settingsView = new SettingsView();
         this.leaderboardView = new LeaderboardView(mainMenuController);
-        this.loginView = new LoginView();
+        this.loginView = new LoginView(mainMenuController);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
