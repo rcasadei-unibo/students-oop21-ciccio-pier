@@ -6,8 +6,6 @@ import it.unibo.cicciopier.view.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
-
 
 public class MainMenuController implements MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);

@@ -5,5 +5,5 @@ public enum ViewPanels {
     LOGIN,
     MAIN_MENU,
     SETTINGS,
-    LEADERBOARD;
+    LEADERBOARD
 }

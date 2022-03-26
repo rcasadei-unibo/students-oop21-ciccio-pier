@@ -1,12 +1,9 @@
 package it.unibo.cicciopier.view.menu;
 
-import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.StaticView;
-import it.unibo.cicciopier.view.View;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MenuManagerView extends JFrame implements StaticView {
     private final MainMenuView mainMenuView;
@@ -16,7 +13,7 @@ public class MenuManagerView extends JFrame implements StaticView {
     private final LoginView loginView;
 
     public MenuManagerView(MainMenuController mainMenuController) {
-        this.setName("CICCIO PIER THE GAME!");
+        this.setName("FATTY PIER THE GAME!");
 
         this.mainMenuView = new MainMenuView(mainMenuController);
         this.levelSelectionView = new LevelSelectionView(mainMenuController);

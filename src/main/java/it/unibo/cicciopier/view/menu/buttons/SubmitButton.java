@@ -2,17 +2,13 @@ package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.menu.LevelSelectionView;
 import it.unibo.cicciopier.view.menu.ViewPanels;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class SubmitButton extends JComponent implements MouseListener {
     private final Dimension dimension = new Dimension(150, 57);

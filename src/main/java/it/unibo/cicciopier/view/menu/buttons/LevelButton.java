@@ -3,39 +3,30 @@ package it.unibo.cicciopier.view.menu.buttons;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class LevelButton extends JComponent implements MouseListener {
 
     private final Dimension dimension;
-    private final MainMenuController mainMenuController;
     private final BufferedImage[] image;
     private int buttonStatus;
-    private final Texture button;
-    private final Texture pressedButton;
 
     /**
      * This constructor calls the fathers constructor and adds the implementation of a mouse listener
      */
-    public LevelButton(final MainMenuController mainMenuController, final Texture button, final Texture pressedButton) {
+    public LevelButton(final Texture button, final Texture pressedButton) {
         super();
         this.dimension = new Dimension(90, 90);
-        this.mainMenuController = mainMenuController;
         this.enableInputMethods(true);
         this.addMouseListener(this);
         this.buttonStatus = 0;
-        this.button = button;
-        this.pressedButton = pressedButton;
         this.image = new BufferedImage[2];
-        this.image[0] = this.button.getTexture();
-        this.image[1] = this.pressedButton.getTexture();
+        this.image[0] = button.getTexture();
+        this.image[1] = pressedButton.getTexture();
     }
 
     /**

@@ -2,18 +2,13 @@ package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.menu.MainMenuView;
 import it.unibo.cicciopier.view.menu.ViewPanels;
 
-import javax.imageio.ImageIO;
-import javax.management.ObjectInstance;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class HomeButton extends JComponent implements MouseListener {
 

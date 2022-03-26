@@ -1,7 +1,9 @@
 package it.unibo.cicciopier;
 
 import it.unibo.cicciopier.controller.GameEngine;
+import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.menu.ViewPanels;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ public final class App {
                 System.exit(1);
             }
         }
+        /*
         try {
             GameEngine e = new GameEngine("level-1-1.tmx");
             e.load();
@@ -28,6 +31,10 @@ public final class App {
             LOGGER.error("Error starting game...", e);
             System.exit(1);
         }
+         */
+        MainMenuController mainMenuController = new MainMenuController();
+        mainMenuController.show(ViewPanels.LOGIN);
+
     }
 
 }
