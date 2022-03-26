@@ -12,11 +12,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class MainMenuView extends JPanel implements StaticView {
+public class MainMenuView extends JPanel {
     private static final int BUTTONHEIGHT = 322;
     private static final int BUTTONSPACE = 15;
     private BufferedImage background;
-    private final JFrame jframe;
     private final PlayButton play;
     private final LeaderboardButton leaderboard;
     private final SettingsButton settings;
@@ -25,7 +24,6 @@ public class MainMenuView extends JPanel implements StaticView {
 
 
     public MainMenuView(MainMenuController mainMenuController) {
-        jframe = new JFrame("CICCIO PIER THE GAME");
 
         this.play = new PlayButton(mainMenuController);
         this.leaderboard = new LeaderboardButton(mainMenuController);
@@ -33,6 +31,7 @@ public class MainMenuView extends JPanel implements StaticView {
         this.quit = new QuitButton(mainMenuController);
 
         size = new Dimension(1536, 768);
+        this.setPreferredSize(size);
         background = Texture.MENU_BACKGROUND.getTexture();
 
         this.setLayout(null);
@@ -56,31 +55,9 @@ public class MainMenuView extends JPanel implements StaticView {
 
         settings.setBounds(settingsWidth, settingsOffset, sizeSettings.width, sizeSettings.height);
 
-
-        this.jframe.getContentPane().add(this);
-        this.jframe.pack();
-        this.jframe.setResizable(false);
-        this.jframe.setSize(size);
-
-        this.setPreferredSize(this.size);
         this.repaint();
 
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-    }
-
-    public void hideView(){
-        this.jframe.setVisible(false);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void start() {
-
-        this.jframe.setVisible(true);
     }
 
     /**

@@ -49,6 +49,10 @@ public enum Texture {
      */
     LEVEL_SELECTION_BACKGROUND("/menuGraphics/levelSelectionBackground.png"),
     /**
+     * Represents the background of the leaderboard menu
+     */
+    LEADERBOARD_BACKGROUND("/menuGraphics/leaderboardBackground.png"),
+    /**
      * Represents the button used to access the first level
      */
     LEVEL_BUTTON_1("/menuGraphics/buttons/levelButtons/levelButton1.png"),

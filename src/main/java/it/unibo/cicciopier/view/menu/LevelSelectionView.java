@@ -13,8 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class LevelSelectionView extends JPanel implements StaticView {
-    private final JFrame jframe;
+public class LevelSelectionView extends JPanel {
     private final Dimension size;
     private final BufferedImage background;
     private final SettingsButton settings;
@@ -22,7 +21,6 @@ public class LevelSelectionView extends JPanel implements StaticView {
     private final LevelButton[] levels;
 
     public LevelSelectionView(MainMenuController mainMenuController) {
-        jframe = new JFrame("CICCIO PIER THE GAME");
 
         this.settings = new SettingsButton(mainMenuController);
         this.home = new HomeButton(mainMenuController);
@@ -34,6 +32,7 @@ public class LevelSelectionView extends JPanel implements StaticView {
 
 
         this.size = new Dimension(1536, 768);
+        this.setPreferredSize(size);
         this.background = Texture.LEVEL_SELECTION_BACKGROUND.getTexture();
 
         this.setLayout(null);
@@ -56,28 +55,8 @@ public class LevelSelectionView extends JPanel implements StaticView {
         levels[2].setBounds(880, 390, levelButtonSize.width, levelButtonSize.height);
         levels[3].setBounds(1030, 610, levelButtonSize.width, levelButtonSize.height);
 
-        this.jframe.getContentPane().add(this);
-        this.jframe.pack();
-        this.jframe.setResizable(false);
-        this.jframe.setSize(size);
 
-        this.setPreferredSize(this.size);
-        this.repaint();
 
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    }
-
-    public void hideView() {
-        this.jframe.setVisible(false);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void start() {
-        this.jframe.setVisible(true);
     }
 
     /**

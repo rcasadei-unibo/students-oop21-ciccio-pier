@@ -2,6 +2,8 @@ package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.menu.LevelSelectionView;
+import it.unibo.cicciopier.view.menu.ViewPanels;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,7 +18,7 @@ public class PlayButton extends JComponent implements MouseListener {
     private final Dimension dimension = new Dimension(280, 106);
     ;
     private final MainMenuController mainMenuController;
-    private BufferedImage[] image;
+    private final BufferedImage[] image;
     private int buttonStatus;
 
     /**
@@ -24,6 +26,7 @@ public class PlayButton extends JComponent implements MouseListener {
      */
     public PlayButton(MainMenuController mainMenuController) {
         super();
+
         this.mainMenuController  = mainMenuController;
         this.enableInputMethods(true);
         this.addMouseListener(this);
@@ -73,7 +76,7 @@ public class PlayButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        mainMenuController.playAction();
+
     }
 
     /**
@@ -92,6 +95,7 @@ public class PlayButton extends JComponent implements MouseListener {
     public void mouseReleased(MouseEvent e) {
         buttonStatus = 0;
         this.repaint();
+        mainMenuController.show(ViewPanels.LEVEL_SELECTION);
     }
 
     /**

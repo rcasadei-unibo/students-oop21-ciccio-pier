@@ -2,6 +2,8 @@ package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.menu.MainMenuView;
+import it.unibo.cicciopier.view.menu.ViewPanels;
 
 import javax.imageio.ImageIO;
 import javax.management.ObjectInstance;
@@ -17,14 +19,16 @@ public class HomeButton extends JComponent implements MouseListener {
 
     private final Dimension dimension;
     private final MainMenuController mainMenuController;
-    private BufferedImage[] image;
+    private final BufferedImage[] image;
     private int buttonStatus;
+
 
     /**
      * This constructor calls the fathers constructor and adds the implementation of a mouse listener
      */
     public HomeButton(MainMenuController mainMenuController) {
         super();
+
         this.dimension = new Dimension(85, 85);
         this.mainMenuController = mainMenuController;
         this.enableInputMethods(true);
@@ -77,7 +81,7 @@ public class HomeButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        mainMenuController.show();
+
     }
 
     /**
@@ -96,6 +100,7 @@ public class HomeButton extends JComponent implements MouseListener {
     public void mouseReleased(MouseEvent e) {
         this.buttonStatus = 0;
         this.repaint();
+        mainMenuController.show(ViewPanels.MAIN_MENU);
     }
 
     /**

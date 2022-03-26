@@ -1,36 +1,30 @@
 package it.unibo.cicciopier.controller.menu;
 
-import it.unibo.cicciopier.view.menu.LeaderboardView;
-import it.unibo.cicciopier.view.menu.LevelSelectionView;
-import it.unibo.cicciopier.view.menu.MainMenuView;
-import it.unibo.cicciopier.view.menu.SettingsView;
+
+import it.unibo.cicciopier.App;
+import it.unibo.cicciopier.view.menu.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 
+
 public class MainMenuController implements MenuController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
     private int volume;
-    private  MainMenuView menu;
-    private final LeaderboardMenuController leaderboardController;
-    private final SettingsMenuController settingsController;
-    private final LevelSelectionMenuController levelSelectionController;
-    private MenuController active;
+    private final MenuManagerView menu;
 
     public MainMenuController() {
-        this.menu = new MainMenuView(this);
-        this.settingsController = new SettingsMenuController(this);
-        this.leaderboardController = new LeaderboardMenuController(this);
-        this.levelSelectionController = new LevelSelectionMenuController(this);
-        this.active = this;
+        this.menu = new MenuManagerView(this);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void show() {
-        active.hide();
-        menu.start();
-        active = this;
+    public void show(ViewPanels viewPanels) {
+        LOGGER.info("Changing menu view to: " + viewPanels);
+        menu.setVisible(viewPanels);
     }
 
     /**
@@ -38,27 +32,11 @@ public class MainMenuController implements MenuController {
      */
     @Override
     public void hide() {
-        menu.hideView();
+
     }
 
-    public void leaderboardAction() {
-        active.hide();
-        leaderboardController.show();
-        active = leaderboardController;
-    }
-
-    public void playAction(){
-        active.hide();
-        levelSelectionController.show();
-        active = levelSelectionController;
-    }
-
-    public void settingsAction(){
-        active.hide();
-        settingsController.show();
-        active = settingsController;
-    }
-    public void quitAction(){
+    public void quitAction() {
+        LOGGER.info("Exiting...");
         System.exit(0);
     }
 

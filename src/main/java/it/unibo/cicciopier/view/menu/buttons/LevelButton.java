@@ -78,7 +78,7 @@ public class LevelButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        mainMenuController.settingsAction();
+
     }
 
     /**

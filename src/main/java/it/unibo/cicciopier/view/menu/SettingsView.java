@@ -4,7 +4,9 @@ import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.view.StaticView;
 import it.unibo.cicciopier.view.View;
 
-public class SettingsView implements StaticView {
+import javax.swing.*;
+
+public class SettingsView extends JPanel implements StaticView {
 
     public SettingsView() {
 

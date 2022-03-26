@@ -75,7 +75,7 @@ public class QuitButton extends JComponent implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        mainMenuController.quitAction();
+
     }
 
     /**
@@ -94,6 +94,7 @@ public class QuitButton extends JComponent implements MouseListener {
     public void mouseReleased(MouseEvent e) {
         this.buttonStatus = 0;
         this.repaint();
+        mainMenuController.quitAction();
     }
 
     /**
