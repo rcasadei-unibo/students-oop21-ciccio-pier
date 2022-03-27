@@ -1,11 +1,15 @@
 package it.unibo.cicciopier.model.entities;
 
+import it.unibo.cicciopier.model.GameObject;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
+import it.unibo.cicciopier.model.entities.enemies.SimpleEnemy;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
+
+import java.util.function.Function;
 
 public class PlayerImpl extends SimpleLivingEntity implements Player {
     private static final int SPEED = 5;
@@ -117,7 +121,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public void attackNearest() {
-        //TODO
+
     }
 
     /**
@@ -133,6 +137,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
             this.isReady = true;
         }
         this.move();
+
     }
 
     /**

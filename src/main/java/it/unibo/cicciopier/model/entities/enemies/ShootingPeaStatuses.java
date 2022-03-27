@@ -16,7 +16,11 @@ public enum ShootingPeaStatuses {
     /**
      * Represents the entity shooting at the player
      */
-    SHOOTING(10, 3, 2);
+    SHOOTING(9, 2, 2),
+    /**
+     * Represents the entity dying
+     */
+    DYING(11,2,3);
 
     private final int frames;
     private final int durationSeconds;

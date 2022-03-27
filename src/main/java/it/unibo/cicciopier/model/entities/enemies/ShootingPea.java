@@ -9,14 +9,15 @@ import it.unibo.cicciopier.view.entities.enemies.ShootingPeaView;
 public class ShootingPea extends SimpleEnemy {
 
     public static final int MAX_RIGHT_OFFSET = 32*3;
-    public static final int IDLE_DURATION = 100;
+    public static final int IDLE_DURATION = 200;
+    public static final int ATTACK_RANGE = 32*7;
     private final GameObjectView view;
     //Can't be final due to later initialization of the pos
     private int leftPathfurthest;
     private int rightPathfurthest;
     private int currentDest;
     private boolean specular;
-    private int idleSecs;
+    private int idleTicks;
     private boolean pathInitialized;
     private ShootingPeaStatuses status;
 
@@ -31,7 +32,7 @@ public class ShootingPea extends SimpleEnemy {
         this.status = ShootingPeaStatuses.IDLE;
         this.view = new ShootingPeaView(this);
         this.specular = true;
-        this.idleSecs = 0;
+        this.idleTicks = 0;
     }
 
     /**
@@ -55,27 +56,31 @@ public class ShootingPea extends SimpleEnemy {
             this.pathInitialized = true;
         }
 
-        if (this.getPos().getX() == this.currentDest && this.idleSecs < this.IDLE_DURATION){
+        if (this.checkPlayerInRange(ATTACK_RANGE) &&
+                ((this.getWorld().getPlayer().getPos().getX() < this.getPos().getX() && this.isSpecular()) ||
+                    (this.getWorld().getPlayer().getPos().getX() > this.getPos().getX() && !this.isSpecular()))){
+                this.status = ShootingPeaStatuses.SHOOTING;
+                this.setVel(new Vector2d(0,0));
+                if (this.getWorld().getPlayer().checkCollision(this)){
+                    this.attackPlayer();
+                }
+        } else {
+            this.status = ShootingPeaStatuses.WALKING;
+        }
+
+        if (this.getPos().getX() == this.currentDest && this.idleTicks < this.IDLE_DURATION){
             this.status = ShootingPeaStatuses.IDLE;
             this.setVel(new Vector2d(0,0));
-            this.idleSecs++;
+            this.idleTicks++;
         } else if (this.getPos().getX() == this.currentDest){
             this.currentDest = this.currentDest == leftPathfurthest ? rightPathfurthest : leftPathfurthest;
-            this.idleSecs = 0;
+            this.idleTicks = 0;
             this.status = ShootingPeaStatuses.WALKING;
             this.specular = this.specular ? false : true;
         } else if (this.status == ShootingPeaStatuses.WALKING) {
-            this.setVel(new Vector2d(this.currentDest == leftPathfurthest? -0.2 : 0.2,0));
+            this.setVel(new Vector2d(this.currentDest == leftPathfurthest? -0.4 : 0.4,0));
         }
         this.move();
-
-        /*
-        //testing
-        if (this.checkPlayerInRange(128)){
-            this.status = ShootingPeaStatuses.WALKING;
-        } else {
-            this.status = ShootingPeaStatuses.IDLE;
-        }*/
     }
 
     /**
