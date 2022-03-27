@@ -8,7 +8,7 @@ import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 
 public class PlayerImpl extends SimpleLivingEntity implements Player {
-    private static final int SPEED = 5;
+    private static final int SPEED = 7;
     private static final int MAX_TIME = 35;
     private static final int JUMP_FORCE = 15;
 
@@ -139,13 +139,6 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         //TODO
         this.move();
 
-        //TESTING RENDER
-        if (this.test){
-            Entity e = this.getWorld().getEntityFactory().createEntity(EntityType.SHOOTING_PEA);
-            e.setPos(new Vector2d(this.getPos().getX()+(32*5),this.getPos().getY()));
-            this.getWorld().addEntity(e);
-            this.test = false;
-        }
     }
 
     /**
