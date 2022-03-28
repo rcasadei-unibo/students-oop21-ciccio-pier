@@ -2,6 +2,7 @@ package it.unibo.cicciopier.model;
 
 import javax.sound.sampled.*;
 import java.io.*;
+
 /**
  * Enum to store all the sound files, and load them
  */
@@ -9,7 +10,35 @@ public enum Sound {
     /**
      * Represents the audio of a coin
      */
-    COIN("/audios/coin.wav");
+    COIN("/audios/coin.wav"),
+    /**
+     * Represents the audio for player jump
+     */
+    JUMP("/audios/jump.wav"),
+    /**
+     * Represents the audio for the explosion
+     */
+    EXPLOSION("/audios/explosion.wav"),
+    /**
+     * Represent the audio when you pick an item
+     */
+    ITEM("/audios/item.wav"),
+    /**
+     * Represents the audio for the click in main buttons
+     */
+    MAIN_BUTTON("/audios/menu/mainButton.wav"),
+    /**
+     * Represents the audio for the hover action
+     */
+    HOVER_BUTTON("/audios/menu/hoverButton.wav"),
+    /**
+     * Represents the audio for the click of starting the game
+     */
+    GAME_HOVER("/audios/menu/gameButton.wav"),
+    /**
+     * Represents the audio for the click in side buttons
+     */
+    SIDE_BUTTON("/audios/menu/sideButton.wav");
 
     private final String fileName;
     private byte[] bytes;
