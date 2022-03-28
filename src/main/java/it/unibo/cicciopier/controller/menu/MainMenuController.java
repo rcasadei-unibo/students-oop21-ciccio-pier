@@ -28,7 +28,6 @@ public class MainMenuController implements MenuController {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void hide() {
 
     }
