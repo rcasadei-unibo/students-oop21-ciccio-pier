@@ -1,8 +1,9 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.menu.buttons.SubmitButton;
+import it.unibo.cicciopier.view.menu.buttons.CustomButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,10 @@ public class LoginView extends JPanel {
 
     public LoginView(MainMenuController mainMenuController) {
 
-        SubmitButton submitButton = new SubmitButton(mainMenuController);
+        BufferedImage[] bufferedImage = new BufferedImage[2];
+        bufferedImage[0] = Texture.SUBMIT_BUTTON.getTexture();
+        bufferedImage[1] = Texture.SUBMIT_BUTTON_PRESSED.getTexture();
+        CustomButton submitButton = new CustomButton(mainMenuController,new Dimension(150, 57),bufferedImage, MenuAction.LOGIN,false);
 
         Dimension size = new Dimension(1536, 768);
         this.setPreferredSize(size);

@@ -1,9 +1,9 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.menu.buttons.HomeButton;
-import it.unibo.cicciopier.view.menu.buttons.SettingsButton;
+import it.unibo.cicciopier.view.menu.buttons.CustomButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +14,17 @@ public class LeaderboardView extends JPanel {
 
     public LeaderboardView(MainMenuController mainMenuController) {
 
-        SettingsButton settings = new SettingsButton(mainMenuController);
-        HomeButton home = new HomeButton(mainMenuController);
+        BufferedImage[] bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.SETTINGS_BUTTON.getTexture();
+        bufferedImage[1] = Texture.SETTINGS_BUTTON_PRESSED.getTexture();
+        bufferedImage[2] = Texture.SETTINGS_BUTTON_HOVER.getTexture();
+        CustomButton settings = new CustomButton(mainMenuController,new Dimension(85, 85),bufferedImage, MenuAction.SHOW,true,ViewPanels.SETTINGS);
+
+        bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.HOME_BUTTON.getTexture();
+        bufferedImage[1] = Texture.HOME_BUTTON_PRESSED.getTexture();
+        bufferedImage[2] = Texture.HOME_BUTTON_HOVER.getTexture();
+        CustomButton home = new CustomButton(mainMenuController,new Dimension(85, 85),bufferedImage, MenuAction.SHOW,true,ViewPanels.MAIN_MENU);
 
 
         Dimension size = new Dimension(1536, 768);

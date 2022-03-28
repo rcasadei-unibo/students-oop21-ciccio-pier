@@ -1,10 +1,9 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.menu.buttons.HomeButton;
-import it.unibo.cicciopier.view.menu.buttons.LevelButton;
-import it.unibo.cicciopier.view.menu.buttons.SettingsButton;
+import it.unibo.cicciopier.view.menu.buttons.CustomButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +14,37 @@ public class LevelSelectionView extends JPanel {
 
     public LevelSelectionView(MainMenuController mainMenuController) {
 
-        SettingsButton settings = new SettingsButton(mainMenuController);
-        HomeButton home = new HomeButton(mainMenuController);
-        LevelButton[] levels = new LevelButton[4];
-        levels[0] = new LevelButton(Texture.LEVEL_BUTTON_1, Texture.LEVEL_BUTTON_1_PRESSED);
-        levels[1] = new LevelButton(Texture.LEVEL_BUTTON_2, Texture.LEVEL_BUTTON_2_PRESSED);
-        levels[2] = new LevelButton(Texture.LEVEL_BUTTON_3, Texture.LEVEL_BUTTON_3_PRESSED);
-        levels[3] = new LevelButton(Texture.LEVEL_BUTTON_BOSS, Texture.LEVEL_BUTTON_BOSS_PRESSED);
+        BufferedImage[] bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.SETTINGS_BUTTON.getTexture();
+        bufferedImage[1] = Texture.SETTINGS_BUTTON_PRESSED.getTexture();
+        bufferedImage[2] = Texture.SETTINGS_BUTTON_HOVER.getTexture();
+        CustomButton settings = new CustomButton(mainMenuController,new Dimension(85, 85),bufferedImage, MenuAction.SHOW,true,ViewPanels.SETTINGS);
+
+        bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.HOME_BUTTON.getTexture();
+        bufferedImage[1] = Texture.HOME_BUTTON_PRESSED.getTexture();
+        bufferedImage[2] = Texture.HOME_BUTTON_HOVER.getTexture();
+        CustomButton home = new CustomButton(mainMenuController,new Dimension(85, 85),bufferedImage, MenuAction.SHOW,true,ViewPanels.MAIN_MENU);
+
+        bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.LEVEL_BUTTON_1.getTexture();
+        bufferedImage[1] = Texture.LEVEL_BUTTON_1_PRESSED.getTexture();
+        CustomButton level1 = new CustomButton(mainMenuController,new Dimension(90, 90),bufferedImage, MenuAction.PLAY_LEVEL,false);
+
+        bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.LEVEL_BUTTON_2.getTexture();
+        bufferedImage[1] = Texture.LEVEL_BUTTON_2_PRESSED.getTexture();
+        CustomButton level2 = new CustomButton(mainMenuController,new Dimension(90, 90),bufferedImage, MenuAction.PLAY_LEVEL,false);
+
+        bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.LEVEL_BUTTON_3.getTexture();
+        bufferedImage[1] = Texture.LEVEL_BUTTON_3_PRESSED.getTexture();
+        CustomButton level3 = new CustomButton(mainMenuController,new Dimension(90, 90),bufferedImage, MenuAction.PLAY_LEVEL,false);
+
+        bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.LEVEL_BUTTON_BOSS.getTexture();
+        bufferedImage[1] = Texture.LEVEL_BUTTON_BOSS_PRESSED.getTexture();
+        CustomButton levelBoss = new CustomButton(mainMenuController,new Dimension(90, 90),bufferedImage, MenuAction.PLAY_LEVEL,false);
 
 
         Dimension size = new Dimension(1536, 768);
@@ -31,22 +54,23 @@ public class LevelSelectionView extends JPanel {
         this.setLayout(null);
         this.add(home);
         this.add(settings);
-        for (LevelButton level : levels) {
-            this.add(level);
-        }
+        this.add(level1);
+        this.add(level2);
+        this.add(level3);
+        this.add(levelBoss);
 
         final Dimension sizeSettings = settings.getPreferredSize();
         final int settingsWidthOffset = size.width - sizeSettings.width - 60;
         final int homeWidthOffset = 60;
-        final Dimension levelButtonSize = levels[0].getPreferredSize();
+        final Dimension levelButtonSize = level1.getPreferredSize();
         final int settingsHeightOffset = 20;
 
         settings.setBounds(settingsWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
         home.setBounds(homeWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
-        levels[0].setBounds(445, 600, levelButtonSize.width, levelButtonSize.height);
-        levels[1].setBounds(605, 390, levelButtonSize.width, levelButtonSize.height);
-        levels[2].setBounds(880, 390, levelButtonSize.width, levelButtonSize.height);
-        levels[3].setBounds(1030, 610, levelButtonSize.width, levelButtonSize.height);
+        level1.setBounds(445, 600, levelButtonSize.width, levelButtonSize.height);
+        level2.setBounds(605, 390, levelButtonSize.width, levelButtonSize.height);
+        level3.setBounds(880, 390, levelButtonSize.width, levelButtonSize.height);
+        levelBoss.setBounds(1030, 610, levelButtonSize.width, levelButtonSize.height);
 
 
 

@@ -1,11 +1,9 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.menu.buttons.LeaderboardButton;
-import it.unibo.cicciopier.view.menu.buttons.PlayButton;
-import it.unibo.cicciopier.view.menu.buttons.QuitButton;
-import it.unibo.cicciopier.view.menu.buttons.SettingsButton;
+import it.unibo.cicciopier.view.menu.buttons.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,10 +17,26 @@ public class MainMenuView extends JPanel {
 
     public MainMenuView(MainMenuController mainMenuController) {
 
-        PlayButton play = new PlayButton(mainMenuController);
-        LeaderboardButton leaderboard = new LeaderboardButton(mainMenuController);
-        SettingsButton settings = new SettingsButton(mainMenuController);
-        QuitButton quit = new QuitButton(mainMenuController);
+        BufferedImage[] bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.SETTINGS_BUTTON.getTexture();
+        bufferedImage[1] = Texture.SETTINGS_BUTTON_PRESSED.getTexture();
+        bufferedImage[2] = Texture.SETTINGS_BUTTON_HOVER.getTexture();
+        CustomButton settings = new CustomButton(mainMenuController,new Dimension(85, 85),bufferedImage, MenuAction.SHOW,true,ViewPanels.SETTINGS);
+
+        bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.PLAY_BUTTON.getTexture();
+        bufferedImage[1] = Texture.PLAY_BUTTON_PRESSED.getTexture();
+        CustomButton play = new CustomButton(mainMenuController,new Dimension(280, 106),bufferedImage, MenuAction.SHOW,false,ViewPanels.LEVEL_SELECTION);
+
+        bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.LEADERBOARD_BUTTON.getTexture();
+        bufferedImage[1] = Texture.LEADERBOARD_BUTTON_PRESSED.getTexture();
+        CustomButton leaderboard = new CustomButton(mainMenuController,new Dimension(280, 106),bufferedImage, MenuAction.SHOW,false,ViewPanels.LEADERBOARD);
+
+        bufferedImage = new BufferedImage[3];
+        bufferedImage[0] = Texture.QUIT_BUTTON.getTexture();
+        bufferedImage[1] = Texture.QUIT_BUTTON_PRESSED.getTexture();
+        CustomButton quit = new CustomButton(mainMenuController,new Dimension(280, 106),bufferedImage, MenuAction.QUIT,false);
 
         Dimension size = new Dimension(1536, 768);
         this.setPreferredSize(size);

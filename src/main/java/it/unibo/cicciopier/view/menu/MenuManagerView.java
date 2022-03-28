@@ -4,6 +4,7 @@ import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.StaticView;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MenuManagerView extends JFrame implements StaticView {
     private final MainMenuView mainMenuView;
@@ -17,12 +18,12 @@ public class MenuManagerView extends JFrame implements StaticView {
 
         this.mainMenuView = new MainMenuView(mainMenuController);
         this.levelSelectionView = new LevelSelectionView(mainMenuController);
-        this.settingsView = new SettingsView();
+        this.settingsView = new SettingsView(mainMenuController);
         this.leaderboardView = new LeaderboardView(mainMenuController);
         this.loginView = new LoginView(mainMenuController);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setVisible(true);
 
     }
@@ -63,5 +64,9 @@ public class MenuManagerView extends JFrame implements StaticView {
             }
         }
         this.pack();
+    }
+
+    public SettingsView getSettingsView() {
+        return settingsView;
     }
 }
