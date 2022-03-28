@@ -49,6 +49,9 @@ public class AudioController {
      */
     public void setMusicVolume(final float musicVolume) {
         this.musicVolume = musicVolume;
+        for (Music music : Music.values()) {
+            music.changeVolume(musicVolume);
+        }
     }
 
     /**
@@ -58,6 +61,7 @@ public class AudioController {
      */
     public void playMusic(final Music music) {
         music.play(this.musicVolume);
+
     }
 
     /**

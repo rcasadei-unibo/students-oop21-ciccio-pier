@@ -57,7 +57,7 @@ public class ExplosionView implements GameObjectView {
             aniTik = 0;
             this.currentIndex++;
             if (currentIndex >= this.explosionAni.length) {
-                this.currentIndex = 0;
+                this.explosion.finished();
             }
         }
     }
@@ -68,6 +68,10 @@ public class ExplosionView implements GameObjectView {
     @Override
     public void render(final Graphics g) {
         this.updateAnimation();
+        //check if we arrived at the end of the array
+        if(this.currentIndex == this.explosionAni.length){
+            return;
+        }
         g.drawImage(
                 this.explosionAni[this.currentIndex],
                 this.explosion.getPos().getX(),

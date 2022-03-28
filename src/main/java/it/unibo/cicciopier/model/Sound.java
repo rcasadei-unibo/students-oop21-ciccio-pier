@@ -20,6 +20,10 @@ public enum Sound {
      */
     EXPLOSION("/audios/explosion.wav"),
     /**
+     * Represents the audio when the missile get launched
+     */
+    LAUNCH("/audios/launch.wav"),
+    /**
      * Represent the audio when you pick an item
      */
     ITEM("/audios/item.wav"),

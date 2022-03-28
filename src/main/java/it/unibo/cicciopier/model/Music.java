@@ -47,8 +47,7 @@ public enum Music {
      * @param musicVolume how much the volume must be
      */
     public void play(final float musicVolume) {
-        FloatControl volume = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(20F * (float) Math.log10(musicVolume));
+        this.changeVolume(musicVolume);
         this.clip.setFramePosition(0);
         this.clip.start();
         this.clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -59,5 +58,15 @@ public enum Music {
      */
     public void stop() {
         this.clip.stop();
+    }
+
+    /**
+     * Change the volume of all the music
+     *
+     * @param musicVolume how much it needs to change
+     */
+    public void changeVolume(final float musicVolume) {
+        FloatControl volume = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
+        volume.setValue(20F * (float) Math.log10(musicVolume));
     }
 }
