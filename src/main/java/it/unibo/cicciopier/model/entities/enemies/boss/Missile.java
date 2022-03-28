@@ -31,6 +31,7 @@ public class Missile extends SimpleMovingEntity {
     private final long initialTime;
     private boolean isOnce;
     private boolean again;
+    private boolean playerCollision;
 
     /**
      * Constructor for this class, create a Missile instance
@@ -49,6 +50,7 @@ public class Missile extends SimpleMovingEntity {
         this.isOnce = false;
         this.again = false;
         this.missileView = new MissileView(this);
+        this.playerCollision = false;
     }
 
     /**
@@ -129,7 +131,14 @@ public class Missile extends SimpleMovingEntity {
         this.getPos().add(this.getVel());
         //reset the accel vector
         this.accel.set(0, 0);
-        if (this.checkCollision(this.getWorld().getPlayer()) ||
+        if (this.checkCollision(this.getWorld().getPlayer())) {
+            this.playerCollision = true;
+        }
+        if (this.playerCollision) {
+            //deal damage to player if its intersects
+            this.getWorld().getPlayer().damage(this.getType().getAttackDamage());
+        }
+        if (this.playerCollision ||
                 this.upCollision() != 1 ||
                 this.leftCollision() != 1 ||
                 this.bottomCollision() != -1 ||
@@ -138,10 +147,9 @@ public class Missile extends SimpleMovingEntity {
             Entity e = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
             e.setPos(this.getPos().clone().addVector(new Vector2d(-(double) this.getWidth() / 2, 0)));
             this.getWorld().addEntity(e);
-            //deal damage to player if its intersects
-            //this.getWorld().getPlayer().damage(this.getType().getAttackDamage());
             this.remove();
         }
+
 
     }
 
