@@ -95,19 +95,9 @@ public class GameEngine implements Engine {
             return;
         }
         // for every entity check if it has to be removed, update it otherwise
-        /*Iterator<Entity> i = this.getWorld().getEntities().iterator();
-        while (i.hasNext()) {
-            Entity e = i.next();
+        for(Entity e : this.getWorld().getEntities()) {
             if (e.isRemoved()) {
-                i.remove();
-                continue;
-            }
-            e.tick();
-        }*/
-        List<Entity> l = new ArrayList<>(this.getWorld().getEntities());
-        for(Entity e : l) {
-            if (e.isRemoved()) {
-                this.getWorld().getEntities().remove(e);
+                this.getWorld().removeEntity(e);
                 continue;
             }
             e.tick();

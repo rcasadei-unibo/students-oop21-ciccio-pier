@@ -107,7 +107,7 @@ public class GameWorld implements World {
      **/
     @Override
     public List<Entity> getEntities() {
-        return this.entities;
+        return new ArrayList<>(this.entities);
     }
 
     /**
@@ -124,6 +124,14 @@ public class GameWorld implements World {
     @Override
     public void addEntity(final Entity entity) {
         this.entities.add(entity);
+    }
+
+    /**
+     * {@inheritDoc}
+     **/
+    @Override
+    public void removeEntity(final Entity entity) {
+        this.entities.remove(entity);
     }
 
     /**
