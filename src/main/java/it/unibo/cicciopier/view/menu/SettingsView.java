@@ -73,8 +73,8 @@ public class SettingsView extends JPanel {
         plusMusic.setBounds(audioWidthOffset, audioHeightOffset + 60, plusSound.getPreferredSize().width, plusSound.getPreferredSize().height);
         minusSound.setBounds(audioWidthOffset + 150, audioHeightOffset, plusSound.getPreferredSize().width, plusSound.getPreferredSize().height);
         minusMusic.setBounds(audioWidthOffset + 150, audioHeightOffset + 60, plusSound.getPreferredSize().width, plusSound.getPreferredSize().height);
-        gameAudio.setBounds(minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x - plusSound.getPreferredSize().width) + 20, audioHeightOffset, 80, 50);
-        musicAudio.setBounds(minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x - plusSound.getPreferredSize().width) + 20, audioHeightOffset + 60, 80, 50);
+        gameAudio.setBounds(minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x - plusSound.getPreferredSize().width) + 27, audioHeightOffset, 80, 50);
+        musicAudio.setBounds(minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x - plusSound.getPreferredSize().width) + 27, audioHeightOffset + 60, 80, 50);
         loggedUser.setBounds(homeWidthOffset, settingsHeightOffset + sizeHome.height + 10, 300, 30);
         logout.setBounds(logoutWidthOffset, logoutHeightOffset, logout.getPreferredSize().width, logout.getPreferredSize().height);
 
