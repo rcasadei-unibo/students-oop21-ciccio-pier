@@ -1,18 +1,14 @@
 package it.unibo.cicciopier.model.entities;
 
-import it.unibo.cicciopier.model.GameObject;
+import it.unibo.cicciopier.controller.AudioController;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
-import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
-import it.unibo.cicciopier.model.entities.enemies.SimpleEnemy;
-import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 
-import java.util.function.Function;
-
 public class PlayerImpl extends SimpleLivingEntity implements Player {
-    private static final int SPEED = 5;
+    private static final int SPEED = 7;
     private static final int MAX_TIME = 35;
     private static final int JUMP_FORCE = 15;
     private final int maxStamina = 100;
@@ -146,6 +142,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public void jump() {
         if (this.isReady && this.isGround()) {
+            AudioController.getAudioController().playSound(Sound.JUMP);
             this.getVel().setY(-PlayerImpl.JUMP_FORCE);
             this.isReady = false;
             this.time = 0;

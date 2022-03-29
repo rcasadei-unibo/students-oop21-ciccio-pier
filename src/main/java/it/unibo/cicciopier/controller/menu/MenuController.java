@@ -1,17 +1,12 @@
 package it.unibo.cicciopier.controller.menu;
 
-import javax.swing.*;
+import it.unibo.cicciopier.view.menu.ViewPanels;
 
 public interface MenuController {
 
     /**
      * Shows the menu to the player
      */
-    void show();
-
-    /**
-     *  Hide the view from the player
-     */
-    void hide();
+    void show(ViewPanels viewPanels);
 
 }

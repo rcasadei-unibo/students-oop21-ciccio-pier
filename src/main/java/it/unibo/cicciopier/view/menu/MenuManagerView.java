@@ -1,45 +1,80 @@
 package it.unibo.cicciopier.view.menu;
 
-import it.unibo.cicciopier.controller.Engine;
-import it.unibo.cicciopier.view.View;
+import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.view.StaticView;
 
-public class MenuManagerView implements View {
-    private final Engine engine;
+import javax.swing.*;
+import java.awt.*;
 
-    public MenuManagerView(Engine engine) {
-        this.engine = engine;
+public class MenuManagerView extends JFrame implements StaticView {
+    private final MainMenuView mainMenuView;
+    private final LevelSelectionView levelSelectionView;
+    private final SettingsView settingsView;
+    private final LeaderboardView leaderboardView;
+    private final LoginView loginView;
+
+    public MenuManagerView(MainMenuController mainMenuController) {
+        this.setName("FATTY PIER THE GAME!");
+
+        this.mainMenuView = new MainMenuView(mainMenuController);
+        this.levelSelectionView = new LevelSelectionView(mainMenuController);
+        this.settingsView = new SettingsView(mainMenuController);
+        this.leaderboardView = new LeaderboardView(mainMenuController);
+        this.loginView = new LoginView(mainMenuController);
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(true);
+        this.setVisible(true);
+
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void load() throws Exception {
 
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void start() {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void render() {
-
+    public void setVisible(ViewPanels viewPanels) {
+        this.getContentPane().removeAll();
+        switch (viewPanels) {
+            case LEVEL_SELECTION: {
+                levelSelectionView.updateLoggedUser();
+                this.getContentPane().add(levelSelectionView);
+                levelSelectionView.repaint();
+                break;
+            }
+            case MAIN_MENU: {
+                mainMenuView.updateLoggedUser();
+                this.getContentPane().add(mainMenuView);
+                mainMenuView.repaint();
+                break;
+            }
+            case LOGIN: {
+                this.getContentPane().add(loginView);
+                loginView.repaint();
+                break;
+            }
+            case SETTINGS: {
+                settingsView.updateLoggedUser();
+                this.getContentPane().add(settingsView);
+                settingsView.repaint();
+                break;
+            }
+            case LEADERBOARD: {
+                leaderboardView.updateLoggedUser();
+                this.getContentPane().add(leaderboardView);
+                leaderboardView.repaint();
+                break;
+            }
+        }
+        this.pack();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Engine getEngine() {
-        return this.engine;
+    public SettingsView getSettingsView() {
+        return settingsView;
     }
 
+    public LoginView getLoginView() {
+        return loginView;
+    }
 }

@@ -6,7 +6,9 @@ import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.view.GameView;
 import it.unibo.cicciopier.view.View;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Simple implementation of the interface {@link Engine}.
@@ -93,11 +95,9 @@ public class GameEngine implements Engine {
             return;
         }
         // for every entity check if it has to be removed, update it otherwise
-        Iterator<Entity> i = this.getWorld().getEntities().iterator();
-        while (i.hasNext()) {
-            Entity e = i.next();
+        for(Entity e : this.getWorld().getEntities()) {
             if (e.isRemoved()) {
-                i.remove();
+                this.getWorld().removeEntity(e);
                 continue;
             }
             e.tick();

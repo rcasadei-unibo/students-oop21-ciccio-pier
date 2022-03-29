@@ -28,10 +28,16 @@ public class MissileView implements GameObjectView {
      */
     @Override
     public void render(final Graphics g) {
-
         final Graphics2D g2d = (Graphics2D) g;
-        //
         AffineTransform oldXForm = g2d.getTransform();
+        g2d.drawRect(
+
+                this.missile.getPos().getX(),
+                this.missile.getPos().getY(),
+                this.missile.getWidth(),
+                this.missile.getHeight()
+
+        );
         g2d.rotate(
                 Math.PI/2 + this.missile.getVel().getAngle(),
                 this.missile.getPos().getX(),
@@ -39,8 +45,8 @@ public class MissileView implements GameObjectView {
         );
         g2d.drawImage(
                 img,
-                this.missile.getPos().getX(),
-                this.missile.getPos().getY(),
+                this.missile.getPos().getX()-15,
+                this.missile.getPos().getY()-5,
                 null
         );
         g2d.setTransform(oldXForm);

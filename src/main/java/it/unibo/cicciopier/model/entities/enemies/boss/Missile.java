@@ -1,11 +1,15 @@
 package it.unibo.cicciopier.model.entities.enemies.boss;
 
+import it.unibo.cicciopier.controller.AudioController;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.MissileView;
+
 
 import java.util.Random;
 
@@ -15,10 +19,10 @@ import java.util.Random;
 public class Missile extends SimpleMovingEntity {
     private static final int MAX_TIME = 2_000_000_000; //2 seconds
     private static final int MIN_DISTANCE = 50;
-    private static final int MAX_DISTANCE = 250;
+    private static final int MAX_DISTANCE = 70;
     private static final int MAX_ANGLE = 46; //in degree
-    private static final int MAX_SPEED = 30;
-    private static final double MAX_STEERING = 0.4d;
+    private static final int MAX_SPEED = 8;
+    private static final double MAX_STEERING = 0.8;
 
     private final MissileView missileView;
     private final Vector2d accel;
@@ -26,6 +30,8 @@ public class Missile extends SimpleMovingEntity {
     private int initialDistance;
     private final long initialTime;
     private boolean isOnce;
+    private boolean again;
+    private boolean playerCollision;
 
     /**
      * Constructor for this class, create a Missile instance
@@ -34,7 +40,7 @@ public class Missile extends SimpleMovingEntity {
      */
     public Missile(final World world) {
         super(EntityType.MISSILE, world);
-        this.setVel(new Vector2d(0, -12));
+        this.setVel(new Vector2d(0, -6));
         this.accel = new Vector2d();
         this.maxTravelDistance = new Random().
                 nextInt(Missile.MAX_DISTANCE - Missile.MIN_DISTANCE) + Missile.MIN_DISTANCE;
@@ -42,7 +48,9 @@ public class Missile extends SimpleMovingEntity {
         //rotate by a random number
         this.getVel().rotateInDegree(this.randAngleInRange());
         this.isOnce = false;
+        this.again = false;
         this.missileView = new MissileView(this);
+        this.playerCollision = false;
     }
 
     /**
@@ -84,8 +92,7 @@ public class Missile extends SimpleMovingEntity {
      */
     private void seek() {
         //player pos with a offset
-        final Vector2d playerPos = this.getWorld().getPlayer().getPos().clone().
-                addVector(new Vector2d(100, 0));
+        final Vector2d playerPos = this.getWorld().getPlayer().getPos().clone();
         // desired Velocity of the missile
         final Vector2d desire = this.getPos().directionVector(playerPos);
         desire.setMagnitude(Missile.MAX_SPEED);
@@ -111,8 +118,10 @@ public class Missile extends SimpleMovingEntity {
             } else {
                 this.initialDistance = this.getPos().getY();
                 this.isOnce = true;
+                AudioController.getAudioController().playSound(Sound.LAUNCH);
             }
         }
+
         //seek the player if i reached the max distance
         if (this.isMaxDistance()) {
             this.seek();
@@ -122,6 +131,26 @@ public class Missile extends SimpleMovingEntity {
         this.getPos().add(this.getVel());
         //reset the accel vector
         this.accel.set(0, 0);
+        if (this.checkCollision(this.getWorld().getPlayer())) {
+            this.playerCollision = true;
+        }
+        if (this.playerCollision) {
+            //deal damage to player if its intersects
+            this.getWorld().getPlayer().damage(this.getType().getAttackDamage());
+        }
+        if (this.playerCollision ||
+                this.upCollision() != 1 ||
+                this.leftCollision() != 1 ||
+                this.bottomCollision() != -1 ||
+                this.rightCollision() != -1) {
+            //create an explosion
+            Entity e = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
+            e.setPos(this.getPos().clone().addVector(new Vector2d(-(double) this.getWidth() / 2, 0)));
+            this.getWorld().addEntity(e);
+            this.remove();
+        }
+
+
     }
 
     /**

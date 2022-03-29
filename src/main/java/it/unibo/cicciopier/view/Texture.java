@@ -49,6 +49,42 @@ public enum Texture {
      */
     LEVEL_SELECTION_BACKGROUND("/menuGraphics/levelSelectionBackground.png"),
     /**
+     * Represents the background of the leaderboard menu
+     */
+    LEADERBOARD_BACKGROUND("/menuGraphics/leaderboardBackground.png"),
+    /**
+     * Represents the background of the login view
+     */
+    LOGIN_BACKGROUND("/menuGraphics/loginBackground.png"),
+    /**
+     * Represents the background of the login view
+     */
+    SETTINGS_BACKGROUND("/menuGraphics/settingsBackground.png"),
+    /**
+     * Represents the button used to access the first level
+     */
+    SUBMIT_BUTTON("/menuGraphics/buttons/submitButton/submitButton.png"),
+    /**
+     * Represents the button used to access the first level
+     */
+    SUBMIT_BUTTON_PRESSED("/menuGraphics/buttons/submitButton/submitButtonPressed.png"),
+    /**
+     * Represents the button used to increase the audio
+     */
+    PLUS_AUDIO_BUTTON("/menuGraphics/buttons/audioButtons/plusAudioButton.png"),
+    /**
+     * Represents the button used to increase the audio while pressed
+     */
+    PLUS_AUDIO_BUTTON_PRESSED("/menuGraphics/buttons/audioButtons/plusAudioButtonPressed.png"),
+    /**
+     * Represents the button used to decrease the audio
+     */
+    MINUS_AUDIO_BUTTON("/menuGraphics/buttons/audioButtons/minusAudioButton.png"),
+    /**
+     * Represents the button used to decrease the audio while pressed
+     */
+    MINUS_AUDIO_BUTTON_PRESSED("/menuGraphics/buttons/audioButtons/minusAudioButtonPressed.png"),
+    /**
      * Represents the button used to access the first level
      */
     LEVEL_BUTTON_1("/menuGraphics/buttons/levelButtons/levelButton1.png"),
@@ -148,6 +184,7 @@ public enum Texture {
     public void load() throws IOException, IllegalArgumentException {
         LOGGER.info("Loading texture {} from file {}...", this.name(), this.fileName);
         final InputStream is = getClass().getResourceAsStream(this.fileName);
+        assert is != null;
         this.img = ImageIO.read(is);
         is.close();
     }

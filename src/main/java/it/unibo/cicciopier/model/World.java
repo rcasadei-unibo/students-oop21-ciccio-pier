@@ -99,6 +99,13 @@ public interface World extends Iterable<Block> {
     void addEntity(final Entity entity);
 
     /**
+     * Remove an entity from this world.
+     *
+     * @param entity the entity
+     */
+    void removeEntity(final Entity entity);
+
+    /**
      * Get the player.
      *
      * @return the player
