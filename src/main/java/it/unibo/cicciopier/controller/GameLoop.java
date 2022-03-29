@@ -47,7 +47,8 @@ public class GameLoop extends Thread implements Loop {
             }
             lastLoopTime = System.currentTimeMillis();
             if (this.engine.getState() == GameState.RUNNING
-                    || this.engine.getState() == GameState.PAUSED) {
+                    || this.engine.getState() == GameState.PAUSED
+                    || this.engine.getState() == GameState.OVER) {
                 this.engine.update();
             }
         }

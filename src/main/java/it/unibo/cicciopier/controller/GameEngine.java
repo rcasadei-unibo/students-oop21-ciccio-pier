@@ -89,23 +89,25 @@ public class GameEngine implements Engine {
      */
     @Override
     public void update() {
-        // check if player is dead, the game is over
-        if (this.getWorld().getPlayer().isDead()) {
-            this.state = GameState.OVER;
-            return;
-        }
-        // for every entity check if it has to be removed, update it otherwise
-        for(Entity e : this.getWorld().getEntities()) {
-            if (e.isRemoved()) {
-                this.getWorld().removeEntity(e);
-                continue;
+        if (this.getState() == GameState.RUNNING) {
+            // check if player is dead, the game is over
+            if (this.getWorld().getPlayer().isDead()) {
+                this.state = GameState.OVER;
+                return;
             }
-            e.tick();
+            // for every entity check if it has to be removed, update it otherwise
+            for (Entity e : this.getWorld().getEntities()) {
+                if (e.isRemoved()) {
+                    this.getWorld().removeEntity(e);
+                    continue;
+                }
+                e.tick();
+            }
+            // process input
+            this.processInput();
+            // update player
+            this.getWorld().getPlayer().tick();
         }
-        // process input
-        this.processInput();
-        // update player
-        this.getWorld().getPlayer().tick();
         // update view
         this.view.render();
     }

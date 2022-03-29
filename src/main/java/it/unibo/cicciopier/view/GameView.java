@@ -82,6 +82,9 @@ public class GameView extends JFrame implements View, KeyListener {
     @Override
     public void keyPressed(final KeyEvent e) {
         switch (e.getKeyCode()) {
+            case KeyEvent.VK_ESCAPE:
+                this.engine.pause();
+                break;
             case KeyEvent.VK_A:
             case KeyEvent.VK_LEFT:
                 this.engine.getInput().setPressed(Input.LEFT);

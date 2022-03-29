@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.view;
 
+import it.unibo.cicciopier.controller.GameState;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.model.entities.base.Entity;
@@ -62,6 +63,14 @@ public class LevelView extends JPanel {
             g.drawRect(p.getPos().getX(), p.getPos().getY(), p.getWidth() - 1, p.getHeight() - 1);
         } else {
             p.getView().render(g);
+        }
+        if (this.view.getEngine().getState() == GameState.PAUSED) {
+            g.setColor(Color.BLACK);
+            g.drawString("PAUSED", p.getPos().getX(), p.getPos().getY() - 30);
+        }
+        if (this.view.getEngine().getState() == GameState.OVER) {
+            g.setColor(Color.BLACK);
+            g.drawString("GAME OVER!", p.getPos().getX(), p.getPos().getY() - 30);
         }
         // dispose
         g.dispose();
