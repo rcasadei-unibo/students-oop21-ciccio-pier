@@ -1,10 +1,15 @@
 package it.unibo.cicciopier.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Simple implementation of the interface {@link Loop}.
  */
 public class GameLoop extends Thread implements Loop {
-    private static final int TICK_TIME = 10;
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameLoop.class);
+    private static final int TPS = 100;
+    private static final int TICK_TIME = 1000 / TPS;
 
     private final Engine engine;
     private boolean running;
@@ -44,6 +49,9 @@ public class GameLoop extends Thread implements Loop {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            } else if (lastLoopTime != 0 && deltaTime > TICK_TIME) {
+                long behind = deltaTime - TICK_TIME;
+                LOGGER.warn("Can't keep up! Did the system time change, or is the game overloaded? Running {}ms behind, skipping {} tick(s)", behind, behind / TPS);
             }
             lastLoopTime = System.currentTimeMillis();
             if (this.engine.getState() == GameState.RUNNING
