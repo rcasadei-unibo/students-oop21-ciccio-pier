@@ -3,6 +3,7 @@ package it.unibo.cicciopier.view.menu;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.CustomButton;
 
 import javax.swing.*;
@@ -11,20 +12,20 @@ import java.awt.image.BufferedImage;
 
 public class LeaderboardView extends JPanel {
     private final BufferedImage background;
+    private final JLabel loggedUser;
+    private final MainMenuController mainMenuController;
 
     public LeaderboardView(MainMenuController mainMenuController) {
 
-        BufferedImage[] bufferedImage = new BufferedImage[3];
-        bufferedImage[0] = Texture.SETTINGS_BUTTON.getTexture();
-        bufferedImage[1] = Texture.SETTINGS_BUTTON_PRESSED.getTexture();
-        bufferedImage[2] = Texture.SETTINGS_BUTTON_HOVER.getTexture();
-        CustomButton settings = new CustomButton(mainMenuController,new Dimension(85, 85),bufferedImage, MenuAction.SHOW,true,ViewPanels.SETTINGS);
+        this.mainMenuController = mainMenuController;
 
-        bufferedImage = new BufferedImage[3];
-        bufferedImage[0] = Texture.HOME_BUTTON.getTexture();
-        bufferedImage[1] = Texture.HOME_BUTTON_PRESSED.getTexture();
-        bufferedImage[2] = Texture.HOME_BUTTON_HOVER.getTexture();
-        CustomButton home = new CustomButton(mainMenuController,new Dimension(85, 85),bufferedImage, MenuAction.SHOW,true,ViewPanels.MAIN_MENU);
+        this.loggedUser = new JLabel("Logged user: " + this.mainMenuController.getUsername());
+
+        CustomButton settings = new CustomButton(this.mainMenuController, Buttons.SETTINGS);
+
+        CustomButton home = new CustomButton(this.mainMenuController, Buttons.HOME);
+
+        this.loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
 
 
         Dimension size = new Dimension(1536, 768);
@@ -34,6 +35,7 @@ public class LeaderboardView extends JPanel {
         this.setLayout(null);
         this.add(home);
         this.add(settings);
+        this.add(loggedUser);
 
         final Dimension sizeSettings = settings.getPreferredSize();
         final int settingsWidthOffset = size.width - sizeSettings.width - 60;
@@ -42,8 +44,7 @@ public class LeaderboardView extends JPanel {
 
         settings.setBounds(settingsWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
         home.setBounds(homeWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
-
-
+        loggedUser.setBounds(homeWidthOffset, settingsHeightOffset + sizeSettings.height + 10, 300, 30);
 
 
     }
@@ -55,6 +56,10 @@ public class LeaderboardView extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
+    }
+
+    public void updateLoggedUser() {
+        loggedUser.setText(("Logged user: " + mainMenuController.getUsername()));
     }
 
 }

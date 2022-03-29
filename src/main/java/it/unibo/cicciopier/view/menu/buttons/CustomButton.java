@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.AudioController;
+import it.unibo.cicciopier.controller.GameEngine;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.model.Sound;
@@ -19,30 +20,28 @@ public class CustomButton extends JComponent implements MouseListener {
     private final BufferedImage[] image;
     private int buttonStatus;
     private final MenuAction menuAction;
-    private ViewPanels viewPanels;
+    private final ViewPanels viewPanels;
     private final boolean hasHover;
+    private final GameEngine gameEngine;
 
 
     /**
      * This constructor calls the fathers constructor and adds the implementation of a mouse listener
      */
-    public CustomButton(MainMenuController mainMenuController, Dimension dimension, BufferedImage[] image, MenuAction action, boolean hasHover) {
+    public CustomButton(MainMenuController mainMenuController, Buttons button) {
         super();
 
-        this.dimension = dimension;
+        this.dimension = button.dimension;
         this.mainMenuController = mainMenuController;
         this.enableInputMethods(true);
         this.addMouseListener(this);
         this.buttonStatus = 0;
-        this.image = image;
-        this.hasHover = hasHover;
-        this.menuAction = action;
+        this.image = button.bufferedImage;
+        this.hasHover = button.hasHover;
+        this.menuAction = button.menuAction;
+        this.viewPanels = button.viewPanels;
+        this.gameEngine = button.gameEngine;
 
-
-    }
-    public CustomButton(MainMenuController mainMenuController, Dimension dimension, BufferedImage[] image, MenuAction action,boolean hasHover, ViewPanels viewPanels) {
-        this(mainMenuController,dimension,image,action,hasHover);
-        this.viewPanels = viewPanels;
 
     }
 
@@ -106,9 +105,11 @@ public class CustomButton extends JComponent implements MouseListener {
     public void mouseReleased(MouseEvent e) {
         this.buttonStatus = 0;
         this.repaint();
-        if(viewPanels!=null){
-            mainMenuController.action(this.menuAction,this.viewPanels);
-        }else mainMenuController.action(this.menuAction);
+        if (viewPanels != null) {
+            this.mainMenuController.show(this.viewPanels);
+        } else if (this.menuAction == MenuAction.PLAY_LEVEL && this.gameEngine != null) {
+            this.mainMenuController.startLevel(this.gameEngine);
+        } else this.mainMenuController.action(this.menuAction);
 
     }
 

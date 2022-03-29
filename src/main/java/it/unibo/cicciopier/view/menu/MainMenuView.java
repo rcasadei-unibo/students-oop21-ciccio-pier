@@ -13,47 +13,45 @@ public class MainMenuView extends JPanel {
     private static final int BUTTON_HEIGHT = 322;
     private static final int BUTTON_SPACE = 15;
     private final BufferedImage background;
+    private final JLabel loggedUser;
+    private final MainMenuController mainMenuController;
 
 
     public MainMenuView(MainMenuController mainMenuController) {
 
-        BufferedImage[] bufferedImage = new BufferedImage[3];
-        bufferedImage[0] = Texture.SETTINGS_BUTTON.getTexture();
-        bufferedImage[1] = Texture.SETTINGS_BUTTON_PRESSED.getTexture();
-        bufferedImage[2] = Texture.SETTINGS_BUTTON_HOVER.getTexture();
-        CustomButton settings = new CustomButton(mainMenuController,new Dimension(85, 85),bufferedImage, MenuAction.SHOW,true,ViewPanels.SETTINGS);
+        this.mainMenuController = mainMenuController;
 
-        bufferedImage = new BufferedImage[3];
-        bufferedImage[0] = Texture.PLAY_BUTTON.getTexture();
-        bufferedImage[1] = Texture.PLAY_BUTTON_PRESSED.getTexture();
-        CustomButton play = new CustomButton(mainMenuController,new Dimension(280, 106),bufferedImage, MenuAction.SHOW,false,ViewPanels.LEVEL_SELECTION);
+        this.loggedUser = new JLabel("Logged user: " + this.mainMenuController.getUsername());
 
-        bufferedImage = new BufferedImage[3];
-        bufferedImage[0] = Texture.LEADERBOARD_BUTTON.getTexture();
-        bufferedImage[1] = Texture.LEADERBOARD_BUTTON_PRESSED.getTexture();
-        CustomButton leaderboard = new CustomButton(mainMenuController,new Dimension(280, 106),bufferedImage, MenuAction.SHOW,false,ViewPanels.LEADERBOARD);
+        CustomButton settings = new CustomButton(this.mainMenuController, Buttons.SETTINGS);
 
-        bufferedImage = new BufferedImage[3];
-        bufferedImage[0] = Texture.QUIT_BUTTON.getTexture();
-        bufferedImage[1] = Texture.QUIT_BUTTON_PRESSED.getTexture();
-        CustomButton quit = new CustomButton(mainMenuController,new Dimension(280, 106),bufferedImage, MenuAction.QUIT,false);
+        CustomButton play = new CustomButton(this.mainMenuController, Buttons.PLAY);
+
+        CustomButton leaderboard = new CustomButton(this.mainMenuController, Buttons.LEADERBOARD);
+
+        CustomButton quit = new CustomButton(this.mainMenuController, Buttons.QUIT);
+
+        this.loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
 
         Dimension size = new Dimension(1536, 768);
         this.setPreferredSize(size);
         background = Texture.MENU_BACKGROUND.getTexture();
+
 
         this.setLayout(null);
         this.add(play);
         this.add(leaderboard);
         this.add(settings);
         this.add(quit);
+        this.add(loggedUser);
+
 
         final Dimension sizeButton = play.getPreferredSize();
         final Dimension sizeSettings = settings.getPreferredSize();
         final int width = size.width / 2 - sizeButton.width / 2;
         final int spacing = sizeButton.height + BUTTON_SPACE;
         final int settingsWidth = size.width - sizeSettings.width - 60;
-        final int settingsOffset = 20;
+        final int settingsHeightOffset = 20;
 
         play.setBounds(width, BUTTON_HEIGHT, sizeButton.width, sizeButton.height);
 
@@ -61,9 +59,9 @@ public class MainMenuView extends JPanel {
 
         quit.setBounds(width, BUTTON_HEIGHT + spacing * 2, sizeButton.width, sizeButton.height);
 
-        settings.setBounds(settingsWidth, settingsOffset, sizeSettings.width, sizeSettings.height);
+        settings.setBounds(settingsWidth, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
 
-        this.repaint();
+        loggedUser.setBounds(60, settingsHeightOffset, 300, 30);
 
 
     }
@@ -75,5 +73,9 @@ public class MainMenuView extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
+    }
+
+    public void updateLoggedUser() {
+        loggedUser.setText(("Logged user: " + mainMenuController.getUsername()));
     }
 }

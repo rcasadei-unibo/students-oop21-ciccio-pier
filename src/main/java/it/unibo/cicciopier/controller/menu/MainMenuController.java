@@ -3,6 +3,8 @@ package it.unibo.cicciopier.controller.menu;
 
 import it.unibo.cicciopier.App;
 import it.unibo.cicciopier.controller.AudioController;
+import it.unibo.cicciopier.controller.GameEngine;
+import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.view.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,13 +13,15 @@ import org.slf4j.LoggerFactory;
 public class MainMenuController implements MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
     private final AudioController audioController;
-    private static int MAX_VOLUME = 1;
-    private static int MIN_VOLUME = 0;
+    private static final int MAX_VOLUME = 1;
+    private static final int MIN_VOLUME = 0;
     private final MenuManagerView menu;
+    private String username;
 
     public MainMenuController() {
         this.menu = new MenuManagerView(this);
         this.audioController = AudioController.getAudioController();
+        this.audioController.playMusic(Music.BACKGROUND);
     }
 
     public void action(MenuAction menuAction) {
@@ -64,19 +68,31 @@ public class MainMenuController implements MenuController {
             case QUIT: {
                 quitAction();
             }
+            case LOGIN:{
+                //TODO check if a Json called after the username given exist and load it or create a new one
+                this.username = menu.getLoginView().getUsername();
+                this.show(ViewPanels.MAIN_MENU);
+                break;
+            }
+            case LOGOUT:{
+                this.username = null;
+                this.show(ViewPanels.LOGIN);
+            }
         }
     }
 
-    public void action(MenuAction menuAction, ViewPanels viewPanels) {
-        switch (menuAction) {
-            case SHOW: {
-                show(viewPanels);
-                break;
-            }
-            case PLAY_LEVEL: {
-                LOGGER.info("Action PLAY_LEVEL called Wrongly");
-                break;
-            }
+    public void startLevel( GameEngine gameEngine){
+        LOGGER.info("Starting level...");
+
+        try {
+            AudioController.getAudioController().stopMusic(Music.BACKGROUND);
+            this.menu.setVisible(false);
+            AudioController.getAudioController().playMusic(Music.GAME);
+            gameEngine.load();
+            gameEngine.start();
+        } catch (Exception e) {
+            LOGGER.error("Error starting game...", e);
+            System.exit(1);
         }
     }
 
@@ -101,5 +117,7 @@ public class MainMenuController implements MenuController {
         System.exit(0);
     }
 
-
+    public String getUsername() {
+        return username;
+    }
 }

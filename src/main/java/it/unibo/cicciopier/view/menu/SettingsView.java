@@ -4,6 +4,7 @@ import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.CustomButton;
 
 import javax.swing.*;
@@ -14,40 +15,33 @@ public class SettingsView extends JPanel {
     private final BufferedImage background;
     private final JLabel gameAudio;
     private final JLabel musicAudio;
+    private final JLabel loggedUser;
+    private final MainMenuController mainMenuController;
 
     public SettingsView(MainMenuController mainMenuController) {
 
-        BufferedImage[] bufferedImage = new BufferedImage[3];
-        bufferedImage[0] = Texture.HOME_BUTTON.getTexture();
-        bufferedImage[1] = Texture.HOME_BUTTON_PRESSED.getTexture();
-        bufferedImage[2] = Texture.HOME_BUTTON_HOVER.getTexture();
-        CustomButton home = new CustomButton(mainMenuController, new Dimension(85, 85), bufferedImage, MenuAction.SHOW, true, ViewPanels.MAIN_MENU);
+        this.mainMenuController = mainMenuController;
 
-        bufferedImage = new BufferedImage[2];
-        bufferedImage[0] = Texture.PLUS_AUDIO_BUTTON.getTexture();
-        bufferedImage[1] = Texture.PLUS_AUDIO_BUTTON_PRESSED.getTexture();
-        CustomButton plusSound = new CustomButton(mainMenuController, new Dimension(50, 57), bufferedImage, MenuAction.INCREASE_GAME_AUDIO, false);
+        this.loggedUser = new JLabel("Logged user: " + mainMenuController.getUsername());
 
-        bufferedImage = new BufferedImage[2];
-        bufferedImage[0] = Texture.MINUS_AUDIO_BUTTON.getTexture();
-        bufferedImage[1] = Texture.MINUS_AUDIO_BUTTON_PRESSED.getTexture();
-        CustomButton minusSound = new CustomButton(mainMenuController, new Dimension(50, 57), bufferedImage, MenuAction.DECREASE_GAME_AUDIO, false);
+        CustomButton home = new CustomButton(mainMenuController, Buttons.HOME);
 
-        bufferedImage = new BufferedImage[2];
-        bufferedImage[0] = Texture.PLUS_AUDIO_BUTTON.getTexture();
-        bufferedImage[1] = Texture.PLUS_AUDIO_BUTTON_PRESSED.getTexture();
-        CustomButton plusMusic = new CustomButton(mainMenuController, new Dimension(50, 57), bufferedImage, MenuAction.INCREASE_MUSIC_AUDIO, false);
+        CustomButton plusSound = new CustomButton(mainMenuController, Buttons.PLUS_GAME_AUDIO);
 
-        bufferedImage = new BufferedImage[2];
-        bufferedImage[0] = Texture.MINUS_AUDIO_BUTTON.getTexture();
-        bufferedImage[1] = Texture.MINUS_AUDIO_BUTTON_PRESSED.getTexture();
-        CustomButton minusMusic = new CustomButton(mainMenuController, new Dimension(50, 57), bufferedImage, MenuAction.DECREASE_MUSIC_AUDIO, false);
+        CustomButton minusSound = new CustomButton(mainMenuController, Buttons.MINUS_GAME_AUDIO);
+
+        CustomButton plusMusic = new CustomButton(mainMenuController, Buttons.PLUS_MUSIC_AUDIO);
+
+        CustomButton minusMusic = new CustomButton(mainMenuController, Buttons.MINUS_MUSIC_AUDIO);
+
 
         this.gameAudio = new JLabel(Math.round(AudioController.getAudioController().getSoundVolume() * 100) + "%");
         this.musicAudio = new JLabel(Math.round(AudioController.getAudioController().getMusicVolume() * 100) + "%");
-        Font font = gameAudio.getFont().deriveFont(Font.BOLD,25);
+        Font font = gameAudio.getFont().deriveFont(Font.BOLD, 25);
         gameAudio.setFont(font);
         musicAudio.setFont(font);
+
+        this.loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
 
         Dimension size = new Dimension(1536, 768);
         this.setPreferredSize(size);
@@ -61,6 +55,7 @@ public class SettingsView extends JPanel {
         this.add(minusMusic);
         this.add(gameAudio);
         this.add(musicAudio);
+        this.add(this.loggedUser);
 
         final Dimension sizeHome = home.getPreferredSize();
         final int homeWidthOffset = 60;
@@ -73,18 +68,18 @@ public class SettingsView extends JPanel {
         plusMusic.setBounds(audioWidthOffset, audioHeightOffset + 60, plusSound.getPreferredSize().width, plusSound.getPreferredSize().height);
         minusSound.setBounds(audioWidthOffset + 150, audioHeightOffset, plusSound.getPreferredSize().width, plusSound.getPreferredSize().height);
         minusMusic.setBounds(audioWidthOffset + 150, audioHeightOffset + 60, plusSound.getPreferredSize().width, plusSound.getPreferredSize().height);
+        gameAudio.setBounds(minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x - plusSound.getPreferredSize().width) + 20, audioHeightOffset, 80, 50);
+        musicAudio.setBounds(minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x - plusSound.getPreferredSize().width) + 20, audioHeightOffset + 60, 80, 50);
+        loggedUser.setBounds(homeWidthOffset, settingsHeightOffset + sizeHome.height + 10, 300, 30);
 
-        //TODO fix how the distance is calculated
-        gameAudio.setBounds (minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x -plusSound.getPreferredSize().width) + 20 , audioHeightOffset, 80, 50);
-        musicAudio.setBounds(minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x -plusSound.getPreferredSize().width) + 20 , audioHeightOffset + 60, 80, 50);
     }
 
-    public void updateGameAudioText(){
+    public void updateGameAudioText() {
         this.gameAudio.setText(Math.round(AudioController.getAudioController().getSoundVolume() * 100) + "%");
         this.gameAudio.repaint();
     }
 
-    public void updateMusicAudioText(){
+    public void updateMusicAudioText() {
         this.musicAudio.setText(Math.round(AudioController.getAudioController().getMusicVolume() * 100) + "%");
         this.musicAudio.repaint();
     }
@@ -96,6 +91,11 @@ public class SettingsView extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
+    }
+
+    public void updateLoggedUser() {
+        this.loggedUser.setText("Logged user: " + this.mainMenuController.getUsername());
+        this.loggedUser.repaint();
     }
 
 }

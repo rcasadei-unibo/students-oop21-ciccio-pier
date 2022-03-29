@@ -34,30 +34,34 @@ public class MenuManagerView extends JFrame implements StaticView {
 
     }
 
-    public void setVisible(ViewPanels viewPanels){
+    public void setVisible(ViewPanels viewPanels) {
         this.getContentPane().removeAll();
-        switch (viewPanels){
-            case LEVEL_SELECTION:{
+        switch (viewPanels) {
+            case LEVEL_SELECTION: {
+                levelSelectionView.updateLoggedUser();
                 this.getContentPane().add(levelSelectionView);
                 levelSelectionView.repaint();
                 break;
             }
-            case MAIN_MENU:{
+            case MAIN_MENU: {
+                mainMenuView.updateLoggedUser();
                 this.getContentPane().add(mainMenuView);
                 mainMenuView.repaint();
                 break;
             }
-            case LOGIN:{
+            case LOGIN: {
                 this.getContentPane().add(loginView);
                 loginView.repaint();
                 break;
             }
-            case  SETTINGS:{
+            case SETTINGS: {
+                settingsView.updateLoggedUser();
                 this.getContentPane().add(settingsView);
                 settingsView.repaint();
                 break;
             }
-            case LEADERBOARD:{
+            case LEADERBOARD: {
+                leaderboardView.updateLoggedUser();
                 this.getContentPane().add(leaderboardView);
                 leaderboardView.repaint();
                 break;
@@ -68,5 +72,9 @@ public class MenuManagerView extends JFrame implements StaticView {
 
     public SettingsView getSettingsView() {
         return settingsView;
+    }
+
+    public LoginView getLoginView() {
+        return loginView;
     }
 }
