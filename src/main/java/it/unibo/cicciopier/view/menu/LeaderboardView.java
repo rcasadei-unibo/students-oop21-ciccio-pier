@@ -26,6 +26,7 @@ public class LeaderboardView extends JPanel {
         CustomButton home = new CustomButton(this.mainMenuController, Buttons.HOME);
 
         this.loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
+        this.loggedUser.setForeground(Color.WHITE);
 
 
         Dimension size = new Dimension(1536, 768);

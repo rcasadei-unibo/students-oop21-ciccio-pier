@@ -56,5 +56,8 @@ public class LoginView extends JPanel {
     public String getUsername() {
         return this.textField.getText();
     }
+    public void logout(){
+        this.textField.setText("");
+    }
 
 }

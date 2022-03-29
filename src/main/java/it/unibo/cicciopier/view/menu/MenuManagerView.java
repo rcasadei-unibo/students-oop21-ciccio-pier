@@ -14,7 +14,7 @@ public class MenuManagerView extends JFrame implements StaticView {
     private final LoginView loginView;
 
     public MenuManagerView(MainMenuController mainMenuController) {
-        this.setName("FATTY PIER THE GAME!");
+        this.setTitle("CICCIO PIER THE GAME!");
 
         this.mainMenuView = new MainMenuView(mainMenuController);
         this.levelSelectionView = new LevelSelectionView(mainMenuController);

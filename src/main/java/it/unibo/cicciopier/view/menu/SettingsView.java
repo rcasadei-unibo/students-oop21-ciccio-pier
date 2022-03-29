@@ -34,6 +34,8 @@ public class SettingsView extends JPanel {
 
         CustomButton minusMusic = new CustomButton(mainMenuController, Buttons.MINUS_MUSIC_AUDIO);
 
+        CustomButton logout = new CustomButton(mainMenuController, Buttons.LOGOUT);
+
 
         this.gameAudio = new JLabel(Math.round(AudioController.getAudioController().getSoundVolume() * 100) + "%");
         this.musicAudio = new JLabel(Math.round(AudioController.getAudioController().getMusicVolume() * 100) + "%");
@@ -42,6 +44,7 @@ public class SettingsView extends JPanel {
         musicAudio.setFont(font);
 
         this.loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
+        this.loggedUser.setForeground(Color.WHITE);
 
         Dimension size = new Dimension(1536, 768);
         this.setPreferredSize(size);
@@ -56,12 +59,15 @@ public class SettingsView extends JPanel {
         this.add(gameAudio);
         this.add(musicAudio);
         this.add(this.loggedUser);
+        this.add(logout);
 
         final Dimension sizeHome = home.getPreferredSize();
         final int homeWidthOffset = 60;
         final int settingsHeightOffset = 20;
         final int audioWidthOffset = size.width / 2 - plusMusic.getPreferredSize().width;
         final int audioHeightOffset = size.height / 2 - minusMusic.getPreferredSize().height + 50;
+        final int logoutWidthOffset = size.width / 2 - logout.getPreferredSize().width / 2;
+        final int logoutHeightOffset = audioHeightOffset + 210;
 
         home.setBounds(homeWidthOffset, settingsHeightOffset, sizeHome.width, sizeHome.height);
         plusSound.setBounds(audioWidthOffset, audioHeightOffset, plusSound.getPreferredSize().width, plusSound.getPreferredSize().height);
@@ -71,6 +77,7 @@ public class SettingsView extends JPanel {
         gameAudio.setBounds(minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x - plusSound.getPreferredSize().width) + 20, audioHeightOffset, 80, 50);
         musicAudio.setBounds(minusSound.getBounds().x - (minusSound.getBounds().x - plusSound.getBounds().x - plusSound.getPreferredSize().width) + 20, audioHeightOffset + 60, 80, 50);
         loggedUser.setBounds(homeWidthOffset, settingsHeightOffset + sizeHome.height + 10, 300, 30);
+        logout.setBounds(logoutWidthOffset, logoutHeightOffset, logout.getPreferredSize().width, logout.getPreferredSize().height);
 
     }
 

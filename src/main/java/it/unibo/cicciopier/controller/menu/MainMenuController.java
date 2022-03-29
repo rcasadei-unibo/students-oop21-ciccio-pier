@@ -9,6 +9,8 @@ import it.unibo.cicciopier.view.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Timer;
+
 
 public class MainMenuController implements MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
@@ -22,6 +24,7 @@ public class MainMenuController implements MenuController {
         this.menu = new MenuManagerView(this);
         this.audioController = AudioController.getAudioController();
         this.audioController.playMusic(Music.BACKGROUND);
+        this.show(ViewPanels.LOGIN);
     }
 
     public void action(MenuAction menuAction) {
@@ -35,7 +38,7 @@ public class MainMenuController implements MenuController {
             }
             case INCREASE_MUSIC_AUDIO: {
                 if (audioController.getMusicVolume() != MAX_VOLUME) {
-                    audioController.setMusicVolume((float) ((Math.round(audioController.getMusicVolume()*100) + 10))/100);
+                    audioController.setMusicVolume((float) ((Math.round(audioController.getMusicVolume() * 100) + 10)) / 100);
                     menu.getSettingsView().updateMusicAudioText();
                     LOGGER.info("Music volume set to:" + audioController.getMusicVolume() * 100 + "%");
                 }
@@ -43,7 +46,7 @@ public class MainMenuController implements MenuController {
             }
             case DECREASE_MUSIC_AUDIO: {
                 if (audioController.getMusicVolume() != MIN_VOLUME) {
-                    audioController.setMusicVolume((float) ((Math.round(audioController.getMusicVolume()*100) - 10))/100);
+                    audioController.setMusicVolume((float) ((Math.round(audioController.getMusicVolume() * 100) - 10)) / 100);
                     menu.getSettingsView().updateMusicAudioText();
                     LOGGER.info("Music volume set to:" + audioController.getMusicVolume() * 100 + "%");
                 }
@@ -51,7 +54,7 @@ public class MainMenuController implements MenuController {
             }
             case INCREASE_GAME_AUDIO: {
                 if (audioController.getSoundVolume() != MAX_VOLUME) {
-                    audioController.setSoundVolume((float) ((Math.round(audioController.getSoundVolume()*100) + 10))/100);
+                    audioController.setSoundVolume((float) ((Math.round(audioController.getSoundVolume() * 100) + 10)) / 100);
                     menu.getSettingsView().updateGameAudioText();
                     LOGGER.info("Game volume set to:" + audioController.getSoundVolume() * 100 + "%");
                 }
@@ -59,7 +62,7 @@ public class MainMenuController implements MenuController {
             }
             case DECREASE_GAME_AUDIO: {
                 if (audioController.getSoundVolume() != MIN_VOLUME) {
-                    audioController.setSoundVolume((float) ((Math.round(audioController.getSoundVolume()*100) - 10))/100);
+                    audioController.setSoundVolume((float) ((Math.round(audioController.getSoundVolume() * 100) - 10)) / 100);
                     menu.getSettingsView().updateGameAudioText();
                     LOGGER.info("Game volume set to:" + audioController.getSoundVolume() * 100 + "%");
                 }
@@ -76,6 +79,7 @@ public class MainMenuController implements MenuController {
             }
             case LOGOUT:{
                 this.username = null;
+                menu.getLoginView().logout();
                 this.show(ViewPanels.LOGIN);
             }
         }

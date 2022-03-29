@@ -22,6 +22,7 @@ public class MainMenuView extends JPanel {
         this.mainMenuController = mainMenuController;
 
         this.loggedUser = new JLabel("Logged user: " + this.mainMenuController.getUsername());
+        this.loggedUser.setForeground(Color.WHITE);
 
         CustomButton settings = new CustomButton(this.mainMenuController, Buttons.SETTINGS);
 

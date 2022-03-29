@@ -35,6 +35,7 @@ public class LevelSelectionView extends JPanel {
 
 
         loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
+        this.loggedUser.setForeground(Color.WHITE);
 
         Dimension size = new Dimension(1536, 768);
         this.setPreferredSize(size);

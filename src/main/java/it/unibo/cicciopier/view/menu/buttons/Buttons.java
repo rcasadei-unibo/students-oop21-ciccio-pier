@@ -34,6 +34,10 @@ public enum Buttons {
      */
     SUBMIT(new Dimension(150, 57), new BufferedImage[]{Texture.SUBMIT_BUTTON.getTexture(), Texture.SUBMIT_BUTTON_PRESSED.getTexture()}, MenuAction.LOGIN, false, null, null),
     /**
+     * An implementation of the Texture {@link Texture#SUBMIT_BUTTON}
+     */
+    LOGOUT(new Dimension(150, 57), new BufferedImage[]{Texture.LOGOUT_BUTTON.getTexture(), Texture.LOGOUT_BUTTON_PRESSED.getTexture()}, MenuAction.LOGOUT, false, null, null),
+    /**
      * An implementation of the Texture {@link Texture#LEVEL_BUTTON_1}
      */
     LEVEL1(new Dimension(90, 90), new BufferedImage[]{Texture.LEVEL_BUTTON_1.getTexture(), Texture.LEVEL_BUTTON_1_PRESSED.getTexture()}, MenuAction.PLAY_LEVEL, false, null, new GameEngine("level-1-1.tmx")),

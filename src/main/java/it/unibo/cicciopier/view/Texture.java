@@ -65,6 +65,14 @@ public enum Texture {
      */
     SUBMIT_BUTTON("/menuGraphics/buttons/submitButton/submitButton.png"),
     /**
+     * Represents the button used to logout from the current user
+     */
+    LOGOUT_BUTTON("/menuGraphics/buttons/logoutButton/logoutButton.png"),
+    /**
+     * Represents the button used to logout from the current user while pressed
+     */
+    LOGOUT_BUTTON_PRESSED("/menuGraphics/buttons/logoutButton/logoutButtonPressed.png"),
+    /**
      * Represents the button used to access the first level
      */
     SUBMIT_BUTTON_PRESSED("/menuGraphics/buttons/submitButton/submitButtonPressed.png"),
