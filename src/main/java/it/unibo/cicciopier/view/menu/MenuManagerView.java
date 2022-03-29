@@ -4,7 +4,6 @@ import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.StaticView;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MenuManagerView extends JFrame implements StaticView {
     private final MainMenuView mainMenuView;

@@ -9,7 +9,6 @@ import it.unibo.cicciopier.view.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Timer;
 
 
 public class MainMenuController implements MenuController {
@@ -107,13 +106,6 @@ public class MainMenuController implements MenuController {
     public void show(ViewPanels viewPanels) {
         LOGGER.info("Changing menu view to: " + viewPanels);
         menu.setVisible(viewPanels);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void hide() {
-
     }
 
     public void quitAction() {

@@ -1,7 +1,5 @@
 package it.unibo.cicciopier.controller.menu;
 
-import it.unibo.cicciopier.controller.GameEngine;
-
 public enum MenuAction {
     PLAY_LEVEL(),
     INCREASE_MUSIC_AUDIO(),
