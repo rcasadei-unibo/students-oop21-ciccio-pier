@@ -66,7 +66,8 @@ public enum Music {
      * @param musicVolume how much it needs to change
      */
     public void changeVolume(final float musicVolume) {
+        final float startingDecibel  = 80F;
         FloatControl volume = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(20F * (float) Math.log10(musicVolume));
+        volume.setValue(startingDecibel * (float) Math.log10(musicVolume));
     }
 }

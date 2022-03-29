@@ -95,12 +95,13 @@ public enum Sound {
      */
     public void playSound(final float soundVolume) {
         try {
+            final float startingDecibel  = 80F;
             Clip clip = AudioSystem.getClip();
             ByteArrayInputStream bis = new ByteArrayInputStream(this.bytes);
             AudioInputStream ais = AudioSystem.getAudioInputStream(bis);
             clip.open(ais);
             FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            volume.setValue(20F * (float) Math.log10(soundVolume));
+            volume.setValue(startingDecibel * (float) Math.log10(soundVolume));
             clip.setFramePosition(0);
             clip.start();
             //close the streams

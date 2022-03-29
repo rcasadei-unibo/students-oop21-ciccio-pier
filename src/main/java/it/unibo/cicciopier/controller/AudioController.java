@@ -8,7 +8,7 @@ import it.unibo.cicciopier.model.Music;
  */
 public class AudioController {
     private static AudioController audioController = null;
-    private static final float MAX_VOLUME = 1;
+    private static final float STARTING_VOLUME = 0.5F;
 
     private float musicVolume;
     private float soundVolume;
@@ -17,8 +17,8 @@ public class AudioController {
      * Private Constructor for this class, so only one instance of this class can be created
      */
     private AudioController() {
-        this.musicVolume = AudioController.MAX_VOLUME;
-        this.soundVolume = AudioController.MAX_VOLUME;
+        this.musicVolume = AudioController.STARTING_VOLUME;
+        this.soundVolume = AudioController.STARTING_VOLUME;
     }
 
     /**
