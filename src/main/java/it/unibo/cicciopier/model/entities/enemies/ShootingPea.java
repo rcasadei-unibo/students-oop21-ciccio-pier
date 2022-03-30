@@ -4,23 +4,22 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.entities.enemies.ShootingPeaView;
+import it.unibo.cicciopier.view.entities.enemies.EnemyView;
 
 public class ShootingPea extends SimpleEnemy {
 
-    public static final int MAX_RIGHT_OFFSET = 32*3;
+    public static final int MAX_RIGHT_OFFSET = 32 * 3;
     public static final int IDLE_DURATION = 200;
-    public static final int ATTACK_RANGE = 32*7;
-    private final GameObjectView view;
+    public static final int ATTACK_RANGE = 32 * 7;
+    private final EnemyView view;
+    private int deathTicks;
+    private final int deathDurationTicks;
     //Can't be final due to later initialization of the pos
     private int leftPathfurthest;
     private int rightPathfurthest;
     private int currentDest;
-    private boolean specular;
     private int idleTicks;
     private boolean pathInitialized;
-    private ShootingPeaStatuses status;
-
 
     /**
      * Constructor for this class
@@ -29,15 +28,14 @@ public class ShootingPea extends SimpleEnemy {
      */
     public ShootingPea(final World world) {
         super(EntityType.SHOOTING_PEA, world);
-        this.status = ShootingPeaStatuses.IDLE;
-        this.view = new ShootingPeaView(this);
-        this.specular = true;
+        this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
+        this.setSpecular(true);
         this.idleTicks = 0;
+        this.deathTicks = 0;
+        this.deathDurationTicks = EnemyStatuses.SHOOTING_PEA_DYING.getDuration() * 100;
+        this.view = new EnemyView(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public GameObjectView getView() {
         return this.view;
@@ -48,37 +46,53 @@ public class ShootingPea extends SimpleEnemy {
      */
     @Override
     public void tick() {
-        //TODO : per contatto, fai danno con metodo ereditato. Spawn proiettile, individua inoltre un modo per aggrare?
-        if (!this.pathInitialized){
+        //TODO
+        //RN ONLY USED FOR TESTING
+        if (!this.pathInitialized) {
             this.leftPathfurthest = this.getPos().getX();
-            this.rightPathfurthest = this.leftPathfurthest + this.MAX_RIGHT_OFFSET;
+            this.rightPathfurthest = this.leftPathfurthest + MAX_RIGHT_OFFSET;
             this.currentDest = this.leftPathfurthest;
             this.pathInitialized = true;
         }
 
+        /*
         if (this.checkPlayerInRange(ATTACK_RANGE) &&
                 ((this.getWorld().getPlayer().getPos().getX() < this.getPos().getX() && this.isSpecular()) ||
-                    (this.getWorld().getPlayer().getPos().getX() > this.getPos().getX() && !this.isSpecular()))){
-                this.status = ShootingPeaStatuses.SHOOTING;
-                this.setVel(new Vector2d(0,0));
-                if (this.getWorld().getPlayer().checkCollision(this)){
-                    this.attackPlayer();
-                }
+                        (this.getWorld().getPlayer().getPos().getX() > this.getPos().getX() && !this.isSpecular()))){
+            this.status = ShootingPeaStatuses.SHOOTING;
+            this.setVel(new Vector2d(0,0));
+            if (this.getWorld().getPlayer().checkCollision(this)){
+                this.attackPlayer();
+            }
         } else {
             this.status = ShootingPeaStatuses.WALKING;
         }
+        */
 
-        if (this.getPos().getX() == this.currentDest && this.idleTicks < this.IDLE_DURATION){
-            this.status = ShootingPeaStatuses.IDLE;
-            this.setVel(new Vector2d(0,0));
+        //testing
+        if (this.getBounds().intersects(this.getWorld().getPlayer().getBounds())) {
+            this.die();
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_DYING);
+        }
+        if (this.getStatus() == EnemyStatuses.SHOOTING_PEA_DYING) {
+            this.deathTicks++;
+            if (this.deathTicks == this.deathDurationTicks) {
+                this.remove();
+            }
+            return;
+        }
+
+        if (this.getPos().getX() == this.currentDest && this.idleTicks < IDLE_DURATION) {
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
+            this.setVel(new Vector2d(0, 0));
             this.idleTicks++;
-        } else if (this.getPos().getX() == this.currentDest){
+        } else if (this.getPos().getX() == this.currentDest) {
             this.currentDest = this.currentDest == leftPathfurthest ? rightPathfurthest : leftPathfurthest;
             this.idleTicks = 0;
-            this.status = ShootingPeaStatuses.WALKING;
-            this.specular = this.specular ? false : true;
-        } else if (this.status == ShootingPeaStatuses.WALKING) {
-            this.setVel(new Vector2d(this.currentDest == leftPathfurthest? -0.4 : 0.4,0));
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_WALKING);
+            this.setSpecular(!this.getSpecular());
+        } else if (this.getStatus() == EnemyStatuses.SHOOTING_PEA_WALKING) {
+            this.setVel(new Vector2d(this.currentDest == leftPathfurthest ? -0.4 : 0.4, 0));
         }
         this.move();
     }
@@ -91,16 +105,5 @@ public class ShootingPea extends SimpleEnemy {
 
     }
 
-    /**
-     * Method used to retrieve the entity's status
-     *
-     * @return The status
-     */
-    public ShootingPeaStatuses getStatus() {
-        return this.status;
-    }
 
-    public boolean isSpecular(){
-        return this.specular;
-    }
 }

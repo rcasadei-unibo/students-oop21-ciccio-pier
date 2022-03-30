@@ -1,26 +1,24 @@
 package it.unibo.cicciopier.model.entities.enemies;
 
-/**
- * Represents the entity's status and their respective frames
- */
-public enum ShootingPeaStatuses {
+public enum EnemyStatuses {
 
     /**
      * Represents the entity standing still
      */
-    IDLE(5, 1, 0),
+    SHOOTING_PEA_IDLE(5, 1, 0),
+    NINJA_POTATO_IDLE(5,3,0),
     /**
      * Represents the entity walking
      */
-    WALKING(13, 2, 1),
+    SHOOTING_PEA_WALKING(13, 2, 1),
     /**
      * Represents the entity shooting at the player
      */
-    SHOOTING(9, 2, 2),
+    SHOOTING_PEA_SHOOTING(9, 2, 2),
     /**
      * Represents the entity dying
      */
-    DYING(11,2,3);
+    SHOOTING_PEA_DYING(11, 2, 3);
 
     private final int frames;
     private final int durationSeconds;
@@ -31,35 +29,23 @@ public enum ShootingPeaStatuses {
      *
      * @param frames The number of frames for the status's animation
      */
-    ShootingPeaStatuses(final int frames, final int seconds, final int row) {
+    EnemyStatuses(final int frames, final int seconds, final int row) {
         this.frames = frames;
         this.durationSeconds = seconds;
         this.row = row;
     }
 
-    /**
-     * Method to get the number of frames for a specific animation
-     *
-     * @return The number of frames
-     */
+
     public int getFrames() {
         return this.frames;
     }
 
-    /**
-     * Method to get the duration of the animation
-     *
-     * @return The duration, in seconds
-     */
+
     public int getDuration() {
         return this.durationSeconds;
     }
 
-    /**
-     * Method to get the row of the animation
-     *
-     * @return The row of the animation
-     */
+
     public int getRow() {
         return this.row;
     }
