@@ -24,6 +24,7 @@ public enum Texture {
      * Represents the texture of the ShootingPea
      */
     SHOOTING_PEA("/textures/enemies/shootingPea.png"),
+    NINJA_POTATO("/textures/enemies/ninjaPotato.png"),
     /**
      * Represents the texture of the Missile.
      */
