@@ -4,10 +4,14 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
+import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.entities.enemies.EnemyView;
 
+/**
+ * Represents the enemy ShootingPea, a walking pea whom attack consists into shooting
+ * peas bursting from the pod's bottom.
+ */
 public class ShootingPea extends SimpleEnemy {
-
     public static final int MAX_RIGHT_OFFSET = 32 * 3;
     public static final int IDLE_DURATION = 200;
     public static final int ATTACK_RANGE = 32 * 7;
@@ -33,9 +37,12 @@ public class ShootingPea extends SimpleEnemy {
         this.idleTicks = 0;
         this.deathTicks = 0;
         this.deathDurationTicks = EnemyStatuses.SHOOTING_PEA_DYING.getDuration() * 100;
-        this.view = new EnemyView(this);
+        this.view = new EnemyView(this, Texture.SHOOTING_PEA);
     }
 
+    /**
+     * {inheritDoc}
+     */
     @Override
     public GameObjectView getView() {
         return this.view;
@@ -55,22 +62,7 @@ public class ShootingPea extends SimpleEnemy {
             this.pathInitialized = true;
         }
 
-        /*
-        if (this.checkPlayerInRange(ATTACK_RANGE) &&
-                ((this.getWorld().getPlayer().getPos().getX() < this.getPos().getX() && this.isSpecular()) ||
-                        (this.getWorld().getPlayer().getPos().getX() > this.getPos().getX() && !this.isSpecular()))){
-            this.status = ShootingPeaStatuses.SHOOTING;
-            this.setVel(new Vector2d(0,0));
-            if (this.getWorld().getPlayer().checkCollision(this)){
-                this.attackPlayer();
-            }
-        } else {
-            this.status = ShootingPeaStatuses.WALKING;
-        }
-        */
-
-        //testing
-        if (this.getBounds().intersects(this.getWorld().getPlayer().getBounds())) {
+        if (this.getWorld().getPlayer().checkCollision(this)) {
             this.die();
             this.setStatus(EnemyStatuses.SHOOTING_PEA_DYING);
         }
@@ -80,6 +72,22 @@ public class ShootingPea extends SimpleEnemy {
                 this.remove();
             }
             return;
+        }
+
+
+        if (this.checkPlayerInRange(ATTACK_RANGE) &&
+                ((this.getWorld().getPlayer().getPos().getX() < this.getPos().getX() && this.getSpecular()) ||
+                        (this.getWorld().getPlayer().getPos().getX() > this.getPos().getX() && !this.getSpecular()))) {
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_SHOOTING);
+            this.setVel(new Vector2d(0, 0));
+            return;
+            /*
+            if (this.getWorld().getPlayer().checkCollision(this)){
+                this.attackPlayer();
+            }
+            */
+        } else {
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_WALKING);
         }
 
         if (this.getPos().getX() == this.currentDest && this.idleTicks < IDLE_DURATION) {

@@ -24,6 +24,9 @@ public enum Texture {
      * Represents the texture of the ShootingPea
      */
     SHOOTING_PEA("/textures/enemies/shootingPea.png"),
+    /**
+     * Represents the texture of the NinjaPotato
+     */
     NINJA_POTATO("/textures/enemies/ninjaPotato.png"),
     /**
      * Represents the texture of the Missile.
@@ -110,23 +113,23 @@ public enum Texture {
      */
     LEVEL_BUTTON_3_PRESSED("/menuGraphics/buttons/levelButtons/levelButton3Pressed.png"),
     /**
-     *  Represents the button used to access the boss level
+     * Represents the button used to access the boss level
      */
     LEVEL_BUTTON_BOSS("/menuGraphics/buttons/levelButtons/levelButtonBoss.png"),
     /**
-     *  Represents the button used to access the boss level while pressed
+     * Represents the button used to access the boss level while pressed
      */
     LEVEL_BUTTON_BOSS_PRESSED("/menuGraphics/buttons/levelButtons/levelButtonBossPressed.png"),
     /**
-     *  Represents the button used to access the main menu
+     * Represents the button used to access the main menu
      */
     HOME_BUTTON("/menuGraphics/buttons/homeButton/homeButton.png"),
     /**
-     *  Represents the button used to access the main menu while pressed
+     * Represents the button used to access the main menu while pressed
      */
     HOME_BUTTON_PRESSED("/menuGraphics/buttons/homeButton/homeButtonPressed.png"),
     /**
-     *   Represents the button used to access the main menu while hover it
+     * Represents the button used to access the main menu while hover it
      */
     HOME_BUTTON_HOVER("/menuGraphics/buttons/homeButton/homeButtonHover.png"),
     /**
