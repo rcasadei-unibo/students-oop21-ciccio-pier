@@ -39,17 +39,9 @@ public class TmxWorldLoader implements WorldLoader {
      * {@inheritDoc}
      */
     @Override
-    public String getLevelName() {
-        return this.level;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void load() throws Exception {
         TMXMapReader reader = new TMXMapReader();
-        URL url = App.class.getResource("/levels/" + this.level);
+        URL url = App.class.getResource("/levels/" + this.getLevelName());
         LOGGER.info("Loading file {}", url);
         // read height and width from map.
         this.map = reader.readMap(url);
@@ -63,7 +55,7 @@ public class TmxWorldLoader implements WorldLoader {
      */
     @Override
     public void loadBlocks() {
-        TileLayer layer = (TileLayer) map.getLayer(0);
+        TileLayer layer = (TileLayer) this.map.getLayer(0);
         LOGGER.info("Level {} - {}", layer.getId(), layer.getName());
         // get every tile and create a block from its id, then set it at its position and add it to the world.
         for (int ty = 0; ty < this.getWorld().getHeight(); ty++) {
@@ -75,13 +67,14 @@ public class TmxWorldLoader implements WorldLoader {
                     try {
                         type = BlockType.values()[id];
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        LOGGER.error("Invalid block id {} in {}, skipping...", id, level);
+                        LOGGER.error("Invalid block id {} in {}, skipping...", id, this.getLevelName());
                         continue;
                     }
                 }
                 Block b = this.getWorld().getBlockFactory().createBlock(type);
                 if(b == null) {
-                    LOGGER.error("Error creating block of type {} in {} at coordinates {} {}, skipping...", type.name(), level, tx, ty);
+                    LOGGER.error("Error creating block of type {} in {} at coordinates {} {}, skipping...",
+                            type.name(), this.getLevelName(), tx, ty);
                     continue;
                 }
                 b.setPos(new Vector2d(tx * Block.SIZE, ty * Block.SIZE));
@@ -96,7 +89,7 @@ public class TmxWorldLoader implements WorldLoader {
      */
     @Override
     public void loadEntities() {
-        ObjectGroup layer = (ObjectGroup) map.getLayer(1);
+        ObjectGroup layer = (ObjectGroup) this.map.getLayer(1);
         LOGGER.info("Level {} - {}", layer.getId(), layer.getName());
         // get every object and create an entity from its type, then teleport it and add it to the world.
         for (MapObject object : layer) {
@@ -105,12 +98,13 @@ public class TmxWorldLoader implements WorldLoader {
             try {
                 type = EntityType.valueOf(id);
             } catch (IllegalArgumentException e) {
-                LOGGER.error("Invalid entity type {} in {}, skipping...", id, level);
+                LOGGER.error("Invalid entity type {} in {}, skipping...", id, this.getLevelName());
                 continue;
             }
             Entity e = this.getWorld().getEntityFactory().createEntity(type);
             if(e == null) {
-                LOGGER.error("Error creating entity of type {} in {} at coordinates {} {}, skipping...", type.name(), level, object.getX(), object.getY());
+                LOGGER.error("Error creating entity of type {} in {} at coordinates {} {}, skipping...",
+                        type.name(), this.getLevelName(), object.getX(), object.getY());
                 continue;
             }
             e.setPos(new Vector2d(object.getX(), object.getY()));
@@ -124,11 +118,11 @@ public class TmxWorldLoader implements WorldLoader {
      */
     @Override
     public void loadPlayer() {
-        ObjectGroup layer = (ObjectGroup) map.getLayer(2);
+        ObjectGroup layer = (ObjectGroup) this.map.getLayer(2);
         LOGGER.info("Level {} - {}", layer.getId(), layer.getName());
         // get the first object and teleport the player there.
         MapObject object = layer.iterator().next();
-        this.world.getPlayer().setPos(new Vector2d(object.getX(), object.getY()));
+        this.getWorld().getPlayer().setPos(new Vector2d(object.getX(), object.getY()));
     }
 
     /**
@@ -137,6 +131,14 @@ public class TmxWorldLoader implements WorldLoader {
     @Override
     public World getWorld() {
         return this.world;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getLevelName() {
+        return this.level;
     }
 
 }
