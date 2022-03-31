@@ -42,8 +42,8 @@ public class EntityFactoryImpl implements EntityFactory {
         switch (type) {
             case PLAYER:
                 return Optional.of(this.createPlayer());
-            //case MISSILE:
-            //    return Optional.of(new Missile(this.world));
+            case MISSILE:
+                return Optional.of(new Missile(this.world));
             case LASER:
                 return Optional.of(new Laser(this.world));
             case CANNON_BALL:
