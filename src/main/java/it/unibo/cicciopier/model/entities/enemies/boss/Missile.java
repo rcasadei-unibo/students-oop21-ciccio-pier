@@ -11,6 +11,7 @@ import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.MissileView;
 
 
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -144,10 +145,13 @@ public class Missile extends SimpleMovingEntity {
                 this.bottomCollision() != -1 ||
                 this.rightCollision() != -1) {
             //create an explosion
-            Entity e = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
-            e.setPos(this.getPos().clone().addVector(new Vector2d(-(double) this.getWidth() / 2, 0)));
-            this.getWorld().addEntity(e);
-            this.remove();
+            Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
+            if (opt.isPresent()) {
+                Entity e = opt.get();
+                e.setPos(this.getPos().clone().addVector(new Vector2d(-(double) this.getWidth() / 2, 0)));
+                this.getWorld().addEntity(e);
+                this.remove();
+            }
         }
 
 

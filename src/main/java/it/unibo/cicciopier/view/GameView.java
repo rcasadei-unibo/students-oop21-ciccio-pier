@@ -40,7 +40,7 @@ public class GameView extends JFrame implements View, KeyListener {
         this.level.setPreferredSize(new Dimension(h * 16 / 9, h));
         this.level.setBackground(Color.CYAN);
         this.level.load();
-        this.add(level);
+        this.add(this.level);
         this.pack();
     }
 

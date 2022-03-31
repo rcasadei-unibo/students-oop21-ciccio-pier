@@ -11,6 +11,8 @@ import it.unibo.cicciopier.model.entities.enemies.boss.Missile;
 import it.unibo.cicciopier.model.items.Chicken;
 import it.unibo.cicciopier.model.items.Coin;
 
+import java.util.Optional;
+
 public class EntityFactoryImpl implements EntityFactory {
 
     private final World world;
@@ -29,33 +31,33 @@ public class EntityFactoryImpl implements EntityFactory {
      */
     @Override
     public Player createPlayer() {
-        return new PlayerImpl(EntityType.PLAYER, this.world);
+        return new PlayerImpl(this.world);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Entity createEntity(final EntityType type) {
+    public Optional<Entity> createEntity(final EntityType type) {
         switch (type) {
             case PLAYER:
-                return this.createPlayer();
-            case MISSILE:
-                return new Missile(this.world);
+                return Optional.of(this.createPlayer());
+            //case MISSILE:
+            //    return Optional.of(new Missile(this.world));
             case LASER:
-                return new Laser(this.world);
+                return Optional.of(new Laser(this.world));
             case CANNON_BALL:
-                return new CannonBall(this.world);
+                return Optional.of(new CannonBall(this.world));
             case COIN:
-                return new Coin(this.world);
+                return Optional.of(new Coin(this.world));
             case CHICKEN:
-                return new Chicken(this.world);
+                return Optional.of(new Chicken(this.world));
             case EXPLOSION:
-                return new Explosion(this.world);
+                return Optional.of(new Explosion(this.world));
             case SHOOTING_PEA:
-                return new ShootingPea(this.world);
+                return Optional.of(new ShootingPea(this.world));
             default:
-                return null;
+                return Optional.empty();
         }
     }
 }

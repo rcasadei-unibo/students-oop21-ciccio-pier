@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
+import java.util.Optional;
 
 /**
  * Simple implementation of the interface {@link WorldLoader} for tmx files.
@@ -71,12 +72,13 @@ public class TmxWorldLoader implements WorldLoader {
                         continue;
                     }
                 }
-                Block b = this.getWorld().getBlockFactory().createBlock(type);
-                if(b == null) {
+                Optional<Block> opt = this.getWorld().getBlockFactory().createBlock(type);
+                if (opt.isEmpty()) {
                     LOGGER.error("Error creating block of type {} in {} at coordinates {} {}, skipping...",
                             type.name(), this.getLevelName(), tx, ty);
                     continue;
                 }
+                Block b = opt.get();
                 b.setPos(new Vector2d(tx * Block.SIZE, ty * Block.SIZE));
                 this.getWorld().setBlock(tx, ty, b);
                 //LOGGER.info("  * Block - type: {} - x: {} - y: {}", type, tx, ty);
@@ -101,12 +103,13 @@ public class TmxWorldLoader implements WorldLoader {
                 LOGGER.error("Invalid entity type {} in {}, skipping...", id, this.getLevelName());
                 continue;
             }
-            Entity e = this.getWorld().getEntityFactory().createEntity(type);
-            if(e == null) {
+            Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(type);
+            if (opt.isEmpty()) {
                 LOGGER.error("Error creating entity of type {} in {} at coordinates {} {}, skipping...",
                         type.name(), this.getLevelName(), object.getX(), object.getY());
                 continue;
             }
+            Entity e = opt.get();
             e.setPos(new Vector2d(object.getX(), object.getY()));
             this.getWorld().addEntity(e);
             //LOGGER.info("  * Entity - type: {} - x: {} - y: {}", type, object.getX(), object.getY());

@@ -3,6 +3,8 @@ package it.unibo.cicciopier.model.entities;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 
+import java.util.Optional;
+
 /**
  * Contains methods used for creating {@link Entity} instances.
  */
@@ -21,6 +23,6 @@ public interface EntityFactory {
      * @param type the entity type
      * @return the created entity
      */
-    Entity createEntity(final EntityType type);
+    Optional<Entity> createEntity(final EntityType type);
 
 }

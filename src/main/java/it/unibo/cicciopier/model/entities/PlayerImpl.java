@@ -30,8 +30,8 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      * @param world The game's world
      * @param type  The entity's type
      */
-    public PlayerImpl(final EntityType type, final World world) {
-        super(type, world);
+    public PlayerImpl(final World world) {
+        super(EntityType.PLAYER, world);
         this.stamina = maxStamina;
         this.attackDamage = this.getType().getAttackDamage();
         this.score = 0;
