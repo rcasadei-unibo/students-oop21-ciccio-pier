@@ -3,6 +3,7 @@ package it.unibo.cicciopier.model.entities;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.model.entities.enemies.NinjaPotato;
 import it.unibo.cicciopier.model.entities.enemies.ShootingPea;
 import it.unibo.cicciopier.model.entities.enemies.boss.CannonBall;
 import it.unibo.cicciopier.model.entities.enemies.boss.Explosion;
@@ -56,6 +57,8 @@ public class EntityFactoryImpl implements EntityFactory {
                 return Optional.of(new Explosion(this.world));
             case SHOOTING_PEA:
                 return Optional.of(new ShootingPea(this.world));
+            case NINJA_POTATO:
+                return Optional.of(new NinjaPotato(this.world));
             default:
                 return Optional.empty();
         }

@@ -35,7 +35,11 @@ public enum EntityType {
     /**
      * Represents a ShootingPea
      */
-    SHOOTING_PEA(32,64,100,50);
+    SHOOTING_PEA(32,64,100,50),
+    /**
+     * Represents a NinjaPotato
+     */
+    NINJA_POTATO(32,32,100,50);
 
     private final int width;
     private final int height;

@@ -2,69 +2,28 @@ package it.unibo.cicciopier.model.entities.enemies;
 
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.GameView;
-import it.unibo.cicciopier.view.entities.enemies.ShootingPeaView;
+import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.entities.enemies.EnemyView;
 
+/**
+ * Represents the enemy ShootingPea, a walking pea whom attack consists into shooting
+ * peas bursting from the pod's bottom.
+ */
 public class ShootingPea extends SimpleEnemy {
-
-    public static final int MAX_RIGHT_OFFSET = 10;
-    private final GameObjectView view;
+    public static final int MAX_RIGHT_OFFSET = 32 * 3;
+    public static final int IDLE_DURATION = 200;
+    public static final int ATTACK_RANGE = 32 * 7;
+    private final EnemyView view;
+    private int deathTicks;
+    private final int deathDurationTicks;
     //Can't be final due to later initialization of the pos
-    private int leftPathOffset;
+    private int leftPathfurthest;
+    private int rightPathfurthest;
+    private int currentDest;
+    private int idleTicks;
     private boolean pathInitialized;
-    private Statuses status;
-    //testing
-    private int tmp = 0;
-
-    /**
-     * Represents the entity's status and their respective frames
-     */
-    public static enum Statuses {
-        /**
-         * Represents the entity standing still
-         */
-        IDLE(5,1),
-        /**
-         * Represents the entity shooting at the player
-         */
-        SHOOTING(10,3),
-        /**
-         * Represents the entity walking
-         */
-        WALKING(10,2);
-
-        private final int frames;
-        private final int durationSeconds;
-
-        /**
-         * Constructor for the entity's statuses
-         *
-         * @param frames The number of frames for the status's animation
-         */
-        Statuses(final int frames, final int seconds) {
-            this.frames = frames;
-            this.durationSeconds = seconds;
-        }
-
-        /**
-         * Method to get the number of frames for a specific animation
-         *
-         * @return The number of frames
-         */
-        public int getFrames() {
-            return this.frames;
-        }
-
-        /**
-         * Method to get the duration of the animation
-         *
-         * @return The duration, in seconds
-         */
-        public int getDuration(){
-            return this.durationSeconds;
-        }
-    }
 
     /**
      * Constructor for this class
@@ -73,12 +32,16 @@ public class ShootingPea extends SimpleEnemy {
      */
     public ShootingPea(final World world) {
         super(EntityType.SHOOTING_PEA, world);
-        this.view = new ShootingPeaView(this);
-        this.status = Statuses.IDLE;
+        this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
+        this.setSpecular(true);
+        this.idleTicks = 0;
+        this.deathTicks = 0;
+        this.deathDurationTicks = EnemyStatuses.SHOOTING_PEA_DYING.getDuration() * 100;
+        this.view = new EnemyView(this, Texture.SHOOTING_PEA);
     }
 
     /**
-     * {@inheritDoc}
+     * {inheritDoc}
      */
     @Override
     public GameObjectView getView() {
@@ -90,33 +53,65 @@ public class ShootingPea extends SimpleEnemy {
      */
     @Override
     public void tick() {
-        //TODO : per contatto, fai danno con metodo ereditato. Spawn proiettile, individua inoltre un modo per aggrare?
-        if (!this.pathInitialized){
-            this.leftPathOffset = this.getPos().getX();
+        //TODO
+        //RN ONLY USED FOR TESTING
+        if (!this.pathInitialized) {
+            this.leftPathfurthest = this.getPos().getX();
+            this.rightPathfurthest = this.leftPathfurthest + MAX_RIGHT_OFFSET;
+            this.currentDest = this.leftPathfurthest;
             this.pathInitialized = true;
         }
-        //testing
-        if (this.checkPlayerInRange(128)){
-            this.status = Statuses.WALKING;
-        } else {
-            this.status = Statuses.IDLE;
+
+        if (this.getWorld().getPlayer().checkCollision(this)) {
+            this.die();
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_DYING);
         }
+        if (this.getStatus() == EnemyStatuses.SHOOTING_PEA_DYING) {
+            this.deathTicks++;
+            if (this.deathTicks == this.deathDurationTicks) {
+                this.remove();
+            }
+            return;
+        }
+
+
+        if (this.checkPlayerInRange(ATTACK_RANGE) &&
+                ((this.getWorld().getPlayer().getPos().getX() < this.getPos().getX() && this.getSpecular()) ||
+                        (this.getWorld().getPlayer().getPos().getX() > this.getPos().getX() && !this.getSpecular()))) {
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_SHOOTING);
+            this.setVel(new Vector2d(0, 0));
+            return;
+            /*
+            if (this.getWorld().getPlayer().checkCollision(this)){
+                this.attackPlayer();
+            }
+            */
+        } else {
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_WALKING);
+        }
+
+        if (this.getPos().getX() == this.currentDest && this.idleTicks < IDLE_DURATION) {
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
+            this.setVel(new Vector2d(0, 0));
+            this.idleTicks++;
+        } else if (this.getPos().getX() == this.currentDest) {
+            this.currentDest = this.currentDest == leftPathfurthest ? rightPathfurthest : leftPathfurthest;
+            this.idleTicks = 0;
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_WALKING);
+            this.setSpecular(!this.getSpecular());
+        } else if (this.getStatus() == EnemyStatuses.SHOOTING_PEA_WALKING) {
+            this.setVel(new Vector2d(this.currentDest == leftPathfurthest ? -0.4 : 0.4, 0));
+        }
+        this.move();
     }
 
     /**
-     * {@inheritDoc}
+     * Does nothing, this entity does not jump
      */
     @Override
     public void jump() {
 
     }
 
-    /**
-     * Method used to retrieve the entity's status
-     *
-     * @return The status
-     */
-    public Statuses getStatus() {
-        return this.status;
-    }
+
 }
