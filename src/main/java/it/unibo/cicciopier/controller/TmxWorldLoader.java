@@ -75,11 +75,15 @@ public class TmxWorldLoader implements WorldLoader {
                     try {
                         type = BlockType.values()[id];
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        LOGGER.error("Invalid block id \"{}\" in {}, skipping...", id, level);
+                        LOGGER.error("Invalid block id {} in {}, skipping...", id, level);
                         continue;
                     }
                 }
                 Block b = this.getWorld().getBlockFactory().createBlock(type);
+                if(b == null) {
+                    LOGGER.error("Error creating block of type {} in {} at coordinates {} {}, skipping...", type.name(), level, tx, ty);
+                    continue;
+                }
                 b.setPos(new Vector2d(tx * Block.SIZE, ty * Block.SIZE));
                 this.getWorld().setBlock(tx, ty, b);
                 //LOGGER.info("  * Block - type: {} - x: {} - y: {}", type, tx, ty);
@@ -101,10 +105,14 @@ public class TmxWorldLoader implements WorldLoader {
             try {
                 type = EntityType.valueOf(id);
             } catch (IllegalArgumentException e) {
-                LOGGER.error("Invalid entity type \"{}\" in {}, skipping...", id, level);
+                LOGGER.error("Invalid entity type {} in {}, skipping...", id, level);
                 continue;
             }
             Entity e = this.getWorld().getEntityFactory().createEntity(type);
+            if(e == null) {
+                LOGGER.error("Error creating entity of type {} in {} at coordinates {} {}, skipping...", type.name(), level, object.getX(), object.getY());
+                continue;
+            }
             e.setPos(new Vector2d(object.getX(), object.getY()));
             this.getWorld().addEntity(e);
             //LOGGER.info("  * Entity - type: {} - x: {} - y: {}", type, object.getX(), object.getY());
