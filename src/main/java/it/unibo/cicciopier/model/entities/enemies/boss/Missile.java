@@ -18,9 +18,8 @@ import java.util.Random;
  * Create a simple missile that chase the player
  */
 public class Missile extends SimpleMovingEntity {
-    private static final int MAX_TIME = 2_000_000_000; //2 seconds
-    private static final int MIN_DISTANCE = 50;
-    private static final int MAX_DISTANCE = 70;
+    private static final int MIN_DISTANCE = 100;
+    private static final int MAX_DISTANCE = 250;
     private static final int MAX_ANGLE = 46; //in degree
     private static final int MAX_SPEED = 8;
     private static final double MAX_STEERING = 0.8;
@@ -28,10 +27,7 @@ public class Missile extends SimpleMovingEntity {
     private final MissileView missileView;
     private final Vector2d accel;
     private final int maxTravelDistance;
-    private int initialDistance;
-    private final long initialTime;
-    private boolean isOnce;
-    private boolean again;
+    private int currentDistance;
     private boolean playerCollision;
 
     /**
@@ -45,13 +41,12 @@ public class Missile extends SimpleMovingEntity {
         this.accel = new Vector2d();
         this.maxTravelDistance = new Random().
                 nextInt(Missile.MAX_DISTANCE - Missile.MIN_DISTANCE) + Missile.MIN_DISTANCE;
-        this.initialTime = System.nanoTime();
         //rotate by a random number
         this.getVel().rotateInDegree(this.randAngleInRange());
-        this.isOnce = false;
-        this.again = false;
-        this.missileView = new MissileView(this);
         this.playerCollision = false;
+        this.currentDistance = 0;
+        this.missileView = new MissileView(this);
+
     }
 
     /**
@@ -76,7 +71,8 @@ public class Missile extends SimpleMovingEntity {
      * @return true if max distance reached else false
      */
     private boolean isMaxDistance() {
-        return Math.abs(this.getPos().getY() - this.initialDistance) >= this.maxTravelDistance;
+        this.currentDistance += this.getVel().getMagnitude();
+        return this.currentDistance >= this.maxTravelDistance;
     }
 
     /**
@@ -108,21 +104,6 @@ public class Missile extends SimpleMovingEntity {
      */
     @Override
     public void tick() {
-        //do this only one time
-        if (!this.isOnce) {
-            final long currentTime = System.nanoTime();
-            final long deltaTime = currentTime - this.initialTime;
-
-            //if 2 seconds is not passed then don't do anything
-            if (deltaTime < Missile.MAX_TIME) {
-                return;
-            } else {
-                this.initialDistance = this.getPos().getY();
-                this.isOnce = true;
-                AudioController.getAudioController().playSound(Sound.LAUNCH);
-            }
-        }
-
         //seek the player if i reached the max distance
         if (this.isMaxDistance()) {
             this.seek();
@@ -153,8 +134,6 @@ public class Missile extends SimpleMovingEntity {
                 this.remove();
             }
         }
-
-
     }
 
     /**

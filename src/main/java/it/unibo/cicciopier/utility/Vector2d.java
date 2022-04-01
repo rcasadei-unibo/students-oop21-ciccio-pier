@@ -221,7 +221,7 @@ public class Vector2d {
      * Get the euclidean distance of 2 vectors current and v2
      *
      * @param v2 second vector
-     * @return a vector
+     * @return the distance
      */
     public double euclidDistance(final Vector2d v2) {
         final double first = Math.pow(this.x - v2.getX(), 2);
