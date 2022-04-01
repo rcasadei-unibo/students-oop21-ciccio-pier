@@ -17,7 +17,7 @@ public class ShootingPea extends SimpleEnemy {
     public static final int ATTACK_RANGE = 32 * 7;
     private final EnemyView view;
     private int deathTicks;
-    private final int deathDurationTicks;
+    private final double deathDurationTicks;
     //Can't be final due to later initialization of the pos
     private int leftPathfurthest;
     private int rightPathfurthest;
@@ -68,7 +68,7 @@ public class ShootingPea extends SimpleEnemy {
         }
         if (this.getStatus() == EnemyStatuses.SHOOTING_PEA_DYING) {
             this.deathTicks++;
-            if (this.deathTicks == this.deathDurationTicks) {
+            if (this.deathTicks >= this.deathDurationTicks) {
                 this.remove();
             }
             return;

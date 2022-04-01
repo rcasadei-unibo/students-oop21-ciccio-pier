@@ -53,7 +53,7 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     protected boolean checkPlayerInRange(final int range) {
         int pivot = this.getPos().getX();
         int playerPos = this.getWorld().getPlayer().getPos().getX();
-        return (playerPos >= pivot - range) && (playerPos <= pivot + range);
+        return ( (playerPos >= pivot - range) && (playerPos <= pivot + range) && this.getPos().getY() ==  getWorld().getPlayer().getPos().getY() );
     }
 
     /**

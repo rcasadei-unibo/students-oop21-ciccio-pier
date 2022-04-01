@@ -21,7 +21,7 @@ abstract class SimpleEnemyView implements GameObjectView {
     private final int height;
     private boolean dead;
     private double interval;
-    private int duration;
+    private double duration;
     private int frames;
     private int col;
     private int row;
@@ -113,6 +113,7 @@ abstract class SimpleEnemyView implements GameObjectView {
 
     //if status has not changed, calculate time, and if right, change sprite
     //otherwise, render the new sprite
+    //Try to fix graphic glitch
     private void loadAnim(Graphics g) {
         if (this.updateAnim()) {
             this.secs++;

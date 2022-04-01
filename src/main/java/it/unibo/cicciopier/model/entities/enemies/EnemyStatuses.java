@@ -11,35 +11,51 @@ public enum EnemyStatuses {
     /**
      * Represents the entity staying hidden
      */
-    NINJA_POTATO_HIDDEN(1, 1, 4),
+    NINJA_POTATO_HIDDEN(5, 4, 4),
+    /**
+     * Represents the entity when entering angered state
+     */
+    ROLLING_PEACH_ANGERED(1,1,2),
     /**
      * Represents the entity standing still
      */
-    SHOOTING_PEA_IDLE(5, 1, 0),
+    SHOOTING_PEA_IDLE(5, 2, 0),
     NINJA_POTATO_IDLE(5, 3, 0),
+    ROLLING_PEACH_IDLE(6,4,0),
     /**
      * Represents the entity walking
      */
     SHOOTING_PEA_WALKING(13, 2, 1),
+    ROLLING_PEACH_WALKING(6,2,1),
+    /**
+     * Represents the entity switching between hidden and swing
+     */
+    NINJA_POTATO_JUMPING_OUT(6,0.2,1),
+    NINJA_POTATO_JUMPING_IN(6,1,-1),
     /**
      * Represents the entity shooting at the player
      */
-    SHOOTING_PEA_SHOOTING(9, 2, 2),
+    SHOOTING_PEA_SHOOTING(9, 1, 2),
+    /**
+     * Represents the entity rolling towards the player
+     */
+    ROLLING_PEACH_ROLLING(4,2,3),
     /**
      * Represents the entity swinging at the player
      * The #1 is the drawing out the sword
      * The #2 is putting the sword away
      */
-    NINJA_POTATO_SWING_1(10, 1, 2),
+    NINJA_POTATO_SWING_1(10, 0.4, 2),
     NINJA_POTATO_SWING_2(10, 1, -2),
     /**
      * Represents the entity dying
      */
     SHOOTING_PEA_DYING(11, 4, 3),
-    NINJA_POTATO_DYING(9, 3, 3);
+    NINJA_POTATO_DYING(9, 3, 3),
+    ROLLING_PEACH_DYING(9,3,4);
 
     private final int frames;
-    private final int durationSeconds;
+    private final double durationSeconds;
     private final int row;
 
     /**
@@ -47,7 +63,7 @@ public enum EnemyStatuses {
      *
      * @param frames The number of frames for the status's animation
      */
-    EnemyStatuses(final int frames, final int seconds, final int row) {
+    EnemyStatuses(final int frames, final double seconds, final int row) {
         this.frames = frames;
         this.durationSeconds = seconds;
         this.row = row;
@@ -67,7 +83,7 @@ public enum EnemyStatuses {
      *
      * @return the duration (in seconds)
      */
-    public int getDuration() {
+    public double getDuration() {
         return this.durationSeconds;
     }
 
