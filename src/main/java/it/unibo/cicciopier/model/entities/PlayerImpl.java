@@ -11,8 +11,6 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private static final int SPEED = 7;
     private static final int MAX_TIME = 35;
     private static final int JUMP_FORCE = 15;
-
-    //TO DEFINE STAMINA AMOUNT
     private final int maxStamina = 100;
     private final int attackDamage;
     private int stamina;
@@ -20,9 +18,6 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private int coin;
     private int time;
     private boolean isReady;
-
-    //TESTING RENDER
-    private boolean test = true;
 
     /**
      * Constructor for this class
@@ -122,7 +117,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public void attackNearest() {
-        //TODO
+
     }
 
     /**
@@ -130,13 +125,13 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public void tick() {
+        //TODO?
         //update the time
         this.time++;
         if (this.time >= PlayerImpl.MAX_TIME) {
             //is ready to jump
             this.isReady = true;
         }
-        //TODO
         this.move();
 
     }

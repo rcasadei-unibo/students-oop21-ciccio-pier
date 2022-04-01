@@ -44,8 +44,8 @@ public interface WorldLoader {
     default void create() {
         this.getWorld().clear();
         this.loadBlocks();
-        this.loadEntities();
         this.loadPlayer();
+        this.loadEntities();
     }
 
     /**
