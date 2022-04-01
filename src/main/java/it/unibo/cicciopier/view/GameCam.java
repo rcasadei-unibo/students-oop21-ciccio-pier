@@ -17,8 +17,9 @@ public class GameCam {
      *
      * @param object   the game object
      * @param graphics the graphics object
+     * @return the X origin of the cam
      */
-    public void translate(final GameObject object, final Graphics graphics) {
+    public int translate(final GameObject object, final Graphics graphics) {
         int camX = ((int) object.getBounds().getCenterX()) - (this.getViewportSize() / 2);
         if (camX > this.getOffsetMax()) {
             camX = this.getOffsetMax();
@@ -28,6 +29,7 @@ public class GameCam {
         }
         // move view horizontally
         graphics.translate(-camX, 0);
+        return camX;
     }
 
     /**

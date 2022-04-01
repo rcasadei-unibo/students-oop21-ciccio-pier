@@ -41,7 +41,7 @@ public class LevelView extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Player p = this.view.getEngine().getWorld().getPlayer();
-        this.cam.translate(p, g);
+        final int originX = this.cam.translate(p, g);
         // render blocks
         for (Block b : this.view.getEngine().getWorld()) {
             b.getView().render(g);
@@ -66,11 +66,11 @@ public class LevelView extends JPanel {
         }
         if (this.view.getEngine().getState() == GameState.PAUSED) {
             g.setColor(Color.BLACK);
-            g.drawString("PAUSED", p.getPos().getX(), p.getPos().getY() - 30);
+            g.drawString("PAUSED", originX + 10, 30);
         }
         if (this.view.getEngine().getState() == GameState.OVER) {
             g.setColor(Color.BLACK);
-            g.drawString("GAME OVER!", p.getPos().getX(), p.getPos().getY() - 30);
+            g.drawString("GAME OVER!", originX + 10, 30);
         }
         // dispose
         g.dispose();
