@@ -49,6 +49,10 @@ public enum Texture {
      */
     EXPLOSION("/textures/explosion.png"),
     /**
+     * Represents the texture of the fire.
+     */
+    FIRE("/textures/fire.png"),
+    /**
      * Represents the background of the menu
      */
     MENU_BACKGROUND("/menuGraphics/menuBackground.png"),

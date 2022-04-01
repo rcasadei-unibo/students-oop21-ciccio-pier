@@ -69,7 +69,7 @@ public class ExplosionView implements GameObjectView {
     public void render(final Graphics g) {
         this.updateAnimation();
         //check if we arrived at the end of the array
-        if(this.currentIndex == this.explosionAni.length){
+        if(this.currentIndex >= this.explosionAni.length){
             return;
         }
         g.drawImage(

@@ -11,7 +11,7 @@ public enum EntityType {
     /**
      * Represents the Missile that the enemy will launch
      */
-    MISSILE(10, 10, 0, 50),
+    MISSILE(10, 10, 0, 2),
     /**
      * Represents the laser that the Boss will shoot
      */
@@ -27,7 +27,7 @@ public enum EntityType {
     /**
      * Represents a fried chicken, an unhealthy food
      */
-    CHICKEN(32,32,0,0),
+    CHICKEN(32, 32, 0, 0),
     /**
      * Represents an explosion
      */
@@ -35,7 +35,7 @@ public enum EntityType {
     /**
      * Represents a ShootingPea
      */
-    SHOOTING_PEA(32,64,100,50),
+    SHOOTING_PEA(32, 64, 100, 50),
     /**
      * Represents a NinjaPotato
      */
@@ -43,7 +43,11 @@ public enum EntityType {
     /**
      * Represents a RollingPeach
      */
-    ROLLING_PEACH(64,64,100,50);
+    ROLLING_PEACH(64,64,100,50),
+    /**
+     * Represents the boss of the game
+     */
+    BROCCOLI(32 * 4, 32 * 3, 500, 10);
 
     private final int width;
     private final int height;

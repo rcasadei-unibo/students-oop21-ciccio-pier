@@ -6,10 +6,7 @@ import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.enemies.NinjaPotato;
 import it.unibo.cicciopier.model.entities.enemies.RollingPeach;
 import it.unibo.cicciopier.model.entities.enemies.ShootingPea;
-import it.unibo.cicciopier.model.entities.enemies.boss.CannonBall;
-import it.unibo.cicciopier.model.entities.enemies.boss.Explosion;
-import it.unibo.cicciopier.model.entities.enemies.boss.Laser;
-import it.unibo.cicciopier.model.entities.enemies.boss.Missile;
+import it.unibo.cicciopier.model.entities.enemies.boss.*;
 import it.unibo.cicciopier.model.items.Chicken;
 import it.unibo.cicciopier.model.items.Coin;
 
@@ -46,6 +43,8 @@ public class EntityFactoryImpl implements EntityFactory {
                 return Optional.of(this.createPlayer());
             case MISSILE:
                 return Optional.of(new Missile(this.world));
+            case BROCCOLI:
+                return Optional.of(new Broccoli(this.world));
             case LASER:
                 return Optional.of(new Laser(this.world));
             case CANNON_BALL:
