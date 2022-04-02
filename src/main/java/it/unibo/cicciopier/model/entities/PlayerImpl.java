@@ -13,8 +13,6 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private int stamina;
     private int score;
     private int coin;
-    private int time;
-    private boolean isReady;
     private final PlayerView playerView;
 
     /**
@@ -28,7 +26,6 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         this.attackDamage = this.getType().getAttackDamage();
         this.score = 0;
         this.coin = 0;
-        this.isReady = true;
         this.playerView = new PlayerView(this);
     }
 
@@ -123,7 +120,6 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public void tick() {
-        //TODO?
         super.tick();
         this.move();
     }
@@ -134,7 +130,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public boolean jump() {
         final boolean jumped = super.jump();
-        if(jumped){
+        if (jumped) {
             this.decreaseStamina(5);
         }
         return jumped;

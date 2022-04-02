@@ -170,15 +170,8 @@ public class Broccoli extends SimpleLivingEntity {
      */
     @Override
     public void tick() {
+        super.tick();
         this.status.tick();
         this.move();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void jump() {
-
     }
 }

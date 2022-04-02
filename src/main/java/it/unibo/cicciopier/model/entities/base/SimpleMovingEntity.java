@@ -84,7 +84,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int upperLeftY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
         Block block = this.getWorld().getBlock(upperLeftX, upperLeftY);
 
-        if (block.getType() != BlockType.AIR) {
+        if (block.isSolid()) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxY() - this.getPos().getY());
@@ -96,7 +96,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
         if (entityHitBox.getMaxX() <= (worldEndX - Block.SIZE)) {
             block = this.getWorld().getBlock(upperRightX, upperRightY);
-            if (block.getType() != BlockType.AIR) {
+            if (block.isSolid()) {
                 //check if they collide
                 if (entityHitBox.intersects(block.getBounds())) {
                     return (int) (block.getBounds().getMaxY() - this.getPos().getY());
@@ -109,7 +109,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         for (int i = 1; i <= middleBlocks; i++) {
             block = this.getWorld().getBlock(upperLeftX + i, upperLeftY);
 
-            if (block.getType() != BlockType.AIR) {
+            if (block.isSolid()) {
                 //check if they collide
                 if (entityHitBox.intersects(block.getBounds())) {
                     return (int) (block.getBounds().getMaxY() - this.getPos().getY());
@@ -137,7 +137,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int upperRightY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
         Block block = this.getWorld().getBlock(upperRightX, upperRightY);
 
-        if (block.getType() != BlockType.AIR) {
+        if (block.isSolid()) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getX() - this.getBounds().getMaxX());
@@ -148,7 +148,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int lowerRightY = (int) (Math.floor(entityHitBox.getMaxY() - 2) / Block.SIZE);
         block = this.getWorld().getBlock(lowerRightX, lowerRightY);
 
-        if (block.getType() != BlockType.AIR) {
+        if (block.isSolid()) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getX() - this.getBounds().getMaxX());
@@ -160,7 +160,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         //collision check with the blocks in the middle
         for (int i = 1; i <= middleBlocks; i++) {
             block = this.getWorld().getBlock(upperRightX, upperRightY + i);
-            if (block.getType() != BlockType.AIR) {
+            if (block.isSolid()) {
                 //check if they collide
                 if (entityHitBox.intersects(block.getBounds())) {
                     return (int) (block.getPos().getX() - this.getBounds().getMaxX());
@@ -190,7 +190,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int upperLeftY = (int) (Math.floor(entityHitBox.getY()) / Block.SIZE);
         Block block = this.getWorld().getBlock(upperLeftX, upperLeftY);
 
-        if (block.getType() != BlockType.AIR) {
+        if (block.isSolid()) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxX() - this.getPos().getX());
@@ -201,7 +201,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int lowerLeftY = (int) (Math.floor(entityHitBox.getMaxY() - 2) / Block.SIZE);
         block = this.getWorld().getBlock(lowerLeftX, lowerLeftY);
 
-        if (block.getType() != BlockType.AIR) {
+        if (block.isSolid()) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxX() - this.getPos().getX());
@@ -213,7 +213,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         for (int i = 1; i <= middleBlocks; i++) {
             block = this.getWorld().getBlock(upperLeftX, upperLeftY + i);
 
-            if (block.getType() != BlockType.AIR) {
+            if (block.isSolid()) {
                 //check if they collide
                 if (entityHitBox.intersects(block.getBounds())) {
                     return (int) (block.getBounds().getMaxX() - this.getPos().getX());
@@ -246,7 +246,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
         Block block = this.getWorld().getBlock(lowerLeftX, lowerLeftY);
 
-        if (block.getType() != BlockType.AIR) {
+        if (block.isSolid()) {
             //check if they collide
             if (entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getY() - this.getBounds().getMaxY());
@@ -258,7 +258,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
 
         if (entityHitBox.getMaxX() <= (worldEndX - Block.SIZE)) {
             block = this.getWorld().getBlock(lowerRightX, lowerRightY);
-            if (block.getType() != BlockType.AIR) {
+            if (block.isSolid()) {
                 //check if they collide
                 if (entityHitBox.intersects(block.getBounds())) {
                     return (int) (block.getPos().getY() - this.getBounds().getMaxY());
@@ -270,7 +270,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
 
         for (int i = 1; i <= middleBlocks; i++) {
             block = this.getWorld().getBlock(lowerLeftX + i, lowerLeftY);
-            if (block.getType() != BlockType.AIR) {
+            if (block.isSolid()) {
                 //check if they collide
                 if (entityHitBox.intersects(block.getBounds())) {
                     return (int) (block.getPos().getY() - this.getBounds().getMaxY());

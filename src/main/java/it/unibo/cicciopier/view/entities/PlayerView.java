@@ -24,7 +24,5 @@ public class PlayerView implements GameObjectView {
                 this.player.getWidth() - 1,
                 this.player.getHeight() - 1
         );
-
-
     }
 }

@@ -21,6 +21,22 @@ public enum Texture {
      */
     PLAYER("/textures/blocks.png"),
     /**
+     * Represents the texture of the health bar decoration
+     */
+    HEALTH_BAR_DECORATION("/textures/healthBarDecoration.png"),
+    /**
+     * Represents the texture of the stamina bar decoration
+     */
+    STAMINA_BAR_DECORATION("/textures/staminaBarDecoration.png"),
+    /**
+     * Represents the texture od the health bar
+     */
+    HEALTH_BAR("/textures/healthBar.png"),
+    /**
+     * Represents the texture od the stamina bar
+     */
+    STAMINA_BAR("/textures/staminaBar.png"),
+    /**
      * Represents the texture of the ShootingPea
      */
     SHOOTING_PEA("/textures/enemies/shootingPea.png"),

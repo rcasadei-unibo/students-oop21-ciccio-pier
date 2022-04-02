@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * Create a class for rendering a coin
  */
 public class CoinView implements GameObjectView {
-    private static final int COIN_SIZE = 20;
+    public static final int COIN_SIZE = 20;
     private static final int NUM_SPRITES = 9;
     private static final int ANIMATION_SPEED = 5;
 
