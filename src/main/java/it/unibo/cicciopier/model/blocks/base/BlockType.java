@@ -7,24 +7,25 @@ public enum BlockType {
     /**
      * Represents a null block.
      */
-    AIR(0, 0),
+    AIR(false, 0, 0),
     /**
      * Represents a grass block.
      */
-    GRASS(32, 0),
+    GRASS(true, 32, 0),
     /**
      * Represents a stone brick block.
      */
-    STONE_BRICK(64, 0),
+    STONE_BRICK(true, 64, 0),
     /**
      * Represents a dirt block.
      */
-    DIRT(96, 0),
+    DIRT(true, 96, 0),
     /**
      * Represents a grass snow block.
      */
-    GRASS_SNOW(128, 0);
+    GRASS_SNOW(true, 128, 0);
 
+    private final boolean solid;
     private final int textureX;
     private final int textureY;
 
@@ -34,9 +35,19 @@ public enum BlockType {
      * @param textureX x pos
      * @param textureY y pos
      */
-    BlockType(final int textureX, final int textureY) {
+    BlockType(final boolean solid, final int textureX, final int textureY) {
+        this.solid = solid;
         this.textureX = textureX;
         this.textureY = textureY;
+    }
+
+    /**
+     * Check if this type of block is solid or not.
+     *
+     * @return true if solid, false otherwise
+     */
+    public boolean isSolid() {
+        return solid;
     }
 
     /**

@@ -40,6 +40,14 @@ public class SimpleBlock extends SimpleGameObject implements Block {
      * {@inheritDoc}
      */
     @Override
+    public boolean isSolid() {
+        return this.type.isSolid();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public GameObjectView getView() {
         return this.view;
     }

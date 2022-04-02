@@ -46,4 +46,11 @@ public interface Block extends GameObject {
      */
     void setType(final BlockType type);
 
+    /**
+     * Check if this block is solid or entities can pass through it.
+     *
+     * @return true if solid, false otherwise
+     */
+    boolean isSolid();
+
 }
