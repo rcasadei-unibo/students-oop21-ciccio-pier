@@ -8,8 +8,14 @@ import org.slf4j.LoggerFactory;
  */
 public class GameLoop extends Thread implements Loop {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameLoop.class);
-    private static final int TPS = 100;
-    private static final int TICK_TIME = 1000 / TPS;
+    /**
+     * Tick per second.
+     */
+    private static final int TPS = 60;
+    /**
+     * Duration of a single tick in millis.
+     */
+    private static final int LAPSE = 1_000 / TPS;
 
     private final Engine engine;
     private boolean running;
@@ -43,14 +49,19 @@ public class GameLoop extends Thread implements Loop {
         while (this.running) {
             // Get delta time
             deltaTime = System.currentTimeMillis() - lastLoopTime;
-            if (deltaTime < TICK_TIME) {
-                try {
-                    Thread.sleep(TICK_TIME - deltaTime);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            if (deltaTime < LAPSE) {
+                while (deltaTime < LAPSE) {
+                    // Yield until it has been at least the target time between updates. This saves the CPU from hogging.
+                    Thread.yield();
+                    try {
+                        Thread.sleep(1);
+                    } catch (Exception e) {
+                        // do nothing
+                    }
+                    deltaTime = System.currentTimeMillis() - lastLoopTime;
                 }
-            } else if (lastLoopTime != 0 && deltaTime > TICK_TIME) {
-                long behind = deltaTime - TICK_TIME;
+            } else if (lastLoopTime != 0 && deltaTime > LAPSE) {
+                long behind = deltaTime - LAPSE;
                 LOGGER.warn("Can't keep up! Did the system time change, or is the game overloaded? Running {}ms behind, skipping {} tick(s)", behind, behind / TPS);
             }
             lastLoopTime = System.currentTimeMillis();
