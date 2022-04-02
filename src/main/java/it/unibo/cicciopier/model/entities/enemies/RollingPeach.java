@@ -6,9 +6,10 @@ import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.entities.enemies.EnemyView;
 
-public class RollingPeach extends SimpleEnemy{
+public class RollingPeach extends SimpleEnemy {
     private final EnemyView view;
     private int ticks;
+
     /**
      * Constructor for this class
      *
@@ -34,24 +35,20 @@ public class RollingPeach extends SimpleEnemy{
      */
     @Override
     public void tick() {
+        super.tick();
         //this.ticks++;
-        if (getWorld().getPlayer().checkCollision(this)){
+        if (getWorld().getPlayer().checkCollision(this)) {
             this.die();
             this.setStatus(EnemyStatuses.ROLLING_PEACH_DYING);
         }
 
-        if (this.getStatus() == EnemyStatuses.ROLLING_PEACH_DYING){
+        if (this.getStatus() == EnemyStatuses.ROLLING_PEACH_DYING) {
             this.ticks++;
-            if (this.ticks >= EnemyStatuses.ROLLING_PEACH_DYING.getDuration()*100){
+            if (this.ticks >= EnemyStatuses.ROLLING_PEACH_DYING.getDuration() * 100) {
                 this.remove();
                 this.ticks = 0;
             }
         }
-
-    }
-
-    @Override
-    public void jump() {
 
     }
 }

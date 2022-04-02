@@ -1,16 +1,13 @@
 package it.unibo.cicciopier.model.entities;
 
-import it.unibo.cicciopier.controller.AudioController;
-import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
 import it.unibo.cicciopier.view.GameObjectView;
+import it.unibo.cicciopier.view.entities.PlayerView;
 
 public class PlayerImpl extends SimpleLivingEntity implements Player {
     private static final int SPEED = 7;
-    private static final int MAX_TIME = 35;
-    private static final int JUMP_FORCE = 15;
     private final int maxStamina = 100;
     private final int attackDamage;
     private int stamina;
@@ -18,12 +15,12 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private int coin;
     private int time;
     private boolean isReady;
+    private final PlayerView playerView;
 
     /**
      * Constructor for this class
      *
      * @param world The game's world
-     * @param type  The entity's type
      */
     public PlayerImpl(final World world) {
         super(EntityType.PLAYER, world);
@@ -32,6 +29,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         this.score = 0;
         this.coin = 0;
         this.isReady = true;
+        this.playerView = new PlayerView(this);
     }
 
     /**
@@ -126,27 +124,20 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public void tick() {
         //TODO?
-        //update the time
-        this.time++;
-        if (this.time >= PlayerImpl.MAX_TIME) {
-            //is ready to jump
-            this.isReady = true;
-        }
+        super.tick();
         this.move();
-
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void jump() {
-        if (this.isReady && this.isGround()) {
-            AudioController.getAudioController().playSound(Sound.JUMP);
-            this.getVel().setY(-PlayerImpl.JUMP_FORCE);
-            this.isReady = false;
-            this.time = 0;
+    public boolean jump() {
+        final boolean jumped = super.jump();
+        if(jumped){
+            this.decreaseStamina(5);
         }
+        return jumped;
     }
 
     /**
@@ -154,6 +145,6 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public GameObjectView getView() {
-        return null;
+        return this.playerView;
     }
 }

@@ -36,6 +36,7 @@ public class NinjaPotato extends SimpleEnemy {
      */
     @Override
     public void tick() {
+        super.tick();
         this.ticks++;
 
         if (this.getWorld().getPlayer().checkCollision(this)) {
@@ -98,13 +99,5 @@ public class NinjaPotato extends SimpleEnemy {
                 this.ticks = 0;
             }
         }
-    }
-
-    /**
-     * Does nothing, this entity does not jump
-     */
-    @Override
-    public void jump() {
-
     }
 }

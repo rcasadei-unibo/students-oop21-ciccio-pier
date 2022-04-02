@@ -53,6 +53,7 @@ public class ShootingPea extends SimpleEnemy {
      */
     @Override
     public void tick() {
+        super.tick();
         //TODO
         //RN ONLY USED FOR TESTING
         if (!this.pathInitialized) {
@@ -74,12 +75,11 @@ public class ShootingPea extends SimpleEnemy {
             return;
         }
 
-
         if (this.checkPlayerInRange(ATTACK_RANGE) &&
                 ((this.getWorld().getPlayer().getPos().getX() < this.getPos().getX() && this.getSpecular()) ||
                         (this.getWorld().getPlayer().getPos().getX() > this.getPos().getX() && !this.getSpecular()))) {
             this.setStatus(EnemyStatuses.SHOOTING_PEA_SHOOTING);
-            this.setVel(new Vector2d(0, 0));
+            this.getVel().setX(0);
             return;
             /*
             if (this.getWorld().getPlayer().checkCollision(this)){
@@ -92,7 +92,7 @@ public class ShootingPea extends SimpleEnemy {
 
         if (this.getPos().getX() == this.currentDest && this.idleTicks < IDLE_DURATION) {
             this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
-            this.setVel(new Vector2d(0, 0));
+            this.getVel().setX(0);
             this.idleTicks++;
         } else if (this.getPos().getX() == this.currentDest) {
             this.currentDest = this.currentDest == leftPathfurthest ? rightPathfurthest : leftPathfurthest;
@@ -100,18 +100,8 @@ public class ShootingPea extends SimpleEnemy {
             this.setStatus(EnemyStatuses.SHOOTING_PEA_WALKING);
             this.setSpecular(!this.getSpecular());
         } else if (this.getStatus() == EnemyStatuses.SHOOTING_PEA_WALKING) {
-            this.setVel(new Vector2d(this.currentDest == leftPathfurthest ? -0.4 : 0.4, 0));
+            this.getVel().setX(this.currentDest == leftPathfurthest ? -0.4 : 0.4);
         }
         this.move();
     }
-
-    /**
-     * Does nothing, this entity does not jump
-     */
-    @Override
-    public void jump() {
-
-    }
-
-
 }

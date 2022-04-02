@@ -34,9 +34,18 @@ public interface LivingEntity extends MovingEntity {
     void heal(final int amount);
 
     /**
-     * Makes the Entity jump
+     * Get the jump force
+     *
+     * @return jump force value
      */
-    void jump();
+    int getJumpForce();
+
+    /**
+     * Makes the Entity jump
+     *
+     * @return true if entity has jumped else false
+     */
+    boolean jump();
 
     /**
      * Checks if the Entity is on the ground

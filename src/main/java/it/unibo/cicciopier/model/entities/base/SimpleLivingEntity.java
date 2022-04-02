@@ -5,12 +5,16 @@ import it.unibo.cicciopier.utility.Vector2d;
 
 public abstract class SimpleLivingEntity extends SimpleMovingEntity implements LivingEntity {
     private static final int MAX_GRAVITY = 20;
+    private static final int JUMP_FORCE = -15;
+    private static final int MAX_TIME = 35;
 
     private final Vector2d gravity;
     private final int maxHp;
     private int hp;
     private boolean ground;
     private boolean dead;
+    private boolean isReady;
+    private int time;
 
     /**
      * Constructor for this class
@@ -25,6 +29,8 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
         this.hp = this.maxHp;
         this.dead = false;
         this.gravity = new Vector2d(0, 1);
+        this.isReady = true;
+        this.time = 0;
     }
 
     /**
@@ -88,6 +94,42 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
     @Override
     public void die() {
         this.dead = true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getJumpForce() {
+        return JUMP_FORCE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean jump() {
+        if (this.isReady && this.ground) {
+            this.getVel().setY(this.getJumpForce());
+            this.isReady = false;
+            this.time = 0;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void tick() {
+        if (this.time >= MAX_TIME) {
+            //is ready to jump
+            this.isReady = true;
+        } else {
+            //update the time
+            this.time++;
+        }
     }
 
     /**
