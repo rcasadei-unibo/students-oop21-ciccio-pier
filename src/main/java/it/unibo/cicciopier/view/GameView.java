@@ -93,6 +93,8 @@ public class GameView extends JFrame implements View, KeyListener {
             case KeyEvent.VK_RIGHT:
                 this.engine.getInput().setPressed(Input.RIGHT);
                 break;
+            case KeyEvent.VK_W:
+            case KeyEvent.VK_UP:
             case KeyEvent.VK_SPACE:
                 this.engine.getInput().setPressed(Input.JUMP);
                 break;
@@ -116,6 +118,8 @@ public class GameView extends JFrame implements View, KeyListener {
             case KeyEvent.VK_RIGHT:
                 this.engine.getInput().setUnpressed(Input.RIGHT);
                 break;
+            case KeyEvent.VK_W:
+            case KeyEvent.VK_UP:
             case KeyEvent.VK_SPACE:
                 this.engine.getInput().setUnpressed(Input.JUMP);
                 break;
