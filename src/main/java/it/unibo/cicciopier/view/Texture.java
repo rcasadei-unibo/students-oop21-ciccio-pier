@@ -19,7 +19,7 @@ public enum Texture {
     /**
      * Represents the texture of the player.
      */
-    PLAYER("/textures/player.png"),
+    PLAYER("/textures/blocks.png"),
     /**
      * Represents the texture of the boss.
      */

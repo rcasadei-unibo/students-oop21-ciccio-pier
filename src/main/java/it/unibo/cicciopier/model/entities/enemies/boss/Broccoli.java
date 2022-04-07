@@ -102,7 +102,6 @@ public class Broccoli extends SimpleLivingEntity {
                     this.currentState = BossState.METEOR_SHOWER;
                     break;
                 case 1:
-                    //laser attack, later will fix it
                     this.currentState = BossState.LASER;
                     break;
                 default:

@@ -7,6 +7,9 @@ import it.unibo.cicciopier.view.Texture;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Simple class to render the boss Broccoli
+ */
 public class BroccoliView implements GameObjectView {
     private static final int BOSS_WIDTH = 252;
     private static final int BOSS_HEIGHT = 384;
@@ -28,12 +31,19 @@ public class BroccoliView implements GameObjectView {
     private int currentIndex;
     private int currentIndexState;
 
-
+    /**
+     * Constructor for this class, create a instance of BroccoliView
+     *
+     * @param broccoli what broccoli to render
+     */
     public BroccoliView(final Broccoli broccoli) {
         this.broccoli = broccoli;
         this.loadAni();
     }
 
+    /**
+     * Load the sprites for the boss animation
+     */
     private void loadAni() {
         this.ani = new BufferedImage[MAX_STATE_NUM][MAX_FRAME];
         int counter = 0;
@@ -47,16 +57,20 @@ public class BroccoliView implements GameObjectView {
                 j = 0;
             }
             this.ani[counter][j] = Texture.BROCCOLI.getTexture().getSubimage(
-                        i * BOSS_WIDTH,
-                        0,
-                        BOSS_WIDTH,
-                        BOSS_HEIGHT);
+                    i * BOSS_WIDTH,
+                    0,
+                    BOSS_WIDTH,
+                    BOSS_HEIGHT);
             j++;
         }
-
     }
 
-    private void updateStateIndex(final int currentIndexState){
+    /**
+     * Update the index of the boss state
+     *
+     * @param currentIndexState what state to update
+     */
+    private void updateStateIndex(final int currentIndexState) {
         if (aniTik >= BroccoliView.ANIMATION_SPEED) {
             this.aniTik = 0;
             this.currentIndex++;
@@ -72,7 +86,7 @@ public class BroccoliView implements GameObjectView {
     private void updateAnimation() {
         this.aniTik++;
 
-        switch (this.broccoli.getCurrentState()){
+        switch (this.broccoli.getCurrentState()) {
             case IDLE:
             case SEEK:
             case DEATH:
@@ -94,6 +108,9 @@ public class BroccoliView implements GameObjectView {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void render(Graphics g) {
         this.updateAnimation();
@@ -102,20 +119,19 @@ public class BroccoliView implements GameObjectView {
                 this.broccoli.getPos().getY() - 40,
                 null
         );
-
         //draw boss healthBar
         g.drawImage(
                 Texture.ENTITY_HEALTH_BAR_DECORATION.getTexture(),
-                this.broccoli.getPos().getX(),
-                this.broccoli.getPos().getY() - 30,
+                this.broccoli.getPos().getX() - 30,
+                this.broccoli.getPos().getY() - 60,
                 null
         );
         final int currentHealth = (this.broccoli.getHp() * HEALTH_BAR_WIDTH) / this.broccoli.getMaxHp();
         if (currentHealth > 0) {
             g.drawImage(
                     Texture.ENTITY_HEALTH_BAR.getTexture().getSubimage(0, 0, currentHealth, HEALTH_BAR_HEIGHT),
-                    this.broccoli.getPos().getX(),
-                    this.broccoli.getPos().getY() - 30,
+                    this.broccoli.getPos().getX() - 30,
+                    this.broccoli.getPos().getY() - 60,
                     null
             );
         }

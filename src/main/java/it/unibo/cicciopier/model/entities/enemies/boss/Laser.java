@@ -2,7 +2,6 @@ package it.unibo.cicciopier.model.entities.enemies.boss;
 
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
-import it.unibo.cicciopier.model.blocks.base.BlockType;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
@@ -15,12 +14,10 @@ import java.awt.geom.Line2D;
  * Create a simple laser attack
  */
 public class Laser extends SimpleMovingEntity {
-    private static final int MAX_TIME = 100; //1 seconds
     private static final int MAX_DISTANCE = 400;
     private static final int MAX_SPEED = 2;
 
-    private int time;
-    private Vector2d endLine;
+    private final Vector2d endLine;
     private int currentDistance;
     private final LaserView laserView;
     private boolean isOnce;
@@ -32,7 +29,6 @@ public class Laser extends SimpleMovingEntity {
      */
     public Laser(final World world) {
         super(EntityType.LASER, world);
-        this.time = 0;
         this.currentDistance = 0;
         this.isOnce = false;
         this.endLine = new Vector2d(0, 0);
@@ -58,9 +54,19 @@ public class Laser extends SimpleMovingEntity {
         this.setVel(desire);
     }
 
+    /**
+     * Check if the laser collides with the player or a block or the map
+     */
     public void laserCheckCollision() {
-        final int x = (int) (Math.floor(this.endLine.getX() + this.getVel().getX()) / Block.SIZE);
+        final int endLineOffsetX = endLine.getX() + this.getVel().getX();
+        final int x = (int) (Math.floor(endLineOffsetX) / Block.SIZE);
         final int y = (int) (Math.floor(this.endLine.getY() + this.getVel().getY()) / Block.SIZE);
+
+        //if its collides with the beginning or the end of the world
+        if (endLineOffsetX <= 0 || endLineOffsetX >= Block.SIZE * this.getWorld().getWidth()) {
+            setVel(new Vector2d(0, 0));
+            return;
+        }
         Block block = getWorld().getBlock(x, y - 1);
         Line2D line2D = new Line2D.Double(
                 this.getPos().getDoubleX(),
@@ -69,12 +75,12 @@ public class Laser extends SimpleMovingEntity {
                 this.endLine.getDoubleY()
         );
         //damage the player if the line intersects with the player
-        if(line2D.intersects(this.getWorld().getPlayer().getBounds())){
+        if (line2D.intersects(this.getWorld().getPlayer().getBounds())) {
             this.getWorld().getPlayer().damage(this.getType().getAttackDamage());
         }
         if (block.getType().isSolid()) {
             if (line2D.intersects(block.getBounds())) {
-                setVel(new Vector2d(0, 0));
+                this.setVel(new Vector2d(0, 0));
             }
         }
     }
@@ -84,14 +90,9 @@ public class Laser extends SimpleMovingEntity {
      */
     @Override
     public void tick() {
-        //System.out.println("Pos: " + this.getPos());
         if (!this.isOnce) {
-            //this.time++;
-            //if (this.time >= Laser.MAX_TIME) {
-            //this.endLine = new Vector2d(this.getPos().getX() - 20, 608 + 96);
             this.seek();
             this.isOnce = true;
-            // }
         } else {
             this.laserCheckCollision();
             this.endLine.add(this.getVel());
