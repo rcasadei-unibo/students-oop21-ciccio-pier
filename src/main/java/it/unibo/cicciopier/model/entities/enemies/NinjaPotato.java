@@ -6,6 +6,10 @@ import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.entities.enemies.EnemyView;
 
+/**
+ * Represents the enemy NinjaPotato, a static hidden potato which attacks the player with a fast slash
+ * when it gets too close.
+ */
 public class NinjaPotato extends SimpleEnemy {
     private final EnemyView view;
     private static final int ATTACK_RANGE = 32 * 6;
@@ -39,6 +43,8 @@ public class NinjaPotato extends SimpleEnemy {
         super.tick();
         this.ticks++;
 
+        //UNA VOLTA ENTRATO IN MODALITA ATTACCO, DEVE RESTARCI FINO A QUANDO NON SI LEVA IL PLAYER DALLA X, INDIPENDENTEMENTE DALLA Y
+
         if (this.getWorld().getPlayer().checkCollision(this)) {
             this.die();
             this.ticks = 0;
@@ -47,36 +53,36 @@ public class NinjaPotato extends SimpleEnemy {
         }
 
         if (this.getStatus() == EnemyStatuses.NINJA_POTATO_DYING) {
-            if (this.ticks >= EnemyStatuses.NINJA_POTATO_DYING.getDuration() * 100) {
+            if (this.ticks >= EnemyStatuses.NINJA_POTATO_DYING.getDurationTicks()) {
                 this.remove();
             }
             return;
         }
 
         if (this.getStatus() == EnemyStatuses.NINJA_POTATO_SWING_1 || this.getStatus() == EnemyStatuses.NINJA_POTATO_SWING_2) {
-            if (!this.checkPlayerInRange(ATTACK_RANGE)) {
+            if (!this.startAggro(ATTACK_RANGE)) {
                 this.ticks = 0;
                 this.setStatus(EnemyStatuses.NINJA_POTATO_IDLE);
-            } else if (this.getStatus() == EnemyStatuses.NINJA_POTATO_SWING_1 && this.ticks >= EnemyStatuses.NINJA_POTATO_SWING_1.getDuration() * 100) {
+            } else if (this.getStatus() == EnemyStatuses.NINJA_POTATO_SWING_1 && this.ticks >= EnemyStatuses.NINJA_POTATO_SWING_1.getDurationTicks()) {
                 this.setStatus(EnemyStatuses.NINJA_POTATO_SWING_2);
                 this.ticks = 0;
-            } else if (this.getStatus() == EnemyStatuses.NINJA_POTATO_SWING_2 && this.ticks >= EnemyStatuses.NINJA_POTATO_SWING_2.getDuration() * 100) {
+            } else if (this.getStatus() == EnemyStatuses.NINJA_POTATO_SWING_2 && this.ticks >= EnemyStatuses.NINJA_POTATO_SWING_2.getDurationTicks()) {
                 this.setStatus(EnemyStatuses.NINJA_POTATO_SWING_1);
                 this.ticks = 0;
             }
             return;
         }
 
-        if (this.getStatus() == EnemyStatuses.NINJA_POTATO_HIDDEN && this.checkPlayerInRange(ATTACK_RANGE)) {
+        if (this.getStatus() == EnemyStatuses.NINJA_POTATO_HIDDEN && this.startAggro(ATTACK_RANGE)) {
             this.setStatus(EnemyStatuses.NINJA_POTATO_JUMPING_OUT);
             this.ticks = 0;
             return;
         }
 
         if (this.getStatus() == EnemyStatuses.NINJA_POTATO_JUMPING_OUT) {
-            if (this.ticks >= EnemyStatuses.NINJA_POTATO_JUMPING_OUT.getDuration() * 100) {
+            if (this.ticks >= EnemyStatuses.NINJA_POTATO_JUMPING_OUT.getDurationTicks()) {
                 this.ticks = 0;
-                if (this.checkPlayerInRange(ATTACK_RANGE)) {
+                if (this.startAggro(ATTACK_RANGE)) {
                     this.setStatus(EnemyStatuses.NINJA_POTATO_SWING_1);
                 } else {
                     this.setStatus(EnemyStatuses.NINJA_POTATO_IDLE);
@@ -86,7 +92,7 @@ public class NinjaPotato extends SimpleEnemy {
         }
 
         if (this.getStatus() == EnemyStatuses.NINJA_POTATO_IDLE) {
-            if (this.ticks >= EnemyStatuses.NINJA_POTATO_IDLE.getDuration() * 100) {
+            if (this.ticks >= EnemyStatuses.NINJA_POTATO_IDLE.getDurationTicks()) {
                 this.setStatus(EnemyStatuses.NINJA_POTATO_JUMPING_IN);
                 this.ticks = 0;
             }
@@ -94,7 +100,7 @@ public class NinjaPotato extends SimpleEnemy {
         }
 
         if (this.getStatus() == EnemyStatuses.NINJA_POTATO_JUMPING_IN) {
-            if (this.ticks >= EnemyStatuses.NINJA_POTATO_JUMPING_IN.getDuration() * 100) {
+            if (this.ticks >= EnemyStatuses.NINJA_POTATO_JUMPING_IN.getDurationTicks()) {
                 this.setStatus(EnemyStatuses.NINJA_POTATO_HIDDEN);
                 this.ticks = 0;
             }

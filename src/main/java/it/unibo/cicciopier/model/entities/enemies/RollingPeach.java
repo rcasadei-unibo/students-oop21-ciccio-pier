@@ -6,6 +6,10 @@ import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.entities.enemies.EnemyView;
 
+/**
+ * Represents the enemy RollingPeach, a walking peach whom attack consists into rolling
+ * towards the player.
+ */
 public class RollingPeach extends SimpleEnemy {
     private final EnemyView view;
     private int ticks;
@@ -44,7 +48,7 @@ public class RollingPeach extends SimpleEnemy {
 
         if (this.getStatus() == EnemyStatuses.ROLLING_PEACH_DYING) {
             this.ticks++;
-            if (this.ticks >= EnemyStatuses.ROLLING_PEACH_DYING.getDuration() * 100) {
+            if (this.ticks >= EnemyStatuses.ROLLING_PEACH_DYING.getDurationTicks()) {
                 this.remove();
                 this.ticks = 0;
             }

@@ -3,9 +3,7 @@ package it.unibo.cicciopier.model.entities;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
-import it.unibo.cicciopier.model.entities.enemies.NinjaPotato;
-import it.unibo.cicciopier.model.entities.enemies.RollingPeach;
-import it.unibo.cicciopier.model.entities.enemies.ShootingPea;
+import it.unibo.cicciopier.model.entities.enemies.*;
 import it.unibo.cicciopier.model.entities.enemies.boss.*;
 import it.unibo.cicciopier.model.items.Chicken;
 import it.unibo.cicciopier.model.items.Coin;
@@ -61,6 +59,18 @@ public class EntityFactoryImpl implements EntityFactory {
                 return Optional.of(new NinjaPotato(this.world));
             case ROLLING_PEACH:
                 return Optional.of(new RollingPeach(this.world));
+            case CRYING_ONION:
+                return Optional.of(new CryingOnion(this.world));
+            case MIND_PINEAPPLE:
+                return Optional.of(new MindPineapple(this.world));
+            case NUT:
+                return Optional.of(new Nut(this.world));
+            case PEA:
+                return Optional.of(new Pea(this.world));
+            case SLASH:
+                return Optional.of(new Slash(this.world));
+            case SPIKES:
+                return Optional.of(new Spikes(this.world));
             default:
                 return Optional.empty();
         }
