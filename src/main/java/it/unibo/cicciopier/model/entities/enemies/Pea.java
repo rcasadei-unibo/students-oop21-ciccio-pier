@@ -3,6 +3,9 @@ package it.unibo.cicciopier.model.entities.enemies;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 
+/**
+ * Class representing the Pea projectile
+ */
 public class Pea extends SimpleProjectile {
 
     /**
@@ -11,9 +14,12 @@ public class Pea extends SimpleProjectile {
      * @param world The game's world
      */
     public Pea(final World world) {
-        super(EntityType.PEA,world,Projectiles.PEA);
+        super(EntityType.PEA, world, Projectiles.PEA);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void tick() {
         super.tick();

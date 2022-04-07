@@ -10,6 +10,9 @@ import it.unibo.cicciopier.view.entities.enemies.ProjectileView;
 
 import java.util.Optional;
 
+/**
+ * Abstract class for a generic moving Projectile
+ */
 public abstract class SimpleProjectile extends SimpleMovingEntity {
     private final ProjectileView view;
     private final Projectiles projectile;
@@ -18,10 +21,11 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
     private int dir;
 
     /**
-     * Constructor for this class
+     * Constructor for a generic moving Projectile
      *
-     * @param type  The Entity's type
-     * @param world The game's world
+     * @param type       The entity type
+     * @param world      The game's world
+     * @param projectile The projectile information
      */
     protected SimpleProjectile(final EntityType type, final World world, final Projectiles projectile) {
         super(type, world);
@@ -31,22 +35,21 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         this.view = new ProjectileView(this, projectile.getTexture());
     }
 
-    @Override
-    public void tick() {
-        this.ticks++;
-        if (this.ticks == this.projectile.getDuration()) {
-            this.remove();
+    /**
+     * Method to set the projectile to be rendered specular
+     *
+     * @param bool True, if the projectile is supposed to be rendered specular
+     */
+    public void setSpecular(final boolean bool) {
+        if (bool) {
+            this.view.setSpecularRender(true);
         }
-        this.setPos(new Vector2d(this.getPos().getX() + (this.dir * this.movementPerTick), this.getPos().getY()));
-        this.checkPlayerHit();
-        this.checkCollisionsHit();
     }
 
-
     /**
-     * int means to left, -int means to right
+     * Method to set the direction of the projectile
      *
-     * @param dir
+     * @param dir Any positive integer represents the left, any negative the right
      */
     public void setDir(final int dir) {
         if (dir > 0) {
@@ -56,11 +59,31 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         }
     }
 
-    @Override
-    public GameObjectView getView() {
-        return this.view;
+    /**
+     * Method to check if projectile hit something, eventually destroying it
+     */
+    private void checkCollisionsHit() {
+        if (this.upCollision() != 1 || this.leftCollision() != 1 ||
+                this.bottomCollision() != -1 || this.rightCollision() != -1) {
+            this.createExplosion();
+            this.remove();
+        }
     }
 
+    /**
+     * Method to check if projectile hit the Player, eventually damaging it
+     */
+    private void checkPlayerHit() {
+        if (this.checkCollision(this.getWorld().getPlayer())) {
+            this.getWorld().getPlayer().damage(this.getType().getAttackDamage());
+            this.createExplosion();
+            this.remove();
+        }
+    }
+
+    /**
+     * Utility method to generate an explosion, needed when the projectile gets destroyed
+     */
     protected void createExplosion() {
         Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
         if (opt.isPresent()) {
@@ -70,20 +93,26 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         }
     }
 
-    private void checkCollisionsHit() {
-        if (this.upCollision() != 1 || this.leftCollision() != 1 ||
-                this.bottomCollision() != -1 || this.rightCollision() != -1) {
-            this.createExplosion();
-            this.remove();
-        }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObjectView getView() {
+        return this.view;
     }
 
-    private void checkPlayerHit() {
-        if (this.checkCollision(this.getWorld().getPlayer())) {
-            this.getWorld().getPlayer().damage(this.getType().getAttackDamage());
-            this.createExplosion();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void tick() {
+        this.ticks++;
+        if (this.ticks == this.projectile.getDuration()) {
             this.remove();
         }
+        this.setPos(new Vector2d(this.getPos().getX() + (this.dir * this.movementPerTick), this.getPos().getY()));
+        this.checkPlayerHit();
+        this.checkCollisionsHit();
     }
 
 }
