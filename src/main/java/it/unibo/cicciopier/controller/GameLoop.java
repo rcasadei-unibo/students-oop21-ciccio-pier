@@ -11,7 +11,7 @@ public class GameLoop extends Thread implements Loop {
     /**
      * Tick per second.
      */
-    private static final int TPS = 60;
+    public static final int TPS = 60;
     /**
      * Duration of a single tick in millis.
      */
