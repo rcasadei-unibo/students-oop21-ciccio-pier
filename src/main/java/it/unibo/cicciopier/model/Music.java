@@ -9,7 +9,7 @@ import java.io.InputStream;
  */
 public enum Music {
     BACKGROUND("/audios/menu.wav"),
-    GAME("/audios/coin.wav");
+    GAME("/audios/game.wav");
 
     private final String fileName;
     private Clip clip;
@@ -66,7 +66,7 @@ public enum Music {
      * @param musicVolume how much it needs to change
      */
     public void changeVolume(final float musicVolume) {
-        final float startingDecibel  = 80F;
+        final float startingDecibel = 80F;
         FloatControl volume = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
         volume.setValue(startingDecibel * (float) Math.log10(musicVolume));
     }

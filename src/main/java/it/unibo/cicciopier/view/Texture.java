@@ -21,6 +21,18 @@ public enum Texture {
      */
     PLAYER("/textures/blocks.png"),
     /**
+     * Represents the meteor texture
+     */
+    METEOR("/textures/meteor.png"),
+    /**
+     * Represents the texture entity health bar decoration
+     */
+    ENTITY_HEALTH_BAR_DECORATION("/textures/entityHealthBarDecoration.png"),
+    /**
+     * Represents the texture entity health bar
+     */
+    ENTITY_HEALTH_BAR("/textures/entityHealthBar.png"),
+    /**
      * Represents the texture of the health bar decoration
      */
     HEALTH_BAR_DECORATION("/textures/healthBarDecoration.png"),

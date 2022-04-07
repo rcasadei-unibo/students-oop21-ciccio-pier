@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.model.entities.enemies.boss;
 
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
@@ -14,9 +15,14 @@ import java.util.Optional;
  * Simple class to spawn the boss
  */
 public class Broccoli extends SimpleLivingEntity {
-    static final int MAX_SPEED = 5;
+    private static final int MAX_RANGE = 40;
+    private static final int MAX_SPEED = 5;
+    private static final int NUM_OF_ATTACKS = 3;
+    private static final int MAX_NUM_METEORS = 4;
+
     private final BroccoliView broccoliView;
-    private Status status;
+    private int timer;
+    private BossState currentState;
 
     /**
      * Constructor for this class
@@ -25,135 +31,171 @@ public class Broccoli extends SimpleLivingEntity {
      */
     public Broccoli(World world) {
         super(EntityType.BROCCOLI, world);
-        this.status = new Idle();
+        this.currentState = BossState.IDLE;
+        this.timer = 0;
         this.broccoliView = new BroccoliView(this);
     }
 
     /**
-     * Inner class for Idle
+     * Reset the timer for the next state, and change the current state to seek state
      */
-    private class Idle implements Status {
-        private int time;
+    private void resetTimerAndSeek() {
+        this.timer = 0;
+        this.currentState = BossState.SEEK;
+    }
 
-        /**
-         * Default Constructor for idle state
-         */
-        public Idle() {
-            this.time = 0;
+    /**
+     * Boss idle state, do nothing
+     */
+    private void idle() {
+        this.timer++;
+        if (this.timer >= 200) {
+            this.resetTimerAndSeek();
+            return;
         }
+        this.getVel().setX(0);
+    }
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void tick() {
-            this.time++;
-            if (this.time >= 300) {
-                System.out.println("cambio status in seek");
-                status = new Seek();
-                return;
+    /**
+     * Boss Seek state, continue to chase until player is in range
+     */
+    private void seek() {
+        //check if boss is still alive
+        if (this.getHp() <= 0) {
+            this.currentState = BossState.DEATH;
+            return;
+        }
+        Vector2d desire = getPos().directionVector(getWorld().getPlayer().getPos());
+        desire.setY(0);
+        double distance = 0;
+        Vector2d BossPos;
+        Vector2d playerPos;
+
+        if (desire.getX() < 0) {    //player is on the left of the boss
+            BossPos = new Vector2d(getPos().getDoubleX(), 0);
+            playerPos = new Vector2d(getWorld().getPlayer().getBounds().getMaxX(), 0);
+            distance = BossPos.euclidDistance(playerPos);
+        } else if (desire.getX() > 0) { //player is on the right of the boss
+            BossPos = new Vector2d(getBounds().getMaxX(), 0);
+            playerPos = new Vector2d(getWorld().getPlayer().getPos().getDoubleX(), 0);
+            distance = BossPos.euclidDistance(playerPos);
+        } else if (desire.getX() == 0) {    //player is on top of the boss
+            this.currentState = BossState.MISSILE_LAUNCHER;
+            return;
+        }
+        //if the distance between the player and the boss is in range then attack the player
+        if (distance <= MAX_RANGE) {
+            //choose a random attack
+            final int randNum = (int) (Math.random() * NUM_OF_ATTACKS);
+
+            switch (randNum) {
+                case 1:
+                    this.currentState = BossState.METEOR_SHOWER;
+                    break;
+                case 2:
+                    //laser attack, later will fix it
+                    this.currentState = BossState.METEOR_SHOWER;
+                    break;
+                default:
+                    this.currentState = BossState.MISSILE_LAUNCHER;
             }
-            getVel().setX(0);
+            return;
+        }
+        //max speed that the boss can move
+        desire.setMagnitude(Broccoli.MAX_SPEED);
+        this.getVel().setX(desire.getX());
+    }
+
+    /**
+     * Boss missile attack state, launch some missile to the player
+     */
+    private void missileLauncher() {
+        this.timer++;
+        this.getVel().setX(0);
+        //every second launch a missile
+        if (this.timer % 100 == 0) {
+            Optional<Entity> opt = getWorld().getEntityFactory().createEntity(EntityType.MISSILE);
+            if (opt.isPresent()) {
+                Entity e = opt.get();
+                e.setPos(getPos().clone());
+                getWorld().addEntity(e);
+            }
+        }
+        //max wait time for missile launch state
+        if (this.timer >= 300) {
+            this.resetTimerAndSeek();
         }
     }
 
     /**
-     * Inner class for Idle
+     * Boss meteor shower state, make meteor fall from the sky
      */
-    private class Seek implements Status {
-        private static final int MAX_RANGE = 50;
+    private void meteorShower() {
+        this.timer++;
+        getVel().setX(0);
+        if (this.timer % 50 == 0) {
+            for (int i = 0; i < MAX_NUM_METEORS; i++) {
+                //meteor starting x position
+                int meteorX = getWorld().getPlayer().getPos().getX();
+                //find a random offset
+                final int offSet = (int) (Math.random() * 500);
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void tick() {
-            Vector2d desire = getPos().directionVector(getWorld().getPlayer().getPos());
-            desire.setY(0);
-            double distance = 0;
-            Vector2d BossPos = null;
-            Vector2d playerPos = null;
-            if (desire.getX() < 0) {
-                BossPos = new Vector2d(getPos().getDoubleX(), 0);
-                playerPos = new Vector2d(getWorld().getPlayer().getBounds().getMaxX(), 0);
-                distance = BossPos.euclidDistance(playerPos);
-            } else if (desire.getX() > 0) {
-                BossPos = new Vector2d(getBounds().getMaxX(), 0);
-                playerPos = new Vector2d(getWorld().getPlayer().getPos().getDoubleX(), 0);
-                distance = BossPos.euclidDistance(playerPos);
-            } else if (desire.getX() == 0) {
-                status = new MissileLauncher();
-                return;
-            }
-            //if the distance between the player and the boss is in range then attack the player
-            if (distance <= Seek.MAX_RANGE) {
-                status = new MissileLauncher();
-                return;
-            }
-            //max speed that the boss can move
-            desire.setMagnitude(Broccoli.MAX_SPEED);
-            getVel().setX(desire.getX());
-        }
-    }
+                //flip a coin, add the offset to the meteor x position
+                meteorX += Math.random() >= 0.5 ? offSet : -offSet;
+                //check if the X position is out of the bounds of the map
+                if (meteorX < 0) {
+                    meteorX = 0;
+                }
+                //create a meteor
+                Optional<Entity> opt = getWorld().getEntityFactory().createEntity(EntityType.METEOR);
 
-    /**
-     * Inner class for Missile launch state
-     */
-    private class MissileLauncher implements Status {
-        private int time;
-
-        /**
-         * Default Constructor for missile launcher state
-         */
-        public MissileLauncher() {
-            this.time = 0;
-            System.out.println("Missile Launch status ");
-        }
-
-        @Override
-        public void tick() {
-            this.time++;
-            getVel().setX(0);
-            if (time == 100 || time == 150 || time == 200 || time == 250 || time == 300) {
-                Optional<Entity> opt = getWorld().getEntityFactory().createEntity(EntityType.MISSILE);
                 if (opt.isPresent()) {
                     Entity e = opt.get();
-                    e.setPos(getPos().clone());
+                    //check if the X position is out of the bounds of the map
+                    if (meteorX + e.getWidth() >= Block.SIZE * getWorld().getWidth()) {
+                        meteorX = Block.SIZE * (getWorld().getWidth() - this.getWidth() / Block.SIZE);
+                    }
+                    //random y offset
+                    e.setPos(new Vector2d(meteorX, -Math.random() * 150 + 40));
                     getWorld().addEntity(e);
                 }
             }
-
-            //remove the boss
-            if (this.time >= 400) {
-                status = new Death();
-            }
+        }
+        if (this.timer >= 450) {
+            this.resetTimerAndSeek();
         }
     }
 
     /**
-     * Inner class for Death state
+     * Boss laser attack state, launch a laser from his eyes
      */
-    private class Death implements Status {
-        private int time;
+    private void laserAttack() {
+        this.timer++;
+        getVel().setX(0);
+        //create only one time
+        if (timer == 1) {
+            //create a laser
+            Optional<Entity> opt = getWorld().getEntityFactory().createEntity(EntityType.LASER);
 
-        /**
-         * Default Constructor for death state
-         */
-        public Death() {
-            this.time = 0;
-            System.out.println("current status is death ");
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void tick() {
-            this.time++;
-            getVel().setX(0);
-            if (this.time >= 200) {
-                remove();
+            if (opt.isPresent()) {
+                Entity e = opt.get();
+                e.setPos(this.getPos().clone());
+                getWorld().addEntity(e);
             }
+        }
+        if (this.timer >= 500) {
+            this.resetTimerAndSeek();
+        }
+    }
+
+    /**
+     * Boss death state
+     */
+    private void death() {
+        this.timer++;
+        getVel().setX(0);
+        if (this.timer >= 300) {
+            this.remove();
         }
     }
 
@@ -171,7 +213,26 @@ public class Broccoli extends SimpleLivingEntity {
     @Override
     public void tick() {
         super.tick();
-        this.status.tick();
+        switch (this.currentState) {
+            case SEEK:
+                this.seek();
+                break;
+            case LASER:
+                this.laserAttack();
+                break;
+            case METEOR_SHOWER:
+                this.meteorShower();
+                break;
+            case MISSILE_LAUNCHER:
+                this.missileLauncher();
+                break;
+            case DEATH:
+                this.death();
+                break;
+            default:
+                this.idle();
+        }
+        this.damage(5);
         this.move();
     }
 }

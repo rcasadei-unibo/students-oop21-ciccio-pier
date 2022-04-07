@@ -41,6 +41,8 @@ public class EntityFactoryImpl implements EntityFactory {
                 return Optional.of(this.createPlayer());
             case MISSILE:
                 return Optional.of(new Missile(this.world));
+            case METEOR:
+                return Optional.of(new Meteor(this.world));
             case BROCCOLI:
                 return Optional.of(new Broccoli(this.world));
             case LASER:
