@@ -49,6 +49,30 @@ public enum Texture {
      */
     ROLLING_PEACH("/textures/enemies/rollingPeach.png"),
     /**
+     * Represents the texture of the CryingOnion
+     */
+    CRYING_ONION("/textures/enemies/cryingOnion.png"),
+    /**
+     * Represents the texture of the MindPineapple
+     */
+    MIND_PINEAPPLE("/textures/enemies/mindPineapple.png"),
+    /**
+     * Represents the texture of the Nut
+     */
+    NUT("/textures/enemies/nut.png"),
+    /**
+     * Represents the texture of the Pea
+     */
+    PEA("/textures/enemies/pea.png"),
+    /**
+     * Represents the texture of the Slash
+     */
+    SLASH("/textures/enemies/slash.png"),
+    /**
+     * Represents the texture of the spikes
+     */
+    SPIKES("/textures/enemies/spikes.png"),
+    /**
      * Represents the texture of the Missile.
      */
     MISSILE("/textures/missile.png"),
