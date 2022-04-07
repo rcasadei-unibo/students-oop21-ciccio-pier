@@ -37,6 +37,15 @@ public class Broccoli extends SimpleLivingEntity {
     }
 
     /**
+     * Get the current state of the boss
+     *
+     * @return boss state
+     */
+    public BossState getCurrentState() {
+        return this.currentState;
+    }
+
+    /**
      * Reset the timer for the next state, and change the current state to seek state
      */
     private void resetTimerAndSeek() {
@@ -89,12 +98,12 @@ public class Broccoli extends SimpleLivingEntity {
             final int randNum = (int) (Math.random() * NUM_OF_ATTACKS);
 
             switch (randNum) {
-                case 1:
+                case 0:
                     this.currentState = BossState.METEOR_SHOWER;
                     break;
-                case 2:
+                case 1:
                     //laser attack, later will fix it
-                    this.currentState = BossState.METEOR_SHOWER;
+                    this.currentState = BossState.LASER;
                     break;
                 default:
                     this.currentState = BossState.MISSILE_LAUNCHER;
@@ -110,6 +119,11 @@ public class Broccoli extends SimpleLivingEntity {
      * Boss missile attack state, launch some missile to the player
      */
     private void missileLauncher() {
+        //check if boss is still alive
+        if (this.getHp() <= 0) {
+            this.currentState = BossState.DEATH;
+            return;
+        }
         this.timer++;
         this.getVel().setX(0);
         //every second launch a missile
@@ -122,7 +136,7 @@ public class Broccoli extends SimpleLivingEntity {
             }
         }
         //max wait time for missile launch state
-        if (this.timer >= 300) {
+        if (this.timer >= 350) {
             this.resetTimerAndSeek();
         }
     }
@@ -131,6 +145,11 @@ public class Broccoli extends SimpleLivingEntity {
      * Boss meteor shower state, make meteor fall from the sky
      */
     private void meteorShower() {
+        //check if boss is still alive
+        if (this.getHp() <= 0) {
+            this.currentState = BossState.DEATH;
+            return;
+        }
         this.timer++;
         getVel().setX(0);
         if (this.timer % 50 == 0) {
@@ -170,20 +189,31 @@ public class Broccoli extends SimpleLivingEntity {
      * Boss laser attack state, launch a laser from his eyes
      */
     private void laserAttack() {
+        //check if boss is still alive
+        if (this.getHp() <= 0) {
+            this.currentState = BossState.DEATH;
+            return;
+        }
         this.timer++;
         getVel().setX(0);
         //create only one time
         if (timer == 1) {
+            final int startingOffset = 5;
             //create a laser
             Optional<Entity> opt = getWorld().getEntityFactory().createEntity(EntityType.LASER);
 
             if (opt.isPresent()) {
-                Entity e = opt.get();
-                e.setPos(this.getPos().clone());
+                final Laser e = (Laser) opt.get();
+                e.setPos(this.getPos().clone().addVector(new Vector2d(50, 170)));
+                if (this.isFacingRight()) {
+                    e.getEndLine().set(this.getPos().getX() + this.getWidth() + startingOffset, this.getBounds().getMaxY());
+                } else {
+                    e.getEndLine().set(this.getPos().getX() - startingOffset, this.getBounds().getMaxY());
+                }
                 getWorld().addEntity(e);
             }
         }
-        if (this.timer >= 500) {
+        if (this.timer >= 400) {
             this.resetTimerAndSeek();
         }
     }
@@ -194,7 +224,7 @@ public class Broccoli extends SimpleLivingEntity {
     private void death() {
         this.timer++;
         getVel().setX(0);
-        if (this.timer >= 300) {
+        if (this.timer >= 200) {
             this.remove();
         }
     }
@@ -232,7 +262,7 @@ public class Broccoli extends SimpleLivingEntity {
             default:
                 this.idle();
         }
-        this.damage(5);
+        this.damage(1);
         this.move();
     }
 }
