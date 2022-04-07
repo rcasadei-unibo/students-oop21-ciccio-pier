@@ -21,7 +21,7 @@ abstract class SimpleEnemyView implements GameObjectView {
     private final int height;
     private boolean dead;
     private double interval;
-    private double duration;
+    private double durationTicks;
     private int frames;
     private int col;
     private int row;
@@ -41,8 +41,8 @@ abstract class SimpleEnemyView implements GameObjectView {
         this.status = this.entity.getStatus();
         this.row = this.status.getRow() * this.height;
         this.frames = this.status.getFrames();
-        this.duration = this.status.getDuration();
-        this.interval = (this.duration * 100) / this.frames;
+        this.durationTicks = this.status.getDurationTicks();
+        this.interval = this.durationTicks / this.frames;
         this.col = 0;
         this.secs = 0;
         this.dead = false;
@@ -56,8 +56,8 @@ abstract class SimpleEnemyView implements GameObjectView {
             this.row = this.status.getRow() * this.height;
             this.col = 0;
             this.frames = this.status.getFrames();
-            this.duration = this.status.getDuration();
-            this.interval = (this.duration * 100) / this.frames;
+            this.durationTicks = this.status.getDurationTicks();
+            this.interval = this.durationTicks / this.frames;
             if (this.entity.isDead()) {
                 this.dead = true;
             }

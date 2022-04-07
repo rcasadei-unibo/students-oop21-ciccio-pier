@@ -1,15 +1,23 @@
 package it.unibo.cicciopier.model.entities;
 
+import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.model.entities.base.LivingEntity;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.PlayerView;
 
+import java.util.Comparator;
+
 public class PlayerImpl extends SimpleLivingEntity implements Player {
     private static final int SPEED = 7;
+    private static final int ATTACK_RANGE = 5 * Block.SIZE;
+    private static final int ATTACK_COOLDOWN = 1 * GameLoop.TPS;
     private final int maxStamina = 100;
     private final int attackDamage;
+    private int attackCooldownTicks;
     private int stamina;
     private int score;
     private int coin;
@@ -26,6 +34,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         this.attackDamage = this.getType().getAttackDamage();
         this.score = 0;
         this.coin = 0;
+        this.attackCooldownTicks = ATTACK_COOLDOWN;
         this.playerView = new PlayerView(this);
     }
 
@@ -112,7 +121,29 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public void attackNearest() {
+        if (this.attackCooldownTicks == ATTACK_COOLDOWN){
+            this.getWorld().getEntitiesInRange(this.getPos(), ATTACK_RANGE).stream().filter(t -> t instanceof LivingEntity)
+                    .map(LivingEntity.class::cast).sorted(new Comparator<LivingEntity>() {
+                        @Override
+                        public int compare(LivingEntity o1, LivingEntity o2) {
+                            if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
+                                return 1;
+                            }
+                            return -1;
+                        }
+                    }).findFirst().ifPresent(t -> t.damage(this.attackDamage));
+            this.attackCooldownTicks = 0;
+        }
+    }
 
+    /**
+     * Called every tick: if player is waiting for the attack cooldown,
+     * it gets updated
+     */
+    private void updateAttackCooldown(){
+        if (this.attackCooldownTicks < ATTACK_COOLDOWN){
+            this.attackCooldownTicks++;
+        }
     }
 
     /**
@@ -121,6 +152,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public void tick() {
         super.tick();
+        this.updateAttackCooldown();
         this.move();
     }
 
