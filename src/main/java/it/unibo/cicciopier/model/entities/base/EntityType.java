@@ -7,7 +7,7 @@ public enum EntityType {
     /**
      * Represents the Player
      */
-    PLAYER(32, 64, 100, 100),
+    PLAYER(32, 64, 100, 60),
     /**
      * Represents the Missile that the enemy will launch
      */
@@ -17,7 +17,7 @@ public enum EntityType {
      */
     LASER(0, 0, 0, 20),
     /**
-     * Represents the projectile that will be launched by the boss
+     * Represents the projectile that will be launched by the bossf
      */
     CANNON_BALL(16, 16, 0, 30),
     /**
@@ -44,6 +44,30 @@ public enum EntityType {
      * Represents a RollingPeach
      */
     ROLLING_PEACH(64,64,100,50),
+    /**
+     * Represents a CryingPotato
+     */
+    CRYING_ONION(64,64,100,50),
+    /**
+     * Represents a MindPineapple
+     */
+    MIND_PINEAPPLE(64,96,100,50),
+    /**
+     * Represents a Nut
+     */
+    NUT(16,16,0,50),
+    /**
+     * Represents a Pea
+     */
+    PEA(16,16,0,50),
+    /**
+     * Represents a Slash
+     */
+    SLASH(16,16,0,50),
+    /**
+     * Represents a Spikes
+     */
+    SPIKES(16,16,0,50),
     /**
      * Represents the boss of the game
      */
