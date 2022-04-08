@@ -2,24 +2,23 @@ package it.unibo.cicciopier.model.items;
 
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameLoop;
-import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.items.CoinView;
 import it.unibo.cicciopier.view.items.JumpBoostView;
+import it.unibo.cicciopier.view.items.SpeedBoostView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Create a coin object
  */
-public class JumpBoost extends SimpleMovingEntity {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JumpBoost.class);
-    private final Item jumpBoost;
-    private JumpBoostView jumpBoostView;
+public class SpeedBoost extends SimpleMovingEntity {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpeedBoost.class);
+    private final Item speedBoost;
+    private SpeedBoostView speedBoostView;
     private boolean isActive;
     private int duration = 10 * GameLoop.TPS;
 
@@ -28,10 +27,10 @@ public class JumpBoost extends SimpleMovingEntity {
      *
      * @param world The game's world
      */
-    public JumpBoost(final World world) {
-        super(EntityType.JUMP_BOOST, world);
-        this.jumpBoost = Item.JUMP_BOOST;
-        this.jumpBoostView = new JumpBoostView(this);
+    public SpeedBoost(final World world) {
+        super(EntityType.SPEED_BOOST, world);
+        this.speedBoost = Item.SPEED_BOOST;
+        this.speedBoostView = new SpeedBoostView(this);
         this.isActive = false;
     }
 
@@ -44,11 +43,11 @@ public class JumpBoost extends SimpleMovingEntity {
         if (this.checkCollision(this.getWorld().getPlayer()) && !this.isActive) {
             AudioController.getAudioController().playSound(Sound.ITEM);
             //remove the boost view
-            this.jumpBoostView = null;
+            this.speedBoostView = null;
             //activate the boost
             this.isActive = true;
-            this.getWorld().getPlayer().setJumpModifier(jumpBoost.getBoost());
-            LOGGER.info("Jump Boost Activated");
+            this.getWorld().getPlayer().setSpeedModifier(speedBoost.getBoost());
+            LOGGER.info("Speed Boost Activated");
 
         }
         if(this.isActive){
@@ -56,8 +55,8 @@ public class JumpBoost extends SimpleMovingEntity {
             LOGGER.info("duration remaining in tick:" + duration);
         }
         if (duration == 0){
-            this.getWorld().getPlayer().setJumpModifier(-jumpBoost.getBoost());
-            LOGGER.info("End of the boost");
+            this.getWorld().getPlayer().setSpeedModifier(-speedBoost.getBoost());
+            LOGGER.info("End of the speed boost");
             this.remove();
         }
     }
@@ -67,7 +66,7 @@ public class JumpBoost extends SimpleMovingEntity {
      */
     @Override
     public GameObjectView getView() {
-        return this.jumpBoostView;
+        return this.speedBoostView;
     }
 
 }

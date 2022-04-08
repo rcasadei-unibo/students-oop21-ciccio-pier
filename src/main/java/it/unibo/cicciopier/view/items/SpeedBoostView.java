@@ -1,27 +1,27 @@
 package it.unibo.cicciopier.view.items;
 
 import it.unibo.cicciopier.model.items.JumpBoost;
+import it.unibo.cicciopier.model.items.SpeedBoost;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Create a class for rendering a jump boost
  */
-public class JumpBoostView implements GameObjectView {
+public class SpeedBoostView implements GameObjectView {
 
-    private final JumpBoost jumpBoost;
+    private final SpeedBoost speedBoost;
 
 
     /**
      * Constructor for this class, create an instance of a jump boost View
      *
-     * @param jumpBoost what jumpBoost to render
+     * @param speedBoost what jumpBoost to render
      */
-    public JumpBoostView(final JumpBoost jumpBoost) {
-        this.jumpBoost = jumpBoost;
+    public SpeedBoostView(final SpeedBoost speedBoost) {
+        this.speedBoost = speedBoost;
     }
 
     /**
@@ -29,11 +29,10 @@ public class JumpBoostView implements GameObjectView {
      */
     @Override
     public void render(final Graphics g) {
-        //this.updateAnimation();
         g.drawImage(
                 Texture.JUMP_BOOST.getTexture(),
-                this.jumpBoost.getPos().getX(),
-                this.jumpBoost.getPos().getY(),
+                this.speedBoost.getPos().getX(),
+                this.speedBoost.getPos().getY(),
                 null
         );
     }
