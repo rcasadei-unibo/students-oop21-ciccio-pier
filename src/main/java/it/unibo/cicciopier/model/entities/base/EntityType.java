@@ -23,7 +23,7 @@ public enum EntityType {
     /**
      * Represents a coin
      */
-    COIN(32, 32, 0, 0),
+    COIN(20, 20, 0, 0),
     /**
      * Represents a fried chicken, an unhealthy food
      */

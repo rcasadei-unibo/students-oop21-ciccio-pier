@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.model.entities.enemies.boss;
 
+import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.base.Entity;
@@ -58,7 +59,7 @@ public class Broccoli extends SimpleLivingEntity {
      */
     private void idle() {
         this.timer++;
-        if (this.timer >= 200) {
+        if (this.timer >= 2 * GameLoop.TPS) {
             this.resetTimerAndSeek();
             return;
         }
@@ -135,7 +136,7 @@ public class Broccoli extends SimpleLivingEntity {
             }
         }
         //max wait time for missile launch state
-        if (this.timer >= 350) {
+        if (this.timer >= 3.5 * GameLoop.TPS) {
             this.resetTimerAndSeek();
         }
     }
@@ -179,7 +180,7 @@ public class Broccoli extends SimpleLivingEntity {
                 }
             }
         }
-        if (this.timer >= 450) {
+        if (this.timer >= 5 * GameLoop.TPS) {
             this.resetTimerAndSeek();
         }
     }
@@ -212,7 +213,7 @@ public class Broccoli extends SimpleLivingEntity {
                 getWorld().addEntity(e);
             }
         }
-        if (this.timer >= 400) {
+        if (this.timer >= 4 * GameLoop.TPS) {
             this.resetTimerAndSeek();
         }
     }
@@ -223,7 +224,7 @@ public class Broccoli extends SimpleLivingEntity {
     private void death() {
         this.timer++;
         getVel().setX(0);
-        if (this.timer >= 200) {
+        if (this.timer >= 2 * GameLoop.TPS) {
             this.remove();
         }
     }

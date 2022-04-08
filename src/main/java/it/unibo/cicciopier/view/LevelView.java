@@ -4,8 +4,6 @@ import it.unibo.cicciopier.controller.GameState;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.model.entities.base.Entity;
-import it.unibo.cicciopier.view.entities.PlayerView;
-import it.unibo.cicciopier.view.items.CoinView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,13 +82,13 @@ public class LevelView extends JPanel {
         g.drawString("Score: " + p.getScore(), originX + 20, 110);
         //draw coin
         g.drawImage(
-                Texture.COIN.getTexture().getSubimage(0, 0, CoinView.COIN_SIZE, CoinView.COIN_SIZE),
+                Texture.COIN.getTexture().getSubimage(0, 0, 20, 20),
                 originX + 20,
                 130,
                 null
         );
         //draw coin counter
-        g.drawString("" + p.getCoin(), originX + CoinView.COIN_SIZE + 38, 144);
+        g.drawString("" + p.getCoin(), originX + 20 + 38, 144);
     }
 
     /**

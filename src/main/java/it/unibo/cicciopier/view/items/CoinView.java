@@ -2,27 +2,22 @@ package it.unibo.cicciopier.view.items;
 
 import it.unibo.cicciopier.model.items.Coin;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.LoadAnimation;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Create a class for rendering a coin
  */
 public class CoinView implements GameObjectView {
-    public static final int COIN_SIZE = 20;
-    private static final int NUM_SPRITES = 9;
     private static final int ANIMATION_SPEED = 5;
 
     private final Coin coin;
-    private BufferedImage[] coinAnimation;
     private int aniTik;
     private int currentIndex;
 
-
     /**
-     * Constructor for this class, create a instance of a coin View
+     * Constructor for this class, create an instance of a coin View
      *
      * @param coin what coin to render
      */
@@ -30,22 +25,6 @@ public class CoinView implements GameObjectView {
         this.coin = coin;
         this.aniTik = 0;
         this.currentIndex = 0;
-        this.loadAnimation();
-    }
-
-    /**
-     * Load all the sprite in a array
-     */
-    private void loadAnimation() {
-        this.coinAnimation = new BufferedImage[CoinView.NUM_SPRITES];
-        for (int i = 0; i < this.coinAnimation.length; i++) {
-            this.coinAnimation[i] = Texture.COIN.getTexture().getSubimage(
-                    CoinView.COIN_SIZE * i,
-                    0,
-                    CoinView.COIN_SIZE,
-                    CoinView.COIN_SIZE
-            );
-        }
     }
 
     /**
@@ -56,7 +35,7 @@ public class CoinView implements GameObjectView {
         if (aniTik >= CoinView.ANIMATION_SPEED) {
             aniTik = 0;
             this.currentIndex++;
-            if (currentIndex >= this.coinAnimation.length) {
+            if (currentIndex >= LoadAnimation.COIN_NUM_SPRITES) {
                 this.currentIndex = 0;
             }
         }
@@ -69,7 +48,7 @@ public class CoinView implements GameObjectView {
     public void render(final Graphics g) {
         this.updateAnimation();
         g.drawImage(
-                this.coinAnimation[this.currentIndex],
+                LoadAnimation.getLoadAnimation().getCoinSprite(this.currentIndex),
                 this.coin.getPos().getX(),
                 this.coin.getPos().getY(),
                 null
