@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Create a coin object
  */
 public class JumpBoost extends SimpleMovingEntity {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MainMenuController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JumpBoost.class);
     private final Item jumpBoost;
     private JumpBoostView jumpBoostView;
     private boolean isActive;
@@ -41,7 +41,7 @@ public class JumpBoost extends SimpleMovingEntity {
     @Override
     public void tick() {
 
-        if (this.checkCollision(this.getWorld().getPlayer())) {
+        if (this.checkCollision(this.getWorld().getPlayer()) && !this.isActive) {
             AudioController.getAudioController().playSound(Sound.ITEM);
             //remove the boost view
             this.jumpBoostView = null;

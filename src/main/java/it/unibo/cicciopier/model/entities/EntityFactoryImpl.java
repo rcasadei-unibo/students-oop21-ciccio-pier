@@ -7,6 +7,7 @@ import it.unibo.cicciopier.model.entities.enemies.*;
 import it.unibo.cicciopier.model.entities.enemies.boss.*;
 import it.unibo.cicciopier.model.items.Chicken;
 import it.unibo.cicciopier.model.items.Coin;
+import it.unibo.cicciopier.model.items.JumpBoost;
 
 import java.util.Optional;
 
@@ -71,6 +72,8 @@ public class EntityFactoryImpl implements EntityFactory {
                 return Optional.of(new Slash(this.world));
             case SPIKES:
                 return Optional.of(new Spikes(this.world));
+            case JUMP_BOOST:
+                return Optional.of(new JumpBoost(this.world));
             default:
                 return Optional.empty();
         }
