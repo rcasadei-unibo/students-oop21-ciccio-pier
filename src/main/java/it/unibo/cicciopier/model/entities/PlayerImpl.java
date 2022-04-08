@@ -16,6 +16,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private static final int ATTACK_RANGE = 5 * Block.SIZE;
     private static final int ATTACK_COOLDOWN = 1 * GameLoop.TPS;
     private final int maxStamina = 100;
+    private int jumpModifier = 0;
     private final int attackDamage;
     private int attackCooldownTicks;
     private int stamina;
@@ -120,8 +121,16 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      * {@inheritDoc}
      */
     @Override
+    public int getJumpForce() {
+        return super.getJumpForce() + this.jumpModifier;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void attackNearest() {
-        if (this.attackCooldownTicks == ATTACK_COOLDOWN){
+        if (this.attackCooldownTicks == ATTACK_COOLDOWN) {
             this.getWorld().getEntitiesInRange(this.getPos(), ATTACK_RANGE).stream().filter(t -> t instanceof LivingEntity)
                     .map(LivingEntity.class::cast).sorted(new Comparator<LivingEntity>() {
                         @Override
@@ -140,8 +149,8 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      * Called every tick: if player is waiting for the attack cooldown,
      * it gets updated
      */
-    private void updateAttackCooldown(){
-        if (this.attackCooldownTicks < ATTACK_COOLDOWN){
+    private void updateAttackCooldown() {
+        if (this.attackCooldownTicks < ATTACK_COOLDOWN) {
             this.attackCooldownTicks++;
         }
     }
@@ -174,5 +183,12 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public GameObjectView getView() {
         return this.playerView;
+    }
+
+    @Override
+    public void setJumpModifier(final int modifier) {
+        this.jumpModifier += modifier;
+
+
     }
 }

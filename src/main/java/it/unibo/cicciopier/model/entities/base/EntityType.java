@@ -29,6 +29,10 @@ public enum EntityType {
      */
     CHICKEN(32, 32, 0, 0),
     /**
+     * Represents jumping power-up
+     */
+    JUMP_BOOST(32, 32, 0, 0),
+    /**
      * Represents an explosion
      */
     EXPLOSION(1, 1, 0, 0),

@@ -50,24 +50,29 @@ public interface Player extends LivingEntity {
     /**
      * Get the current score of the player
      */
-    public int getScore();
+    int getScore();
 
     /**
      * Get the current coin counter
      *
      * @return coins number
      */
-    public int getCoin();
+    int getCoin();
 
     /**
      * Add a score to the score of the player
      *
      * @param score need to add
      */
-    public void addScore(final int score);
+    void addScore(final int score);
 
     /**
      * Update the number of coins by 1
      */
-    public void addCoin();
+    void addCoin();
+
+    /**
+     * Sets the jump modifier
+     */
+    void setJumpModifier(final int modifier);
 }
