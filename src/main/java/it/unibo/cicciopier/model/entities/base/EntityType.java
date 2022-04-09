@@ -79,7 +79,7 @@ public enum EntityType {
     /**
      * Represents a Spikes
      */
-    SPIKES(16, 16, 0, 50),
+    SPIKES(32, 64, 0, 50),
     /**
      * Represents the boss of the game
      */
