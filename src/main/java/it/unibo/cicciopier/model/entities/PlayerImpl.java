@@ -17,6 +17,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private static final int ATTACK_COOLDOWN = 1 * GameLoop.TPS;
     private final int maxStamina = 100;
     private int jumpModifier = 0;
+    private int speedModifire;
     private final int attackDamage;
     private int attackCooldownTicks;
     private int stamina;
@@ -44,7 +45,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public int getSpeed() {
-        return SPEED;
+        return SPEED + speedModifire;
     }
 
     /**
@@ -188,7 +189,10 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public void setJumpModifier(final int modifier) {
         this.jumpModifier += modifier;
+    }
 
-
+    @Override
+    public void setSpeedModifier(final int modifier) {
+        this.jumpModifier += modifier;
     }
 }

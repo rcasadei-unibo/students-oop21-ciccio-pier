@@ -97,6 +97,10 @@ public enum Texture {
      */
     COIN("/textures/coin.png"),
     /**
+     * Represents the texture of the jump boost
+     */
+    JUMP_BOOST("/textures/jumpBoost.png"),
+    /**
      * Represents the texture of the chicken
      */
     CHICKEN("/textures/chicken.png"),

@@ -75,4 +75,9 @@ public interface Player extends LivingEntity {
      * Sets the jump modifier
      */
     void setJumpModifier(final int modifier);
+
+    /**
+     * Sets the speed modifier
+     */
+    void setSpeedModifier (final int modifier);
 }

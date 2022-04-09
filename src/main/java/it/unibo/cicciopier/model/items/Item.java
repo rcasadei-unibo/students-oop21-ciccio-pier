@@ -12,7 +12,11 @@ public enum Item {
     /**
      * Represents a jumping power-up
      */
-    JUMP_BOOST(0, 0, 0, 6);
+    JUMP_BOOST(0, 0, 0, 6),
+    /**
+     * Represents a speed power-up
+     */
+    SPEED_BOOST(0, 0, 0, 6);
 
     private final int score;
     private final int stamina;
