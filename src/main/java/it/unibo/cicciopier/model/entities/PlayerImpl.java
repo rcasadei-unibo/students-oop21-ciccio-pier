@@ -46,6 +46,14 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      * {@inheritDoc}
      */
     @Override
+    public int getAttackRange() {
+        return ATTACK_RANGE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getSpeed() {
         return SPEED + speedModifier;
     }
@@ -135,14 +143,11 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     public void attackNearest() {
         if (this.attackCooldownTicks == ATTACK_COOLDOWN) {
             this.getWorld().getEntitiesInRange(this.getPos(), ATTACK_RANGE).stream().filter(t -> t instanceof LivingEntity)
-                    .map(LivingEntity.class::cast).sorted(new Comparator<LivingEntity>() {
-                        @Override
-                        public int compare(LivingEntity o1, LivingEntity o2) {
-                            if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
-                                return 1;
-                            }
-                            return -1;
+                    .map(LivingEntity.class::cast).sorted( (o1, o2) -> {
+                        if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
+                            return 1;
                         }
+                        return -1;
                     }).findFirst().ifPresent(t -> t.damage(this.getType().getAttackDamage()));
             this.attackCooldownTicks = 0;
         }

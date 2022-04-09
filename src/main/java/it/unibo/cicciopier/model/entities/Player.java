@@ -43,6 +43,13 @@ public interface Player extends LivingEntity {
     void decreaseStamina(final int amount);
 
     /**
+     * Get the attack range of the player
+     *
+     * @return the range of attack
+     */
+    int getAttackRange();
+
+    /**
      * The player attacks, prioritizing the nearest enemy
      */
     void attackNearest();
