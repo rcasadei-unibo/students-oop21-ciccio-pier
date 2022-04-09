@@ -19,11 +19,4 @@ public interface MovingEntity extends Entity {
      * @param vel Entity's new movement
      */
     void setVel(final Vector2d vel);
-
-    /**
-     * Checks the collision between Entity and another GameObject
-     * @param object The GameObject to check
-     * @return If they are colliding
-     */
-    boolean checkCollision(final GameObject object);
 }

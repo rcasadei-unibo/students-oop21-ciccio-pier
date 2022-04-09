@@ -2,6 +2,7 @@ package it.unibo.cicciopier.model.items;
 
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.items.ChickenView;
@@ -9,7 +10,7 @@ import it.unibo.cicciopier.view.items.ChickenView;
 /**
  * Class to create a simple chicken item for the player
  */
-public class Chicken extends SimpleMovingEntity {
+public class Chicken extends SimpleEntity {
     private final Item chickenItem;
     private final ChickenView chickenView;
 

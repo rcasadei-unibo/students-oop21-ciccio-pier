@@ -4,14 +4,14 @@ import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
-import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
+import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.items.CoinView;
 
 /**
  * Create a coin object
  */
-public class Coin extends SimpleMovingEntity {
+public class Coin extends SimpleEntity {
     private final Item coinItem;
     private final CoinView coinView;
 
