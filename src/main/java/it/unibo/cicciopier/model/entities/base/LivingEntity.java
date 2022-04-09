@@ -55,6 +55,20 @@ public interface LivingEntity extends MovingEntity {
     boolean isGround();
 
     /**
+     * Checks if the Entity is facing right
+     *
+     * @return true if its facing right else false
+     */
+    boolean isFacingRight();
+
+    /**
+     * Checks if the Entity is facing left
+     *
+     * @return true if its facing left else false
+     */
+    boolean isFacingLeft();
+
+    /**
      * Checks if Entity is dead
      *
      * @return If Entity died

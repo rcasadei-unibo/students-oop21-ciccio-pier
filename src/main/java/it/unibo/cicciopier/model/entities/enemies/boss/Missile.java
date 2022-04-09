@@ -1,7 +1,5 @@
 package it.unibo.cicciopier.model.entities.enemies.boss;
 
-import it.unibo.cicciopier.controller.AudioController;
-import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;

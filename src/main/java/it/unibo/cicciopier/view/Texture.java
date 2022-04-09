@@ -21,6 +21,10 @@ public enum Texture {
      */
     PLAYER("/textures/blocks.png"),
     /**
+     * Represents the texture of the boss.
+     */
+    BROCCOLI("/textures/broccoli.png"),
+    /**
      * Represents the meteor texture
      */
     METEOR("/textures/meteor.png"),
@@ -92,6 +96,10 @@ public enum Texture {
      * Represents the texture of the coin.
      */
     COIN("/textures/coin.png"),
+    /**
+     * Represents the texture of the jump boost
+     */
+    JUMP_BOOST("/textures/jumpBoost.png"),
     /**
      * Represents the texture of the chicken
      */

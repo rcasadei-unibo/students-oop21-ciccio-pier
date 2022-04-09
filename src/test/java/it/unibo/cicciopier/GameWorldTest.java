@@ -33,7 +33,7 @@ public class GameWorldTest {
     public void testEntities() {
         // Test create
         final Optional<Entity> e = this.world.getEntityFactory().createEntity(EntityType.SHOOTING_PEA);
-        if(e.isEmpty()) {
+        if (e.isEmpty()) {
             fail("Cannot create entity!");
         }
         // Test add
@@ -56,7 +56,7 @@ public class GameWorldTest {
     public void testBlocks() {
         // Test create
         final Optional<Block> b = this.world.getBlockFactory().createBlock(BlockType.DIRT);
-        if(b.isEmpty()) {
+        if (b.isEmpty()) {
             fail("Cannot create block!");
         }
         b.get().setPos(new Vector2d(0, 0));

@@ -5,7 +5,7 @@ import it.unibo.cicciopier.utility.Vector2d;
 
 public abstract class SimpleLivingEntity extends SimpleMovingEntity implements LivingEntity {
     private static final int MAX_GRAVITY = 20;
-    private static final int JUMP_FORCE = -15;
+    private static final int JUMP_FORCE = 15;
     private static final int MAX_TIME = 35;
 
     private final Vector2d gravity;
@@ -14,6 +14,8 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
     private boolean ground;
     private boolean dead;
     private boolean isReady;
+    private boolean facingRight;
+    private boolean facingLeft;
     private int time;
 
     /**
@@ -30,6 +32,8 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
         this.dead = false;
         this.gravity = new Vector2d(0, 1);
         this.isReady = true;
+        this.facingRight = true;
+        this.facingLeft = true;
         this.time = 0;
     }
 
@@ -84,6 +88,22 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * {@inheritDoc}
      */
     @Override
+    public boolean isFacingRight() {
+        return this.facingRight;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFacingLeft() {
+        return this.facingLeft;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isDead() {
         return this.dead;
     }
@@ -110,7 +130,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
     @Override
     public boolean jump() {
         if (this.isReady && this.ground) {
-            this.getVel().setY(this.getJumpForce());
+            this.getVel().setY(-this.getJumpForce());
             this.isReady = false;
             this.time = 0;
             return true;
@@ -137,6 +157,8 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      */
     protected void move() {
         if (this.getVel().getX() > 0) {
+            this.facingRight = true;
+            this.facingLeft = false;
             //check right collision
             final int rightOffset = this.rightCollision();
 
@@ -146,6 +168,8 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
                 this.getVel().setX(rightOffset);
             }
         } else if (this.getVel().getX() < 0) {
+            this.facingRight = false;
+            this.facingLeft = true;
             //check left collision
             final int leftOffset = this.leftCollision();
             if (leftOffset == 0) {

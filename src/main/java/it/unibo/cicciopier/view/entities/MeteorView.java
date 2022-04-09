@@ -11,7 +11,7 @@ import java.awt.geom.AffineTransform;
  * Simple class to render a meteor
  */
 public class MeteorView implements GameObjectView {
-    private static final double ANGULAR_VELOCITY = (Math.PI * 0.8) / 180;
+    private static final double ANGULAR_VELOCITY = (Math.PI * 0.9) / 180;
     private static final double MAX_ANGLE = Math.PI * 2;
     private static final int METEOR_SIZE = 64;
     private final Meteor meteor;

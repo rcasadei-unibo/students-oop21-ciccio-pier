@@ -95,6 +95,11 @@ public class GameEngine implements Engine {
                 this.state = GameState.OVER;
                 return;
             }
+            // check if player has won, the game has ended
+            if (this.getWorld().getPlayer().hasWon()) {
+                this.state = GameState.WON;
+                return;
+            }
             // for every entity check if it has to be removed, update it otherwise
             for (Entity e : this.getWorld().getEntities()) {
                 if (e.isRemoved()) {

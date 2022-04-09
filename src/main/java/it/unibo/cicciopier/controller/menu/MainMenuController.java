@@ -1,7 +1,6 @@
 package it.unibo.cicciopier.controller.menu;
 
 
-import it.unibo.cicciopier.App;
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameEngine;
 import it.unibo.cicciopier.model.Music;
@@ -12,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class MainMenuController implements MenuController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainMenuController.class);
     private final AudioController audioController;
     private static final int MAX_VOLUME = 1;
     private static final int MIN_VOLUME = 0;

@@ -2,6 +2,7 @@ package it.unibo.cicciopier;
 
 import it.unibo.cicciopier.controller.GameEngine;
 import it.unibo.cicciopier.model.Sound;
+import it.unibo.cicciopier.view.LoadAnimation;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.model.Music;
 import org.slf4j.Logger;
@@ -40,7 +41,9 @@ public final class App {
                 e.printStackTrace();
             }
         }
-
+        //load all the animation for the game
+        LoadAnimation loadAnimation = LoadAnimation.getLoadAnimation();
+        loadAnimation.loadAllAnimation();
         try {
             GameEngine e = new GameEngine("level-1-1.tmx");
             e.load();
