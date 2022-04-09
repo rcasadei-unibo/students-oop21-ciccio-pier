@@ -18,7 +18,7 @@ public class ShootingPea extends SimplePathEnemy {
     private static final int ATTACK_RANGE = 7 * Block.SIZE;
     private static final int IDLE_DURATION = 2 * GameLoop.TPS;
     private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
-    private static final double MOVEMENT_SPEED = (0.7 * Block.SIZE)/GameLoop.TPS;
+    private static final double MOVEMENT_SPEED = (0.7 * Block.SIZE) / GameLoop.TPS;
     private static final int HEALTH_VALUE = 50;
     private static final int STAMINA_VALUE = 50;
 
@@ -39,21 +39,33 @@ public class ShootingPea extends SimplePathEnemy {
         this.view = new EnemyView(this, Texture.SHOOTING_PEA);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getHealValue() {
         return HEALTH_VALUE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getStaminaValue() {
         return STAMINA_VALUE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getScoreValue() {
         return SCORE_VALUE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isTextureSpecular() {
         return true;
@@ -123,9 +135,9 @@ public class ShootingPea extends SimplePathEnemy {
         return this.view;
     }
 
-
-
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void attacking() {
         this.getVel().setX(0);
@@ -148,6 +160,9 @@ public class ShootingPea extends SimplePathEnemy {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void notAttacking() {
         this.attackDurationTicks = 0;

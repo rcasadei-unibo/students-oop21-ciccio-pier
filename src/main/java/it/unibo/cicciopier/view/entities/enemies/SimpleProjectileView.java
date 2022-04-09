@@ -14,9 +14,9 @@ import java.awt.*;
 abstract class SimpleProjectileView implements GameObjectView {
     private final SimpleProjectile entity;
     private final Texture texture;
-    private boolean specular;
     private final int width;
     private final int height;
+    private boolean specular;
 
     /**
      * Constructor for a generic Projectile render

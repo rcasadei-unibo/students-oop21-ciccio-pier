@@ -31,12 +31,12 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
      * after being created, therefore this method gets called once the first tick
      * and takes the initial position as the left extreme of the path
      *
-     * @param MAX_RIGHT_OFFSET The offset for the right extreme of this path
+     * @param maxRightOffset The offset for the right extreme of this path
      */
-    protected void initializePath(final int MAX_RIGHT_OFFSET) {
+    protected void initializePath(final int maxRightOffset) {
         if (!this.pathInitialized) {
             this.leftPathfurthest = this.getPos().getX();
-            this.rightPathfurthest = this.leftPathfurthest + MAX_RIGHT_OFFSET;
+            this.rightPathfurthest = this.leftPathfurthest + maxRightOffset;
             this.currentDest = this.leftPathfurthest;
             this.pathInitialized = true;
         }

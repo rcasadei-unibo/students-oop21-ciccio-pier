@@ -38,7 +38,9 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         this.view = new ProjectileView(this, projectile.getTexture());
     }
 
-
+    /**
+     * Utility method to check if the projectile has to be rendered specularly
+     */
     private void setSpecular() {
         if (this.specularTexture && this.dir == -1
                 || !this.specularTexture && this.dir == 1) {

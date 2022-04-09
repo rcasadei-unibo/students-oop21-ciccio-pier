@@ -35,21 +35,33 @@ public class NinjaPotato extends SimpleEnemy {
         this.view = new EnemyView(this, Texture.NINJA_POTATO);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isTextureSpecular() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getScoreValue() {
         return SCORE_VALUE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getHealValue() {
         return HEALTH_VALUE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getStaminaValue() {
         return STAMINA_VALUE;
@@ -71,6 +83,9 @@ public class NinjaPotato extends SimpleEnemy {
         return this.view;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void damage(int amount) {
         if (this.getStatus() != EnemyStatuses.NINJA_POTATO_HIDDEN) {
@@ -78,7 +93,9 @@ public class NinjaPotato extends SimpleEnemy {
         }
     }
 
-
+    /**
+     * Utility method to determine the NinjaPotato facing direction
+     */
     private void checkSpecular() {
         if (this.getWorld().getPlayer().getPos().getX() < this.getPos().getX()) {
             this.setFacingRight(false);
@@ -87,12 +104,21 @@ public class NinjaPotato extends SimpleEnemy {
         }
     }
 
+    /**
+     * Utility method used to update the local ticks used by all the
+     * NinjaPotato actions. The local ticks increase every tick upon reaching
+     * a delimiter, so to avoid eventual Overflows
+     */
     private void updateLocalTicks() {
         if (this.localTicks < LOCAL_TICK_COUNT_DELIMITER) {
             this.localTicks++;
         }
     }
 
+    /**
+     * Method that defines the NinjaPotato attack behaviour.
+     * It is called every tick, unless the Entity has died
+     */
     private void attackBehaviour() {
         switch (this.getStatus()) {
             case NINJA_POTATO_HIDDEN:
@@ -129,7 +155,7 @@ public class NinjaPotato extends SimpleEnemy {
                 if (this.localTicks == EnemyStatuses.NINJA_POTATO_SWING_1.getDurationTicks()) {
                     this.localTicks = 0;
                     this.checkSpecular();
-                    this.shoot(this.isFacingRight() ? 1 : -1,EntityType.SLASH);
+                    this.shoot(this.isFacingRight() ? 1 : -1, EntityType.SLASH);
                     this.setStatus(EnemyStatuses.NINJA_POTATO_SWING_2);
                 }
                 return;
@@ -154,7 +180,7 @@ public class NinjaPotato extends SimpleEnemy {
     @Override
     public void tick() {
         super.tick();
-        if (this.isDead()){
+        if (this.isDead()) {
             return;
         }
         this.updateLocalTicks();

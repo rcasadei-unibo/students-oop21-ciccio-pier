@@ -18,13 +18,13 @@ import java.util.Optional;
  */
 public class MindPineapple extends SimplePathEnemy {
     private static final int SCORE_VALUE = 50;
-    private final double IDLE_DURATION = 4 * GameLoop.TPS;
-    private final double MOVEMENT_SPEED = (2d * Block.SIZE) / GameLoop.TPS;
-    private final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
-    private final int ATTACK_RANGE = this.getWorld().getPlayer().getAttackRange() + Block.SIZE;
+    private static final double IDLE_DURATION = 4 * GameLoop.TPS;
+    private static final double MOVEMENT_SPEED = (2d * Block.SIZE) / GameLoop.TPS;
+    private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
     private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
     private static final int HEALTH_VALUE = 50;
     private static final int STAMINA_VALUE = 50;
+    private final int ATTACK_RANGE = this.getWorld().getPlayer().getAttackRange() + Block.SIZE;
 
 
     private final EnemyView view;
@@ -44,21 +44,33 @@ public class MindPineapple extends SimplePathEnemy {
         this.view = new EnemyView(this, Texture.MIND_PINEAPPLE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getScoreValue() {
         return SCORE_VALUE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getHealValue() {
         return HEALTH_VALUE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getStaminaValue() {
         return STAMINA_VALUE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isTextureSpecular() {
         return false;
@@ -128,6 +140,9 @@ public class MindPineapple extends SimplePathEnemy {
         return this.view;
     }
 
+    /**
+     * Utility method called to set the MindPineapple angry
+     */
     private void angered() {
         this.localTicks++;
         this.setStatus(EnemyStatuses.MIND_PINEAPPLE_ANGERED);
@@ -137,19 +152,27 @@ public class MindPineapple extends SimplePathEnemy {
         }
     }
 
+    /**
+     * Utility method called when the MindPineapple manifests some spikes, attacking the Player.
+     * The spikes are intended to slow down the pace of the player, therefore they do not behave
+     * like usual projectiles, being slightly taller and significantly slower
+     *
+     * @param dir The direction of the spikes
+     */
     private void manifestSpikes(final int dir) {
         Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.SPIKES);
         if (opt.isPresent()) {
             SimpleProjectile e = ((SimpleProjectile) opt.get());
             e.setDir(dir);
-            //e.setPos(this.getPos().addVector(new Vector2d(dir * this.getType().getWidth(), this.getType().getHeight() - e.getHeight())));
             e.setPos(this.getWorld().getPlayer().getPos().addVector(new Vector2d(
-                            -dir * this.getType().getWidth(), 0)));
-            //viene spawnata davanti al player, anche quando questo salta, non e un bug, ma un modo per obbligarlo a fare piano
+                    -dir * this.getType().getWidth(), 0)));
             this.getWorld().addEntity(e);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void attacking() {
         this.getVel().setX(0);
@@ -164,6 +187,9 @@ public class MindPineapple extends SimplePathEnemy {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void notAttacking() {
         this.angered = false;

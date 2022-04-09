@@ -154,8 +154,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     }
 
     /**
-     * Called every tick: if player is waiting for the attack cooldown,
-     * it gets updated
+     * Utility method called every tick used to update the player's attack cooldown when needed
      */
     private void updateAttackCooldown() {
         if (this.attackCooldownTicks < ATTACK_COOLDOWN) {
