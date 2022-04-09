@@ -36,7 +36,7 @@ public interface LivingEntity extends MovingEntity {
     /**
      * Get the jump force
      *
-     * @return jump force value
+     * @return The jump force value
      */
     int getJumpForce();
 
@@ -62,11 +62,11 @@ public interface LivingEntity extends MovingEntity {
     boolean isFacingRight();
 
     /**
-     * Checks if the Entity is facing left
+     * Sets if the Entity is facing right or not
      *
-     * @return true if its facing left else false
+     * @param bool True, if the Entity is facing right
      */
-    boolean isFacingLeft();
+    void setFacingRight(final boolean bool);
 
     /**
      * Checks if Entity is dead

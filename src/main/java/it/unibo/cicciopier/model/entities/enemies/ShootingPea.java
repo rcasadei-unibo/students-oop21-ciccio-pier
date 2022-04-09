@@ -2,39 +2,29 @@ package it.unibo.cicciopier.model.entities.enemies;
 
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
-import it.unibo.cicciopier.model.entities.base.Entity;
+import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.base.EntityType;
-import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.entities.enemies.EnemyView;
-
-import java.util.Optional;
 
 /**
  * Represents the enemy ShootingPea, a walking pea whom attack consists into shooting
  * peas bursting from the pod's bottom.
  */
-public class ShootingPea extends SimpleEnemy {
-    private static final int MAX_RIGHT_OFFSET = 32 * 3;
-    private static final int IDLE_DURATION = 200;
-    private static final int ATTACK_RANGE = 32 * 7;
+public class ShootingPea extends SimplePathEnemy {
+    private static final int SCORE_VALUE = 50;
+    private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
+    private static final int ATTACK_RANGE = 7 * Block.SIZE;
+    private static final int IDLE_DURATION = 2 * GameLoop.TPS;
     private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
-    private static final int HIT_COOLDOWN = 2 * GameLoop.TPS;
+    private static final double MOVEMENT_SPEED = (0.7 * Block.SIZE)/GameLoop.TPS;
+    private static final int HEALTH_VALUE = 50;
+    private static final int STAMINA_VALUE = 50;
+
     private final EnemyView view;
-    private boolean aggro;
-    private int attackDurationTicks;
-    private int shootingTicks;
-    private int deathTicks;
-    private int hitTicks;
     private boolean shot;
-    private final double deathDurationTicks;
-    //Can't be final due to later initialization of the pos
-    private int leftPathfurthest;
-    private int rightPathfurthest;
-    private int currentDest;
-    private int idleTicks;
-    private boolean pathInitialized;
+    private int attackDurationTicks;
 
     /**
      * Constructor for this class
@@ -44,89 +34,124 @@ public class ShootingPea extends SimpleEnemy {
     public ShootingPea(final World world) {
         super(EntityType.SHOOTING_PEA, world);
         this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
-        this.setSpecular(true);
-        this.idleTicks = 0;
-        this.deathTicks = 0;
-        this.deathDurationTicks = EnemyStatuses.SHOOTING_PEA_DYING.getDurationTicks();
-        this.shootingTicks = ATTACK_COOLDOWN;
         this.attackDurationTicks = 0;
         this.shot = false;
-        this.aggro = false;
-        this.hitTicks = HIT_COOLDOWN;
         this.view = new EnemyView(this, Texture.SHOOTING_PEA);
     }
 
+    @Override
+    public int getHealValue() {
+        return HEALTH_VALUE;
+    }
+
+    @Override
+    public int getStaminaValue() {
+        return STAMINA_VALUE;
+    }
+
+    @Override
+    public int getScoreValue() {
+        return SCORE_VALUE;
+    }
+
+    @Override
+    public boolean isTextureSpecular() {
+        return true;
+    }
+
     /**
-     * {inheritDoc}
+     * {@inheritDoc}
+     */
+    @Override
+    public double getMovementSpeed() {
+        return MOVEMENT_SPEED;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getIdleDuration() {
+        return IDLE_DURATION;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getAttackRange() {
+        return ATTACK_RANGE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getIdleStatus() {
+        return EnemyStatuses.SHOOTING_PEA_IDLE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getWalkingStatus() {
+        return EnemyStatuses.SHOOTING_PEA_WALKING;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getMaxRightOffset() {
+        return MAX_RIGHT_OFFSET;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getDyingStatus() {
+        return EnemyStatuses.SHOOTING_PEA_DYING;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public GameObjectView getView() {
         return this.view;
     }
 
-    private void initializePath() {
-        if (!this.pathInitialized) {
-            this.leftPathfurthest = this.getPos().getX();
-            this.rightPathfurthest = this.leftPathfurthest + MAX_RIGHT_OFFSET;
-            this.currentDest = this.leftPathfurthest;
-            this.pathInitialized = true;
+
+
+
+    @Override
+    protected void attacking() {
+        this.getVel().setX(0);
+        if (this.getShootingCooldownTicks() == 0) {
+            this.shot = false;
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_SHOOTING);
         }
-    }
-
-    private void updateAttackTicks() {
-        if (this.shootingTicks < ATTACK_COOLDOWN) {
-            this.shootingTicks++;
-        }
-    }
-
-    private void updateHitTicks() {
-        if (this.hitTicks < HIT_COOLDOWN) {
-            this.hitTicks++;
-        }
-    }
-
-
-
-    private void checkAttackConditions() {
-        if (this.startAggro(ATTACK_RANGE) && this.facingPlayer()) {
-            this.aggro = true;
-        }
-        if (!this.facingPlayer() || !this.playerInAggroRange(ATTACK_RANGE)){
-            this.aggro = false;
-        }
-    }
-
-    private void attacking() {
-        this.setStatus(EnemyStatuses.SHOOTING_PEA_SHOOTING);
-        this.attackDurationTicks++;
-        if (this.attackDurationTicks >= EnemyStatuses.SHOOTING_PEA_SHOOTING.getDurationTicks() / 2 && !this.shot) {
-            this.shoot();
-            this.shot = true;
+        if (this.getStatus() == EnemyStatuses.SHOOTING_PEA_SHOOTING) {
+            this.attackDurationTicks++;
         }
         if (this.attackDurationTicks >= EnemyStatuses.SHOOTING_PEA_SHOOTING.getDurationTicks()) {
-            this.shootingTicks = 0;
+            this.setShootingCooldownTicks(ATTACK_COOLDOWN);
             this.attackDurationTicks = 0;
-            this.shot = false;
-        }
-        return;
-    }
-
-    private void shoot() {
-        Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.PEA);
-        if (opt.isPresent()) {
-            int dir = this.getSpecular() ? -1 : 1;
-            Pea e = ((Pea) opt.get());
-            e.setPos(this.getPos().addVector(new Vector2d(dir, this.getType().getHeight() / 2)));
-            e.setDir(dir);
-            this.getWorld().addEntity(e);
+            this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
+        } else if (this.attackDurationTicks >= EnemyStatuses.SHOOTING_PEA_SHOOTING.getDurationTicks() / 2
+                && !this.shot) {
+            this.shoot(this.isFacingRight() ? 1 : -1, EntityType.PEA);
+            this.shot = true;
+            this.setShootingCooldownTicks((int) Math.ceil(EnemyStatuses.SHOOTING_PEA_SHOOTING.getDurationTicks()));
         }
     }
 
-    private void checkPlayerCollision() {
-        if (this.getWorld().getPlayer().checkCollision(this) && this.hitTicks == HIT_COOLDOWN) {
-            this.attackPlayer();
-            this.hitTicks = 0;
-        }
+    @Override
+    protected void notAttacking() {
+        this.attackDurationTicks = 0;
+        this.setStatus(EnemyStatuses.SHOOTING_PEA_WALKING);
     }
 
     /**
@@ -135,43 +160,5 @@ public class ShootingPea extends SimpleEnemy {
     @Override
     public void tick() {
         super.tick();
-        this.initializePath();
-        if (this.isDead()) {
-            this.setStatus(EnemyStatuses.SHOOTING_PEA_DYING);
-        }
-        if (this.getStatus() == EnemyStatuses.SHOOTING_PEA_DYING) {
-            this.deathTicks++;
-            if (this.deathTicks >= this.deathDurationTicks) {
-                this.remove();
-            }
-            return;
-        }
-        this.checkPlayerCollision();
-        this.updateHitTicks();
-        this.updateAttackTicks();
-        this.checkAttackConditions();
-        if (this.aggro) {
-            this.getVel().setX(0);
-            if (shootingTicks == ATTACK_COOLDOWN) {
-                this.attacking();
-            } else {
-                this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
-            }
-            return;
-        }
-        this.setStatus(EnemyStatuses.SHOOTING_PEA_WALKING);
-        if (this.getPos().getX() == this.currentDest && this.idleTicks < IDLE_DURATION) {
-            this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
-            this.getVel().setX(0);
-            this.idleTicks++;
-        } else if (this.getPos().getX() == this.currentDest) {
-            this.currentDest = this.currentDest == leftPathfurthest ? rightPathfurthest : leftPathfurthest;
-            this.idleTicks = 0;
-            this.setStatus(EnemyStatuses.SHOOTING_PEA_WALKING);
-            this.setSpecular(!this.getSpecular());
-        } else {
-            this.getVel().setX(this.currentDest == leftPathfurthest ? -0.4 : 0.4);
-        }
-        this.move();
     }
 }

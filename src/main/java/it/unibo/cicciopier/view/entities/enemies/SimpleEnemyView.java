@@ -48,6 +48,14 @@ abstract class SimpleEnemyView implements GameObjectView {
         this.dead = false;
     }
 
+    private boolean isSpecular(){
+        if (!this.entity.isTextureSpecular()){
+            return this.entity.isFacingRight();
+        } else {
+            return !this.entity.isFacingRight();
+        }
+    }
+
     //checks if status changed, return true if not
     private boolean updateAnim() {
         if (this.status != this.entity.getStatus()) {
@@ -125,11 +133,11 @@ abstract class SimpleEnemyView implements GameObjectView {
                 }
             }
         }
-        if (this.status.getRow() < 0 && this.entity.getSpecular()) {
+        if (this.status.getRow() < 0 && this.isSpecular()) {
             this.reverseSpecularRend(g);
         } else if (this.status.getRow() < 0) {
             this.reverseRend(g);
-        } else if (this.entity.getSpecular()) {
+        } else if (this.isSpecular()) {
             this.specularRend(g);
         } else {
             this.rend(g);
