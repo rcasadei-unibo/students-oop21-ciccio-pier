@@ -41,14 +41,6 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean checkCollision(final GameObject object) {
-        return this.getBounds().intersects(object.getBounds());
-    }
-
-    /**
      * Create a rectangle with the position of the entity plus his velocity
      *
      * @return a rectangle with offset of the velocity

@@ -27,6 +27,7 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
      * @param type       The entity type
      * @param world      The game's world
      * @param projectile The projectile information
+     * @param bool       If the projectile's texture is facing right
      */
     protected SimpleProjectile(final EntityType type, final World world, final Projectiles projectile, final boolean bool) {
         super(type, world);

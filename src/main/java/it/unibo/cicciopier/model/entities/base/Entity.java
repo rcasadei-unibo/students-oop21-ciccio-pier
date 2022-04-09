@@ -20,6 +20,13 @@ public interface Entity extends GameObject {
     boolean isRemoved();
 
     /**
+     * Checks the collision between Entity and another GameObject
+     * @param object The GameObject to check
+     * @return If they are colliding
+     */
+    boolean checkCollision(final GameObject object);
+
+    /**
      * Removes the Entity from the world
      */
     void remove();
