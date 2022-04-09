@@ -38,20 +38,19 @@ public class LevelView extends JPanel {
     }
 
     /**
-     * Render the game hub: health bar, stamina, score counter, coin counter
+     * Render the game hud: health bar, stamina, score counter, coin counter
      *
      * @param p       player
      * @param g       graphics
      * @param originX camera starting x
      */
-    private void hud(Player p, Graphics g, int originX) {
+    private void renderHud(final Player p, final Graphics g, final int originX) {
         //draw health bar decoration
         g.drawImage(Texture.HEALTH_BAR_DECORATION.getTexture(),
                 originX + 20,
                 20,
                 null);
         final int playerHealth = (LevelView.HEALTH_BAR_WIDTH * p.getHp()) / p.getMaxHp();
-
         // 0 or negative width can't be drawn
         if (playerHealth > 0) {
             //draw the health bar
@@ -61,14 +60,12 @@ public class LevelView extends JPanel {
                     20,
                     null);
         }
-        //stamina
         //draw stamina bar decoration
         g.drawImage(Texture.STAMINA_BAR_DECORATION.getTexture(),
                 originX + 20,
                 50,
                 null);
         final int playerStamina = (LevelView.HEALTH_BAR_WIDTH * p.getStamina()) / p.getMaxStamina();
-
         // 0 or negative width can't be drawn
         if (playerStamina > 0) {
             //draw the stamina bar
@@ -92,12 +89,56 @@ public class LevelView extends JPanel {
     }
 
     /**
+     * Render view for {@link GameState#PAUSED}
+     *
+     * @param g       graphics
+     * @param originX camera starting x
+     */
+    private void renderPaused(final Graphics g, final int originX) {
+        if (this.view.getEngine().getState() != GameState.PAUSED) {
+            return;
+        }
+        g.setColor(Color.BLACK);
+        g.drawString("PAUSED", originX + 10, 200);
+    }
+
+    /**
+     * Render view for {@link GameState#OVER}
+     *
+     * @param g       graphics
+     * @param originX camera starting x
+     * @param score   the final score
+     */
+    private void renderOver(final Graphics g, final int originX, final int score) {
+        if (this.view.getEngine().getState() != GameState.OVER) {
+            return;
+        }
+        g.setColor(Color.BLACK);
+        g.drawString("GAME OVER!", originX + 10, 200);
+    }
+
+    /**
+     * Render view for {@link GameState#WON}
+     *
+     * @param g       graphics
+     * @param originX camera starting x
+     * @param score   the final score
+     */
+    private void renderWon(final Graphics g, final int originX, final int score) {
+        if (this.view.getEngine().getState() != GameState.WON) {
+            return;
+        }
+        g.setColor(Color.BLACK);
+        g.drawString("WON", originX + 10, 200);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        Player p = this.view.getEngine().getWorld().getPlayer();
+        final Player p = this.view.getEngine().getWorld().getPlayer();
         final int originX = this.cam.translate(p, g);
         // render blocks
         for (Block b : this.view.getEngine().getWorld()) {
@@ -121,16 +162,14 @@ public class LevelView extends JPanel {
         } else {
             p.getView().render(g);
         }
-        if (this.view.getEngine().getState() == GameState.PAUSED) {
-            g.setColor(Color.BLACK);
-            g.drawString("PAUSED", originX + 10, 30);
-        }
-        if (this.view.getEngine().getState() == GameState.OVER) {
-            g.setColor(Color.BLACK);
-            g.drawString("GAME OVER!", originX + 10, 30);
-        }
-        //render game hub
-        this.hud(p, g, originX);
+        // render game hud
+        this.renderHud(p, g, originX);
+        // render paused
+        this.renderPaused(g, originX);
+        // render over
+        this.renderOver(g, originX, p.getScore());
+        // render won
+        this.renderWon(g, originX, p.getScore());
         // dispose
         g.dispose();
     }

@@ -19,5 +19,9 @@ public enum GameState {
     /**
      * The game is over, waiting for level restart or exit.
      */
-    OVER
+    OVER,
+    /**
+     * The player won, showing score and waiting for exit.
+     */
+    WON
 }
