@@ -15,7 +15,7 @@ public class Nut extends SimpleProjectile {
      * @param world The game's world
      */
     public Nut(final World world) {
-        super(EntityType.NUT, world, Projectiles.NUT);
+        super(EntityType.NUT, world, Projectiles.NUT, false);
     }
 
     /**

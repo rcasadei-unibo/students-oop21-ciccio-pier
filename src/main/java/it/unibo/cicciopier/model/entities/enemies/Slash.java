@@ -14,7 +14,7 @@ public class Slash extends SimpleProjectile {
      * @param world The game's world
      */
     public Slash(final World world) {
-        super(EntityType.SLASH,world,Projectiles.SLASH);
+        super(EntityType.SLASH,world,Projectiles.SLASH, false);
     }
 
     /**

@@ -14,6 +14,7 @@ import java.util.Optional;
  * Abstract class for a generic moving Projectile
  */
 public abstract class SimpleProjectile extends SimpleMovingEntity {
+    private final boolean specularTexture;
     private final ProjectileView view;
     private final Projectiles projectile;
     private final double movementPerTick;
@@ -27,21 +28,19 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
      * @param world      The game's world
      * @param projectile The projectile information
      */
-    protected SimpleProjectile(final EntityType type, final World world, final Projectiles projectile) {
+    protected SimpleProjectile(final EntityType type, final World world, final Projectiles projectile, final boolean bool) {
         super(type, world);
         this.projectile = projectile;
         this.ticks = 0;
         this.movementPerTick = this.projectile.getRange() / this.projectile.getDuration();
+        this.specularTexture = bool;
         this.view = new ProjectileView(this, projectile.getTexture());
     }
 
-    /**
-     * Method to set the projectile to be rendered specular
-     *
-     * @param bool True, if the projectile is supposed to be rendered specular
-     */
-    public void setSpecular(final boolean bool) {
-        if (bool) {
+
+    private void setSpecular() {
+        if (this.specularTexture && this.dir == -1
+                || !this.specularTexture && this.dir == 1) {
             this.view.setSpecularRender(true);
         }
     }
@@ -49,7 +48,7 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
     /**
      * Method to set the direction of the projectile
      *
-     * @param dir Any positive integer represents the left, any negative the right
+     * @param dir Any positive integer represents the right, any negative the left
      */
     public void setDir(final int dir) {
         if (dir > 0) {
@@ -57,6 +56,7 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         } else {
             this.dir = -1;
         }
+        this.setSpecular();
     }
 
     /**

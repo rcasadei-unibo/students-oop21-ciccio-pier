@@ -14,7 +14,7 @@ public class Spikes extends SimpleProjectile {
      * @param world The game's world
      */
     public Spikes(final World world) {
-        super(EntityType.SPIKES, world, Projectiles.SPIKES);
+        super(EntityType.SPIKES, world, Projectiles.SPIKES, false);
     }
 
     /**

@@ -13,7 +13,7 @@ public enum Projectiles {
     /**
      * Information relative the Pea projectile
      */
-    PEA(0.7, 10, Texture.PEA),
+    PEA(0.9, 10, Texture.PEA),
     /**
      * Information relative the Nut projectile
      */
@@ -21,11 +21,11 @@ public enum Projectiles {
     /**
      * Information relative the Slash projectile
      */
-    SLASH(1, 3, Texture.SLASH),
+    SLASH(0.5, 7, Texture.SLASH),
     /**
      * Information relative the Spikes projectile
      */
-    SPIKES(3, 2, Texture.SPIKES);
+    SPIKES(2, 2, Texture.SPIKES);
 
     private final double duration;
     private final double range;

@@ -14,7 +14,7 @@ public class Pea extends SimpleProjectile {
      * @param world The game's world
      */
     public Pea(final World world) {
-        super(EntityType.PEA, world, Projectiles.PEA);
+        super(EntityType.PEA, world, Projectiles.PEA, false);
     }
 
     /**
