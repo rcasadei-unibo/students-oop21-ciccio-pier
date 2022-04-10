@@ -2,6 +2,7 @@ package it.unibo.cicciopier.view.blocks;
 
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.blocks.base.BlockType;
+import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 
@@ -12,6 +13,7 @@ import java.awt.*;
  */
 public class BlockView implements GameObjectView {
     private final Block block;
+    private final Pair<Integer> coordinates;
 
     /**
      * Constructor for this class.
@@ -20,6 +22,7 @@ public class BlockView implements GameObjectView {
      */
     public BlockView(final Block block) {
         this.block = block;
+        this.coordinates = BlockTexture.getCoordinates(block.getType());
     }
 
     /**
@@ -35,10 +38,10 @@ public class BlockView implements GameObjectView {
                 this.block.getPos().getY(),
                 this.block.getPos().getX() + Block.SIZE,
                 this.block.getPos().getY() + Block.SIZE,
-                this.block.getType().getTextureX(),
-                this.block.getType().getTextureY(),
-                this.block.getType().getTextureX() + Block.SIZE,
-                this.block.getType().getTextureY() + Block.SIZE,
+                this.coordinates.getX(),
+                this.coordinates.getY(),
+                this.coordinates.getX() + Block.SIZE,
+                this.coordinates.getY() + Block.SIZE,
                 null);
     }
 

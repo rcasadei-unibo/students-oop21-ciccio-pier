@@ -7,38 +7,33 @@ public enum BlockType {
     /**
      * Represents a null block.
      */
-    AIR(false, 0, 0),
+    AIR(false),
     /**
      * Represents a grass block.
      */
-    GRASS(true, 32, 0),
+    GRASS(true),
     /**
      * Represents a stone brick block.
      */
-    STONE_BRICK(true, 64, 0),
+    STONE_BRICK(true),
     /**
      * Represents a dirt block.
      */
-    DIRT(true, 96, 0),
+    DIRT(true),
     /**
      * Represents a grass snow block.
      */
-    GRASS_SNOW(true, 128, 0);
+    GRASS_SNOW(true);
 
     private final boolean solid;
-    private final int textureX;
-    private final int textureY;
 
     /**
      * Create a new block type given the texture coordinates.
      *
-     * @param textureX x pos
-     * @param textureY y pos
+     * @param solid if the block is solid or not
      */
-    BlockType(final boolean solid, final int textureX, final int textureY) {
+    BlockType(final boolean solid) {
         this.solid = solid;
-        this.textureX = textureX;
-        this.textureY = textureY;
     }
 
     /**
@@ -48,24 +43,6 @@ public enum BlockType {
      */
     public boolean isSolid() {
         return solid;
-    }
-
-    /**
-     * Get the x coordinate of the texture.
-     *
-     * @return x pos
-     */
-    public int getTextureX() {
-        return textureX;
-    }
-
-    /**
-     * Get the y coordinate of the texture.
-     *
-     * @return y pos
-     */
-    public int getTextureY() {
-        return textureY;
     }
 
 }
