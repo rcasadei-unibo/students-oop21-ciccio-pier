@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.model.entities.base;
 
+import it.unibo.cicciopier.model.GameObject;
 import it.unibo.cicciopier.model.SimpleGameObject;
 import it.unibo.cicciopier.model.World;
 
@@ -43,6 +44,14 @@ public abstract class SimpleEntity extends SimpleGameObject implements Entity {
     @Override
     public EntityType getType() {
         return this.type;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkCollision(final GameObject object) {
+        return this.getBounds().intersects(object.getBounds());
     }
 
     /**

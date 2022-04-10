@@ -3,6 +3,9 @@ package it.unibo.cicciopier.model.entities.base;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.utility.Vector2d;
 
+/**
+ * Class that abstracts a living entity, affected by both gravity and death
+ */
 public abstract class SimpleLivingEntity extends SimpleMovingEntity implements LivingEntity {
     private static final int MAX_GRAVITY = 20;
     private static final int JUMP_FORCE = 15;
@@ -15,7 +18,6 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
     private boolean dead;
     private boolean isReady;
     private boolean facingRight;
-    private boolean facingLeft;
     private int time;
 
     /**
@@ -33,7 +35,6 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
         this.gravity = new Vector2d(0, 1);
         this.isReady = true;
         this.facingRight = true;
-        this.facingLeft = true;
         this.time = 0;
     }
 
@@ -61,7 +62,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
         this.hp -= amount;
         if (this.hp <= 0) {
             this.hp = 0;
-            this.dead = true;
+            this.die();
         }
     }
 
@@ -96,8 +97,8 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * {@inheritDoc}
      */
     @Override
-    public boolean isFacingLeft() {
-        return this.facingLeft;
+    public void setFacingRight(final boolean bool) {
+        this.facingRight = bool;
     }
 
     /**
@@ -158,7 +159,6 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
     protected void move() {
         if (this.getVel().getX() > 0) {
             this.facingRight = true;
-            this.facingLeft = false;
             //check right collision
             final int rightOffset = this.rightCollision();
 
@@ -169,7 +169,6 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
             }
         } else if (this.getVel().getX() < 0) {
             this.facingRight = false;
-            this.facingLeft = true;
             //check left collision
             final int leftOffset = this.leftCollision();
             if (leftOffset == 0) {

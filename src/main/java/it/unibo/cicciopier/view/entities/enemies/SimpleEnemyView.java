@@ -7,8 +7,6 @@ import it.unibo.cicciopier.view.Texture;
 
 import java.awt.*;
 
-//TO ADD REVERSE ANIMATIONS, CLEAN AND POLISH
-
 /**
  * Generic abstract class for any SimpleEnemy view.
  * Render is automatic, based on the entity status and its relative information.
@@ -16,16 +14,16 @@ import java.awt.*;
 abstract class SimpleEnemyView implements GameObjectView {
     private final SimpleEnemy entity;
     private final Texture texture;
-    private EnemyStatuses status;
     private final int width;
     private final int height;
-    private boolean dead;
-    private double interval;
-    private double durationTicks;
     private int frames;
     private int col;
     private int row;
     private int secs;
+    private boolean dead;
+    private double interval;
+    private double durationTicks;
+    private EnemyStatuses status;
 
     /**
      * Generic constructor for any SimpleEnemy view
@@ -48,7 +46,26 @@ abstract class SimpleEnemyView implements GameObjectView {
         this.dead = false;
     }
 
-    //checks if status changed, return true if not
+    /**
+     * Utility method to check if the current animation has to be displayed specularly or not
+     *
+     * @return True, if the render has to be specular
+     */
+    private boolean isSpecular() {
+        if (!this.entity.isTextureSpecular()) {
+            return this.entity.isFacingRight();
+        } else {
+            return !this.entity.isFacingRight();
+        }
+    }
+
+    /**
+     * Utility method to check if the status has changed.
+     * In that case, it returns false, and it reloads every information
+     * regarding the render of the current animation
+     *
+     * @return True, if the status has not changed
+     */
     private boolean updateAnim() {
         if (this.status != this.entity.getStatus()) {
             this.status = this.entity.getStatus();
@@ -67,7 +84,11 @@ abstract class SimpleEnemyView implements GameObjectView {
         }
     }
 
-    //render the sprite //correct one
+    /**
+     * Utility method to render a texture normally
+     *
+     * @param g The graphics
+     */
     private void rend(Graphics g) {
         g.drawImage(this.texture.getTexture(),
                 this.entity.getPos().getX(),
@@ -77,6 +98,11 @@ abstract class SimpleEnemyView implements GameObjectView {
                 this.col, this.row, this.col + this.width, this.row + this.height, null);
     }
 
+    /**
+     * Utility method to render a texture specularly
+     *
+     * @param g The graphics
+     */
     private void specularRend(Graphics g) {
         g.drawImage(this.texture.getTexture(),
                 this.entity.getPos().getX(),
@@ -86,6 +112,12 @@ abstract class SimpleEnemyView implements GameObjectView {
                 this.col + this.width - 1, this.row, this.col, this.row + this.height, null);
     }
 
+    /**
+     * Utility method to render a texture normally,
+     * with the animation played backward
+     *
+     * @param g The graphics
+     */
     private void reverseRend(Graphics g) {
         int reverseCol = this.width * this.frames;
         int reverseRow = Math.abs(this.row);
@@ -98,6 +130,12 @@ abstract class SimpleEnemyView implements GameObjectView {
                 reverseCol - this.col - 1, reverseRow + this.height, null);
     }
 
+    /**
+     * Utility method to render a texture specularly,
+     * with the animation played backward
+     *
+     * @param g The graphics
+     */
     private void reverseSpecularRend(Graphics g) {
         int reverseCol = this.width * this.frames;
         int reverseRow = Math.abs(this.row);
@@ -111,9 +149,13 @@ abstract class SimpleEnemyView implements GameObjectView {
                 reverseCol - this.col, reverseRow + this.height, null);
     }
 
-    //if status has not changed, calculate time, and if right, change sprite
-    //otherwise, render the new sprite
-    //Try to fix graphic glitch
+    /**
+     * If status has not changed, it updates the animation ticks. If they
+     * are equal to the animation frame interval, the next frame gets set to be rendered
+     * The animation gets then rendered
+     *
+     * @param g The graphics
+     */
     private void loadAnim(Graphics g) {
         if (this.updateAnim()) {
             this.secs++;
@@ -125,11 +167,11 @@ abstract class SimpleEnemyView implements GameObjectView {
                 }
             }
         }
-        if (this.status.getRow() < 0 && this.entity.getSpecular()) {
+        if (this.status.getRow() < 0 && this.isSpecular()) {
             this.reverseSpecularRend(g);
         } else if (this.status.getRow() < 0) {
             this.reverseRend(g);
-        } else if (this.entity.getSpecular()) {
+        } else if (this.isSpecular()) {
             this.specularRend(g);
         } else {
             this.rend(g);

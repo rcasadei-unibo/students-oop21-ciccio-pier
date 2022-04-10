@@ -7,7 +7,7 @@ public enum EntityType {
     /**
      * Represents the Player
      */
-    PLAYER(32, 64, 100, 60),
+    PLAYER(32, 64, 500, 60),
     /**
      * Represents the Missile that the enemy will launch
      */
@@ -59,27 +59,27 @@ public enum EntityType {
     /**
      * Represents a CryingPotato
      */
-    CRYING_ONION(64,64,100,50),
+    CRYING_ONION(64, 64, 100, 50),
     /**
      * Represents a MindPineapple
      */
-    MIND_PINEAPPLE(64,96,100,50),
+    MIND_PINEAPPLE(64, 96, 100, 50),
     /**
      * Represents a Nut
      */
-    NUT(16,16,0,50),
+    NUT(16, 16, 0, 50),
     /**
      * Represents a Pea
      */
-    PEA(16,16,0,50),
+    PEA(16, 16, 0, 50),
     /**
      * Represents a Slash
      */
-    SLASH(16,16,0,50),
+    SLASH(16, 32, 0, 50),
     /**
      * Represents a Spikes
      */
-    SPIKES(16,16,0,50),
+    SPIKES(32, 64, 0, 50),
     /**
      * Represents the boss of the game
      */

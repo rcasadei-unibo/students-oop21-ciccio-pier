@@ -4,43 +4,70 @@ import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.view.Texture;
 
+/**
+ * Enum representing the enemies projectiles with their relative information, such as:
+ * their duration, their range (travel distance) and their texture.
+ */
 public enum Projectiles {
 
-    PEA(0.7,10,Texture.PEA),
-    NUT(0,0,Texture.NUT),
-    SLASH(1,3,Texture.SLASH),
-    SPIKES(3,2,Texture.SPIKES);
-
+    /**
+     * Information relative the Pea projectile
+     */
+    PEA(0.9, 10, Texture.PEA),
+    /**
+     * Information relative the Nut projectile
+     */
+    NUT(0, 0, Texture.NUT),
+    /**
+     * Information relative the Slash projectile
+     */
+    SLASH(0.5, 7, Texture.SLASH),
+    /**
+     * Information relative the Spikes projectile
+     */
+    SPIKES(2, 2, Texture.SPIKES);
 
     private final double duration;
     private final double range;
     private final Texture texture;
 
-    Projectiles(final double duration, final double range, final Texture texture){
+    /**
+     * Constructor used to store information about any Projectile
+     *
+     * @param duration The duration, in seconds, of the Projectile lasting
+     * @param range    The travel distance of the Projectile
+     * @param texture  The Projectile's texture
+     */
+    Projectiles(final double duration, final double range, final Texture texture) {
         this.duration = duration;
         this.range = range;
         this.texture = texture;
     }
 
     /**
-     * Returns duration ticks
+     * Method to get the duration of the projectile
+     *
+     * @return The game ticks of the Projectile duration
      */
-    public double getDuration(){
+    public double getDuration() {
         return this.duration * GameLoop.TPS;
     }
 
     /**
-     * Return range
+     * Method to get the travel distance of the projectile
+     *
+     * @return The blocks distance
      */
-    public double getRange(){
+    public double getRange() {
         return this.range * Block.SIZE;
     }
 
     /**
-     * Return texture
-     * @return
+     * Method to get the projectile texture
+     *
+     * @return The projectile texture
      */
-    public Texture getTexture(){
+    public Texture getTexture() {
         return this.texture;
     }
 
