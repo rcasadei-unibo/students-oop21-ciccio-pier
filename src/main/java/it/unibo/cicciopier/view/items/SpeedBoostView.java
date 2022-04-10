@@ -30,7 +30,7 @@ public class SpeedBoostView implements GameObjectView {
     @Override
     public void render(final Graphics g) {
         g.drawImage(
-                Texture.JUMP_BOOST.getTexture(),
+                Texture.SPEED_BOOST.getTexture(),
                 this.speedBoost.getPos().getX(),
                 this.speedBoost.getPos().getY(),
                 null

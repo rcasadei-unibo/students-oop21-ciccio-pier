@@ -6,6 +6,7 @@ import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.items.CoinView;
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a coin object
  */
-public class JumpBoost extends SimpleMovingEntity {
+public final class JumpBoost extends SimpleEntity {
     private static final Logger LOGGER = LoggerFactory.getLogger(JumpBoost.class);
     private final Item jumpBoost;
     private JumpBoostView jumpBoostView;

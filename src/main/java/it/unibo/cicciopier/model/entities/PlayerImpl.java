@@ -21,6 +21,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private int stamina;
     private int speedModifier;
     private int jumpModifier;
+    private boolean isInvulnerable;
     private int score;
     private int coin;
     private boolean won;
@@ -193,13 +194,23 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     }
 
     @Override
+    public void damage(int amount) {
+        if(!isInvulnerable) super.damage(amount);
+    }
+
+    @Override
     public void setJumpModifier(final int modifier) {
         this.jumpModifier += modifier;
     }
 
     @Override
     public void setSpeedModifier(final int modifier) {
-        this.jumpModifier += modifier;
+        this.speedModifier += modifier;
+    }
+
+    @Override
+    public void setInvulnerability(final boolean active) {
+        this.isInvulnerable = active;
     }
 
     @Override

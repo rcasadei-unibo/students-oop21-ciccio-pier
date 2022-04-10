@@ -16,8 +16,8 @@ public class SimpleBlock extends SimpleGameObject implements Block {
      */
     public SimpleBlock(final BlockType type) {
         super();
-        this.view = new BlockView(this);
         this.type = type;
+        this.view = new BlockView(this);
     }
 
     /**
