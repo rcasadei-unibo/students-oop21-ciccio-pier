@@ -43,6 +43,47 @@ public class ShootingPea extends SimplePathEnemy {
      * {@inheritDoc}
      */
     @Override
+    public GameObjectView getView() {
+        return this.view;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isTextureSpecular() {
+        return true;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getIdleStatus() {
+        return EnemyStatuses.SHOOTING_PEA_IDLE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getWalkingStatus() {
+        return EnemyStatuses.SHOOTING_PEA_WALKING;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getDyingStatus() {
+        return EnemyStatuses.SHOOTING_PEA_DYING;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getHealValue() {
         return HEALTH_VALUE;
     }
@@ -61,14 +102,6 @@ public class ShootingPea extends SimplePathEnemy {
     @Override
     public int getScoreValue() {
         return SCORE_VALUE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isTextureSpecular() {
-        return true;
     }
 
     /**
@@ -99,41 +132,12 @@ public class ShootingPea extends SimplePathEnemy {
      * {@inheritDoc}
      */
     @Override
-    public EnemyStatuses getIdleStatus() {
-        return EnemyStatuses.SHOOTING_PEA_IDLE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getWalkingStatus() {
-        return EnemyStatuses.SHOOTING_PEA_WALKING;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getMaxRightOffset() {
         return MAX_RIGHT_OFFSET;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getDyingStatus() {
-        return EnemyStatuses.SHOOTING_PEA_DYING;
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameObjectView getView() {
-        return this.view;
-    }
+
 
     /**
      * {@inheritDoc}

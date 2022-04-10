@@ -48,8 +48,40 @@ public class MindPineapple extends SimplePathEnemy {
      * {@inheritDoc}
      */
     @Override
-    public int getScoreValue() {
-        return SCORE_VALUE;
+    public GameObjectView getView() {
+        return this.view;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isTextureSpecular() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getDyingStatus() {
+        return EnemyStatuses.MIND_PINEAPPLE_DYING;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getIdleStatus() {
+        return EnemyStatuses.MIND_PINEAPPLE_IDLE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getWalkingStatus() {
+        return EnemyStatuses.MIND_PINEAPPLE_IDLE;
     }
 
     /**
@@ -72,8 +104,8 @@ public class MindPineapple extends SimplePathEnemy {
      * {@inheritDoc}
      */
     @Override
-    public boolean isTextureSpecular() {
-        return false;
+    public int getScoreValue() {
+        return SCORE_VALUE;
     }
 
     /**
@@ -104,41 +136,13 @@ public class MindPineapple extends SimplePathEnemy {
      * {@inheritDoc}
      */
     @Override
-    public EnemyStatuses getIdleStatus() {
-        return EnemyStatuses.MIND_PINEAPPLE_IDLE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getWalkingStatus() {
-        return EnemyStatuses.MIND_PINEAPPLE_IDLE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getMaxRightOffset() {
         return MAX_RIGHT_OFFSET;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getDyingStatus() {
-        return EnemyStatuses.MIND_PINEAPPLE_DYING;
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameObjectView getView() {
-        return this.view;
-    }
+
+
 
     /**
      * Utility method called to set the MindPineapple angry

@@ -3,10 +3,14 @@ package it.unibo.cicciopier.model.entities.enemies;
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
+import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.entities.enemies.EnemyView;
+
+import java.util.Optional;
 
 /**
  * Represents the enemy RollingPeach, a walking peach whom attack consists into rolling
@@ -18,11 +22,17 @@ public class RollingPeach extends SimplePathEnemy {
     private final double MOVEMENT_SPEED = 0.6;
     private final int ATTACK_RANGE = 5 * Block.SIZE;
     private final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
+    private static final double ROLLING_SPEED = (8.5d * Block.SIZE) / GameLoop.TPS;
+    private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
     private static final int HEALTH_VALUE = 50;
     private static final int STAMINA_VALUE = 50;
 
-
     private final EnemyView view;
+    private boolean angered;
+    private boolean jumped;
+    private boolean attacking;
+    private boolean suicidal;
+    private int localTicks;
 
     /**
      * Constructor for this class
@@ -32,26 +42,84 @@ public class RollingPeach extends SimplePathEnemy {
     public RollingPeach(final World world) {
         super(EntityType.ROLLING_PEACH, world);
         this.setStatus(EnemyStatuses.ROLLING_PEACH_IDLE);
+        this.localTicks = 0;
+        this.attacking = false;
+        this.jumped = false;
+        this.angered = false;
+        this.suicidal = false;
         this.view = new EnemyView(this, Texture.ROLLING_PEACH);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getHealValue() {
-        return HEALTH_VALUE;
+    public GameObjectView getView() {
+        return this.view;
     }
 
-    @Override
-    public int getStaminaValue() {
-        return STAMINA_VALUE;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isTextureSpecular() {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getDyingStatus() {
+        return EnemyStatuses.ROLLING_PEACH_DYING;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getIdleStatus() {
+        return EnemyStatuses.ROLLING_PEACH_IDLE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getWalkingStatus() {
+        return EnemyStatuses.ROLLING_PEACH_WALKING;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getHealValue() {
+        if (this.suicidal) {
+            return 0;
+        }
+        return HEALTH_VALUE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getStaminaValue() {
+        if (this.suicidal) {
+            return 0;
+        }
+        return STAMINA_VALUE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getScoreValue() {
+        if (this.suicidal) {
+            return 0;
+        }
         return SCORE_VALUE;
     }
 
@@ -83,40 +151,145 @@ public class RollingPeach extends SimplePathEnemy {
      * {@inheritDoc}
      */
     @Override
-    public EnemyStatuses getIdleStatus() {
-        return EnemyStatuses.ROLLING_PEACH_IDLE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getWalkingStatus() {
-        return EnemyStatuses.ROLLING_PEACH_WALKING;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getMaxRightOffset() {
         return MAX_RIGHT_OFFSET;
     }
 
+
+
+
+
+
     /**
-     * {@inheritDoc}
+     * Utility method used to update the local ticks when needed
      */
-    @Override
-    public EnemyStatuses getDyingStatus() {
-        return EnemyStatuses.ROLLING_PEACH_DYING;
+    private void updateLocalTicks() {
+        if (this.localTicks < LOCAL_TICK_COUNT_DELIMITER) {
+            this.localTicks++;
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public GameObjectView getView() {
-        return this.view;
+    public boolean jump() {
+        this.jumped = true;
+        return super.jump();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void shoot(int dir, EntityType type) {
+        Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(type);
+        if (opt.isPresent()) {
+            SimpleProjectile e = ((SimpleProjectile) opt.get());
+            e.setPos(this.getPos().addVector(new Vector2d(0, this.getType().getHeight() - type.getHeight())));
+            e.setDir(dir);
+            this.getWorld().addEntity(e);
+        }
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void die() {
+        if (!this.suicidal) {
+            this.shoot(0, EntityType.NUT);
+        }
+        super.die();
+    }
+
+    /**
+     * Method used to make the RollingPeach get angry before attacking
+     */
+    private void anger() {
+        this.setStatus(EnemyStatuses.ROLLING_PEACH_ANGERED);
+        this.updateLocalTicks();
+        if (this.localTicks >= EnemyStatuses.ROLLING_PEACH_ANGERED.getDurationTicks()) {
+            this.localTicks = 0;
+            this.angered = true;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void attacking() {
+        if (!this.angered) {
+            this.anger();
+            return;
+        }
+        if (!this.jumped) {
+            this.jump();
+            return;
+        }
+        this.setStatus(EnemyStatuses.ROLLING_PEACH_ROLLING);
+
+        this.rolling();
+    }
+
+    /**
+     * Utility method used to spawn an explosion
+     */
+    private void createExplosion() {
+        Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
+        if (opt.isPresent()) {
+            Entity e = opt.get();
+            e.setPos(this.getPos());
+            this.getWorld().addEntity(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void checkPlayerCollision() {
+        super.checkPlayerCollision();
+        if (this.angered) {
+            if (this.getWorld().getPlayer().checkCollision(this)) {
+                this.suicidal = true;
+                this.die();
+                this.createExplosion();
+            }
+        }
+    }
+
+    /**
+     * Method used to set the RollingPeach rolling, detecting if it hit a block.
+     * In that case it dies
+     */
+    private void rolling() {
+        this.getVel().setX(this.isFacingRight() ? ROLLING_SPEED : -ROLLING_SPEED);
+        if ((this.isFacingRight() && this.rightCollision() >= 0) || (!this.isFacingRight() && this.leftCollision() <= 0)) {
+            this.suicidal = true;
+            this.die();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected boolean attackBehaviour() {
+        this.checkAttackConditions();
+        if (this.isAttacking() && !this.attacking) {
+            this.attacking = true;
+            this.getVel().setX(0);
+        }
+        if (attacking) {
+            this.attacking();
+            this.move();
+            return true;
+        }
+        return false;
     }
 
     /**

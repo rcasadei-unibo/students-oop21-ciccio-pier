@@ -101,7 +101,7 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
      *
      * @return True, if the Enemy is currently attacking
      */
-    private boolean attackBehaviour() {
+    protected boolean attackBehaviour() {
         this.checkAttackConditions();
         if (this.isAttacking()) {
             this.attacking();
@@ -161,8 +161,7 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
         if (this.isDead()) {
             return;
         }
-        this.attackBehaviour();
-        if (this.isAttacking()) {
+        if (this.attackBehaviour()){
             return;
         }
         this.pathMovementBehaviour(this.getMovementSpeed(),this.getIdleDuration());

@@ -17,7 +17,7 @@ public enum EnemyStatuses {
     /**
      * Represents the entity when entering angered state
      */
-    ROLLING_PEACH_ANGERED(1, 1, 2),
+    ROLLING_PEACH_ANGERED(4, 1.4, 2),
     /**
      * Represents the entity when entering angered state
      */
@@ -25,7 +25,7 @@ public enum EnemyStatuses {
     /**
      * Represents the entity starting to cry
      */
-    CRYING_ONION_CRYING(8, 1, 3),
+    CRYING_ONION_CRYING(8, 0.8, 3),
     /**
      * Represents the entity idling
      */
@@ -61,7 +61,7 @@ public enum EnemyStatuses {
     /**
      * Represents the entity walking
      */
-    CRYING_ONION_WALKING_CRYING(9, 0.4, 2),
+    CRYING_ONION_WALKING_CRYING(9, 0.2, 2),
     /**
      * Represents the entity switching between hidden and idling
      */
@@ -77,7 +77,7 @@ public enum EnemyStatuses {
     /**
      * Represents the entity rolling towards the player
      */
-    ROLLING_PEACH_ROLLING(4, 2, 3),
+    ROLLING_PEACH_ROLLING(4, 0.5, 3),
     /**
      * Represents the entity mind-attacking the player
      */
