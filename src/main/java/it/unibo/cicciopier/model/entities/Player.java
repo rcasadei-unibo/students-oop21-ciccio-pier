@@ -89,6 +89,11 @@ public interface Player extends LivingEntity {
     void setSpeedModifier(final int modifier);
 
     /**
+     * Sets the speed modifier
+     */
+    void setInvulnerability(final boolean active);
+
+    /**
      * Checks if the player has won
      *
      * @return true if the player has won, false otherwise

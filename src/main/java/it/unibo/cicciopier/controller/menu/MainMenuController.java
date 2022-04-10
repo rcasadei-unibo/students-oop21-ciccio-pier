@@ -1,27 +1,43 @@
 package it.unibo.cicciopier.controller.menu;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameEngine;
 import it.unibo.cicciopier.model.Music;
+import it.unibo.cicciopier.model.User;
 import it.unibo.cicciopier.view.menu.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import java.io.*;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainMenuController implements MenuController {
+
+
+public final class MainMenuController implements MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainMenuController.class);
-    private final AudioController audioController;
     private static final int MAX_VOLUME = 1;
     private static final int MIN_VOLUME = 0;
     private final MenuManagerView menu;
+    private User player;
+    private final File users_file;
+    private List<User> users;
     private String username;
 
-    public MainMenuController() {
+    public MainMenuController() throws URISyntaxException {
+        //Testing purpose
         this.menu = new MenuManagerView(this);
-        this.audioController = AudioController.getAudioController();
-        this.audioController.playMusic(Music.BACKGROUND);
+        AudioController.getAudioController().playMusic(Music.BACKGROUND);
+        this.users_file = new File("src/main/resources/users/users.json");
+        this.users = new ArrayList<>();
+        this.loadUsers();
         this.show(ViewPanels.LOGIN);
     }
 
@@ -35,55 +51,93 @@ public class MainMenuController implements MenuController {
                 break;
             }
             case INCREASE_MUSIC_AUDIO: {
-                if (audioController.getMusicVolume() != MAX_VOLUME) {
-                    audioController.setMusicVolume((float) ((Math.round(audioController.getMusicVolume() * 100) + 10)) / 100);
-                    menu.getSettingsView().updateMusicAudioText();
-                    LOGGER.info("Music volume set to:" + audioController.getMusicVolume() * 100 + "%");
+                if (AudioController.getAudioController().getMusicVolume() != MAX_VOLUME) {
+                    AudioController.getAudioController().setMusicVolume((float) ((Math.round(AudioController.getAudioController().getMusicVolume() * 100) + 10)) / 100);
+                    this.player.setMusicVolume((Math.round(AudioController.getAudioController().getMusicVolume() * 100)));
+                    this.updateUsers();
+                    this.menu.getSettingsView().updateMusicAudioText();
+                    LOGGER.info("Music volume set to:" + AudioController.getAudioController().getMusicVolume() * 100 + "%");
                 }
                 break;
             }
             case DECREASE_MUSIC_AUDIO: {
-                if (audioController.getMusicVolume() != MIN_VOLUME) {
-                    audioController.setMusicVolume((float) ((Math.round(audioController.getMusicVolume() * 100) - 10)) / 100);
-                    menu.getSettingsView().updateMusicAudioText();
-                    LOGGER.info("Music volume set to:" + audioController.getMusicVolume() * 100 + "%");
+                if (AudioController.getAudioController().getMusicVolume() != MIN_VOLUME) {
+                    AudioController.getAudioController().setMusicVolume((float) ((Math.round(AudioController.getAudioController().getMusicVolume() * 100) - 10)) / 100);
+                    this.player.setMusicVolume((Math.round(AudioController.getAudioController().getMusicVolume() * 100)));
+                    this.updateUsers();
+                    this.menu.getSettingsView().updateMusicAudioText();
+                    LOGGER.info("Music volume set to:" + AudioController.getAudioController().getMusicVolume() * 100 + "%");
                 }
                 break;
             }
             case INCREASE_GAME_AUDIO: {
-                if (audioController.getSoundVolume() != MAX_VOLUME) {
-                    audioController.setSoundVolume((float) ((Math.round(audioController.getSoundVolume() * 100) + 10)) / 100);
-                    menu.getSettingsView().updateGameAudioText();
-                    LOGGER.info("Game volume set to:" + audioController.getSoundVolume() * 100 + "%");
+                if (AudioController.getAudioController().getSoundVolume() != MAX_VOLUME) {
+                    AudioController.getAudioController().setSoundVolume((float) ((Math.round(AudioController.getAudioController().getSoundVolume() * 100) + 10)) / 100);
+                    this.player.setSoundVolume((Math.round(AudioController.getAudioController().getSoundVolume() * 100)));
+                    this.updateUsers();
+                    this.menu.getSettingsView().updateGameAudioText();
+                    LOGGER.info("Game volume set to:" + AudioController.getAudioController().getSoundVolume() * 100 + "%");
                 }
                 break;
             }
             case DECREASE_GAME_AUDIO: {
-                if (audioController.getSoundVolume() != MIN_VOLUME) {
-                    audioController.setSoundVolume((float) ((Math.round(audioController.getSoundVolume() * 100) - 10)) / 100);
-                    menu.getSettingsView().updateGameAudioText();
-                    LOGGER.info("Game volume set to:" + audioController.getSoundVolume() * 100 + "%");
+                if (AudioController.getAudioController().getSoundVolume() != MIN_VOLUME) {
+                    AudioController.getAudioController().setSoundVolume((float) ((Math.round(AudioController.getAudioController().getSoundVolume() * 100) - 10)) / 100);
+                    this.player.setSoundVolume((Math.round(AudioController.getAudioController().getSoundVolume() * 100)));
+                    this.updateUsers();
+                    this.menu.getSettingsView().updateGameAudioText();
+                    LOGGER.info("Game volume set to:" + AudioController.getAudioController().getSoundVolume() * 100 + "%");
                 }
                 break;
             }
             case QUIT: {
                 quitAction();
             }
-            case LOGIN:{
-                //TODO check if a Json called after the username given exist and load it or create a new one
+            case LOGIN: {
                 this.username = menu.getLoginView().getUsername();
+                    this.player = this.users.stream().filter(user -> this.username.equals(user.getUsername()))
+                            .findFirst()
+                            .orElse(createUser());
+
+
+
+                AudioController.getAudioController().setSoundVolume((float) this.player.getSoundVolume()/100);
+                this.menu.getSettingsView().updateGameAudioText();
+                AudioController.getAudioController().setMusicVolume((float) this.player.getMusicVolume()/100);
+                this.menu.getSettingsView().updateMusicAudioText();
+
+
                 this.show(ViewPanels.MAIN_MENU);
                 break;
             }
-            case LOGOUT:{
+            case LOGOUT: {
                 this.username = null;
-                menu.getLoginView().logout();
+                this.menu.getLoginView().logout();
                 this.show(ViewPanels.LOGIN);
             }
         }
     }
 
-    public void startLevel( GameEngine gameEngine){
+    private User createUser() {
+
+        LOGGER.info("Creating a new User: " + this.username);
+        User newUser = new User(this.username);
+        this.users.add(newUser);
+        this.updateUsers();
+        return newUser;
+    }
+
+    private void updateUsers() {
+        try (FileWriter writer = new FileWriter(this.users_file); JsonWriter jsonWriter = new JsonWriter(writer)) {
+            Gson gson = new Gson().newBuilder().serializeNulls().create();
+            gson.toJson(users,List.class,jsonWriter);
+            System.out.println("Successfully updated json object to file...!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void startLevel(GameEngine gameEngine) {
         LOGGER.info("Starting level...");
 
         try {
@@ -98,13 +152,24 @@ public class MainMenuController implements MenuController {
         }
     }
 
+    private void loadUsers() {
+        try (FileReader reader = new FileReader(this.users_file); JsonReader jsonReader = new JsonReader(reader)) {
+            Gson gson = new Gson().newBuilder().serializeNulls().create();
+            this.users = gson.fromJson(jsonReader,new TypeToken<List<User>>(){}.getType());
+            System.out.println("Successfully updated json object to file...!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(this.users == null) this.users = new ArrayList<>();
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void show(ViewPanels viewPanels) {
         LOGGER.info("Changing menu view to: " + viewPanels);
-        menu.setVisible(viewPanels);
+        this.menu.setVisible(viewPanels);
     }
 
     public void quitAction() {
@@ -114,5 +179,9 @@ public class MainMenuController implements MenuController {
 
     public String getUsername() {
         return username;
+    }
+
+    public User getPlayer() {
+        return player;
     }
 }

@@ -101,6 +101,14 @@ public enum Texture {
      */
     JUMP_BOOST("/textures/jumpBoost.png"),
     /**
+     * Represents the texture of the speed boost
+     */
+    SPEED_BOOST("/textures/speedBoost.png"),
+    /**
+     * Represents the texture of the speed boost
+     */
+    INVULNERABILITY_BOOST("/textures/invulnerabilityBoost.png"),
+    /**
      * Represents the texture of the chicken
      */
     CHICKEN("/textures/chicken.png"),

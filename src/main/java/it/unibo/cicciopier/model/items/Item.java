@@ -16,7 +16,12 @@ public enum Item {
     /**
      * Represents a speed power-up
      */
-    SPEED_BOOST(0, 0, 0, 6);
+    SPEED_BOOST(0, 0, 0, 4),
+    /**
+     * Represents a speed power-up
+     */
+    INVULNERABILITY_BOOST(0, 0, 0, 4);
+
 
     private final int score;
     private final int stamina;
