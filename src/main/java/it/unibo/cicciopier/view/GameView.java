@@ -14,7 +14,10 @@ import java.awt.event.KeyListener;
  */
 public class GameView extends JFrame implements View, KeyListener {
     private final Engine engine;
+    private final JLayeredPane pane;
     private final LevelView level;
+    private final HudView hud;
+    private final LevelMenuView menu;
 
     /**
      * Constructor for this class.
@@ -24,11 +27,10 @@ public class GameView extends JFrame implements View, KeyListener {
     public GameView(final Engine engine) {
         super("Level");
         this.engine = engine;
+        this.pane = new JLayeredPane();
         this.level = new LevelView(engine);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.addKeyListener(this);
-        this.setResizable(false);
+        this.hud = new HudView(engine);
+        this.menu = new LevelMenuView(engine);
     }
 
     /**
@@ -36,11 +38,28 @@ public class GameView extends JFrame implements View, KeyListener {
      */
     @Override
     public void load() throws Exception {
-        int h = engine.getWorld().getHeight() * Block.SIZE;
+        final int h = engine.getWorld().getHeight() * Block.SIZE;
+        // Setup pane
+        this.pane.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.pane.setLayout(null);
+        // Setup level
         this.level.setPreferredSize(new Dimension(h * 16 / 9, h));
-        this.level.setBackground(Color.CYAN);
         this.level.load();
-        this.add(this.level);
+        this.pane.add(this.level, Integer.valueOf(0));
+        // Setup hud
+        this.hud.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.hud.load();
+        this.pane.add(this.hud, Integer.valueOf(1));
+        // Setup menu
+        this.menu.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.menu.load();
+        this.pane.add(this.menu, Integer.valueOf(2));
+        // Setup JFrame
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addKeyListener(this);
+        this.setResizable(false);
+        this.add(this.pane);
         this.pack();
     }
 
@@ -66,7 +85,7 @@ public class GameView extends JFrame implements View, KeyListener {
      */
     @Override
     public void render() {
-        this.level.repaint();
+        this.pane.repaint();
     }
 
     /**
