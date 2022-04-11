@@ -1,6 +1,5 @@
 package it.unibo.cicciopier.model;
 
-import com.google.gson.annotations.Expose;
 
 public class User {
     private final String username;
