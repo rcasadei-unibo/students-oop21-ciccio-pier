@@ -22,7 +22,7 @@ public class MenuManagerView extends JFrame implements StaticView {
         this.loginView = new LoginView(mainMenuController);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(true);
+        this.setResizable(false);
         this.setVisible(true);
 
     }

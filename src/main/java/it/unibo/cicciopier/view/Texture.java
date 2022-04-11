@@ -123,135 +123,171 @@ public enum Texture {
     /**
      * Represents the background of the menu
      */
-    MENU_BACKGROUND("/menuGraphics/menuBackground.png"),
+    MENU_BACKGROUND("/textures/backgrounds/menu.png"),
     /**
      * Represents the background of the level selection menu
      */
-    LEVEL_SELECTION_BACKGROUND("/menuGraphics/levelSelectionBackground.png"),
+    LEVEL_SELECTION_BACKGROUND("/textures/backgrounds/level_selection.png"),
     /**
      * Represents the background of the leaderboard menu
      */
-    LEADERBOARD_BACKGROUND("/menuGraphics/leaderboardBackground.png"),
+    LEADERBOARD_BACKGROUND("/textures/backgrounds/leaderboard.png"),
     /**
      * Represents the background of the login view
      */
-    LOGIN_BACKGROUND("/menuGraphics/loginBackground.png"),
+    LOGIN_BACKGROUND("/textures/backgrounds/login.png"),
     /**
      * Represents the background of the login view
      */
-    SETTINGS_BACKGROUND("/menuGraphics/settingsBackground.png"),
+    SETTINGS_BACKGROUND("/textures/backgrounds/settings.png"),
+    /**
+     * Represents the background shown when you win a level
+     */
+    VICTORY_BACKGROUND("/textures/backgrounds/victory.png"),
+    /**
+     * Represents the background shown when you pause a level
+     */
+    PAUSE_BACKGROUND("/textures/backgrounds/pause.png"),
+    /**
+     * Represents the background shown when you pause a level
+     */
+    GAMEOVER_BACKGROUND("/textures/backgrounds/gameover.png"),
     /**
      * Represents the button used to access the first level
      */
-    SUBMIT_BUTTON("/menuGraphics/buttons/submitButton/submitButton.png"),
+    SUBMIT_BUTTON("/textures/buttons/submitButton/submit.png"),
     /**
-     * Represents the button used to logout from the current user
+     * Represents the button used to log out from the current user
      */
-    LOGOUT_BUTTON("/menuGraphics/buttons/logoutButton/logoutButton.png"),
+    LOGOUT_BUTTON("/textures/buttons/logout/logout.png"),
     /**
-     * Represents the button used to logout from the current user while pressed
+     * Represents the button used to log out from the current user while pressed
      */
-    LOGOUT_BUTTON_PRESSED("/menuGraphics/buttons/logoutButton/logoutButtonPressed.png"),
+    LOGOUT_BUTTON_PRESSED("/textures/buttons/logout/logout_pressed.png"),
     /**
      * Represents the button used to access the first level
      */
-    SUBMIT_BUTTON_PRESSED("/menuGraphics/buttons/submitButton/submitButtonPressed.png"),
+    SUBMIT_BUTTON_PRESSED("/textures/buttons/submitButton/submit_pressed.png"),
     /**
      * Represents the button used to increase the audio
      */
-    PLUS_AUDIO_BUTTON("/menuGraphics/buttons/audioButtons/plusAudioButton.png"),
+    PLUS_AUDIO_BUTTON("/textures/buttons/audio/plus.png"),
     /**
      * Represents the button used to increase the audio while pressed
      */
-    PLUS_AUDIO_BUTTON_PRESSED("/menuGraphics/buttons/audioButtons/plusAudioButtonPressed.png"),
+    PLUS_AUDIO_BUTTON_PRESSED("/textures/buttons/audio/plus_pressed.png"),
     /**
      * Represents the button used to decrease the audio
      */
-    MINUS_AUDIO_BUTTON("/menuGraphics/buttons/audioButtons/minusAudioButton.png"),
+    MINUS_AUDIO_BUTTON("/textures/buttons/audio/minus.png"),
     /**
      * Represents the button used to decrease the audio while pressed
      */
-    MINUS_AUDIO_BUTTON_PRESSED("/menuGraphics/buttons/audioButtons/minusAudioButtonPressed.png"),
+    MINUS_AUDIO_BUTTON_PRESSED("/textures/buttons/audio/minus_pressed.png"),
     /**
      * Represents the button used to access the first level
      */
-    LEVEL_BUTTON_1("/menuGraphics/buttons/levelButtons/levelButton1.png"),
+    LEVEL_BUTTON_1("/textures/buttons/level/level1.png"),
     /**
      * Represents the button used to access the first level while pressed
      */
-    LEVEL_BUTTON_1_PRESSED("/menuGraphics/buttons/levelButtons/levelButton1Pressed.png"),
+    LEVEL_BUTTON_1_PRESSED("/textures/buttons/level/level1_pressed.png"),
     /**
      * Represents the button used to access the second level
      */
-    LEVEL_BUTTON_2("/menuGraphics/buttons/levelButtons/levelButton2.png"),
+    LEVEL_BUTTON_2("/textures/buttons/level/level2.png"),
     /**
      * Represents the button used to access the second level while pressed
      */
-    LEVEL_BUTTON_2_PRESSED("/menuGraphics/buttons/levelButtons/levelButton2Pressed.png"),
+    LEVEL_BUTTON_2_PRESSED("/textures/buttons/level/level2_pressed.png"),
     /**
      * Represents the button used to access the third level
      */
-    LEVEL_BUTTON_3("/menuGraphics/buttons/levelButtons/levelButton3.png"),
+    LEVEL_BUTTON_3("/textures/buttons/level/level3.png"),
     /**
      * Represents the button used to access the third level while pressed
      */
-    LEVEL_BUTTON_3_PRESSED("/menuGraphics/buttons/levelButtons/levelButton3Pressed.png"),
+    LEVEL_BUTTON_3_PRESSED("/textures/buttons/level/level3_pressed.png"),
     /**
      * Represents the button used to access the boss level
      */
-    LEVEL_BUTTON_BOSS("/menuGraphics/buttons/levelButtons/levelButtonBoss.png"),
+    LEVEL_BUTTON_BOSS("/textures/buttons/level/level_boss.png"),
     /**
      * Represents the button used to access the boss level while pressed
      */
-    LEVEL_BUTTON_BOSS_PRESSED("/menuGraphics/buttons/levelButtons/levelButtonBossPressed.png"),
+    LEVEL_BUTTON_BOSS_PRESSED("/textures/buttons/level/level_boss_pressed.png"),
     /**
      * Represents the button used to access the main menu
      */
-    HOME_BUTTON("/menuGraphics/buttons/homeButton/homeButton.png"),
+    HOME_BUTTON("/textures/buttons/home/home.png"),
     /**
      * Represents the button used to access the main menu while pressed
      */
-    HOME_BUTTON_PRESSED("/menuGraphics/buttons/homeButton/homeButtonPressed.png"),
+    HOME_BUTTON_PRESSED("/textures/buttons/home/home_pressed.png"),
     /**
      * Represents the button used to access the main menu while hover it
      */
-    HOME_BUTTON_HOVER("/menuGraphics/buttons/homeButton/homeButtonHover.png"),
+    HOME_BUTTON_HOVER("/textures/buttons/home/home_hover.png"),
+    /**
+     * Represents the level restart button
+     */
+    RESTART_BUTTON("/textures/buttons/restart/restart.png"),
+    /**
+     * Represents the level restart button while pressed
+     */
+    RESTART_BUTTON_PRESSED("/textures/buttons/restart/restart_pressed.png"),
+    /**
+     * Represents the level restart button while hover it
+     */
+    RESTART_BUTTON_HOVER("/textures/buttons/restart/restart_hover.png"),
+    /**
+     * Represents the level resume button
+     */
+    RESUME_BUTTON("/textures/buttons/resume/resume.png"),
+    /**
+     * Represents the level resume button while pressed
+     */
+    RESUME_BUTTON_PRESSED("/textures/buttons/resume/resume_pressed.png"),
+    /**
+     * Represents the level resume button while hover it
+     */
+    RESUME_BUTTON_HOVER("/textures/buttons/resume/resume_hover.png"),
     /**
      * Represents the menu play button
      */
-    PLAY_BUTTON("/menuGraphics/buttons/playButton/playButton.png"),
+    PLAY_BUTTON("/textures/buttons/play/play.png"),
     /**
      * Represents the menu play button while pressed
      */
-    PLAY_BUTTON_PRESSED("/menuGraphics/buttons/playButton/playButtonPressed.png"),
+    PLAY_BUTTON_PRESSED("/textures/buttons/play/play_pressed.png"),
     /**
      * Represents the settings button
      */
-    SETTINGS_BUTTON("/menuGraphics/buttons/settingsButton/settingButton.png"),
+    SETTINGS_BUTTON("/textures/buttons/settings/setting.png"),
     /**
      * Represents the settings button while pressed
      */
-    SETTINGS_BUTTON_HOVER("/menuGraphics/buttons/settingsButton/settingsButtonHover.png"),
+    SETTINGS_BUTTON_HOVER("/textures/buttons/settings/settings_hover.png"),
     /**
      * Represents the settings button while the mouse is hover it
      */
-    SETTINGS_BUTTON_PRESSED("/menuGraphics/buttons/settingsButton/settingsButtonPressed.png"),
+    SETTINGS_BUTTON_PRESSED("/textures/buttons/settings/settings_pressed.png"),
     /**
      * Represents the quit button
      */
-    QUIT_BUTTON("/menuGraphics/buttons/quitButton/quitButton.png"),
+    QUIT_BUTTON("/textures/buttons/quit/quit.png"),
     /**
      * Represents the quit button while pressed
      */
-    QUIT_BUTTON_PRESSED("/menuGraphics/buttons/quitButton/quitButtonPressed.png"),
+    QUIT_BUTTON_PRESSED("/textures/buttons/quit/quit_pressed.png"),
     /**
      * Represents the leaderboard button
      */
-    LEADERBOARD_BUTTON("/menuGraphics/buttons/leaderboardButton/leaderboardButton.png"),
+    LEADERBOARD_BUTTON("/textures/buttons/leaderboard/leaderboard.png"),
     /**
      * Represents the leaderboard button while pressed
      */
-    LEADERBOARD_BUTTON_PRESSED("/menuGraphics/buttons/leaderboardButton/leaderboardButtonPressed.png");
+    LEADERBOARD_BUTTON_PRESSED("/textures/buttons/leaderboard/leaderboard_pressed.png");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Texture.class);
     private final String fileName;

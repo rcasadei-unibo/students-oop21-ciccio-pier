@@ -1,9 +1,11 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.CustomButton;
+import it.unibo.cicciopier.view.menu.buttons.MenuActionButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +17,7 @@ public class LoginView extends JPanel {
 
     public LoginView(MainMenuController mainMenuController) {
 
-        CustomButton submitButton = new CustomButton(mainMenuController, Buttons.SUBMIT);
+        CustomButton submitButton = new MenuActionButton(mainMenuController, Buttons.SUBMIT, MenuAction.LOGIN);
 
         this.textField = new JTextField("", JTextField.CENTER);
         textField.setHorizontalAlignment(JTextField.CENTER);

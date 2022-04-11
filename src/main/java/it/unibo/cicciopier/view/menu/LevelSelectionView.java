@@ -4,6 +4,8 @@ import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.CustomButton;
+import it.unibo.cicciopier.view.menu.buttons.PlayLevelButton;
+import it.unibo.cicciopier.view.menu.buttons.ViewPanelButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,17 +22,17 @@ public class LevelSelectionView extends JPanel {
 
         this.loggedUser = new JLabel("Logged user: " + this.mainMenuController.getUsername());
 
-        CustomButton settings = new CustomButton(this.mainMenuController, Buttons.SETTINGS);
+        CustomButton settings = new ViewPanelButton(this.mainMenuController, Buttons.SETTINGS, ViewPanels.SETTINGS);
 
-        CustomButton home = new CustomButton(this.mainMenuController, Buttons.HOME);
+        CustomButton home = new ViewPanelButton(this.mainMenuController, Buttons.HOME, ViewPanels.MAIN_MENU);
 
-        CustomButton level1 = new CustomButton(this.mainMenuController, Buttons.LEVEL1);
+        CustomButton level1 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL1, "level-1-1.tmx");
 
-        CustomButton level2 = new CustomButton(this.mainMenuController, Buttons.LEVEL2);
+        CustomButton level2 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL2,"level-1-2.tmx");
 
-        CustomButton level3 = new CustomButton(this.mainMenuController, Buttons.LEVEL3);
+        CustomButton level3 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL3,"level-1-3.tmx");
 
-        CustomButton levelBoss = new CustomButton(this.mainMenuController, Buttons.LEVEL_BOSS);
+        CustomButton levelBoss = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL_BOSS, "level-1-4.tmx");
 
 
         loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));

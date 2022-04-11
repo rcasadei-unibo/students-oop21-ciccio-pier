@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.buttons.*;
 
@@ -23,13 +24,13 @@ public class MainMenuView extends JPanel {
         this.loggedUser = new JLabel("Logged user: " + this.mainMenuController.getUsername());
         this.loggedUser.setForeground(Color.WHITE);
 
-        CustomButton settings = new CustomButton(this.mainMenuController, Buttons.SETTINGS);
+        CustomButton settings = new ViewPanelButton(this.mainMenuController, Buttons.SETTINGS, ViewPanels.SETTINGS);
 
-        CustomButton play = new CustomButton(this.mainMenuController, Buttons.PLAY);
+        CustomButton play = new ViewPanelButton(this.mainMenuController, Buttons.PLAY, ViewPanels.LEVEL_SELECTION);
 
-        CustomButton leaderboard = new CustomButton(this.mainMenuController, Buttons.LEADERBOARD);
+        CustomButton leaderboard = new ViewPanelButton(this.mainMenuController, Buttons.LEADERBOARD, ViewPanels.LEADERBOARD);
 
-        CustomButton quit = new CustomButton(this.mainMenuController, Buttons.QUIT);
+        CustomButton quit = new MenuActionButton(this.mainMenuController, Buttons.QUIT, MenuAction.QUIT);
 
         this.loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
 

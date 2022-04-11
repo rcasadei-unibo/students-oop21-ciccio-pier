@@ -2,9 +2,13 @@ package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.MenuAction;
+import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.CustomButton;
+import it.unibo.cicciopier.view.menu.buttons.MenuActionButton;
+import it.unibo.cicciopier.view.menu.buttons.ViewPanelButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,17 +27,17 @@ public class SettingsView extends JPanel {
 
         this.loggedUser = new JLabel("Logged user: " + mainMenuController.getUsername());
 
-        CustomButton home = new CustomButton(mainMenuController, Buttons.HOME);
+        CustomButton home = new ViewPanelButton(mainMenuController, Buttons.HOME, ViewPanels.MAIN_MENU);
 
-        CustomButton plusSound = new CustomButton(mainMenuController, Buttons.PLUS_GAME_AUDIO);
+        CustomButton plusSound = new MenuActionButton(mainMenuController, Buttons.PLUS_GAME_AUDIO, MenuAction.INCREASE_GAME_AUDIO);
 
-        CustomButton minusSound = new CustomButton(mainMenuController, Buttons.MINUS_GAME_AUDIO);
+        CustomButton minusSound = new MenuActionButton(mainMenuController, Buttons.MINUS_GAME_AUDIO, MenuAction.DECREASE_GAME_AUDIO);
 
-        CustomButton plusMusic = new CustomButton(mainMenuController, Buttons.PLUS_MUSIC_AUDIO);
+        CustomButton plusMusic = new MenuActionButton(mainMenuController, Buttons.PLUS_MUSIC_AUDIO, MenuAction.INCREASE_MUSIC_AUDIO);
 
-        CustomButton minusMusic = new CustomButton(mainMenuController, Buttons.MINUS_MUSIC_AUDIO);
+        CustomButton minusMusic = new MenuActionButton(mainMenuController, Buttons.MINUS_MUSIC_AUDIO, MenuAction.DECREASE_MUSIC_AUDIO);
 
-        CustomButton logout = new CustomButton(mainMenuController, Buttons.LOGOUT);
+        CustomButton logout = new MenuActionButton(mainMenuController, Buttons.LOGOUT, MenuAction.LOGOUT);
 
 
         this.gameAudio = new JLabel(Math.round(AudioController.getAudioController().getSoundVolume() * 100) + "%");

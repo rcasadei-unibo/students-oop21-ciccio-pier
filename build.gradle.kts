@@ -24,7 +24,6 @@ dependencies {
     implementation("com.sun.xml.bind:jaxb-core:2.3.0.1")
     implementation("com.sun.xml.bind:jaxb-impl:2.3.1")
     implementation("org.mapeditor:libtiled:1.4.2")
-    implementation("com.googlecode.json-simple:json-simple:1.1.1")
     implementation("com.google.code.gson:gson:2.9.0")
 
 

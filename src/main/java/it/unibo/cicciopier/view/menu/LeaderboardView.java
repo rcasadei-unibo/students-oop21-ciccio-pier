@@ -4,6 +4,7 @@ import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.CustomButton;
+import it.unibo.cicciopier.view.menu.buttons.ViewPanelButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +21,9 @@ public class LeaderboardView extends JPanel {
 
         this.loggedUser = new JLabel("Logged user: " + this.mainMenuController.getUsername());
 
-        CustomButton settings = new CustomButton(this.mainMenuController, Buttons.SETTINGS);
+        CustomButton settings = new ViewPanelButton(this.mainMenuController, Buttons.SETTINGS, ViewPanels.SETTINGS);
 
-        CustomButton home = new CustomButton(this.mainMenuController, Buttons.HOME);
+        CustomButton home = new ViewPanelButton(this.mainMenuController, Buttons.HOME, ViewPanels.MAIN_MENU);
 
         this.loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
         this.loggedUser.setForeground(Color.WHITE);

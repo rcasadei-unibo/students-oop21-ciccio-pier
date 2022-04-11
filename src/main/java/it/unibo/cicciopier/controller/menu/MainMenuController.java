@@ -18,7 +18,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Locale;
 
 
 public final class MainMenuController implements MenuController {
@@ -43,13 +43,6 @@ public final class MainMenuController implements MenuController {
 
     public void action(MenuAction menuAction) {
         switch (menuAction) {
-            case SHOW: {
-                LOGGER.info("Action SHOW called Wrongly");
-                break;
-            }
-            case PLAY_LEVEL: {
-                break;
-            }
             case INCREASE_MUSIC_AUDIO: {
                 if (AudioController.getAudioController().getMusicVolume() != MAX_VOLUME) {
                     AudioController.getAudioController().setMusicVolume((float) ((Math.round(AudioController.getAudioController().getMusicVolume() * 100) + 10)) / 100);
@@ -94,29 +87,32 @@ public final class MainMenuController implements MenuController {
                 quitAction();
             }
             case LOGIN: {
-                this.username = menu.getLoginView().getUsername();
-                    this.player = this.users.stream().filter(user -> this.username.equals(user.getUsername()))
-                            .findFirst()
-                            .orElse(createUser());
+                if (!menu.getLoginView().getUsername().isBlank()) {
+                    this.username = menu.getLoginView().getUsername().toLowerCase().trim();
+                    LOGGER.info("Username: " + this.username);
+                    LOGGER.info("Users: " + this.users);
+                    this.player = this.users.stream().filter(user -> user.getUsername().equals(this.username)).findFirst().orElseGet(this::createUser);
 
 
+                    AudioController.getAudioController().setSoundVolume((float) this.player.getSoundVolume() / 100);
+                    this.menu.getSettingsView().updateGameAudioText();
+                    AudioController.getAudioController().setMusicVolume((float) this.player.getMusicVolume() / 100);
+                    this.menu.getSettingsView().updateMusicAudioText();
 
-                AudioController.getAudioController().setSoundVolume((float) this.player.getSoundVolume()/100);
-                this.menu.getSettingsView().updateGameAudioText();
-                AudioController.getAudioController().setMusicVolume((float) this.player.getMusicVolume()/100);
-                this.menu.getSettingsView().updateMusicAudioText();
 
-
-                this.show(ViewPanels.MAIN_MENU);
-                break;
+                    this.show(ViewPanels.MAIN_MENU);
+                    break;
+                }
             }
             case LOGOUT: {
                 this.username = null;
                 this.menu.getLoginView().logout();
                 this.show(ViewPanels.LOGIN);
+
             }
         }
     }
+
 
     private User createUser() {
 
@@ -130,20 +126,21 @@ public final class MainMenuController implements MenuController {
     private void updateUsers() {
         try (FileWriter writer = new FileWriter(this.users_file); JsonWriter jsonWriter = new JsonWriter(writer)) {
             Gson gson = new Gson().newBuilder().serializeNulls().create();
-            gson.toJson(users,List.class,jsonWriter);
+            gson.toJson(users, List.class, jsonWriter);
             System.out.println("Successfully updated json object to file...!!");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void startLevel(GameEngine gameEngine) {
+    public void startLevel(String levelName) {
         LOGGER.info("Starting level...");
 
         try {
             AudioController.getAudioController().stopMusic(Music.BACKGROUND);
             this.menu.setVisible(false);
             AudioController.getAudioController().playMusic(Music.GAME);
+            GameEngine gameEngine = new GameEngine(levelName);
             gameEngine.load();
             gameEngine.start();
         } catch (Exception e) {
@@ -155,12 +152,13 @@ public final class MainMenuController implements MenuController {
     private void loadUsers() {
         try (FileReader reader = new FileReader(this.users_file); JsonReader jsonReader = new JsonReader(reader)) {
             Gson gson = new Gson().newBuilder().serializeNulls().create();
-            this.users = gson.fromJson(jsonReader,new TypeToken<List<User>>(){}.getType());
+            this.users = gson.fromJson(jsonReader, new TypeToken<List<User>>() {
+            }.getType());
             System.out.println("Successfully updated json object to file...!!");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(this.users == null) this.users = new ArrayList<>();
+        if (this.users == null) this.users = new ArrayList<>();
     }
 
     /**
