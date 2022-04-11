@@ -126,7 +126,8 @@ public class GameEngine implements Engine {
             this.processInput();
             // update player
             this.getWorld().getPlayer().tick(this.ticks);
-            this.ticks = 0;
+            // update ticks
+            this.ticks++;
         }
         // update view
         this.view.render();
