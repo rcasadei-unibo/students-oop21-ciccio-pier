@@ -221,8 +221,8 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
-        super.tick();
+    public void tick(final long ticks) {
+        super.tick(ticks);
         if (this.checkDyingBehaviour()) {
             return;
         }

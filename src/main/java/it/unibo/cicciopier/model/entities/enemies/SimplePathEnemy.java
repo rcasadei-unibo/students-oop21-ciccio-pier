@@ -155,9 +155,9 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
         this.initializePath(this.getMaxRightOffset());
-        super.tick();
+        super.tick(ticks);
         if (this.isDead()) {
             return;
         }

@@ -89,7 +89,7 @@ public class Laser extends SimpleMovingEntity {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
         if (!this.isOnce) {
             this.seek();
             this.isOnce = true;

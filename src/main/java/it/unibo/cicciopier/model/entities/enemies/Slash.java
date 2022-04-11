@@ -21,7 +21,7 @@ public class Slash extends SimpleProjectile {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
-        super.tick();
+    public void tick(final long ticks) {
+        super.tick(ticks);
     }
 }

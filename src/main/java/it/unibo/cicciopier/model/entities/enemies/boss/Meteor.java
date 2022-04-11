@@ -38,7 +38,7 @@ public class Meteor extends SimpleMovingEntity {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
         this.getVel().add(this.accel);
         this.getVel().setLimiter(MAX_SPEED);
         this.getPos().add(this.getVel());

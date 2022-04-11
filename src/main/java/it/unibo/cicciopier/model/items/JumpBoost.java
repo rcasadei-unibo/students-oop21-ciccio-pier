@@ -40,7 +40,7 @@ public final class JumpBoost extends SimpleEntity {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
 
         if (this.checkCollision(this.getWorld().getPlayer()) && !this.isActive) {
             AudioController.getAudioController().playSound(Sound.ITEM);

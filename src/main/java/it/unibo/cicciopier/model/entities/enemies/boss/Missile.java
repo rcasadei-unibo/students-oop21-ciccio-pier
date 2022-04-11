@@ -101,7 +101,7 @@ public class Missile extends SimpleMovingEntity {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
         //seek the player if i reached the max distance
         if (this.isMaxDistance()) {
             this.seek();

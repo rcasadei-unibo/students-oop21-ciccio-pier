@@ -241,8 +241,8 @@ public class Broccoli extends SimpleLivingEntity {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
-        super.tick();
+    public void tick(final long ticks) {
+        super.tick(ticks);
         switch (this.currentState) {
             case SEEK:
                 this.seek();

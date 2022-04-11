@@ -182,8 +182,8 @@ public class NinjaPotato extends SimpleEnemy {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
-        super.tick();
+    public void tick(final long ticks) {
+        super.tick(ticks);
         if (this.isDead()) {
             return;
         }

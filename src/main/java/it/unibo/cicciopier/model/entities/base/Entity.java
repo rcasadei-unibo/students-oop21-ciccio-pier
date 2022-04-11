@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.model.entities.base;
 
+import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.model.GameObject;
 
 /**
@@ -33,7 +34,9 @@ public interface Entity extends GameObject {
 
     /**
      * Called every game cycle to update the Entity
+     *
+     * @param ticks {@link Engine#getTicks()}
      */
-    void tick();
+    void tick(final long ticks);
 
 }

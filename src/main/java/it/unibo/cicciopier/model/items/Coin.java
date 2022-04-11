@@ -30,7 +30,7 @@ public class Coin extends SimpleEntity {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
 
         if (this.checkCollision(this.getWorld().getPlayer())) {
             AudioController.getAudioController().playSound(Sound.COIN);

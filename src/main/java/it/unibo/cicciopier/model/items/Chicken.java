@@ -37,7 +37,7 @@ public class Chicken extends SimpleEntity {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
         //check if item collides with the player
         if (this.checkCollision(this.getWorld().getPlayer())) {
             //remove the coin

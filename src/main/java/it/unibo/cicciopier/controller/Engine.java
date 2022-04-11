@@ -43,6 +43,12 @@ public interface Engine {
     void update();
 
     /**
+     * Get the number of ticks updated from the game start.
+     * @return the ticks
+     */
+    long getTicks();
+
+    /**
      * Execute an action, function for menu buttons.
      *
      * @param action the action

@@ -40,7 +40,7 @@ public class Explosion extends SimpleEntity {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
         if (this.isFinish) {
             this.remove();
         }

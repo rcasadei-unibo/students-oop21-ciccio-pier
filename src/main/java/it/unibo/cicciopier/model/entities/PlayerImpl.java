@@ -167,8 +167,8 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
-        super.tick();
+    public void tick(final long ticks) {
+        super.tick(ticks);
         this.updateAttackCooldown();
         this.move();
     }

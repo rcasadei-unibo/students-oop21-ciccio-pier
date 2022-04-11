@@ -108,7 +108,7 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
         this.ticks++;
         if (this.ticks == this.projectile.getDuration()) {
             this.remove();

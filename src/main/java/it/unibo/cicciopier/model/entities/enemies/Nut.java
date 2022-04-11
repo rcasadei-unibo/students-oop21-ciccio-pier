@@ -22,7 +22,7 @@ public class Nut extends SimpleProjectile {
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
         if (this.checkCollision(this.getWorld().getPlayer())) {
             this.remove();
             this.createExplosion();

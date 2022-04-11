@@ -143,7 +143,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * {@inheritDoc}
      */
     @Override
-    public void tick() {
+    public void tick(final long ticks) {
         if (this.time >= MAX_TIME) {
             //is ready to jump
             this.isReady = true;

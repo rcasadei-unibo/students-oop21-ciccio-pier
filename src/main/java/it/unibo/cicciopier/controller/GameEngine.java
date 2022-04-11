@@ -21,6 +21,7 @@ public class GameEngine implements Engine {
     private final View view;
     private final Loop loop;
     private GameState state;
+    private long ticks;
 
     /**
      * Constructor for this class, it instantiates world, world loader, view, loop and game state.
@@ -36,6 +37,7 @@ public class GameEngine implements Engine {
         this.view = new GameView(this);
         this.loop = new GameLoop(this);
         this.state = GameState.LOADING;
+        this.ticks = 0;
     }
 
     /**
@@ -82,6 +84,7 @@ public class GameEngine implements Engine {
         LOGGER.info("Restarting game...");
         this.getWorldLoader().create();
         this.state = GameState.RUNNING;
+        this.ticks = 0;
     }
 
     /**
@@ -117,12 +120,13 @@ public class GameEngine implements Engine {
                     this.getWorld().removeEntity(e);
                     continue;
                 }
-                e.tick();
+                e.tick(this.ticks);
             }
             // process input
             this.processInput();
             // update player
-            this.getWorld().getPlayer().tick();
+            this.getWorld().getPlayer().tick(this.ticks);
+            this.ticks = 0;
         }
         // update view
         this.view.render();
@@ -149,7 +153,15 @@ public class GameEngine implements Engine {
     }
 
     /**
-     * Process the action.
+     * {@inheritDoc}
+     */
+    @Override
+    public long getTicks() {
+        return this.ticks;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void action(final LevelMenuAction action) {
