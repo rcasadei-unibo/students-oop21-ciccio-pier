@@ -43,6 +43,13 @@ public interface Engine {
     void update();
 
     /**
+     * Execute an action, function for menu buttons.
+     *
+     * @param action the action
+     */
+    void action(final LevelMenuAction action);
+
+    /**
      * Get the game loop.
      *
      * @return the loop

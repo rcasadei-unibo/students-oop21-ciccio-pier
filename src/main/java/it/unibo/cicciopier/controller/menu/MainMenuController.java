@@ -140,7 +140,7 @@ public final class MainMenuController implements MenuController {
             AudioController.getAudioController().stopMusic(Music.BACKGROUND);
             this.menu.setVisible(false);
             AudioController.getAudioController().playMusic(Music.GAME);
-            GameEngine gameEngine = new GameEngine(levelName);
+            GameEngine gameEngine = new GameEngine(this, levelName);
             gameEngine.load();
             gameEngine.start();
         } catch (Exception e) {

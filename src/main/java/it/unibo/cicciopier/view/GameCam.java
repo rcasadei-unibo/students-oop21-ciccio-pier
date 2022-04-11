@@ -8,7 +8,8 @@ import java.awt.*;
  * Represents the game cam.
  */
 public class GameCam {
-    private int viewportSize;
+    private int viewportWidth;
+    private int viewportHeight;
     private int offsetMax;
     private int offsetMin;
 
@@ -20,7 +21,7 @@ public class GameCam {
      * @return the X origin of the cam
      */
     public int translate(final GameObject object, final Graphics graphics) {
-        int camX = ((int) object.getBounds().getCenterX()) - (this.getViewportSize() / 2);
+        int camX = ((int) object.getBounds().getCenterX()) - (this.getViewportWidth() / 2);
         if (camX > this.getOffsetMax()) {
             camX = this.getOffsetMax();
         }
@@ -37,17 +38,35 @@ public class GameCam {
      *
      * @return the viewport
      */
-    public int getViewportSize() {
-        return this.viewportSize;
+    public int getViewportWidth() {
+        return this.viewportWidth;
+    }
+
+    /**
+     * Get the cam's vertical viewport.
+     *
+     * @return the viewport
+     */
+    public int getViewportHeight() {
+        return this.viewportHeight;
     }
 
     /**
      * Set the cam's horizontal viewport.
      *
-     * @param viewportSize the new viewport
+     * @param viewportWidth the new viewport
      */
-    public void setViewportSize(final int viewportSize) {
-        this.viewportSize = viewportSize;
+    public void setViewportWidth(final int viewportWidth) {
+        this.viewportWidth = viewportWidth;
+    }
+
+    /**
+     * Set the cam's vertical viewport.
+     *
+     * @param viewportHeight the new viewport
+     */
+    public void setViewportHeight(final int viewportHeight) {
+        this.viewportHeight = viewportHeight;
     }
 
     /**

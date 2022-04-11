@@ -24,7 +24,7 @@ public class GameView extends JFrame implements View, KeyListener {
     public GameView(final Engine engine) {
         super("Level");
         this.engine = engine;
-        this.level = new LevelView(this);
+        this.level = new LevelView(engine);
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addKeyListener(this);
@@ -48,6 +48,15 @@ public class GameView extends JFrame implements View, KeyListener {
      * {@inheritDoc}
      */
     @Override
+    public void close() {
+        this.setVisible(false);
+        this.dispose();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void start() {
         this.setVisible(true);
     }
@@ -58,14 +67,6 @@ public class GameView extends JFrame implements View, KeyListener {
     @Override
     public void render() {
         this.level.repaint();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Engine getEngine() {
-        return this.engine;
     }
 
     /**

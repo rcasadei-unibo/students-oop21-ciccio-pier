@@ -45,7 +45,7 @@ public final class App {
         LoadAnimation loadAnimation = LoadAnimation.getLoadAnimation();
         loadAnimation.loadAllAnimation();
         try {
-            GameEngine e = new GameEngine("level-1-1.tmx");
+            GameEngine e = new GameEngine(null, "level-1-1.tmx");
             e.load();
             e.start();
         } catch (Exception e) {

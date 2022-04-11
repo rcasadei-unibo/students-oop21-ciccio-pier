@@ -1,19 +1,20 @@
 package it.unibo.cicciopier.controller;
 
+import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.model.GameWorld;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.view.GameView;
 import it.unibo.cicciopier.view.View;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple implementation of the interface {@link Engine}.
  */
 public class GameEngine implements Engine {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameEngine.class);
+    private final MainMenuController menu;
     private final InputController input;
     private final WorldLoader loader;
     private final World world;
@@ -24,9 +25,11 @@ public class GameEngine implements Engine {
     /**
      * Constructor for this class, it instantiates world, world loader, view, loop and game state.
      *
+     * @param menu  the menu
      * @param level the file name of the world
      */
-    public GameEngine(final String level) {
+    public GameEngine(final MainMenuController menu, final String level) {
+        this.menu = menu;
         this.input = new InputController();
         this.world = new GameWorld();
         this.loader = new TmxWorldLoader(this.getWorld(), level);
@@ -40,6 +43,7 @@ public class GameEngine implements Engine {
      */
     @Override
     public void load() throws Exception {
+        LOGGER.info("Loading game...");
         this.getWorldLoader().load();
         this.view.load();
     }
@@ -49,6 +53,7 @@ public class GameEngine implements Engine {
      */
     @Override
     public synchronized void start() {
+        LOGGER.info("Starting game...");
         this.getWorldLoader().create();
         this.state = GameState.RUNNING;
         this.getLoop().startLoop();
@@ -61,8 +66,10 @@ public class GameEngine implements Engine {
     @Override
     public synchronized void pause() {
         if (this.state == GameState.RUNNING) {
+            LOGGER.info("Pausing game...");
             this.state = GameState.PAUSED;
         } else if (this.state == GameState.PAUSED) {
+            LOGGER.info("Resuming game...");
             this.state = GameState.RUNNING;
         }
     }
@@ -72,6 +79,7 @@ public class GameEngine implements Engine {
      */
     @Override
     public synchronized void restart() {
+        LOGGER.info("Restarting game...");
         this.getWorldLoader().create();
         this.state = GameState.RUNNING;
     }
@@ -81,7 +89,10 @@ public class GameEngine implements Engine {
      */
     @Override
     public synchronized void stop() {
+        LOGGER.info("Stopping game...");
         this.getLoop().stopLoop();
+        this.view.close();
+        // TODO call function in MainMenuController to update user score
     }
 
     /**
@@ -134,6 +145,24 @@ public class GameEngine implements Engine {
         }
         if (this.getInput().isPressed(Input.ATTACK)) {
             this.getWorld().getPlayer().attackNearest();
+        }
+    }
+
+    /**
+     * Process the action.
+     */
+    @Override
+    public void action(final LevelMenuAction action) {
+        switch (action) {
+            case RESTART:
+                this.restart();
+                break;
+            case RESUME:
+                this.pause();
+                break;
+            case HOME:
+                this.stop();
+                break;
         }
     }
 
