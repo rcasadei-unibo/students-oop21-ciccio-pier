@@ -1,8 +1,6 @@
 package it.unibo.cicciopier.model;
 
 import com.google.gson.annotations.Expose;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 public class User {
     private final String username;
@@ -79,5 +77,16 @@ public class User {
         return username;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", soundVolume=" + soundVolume +
+                ", musicVolume=" + musicVolume +
+                ", level1Score=" + level1Score +
+                ", level2Score=" + level2Score +
+                ", level3Score=" + level3Score +
+                ", level4Score=" + level4Score +
+                '}';
+    }
 }
