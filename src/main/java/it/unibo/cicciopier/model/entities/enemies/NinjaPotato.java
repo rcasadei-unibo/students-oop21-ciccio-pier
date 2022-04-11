@@ -39,8 +39,24 @@ public class NinjaPotato extends SimpleEnemy {
      * {@inheritDoc}
      */
     @Override
+    public GameObjectView getView() {
+        return this.view;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isTextureSpecular() {
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EnemyStatuses getDyingStatus() {
+        return EnemyStatuses.NINJA_POTATO_DYING;
     }
 
     /**
@@ -67,21 +83,9 @@ public class NinjaPotato extends SimpleEnemy {
         return STAMINA_VALUE;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getDyingStatus() {
-        return EnemyStatuses.NINJA_POTATO_DYING;
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameObjectView getView() {
-        return this.view;
-    }
+
+
 
     /**
      * {@inheritDoc}

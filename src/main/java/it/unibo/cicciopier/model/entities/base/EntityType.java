@@ -67,7 +67,7 @@ public enum EntityType {
     /**
      * Represents a Nut
      */
-    NUT(16, 16, 0, 50),
+    NUT(32, 32, 0, 50),
     /**
      * Represents a Pea
      */

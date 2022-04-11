@@ -126,7 +126,7 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     /**
      * Method that defines the common collision hit behaviour between a generic enemy and the player
      */
-    private void checkPlayerCollision() {
+    protected void checkPlayerCollision() {
         if (this.getWorld().getPlayer().checkCollision(this) && this.hitTicks == 0) {
             this.attackPlayer();
             this.hitTicks = HIT_COOLDOWN;
