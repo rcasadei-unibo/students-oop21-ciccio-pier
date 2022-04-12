@@ -7,6 +7,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameEngine;
+import it.unibo.cicciopier.controller.GameState;
+import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.model.User;
 import it.unibo.cicciopier.view.menu.*;
@@ -18,26 +20,28 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 public final class MainMenuController implements MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainMenuController.class);
     private static final int MAX_VOLUME = 1;
     private static final int MIN_VOLUME = 0;
+    public static boolean isDeveloperModeOn = false;
+    private final Gson gson;
     private final MenuManagerView menu;
-    private User player;
     private final File users_file;
+    private User player;
     private List<User> users;
     private String username;
 
     public MainMenuController() throws URISyntaxException {
         //Testing purpose
+        this.gson = new Gson().newBuilder().serializeNulls().create();
+        this.users = new ArrayList<>();
+        this.users_file = new File("src/main/resources/users/users.json");
+        this.loadUsers();
         this.menu = new MenuManagerView(this);
         AudioController.getAudioController().playMusic(Music.BACKGROUND);
-        this.users_file = new File("src/main/resources/users/users.json");
-        this.users = new ArrayList<>();
-        this.loadUsers();
         this.show(ViewPanels.LOGIN);
     }
 
@@ -125,8 +129,7 @@ public final class MainMenuController implements MenuController {
 
     private void updateUsers() {
         try (FileWriter writer = new FileWriter(this.users_file); JsonWriter jsonWriter = new JsonWriter(writer)) {
-            Gson gson = new Gson().newBuilder().serializeNulls().create();
-            gson.toJson(users, List.class, jsonWriter);
+            this.gson.toJson(users, List.class, jsonWriter);
             System.out.println("Successfully updated json object to file...!!");
         } catch (IOException e) {
             e.printStackTrace();
@@ -151,14 +154,14 @@ public final class MainMenuController implements MenuController {
 
     private void loadUsers() {
         try (FileReader reader = new FileReader(this.users_file); JsonReader jsonReader = new JsonReader(reader)) {
-            Gson gson = new Gson().newBuilder().serializeNulls().create();
-            this.users = gson.fromJson(jsonReader, new TypeToken<List<User>>() {
+            this.users = this.gson.fromJson(jsonReader, new TypeToken<List<User>>() {
             }.getType());
-            System.out.println("Successfully updated json object to file...!!");
+            System.out.println("Successfully loaded users...!!");
         } catch (IOException e) {
             e.printStackTrace();
         }
         if (this.users == null) this.users = new ArrayList<>();
+        this.users.forEach(User::updatelevels);
     }
 
     /**
@@ -175,11 +178,31 @@ public final class MainMenuController implements MenuController {
         System.exit(0);
     }
 
+    public void endOfLevel(int score, GameState gameState, Level level){
+        if (gameState == GameState.WON && player.getLevelScore(level.getJsonId()) < score){
+           player.setLevelScore(level.getJsonId(),score);
+           updateUsers();
+        }
+        AudioController.getAudioController().stopMusic(Music.GAME);
+        AudioController.getAudioController().playMusic(Music.BACKGROUND);
+        this.menu.setVisible(true);
+
+
+    }
+
     public String getUsername() {
         return username;
     }
 
     public User getPlayer() {
         return player;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public MenuManagerView getMenu(){
+        return this.menu;
     }
 }

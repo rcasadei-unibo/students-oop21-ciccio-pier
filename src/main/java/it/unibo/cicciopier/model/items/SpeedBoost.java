@@ -51,7 +51,6 @@ public final class SpeedBoost extends SimpleEntity {
         }
         if(this.isActive){
             this.duration--;
-            LOGGER.info("duration remaining in tick:" + duration);
         }
         if (duration == 0){
             this.getWorld().getPlayer().setSpeedModifier(-speedBoost.getBoost());

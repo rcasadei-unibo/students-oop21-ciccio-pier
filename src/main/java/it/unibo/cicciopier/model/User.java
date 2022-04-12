@@ -1,28 +1,28 @@
 package it.unibo.cicciopier.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.HashMap;
+
 public class User {
+    @SerializedName("username")
     private final String username;
+    @SerializedName("sound_volume")
     private int soundVolume;
+    @SerializedName("music_volume")
     private int musicVolume;
-    private int level1Score;
-    private int level2Score;
-    private int level3Score;
-    private int level4Score;
+    @SerializedName("scores")
+    private HashMap<String,Integer> levelScores;
 
-    public User(String username, int soundVolume, int musicVolume, int level1Score, int level2Score, int level3Score, int level4Score) {
+    public User(String username) {
+        this.levelScores = new HashMap<>();
         this.username = username;
-        this.soundVolume = soundVolume;
-        this.musicVolume = musicVolume;
-        this.level1Score = level1Score;
-        this.level2Score = level2Score;
-        this.level3Score = level3Score;
-        this.level4Score = level4Score;
+        this.soundVolume = 50;
+        this.musicVolume = 50;
+        Level.getLevels().forEach(level -> levelScores.put(level.getJsonId(), -1));
+    }
 
-    }
-    public User(String username){
-        this(username,50, 50,-1,-1,-1,-1);
-    }
 
     public int getSoundVolume() {
         return soundVolume;
@@ -40,52 +40,21 @@ public class User {
         this.musicVolume = musicVolume;
     }
 
-    public int getLevel1Score() {
-        return level1Score;
+    public int getLevelScore(String level) {
+        return this.levelScores.get(level);
     }
 
-    public void setLevel1Score(int level1Score) {
-        this.level1Score = level1Score;
-    }
-
-    public int getLevel2Score() {
-        return level2Score;
-    }
-
-    public void setLevel2Score(int level2Score) {
-        this.level2Score = level2Score;
-    }
-
-    public int getLevel3Score() {
-        return level3Score;
-    }
-
-    public void setLevel3Score(int level3Score) {
-        this.level3Score = level3Score;
-    }
-
-    public int getLevel4Score() {
-        return level4Score;
-    }
-
-    public void setLevel4Score(int levelBossScore) {
-        this.level4Score = levelBossScore;
+    public void setLevelScore(String level, int score){
+        this.levelScores.replace(level,score);
     }
 
     public String getUsername() {
         return username;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", soundVolume=" + soundVolume +
-                ", musicVolume=" + musicVolume +
-                ", level1Score=" + level1Score +
-                ", level2Score=" + level2Score +
-                ", level3Score=" + level3Score +
-                ", level4Score=" + level4Score +
-                '}';
+    public void updatelevels(){
+        if (levelScores != null){
+            Level.getLevels().forEach(level -> this.levelScores.putIfAbsent(level.getJsonId(),-1));
+        }
     }
+
 }

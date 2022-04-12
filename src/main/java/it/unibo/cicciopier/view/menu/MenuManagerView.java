@@ -1,11 +1,15 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.view.StaticView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 
 public class MenuManagerView extends JFrame implements StaticView {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MenuManagerView.class);
     private final MainMenuView mainMenuView;
     private final LevelSelectionView levelSelectionView;
     private final SettingsView settingsView;
@@ -37,6 +41,8 @@ public class MenuManagerView extends JFrame implements StaticView {
         this.getContentPane().removeAll();
         switch (viewPanels) {
             case LEVEL_SELECTION: {
+                LOGGER.info("Developer mode is: " + this.settingsView.getDeveloperMode());
+                MainMenuController.isDeveloperModeOn = this.settingsView.getDeveloperMode();
                 levelSelectionView.updateLoggedUser();
                 this.getContentPane().add(levelSelectionView);
                 levelSelectionView.repaint();
@@ -62,6 +68,7 @@ public class MenuManagerView extends JFrame implements StaticView {
             case LEADERBOARD: {
                 leaderboardView.updateLoggedUser();
                 this.getContentPane().add(leaderboardView);
+                leaderboardView.updateLeaderboard(Level.FIRST_LEVEL);
                 leaderboardView.repaint();
                 break;
             }
@@ -75,5 +82,9 @@ public class MenuManagerView extends JFrame implements StaticView {
 
     public LoginView getLoginView() {
         return loginView;
+    }
+
+    public LeaderboardView getLeaderboardView() {
+        return leaderboardView;
     }
 }

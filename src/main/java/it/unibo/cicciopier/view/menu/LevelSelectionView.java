@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.CustomButton;
@@ -26,13 +27,13 @@ public class LevelSelectionView extends JPanel {
 
         CustomButton home = new ViewPanelButton(this.mainMenuController, Buttons.HOME, ViewPanels.MAIN_MENU);
 
-        CustomButton level1 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL1, "level-1-1.tmx");
+        CustomButton level1 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL1, Level.FIRST_LEVEL);
 
-        CustomButton level2 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL2,"level-1-2.tmx");
+        CustomButton level2 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL2, Level.SECOND_LEVEL);
 
-        CustomButton level3 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL3,"level-1-3.tmx");
+        CustomButton level3 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL3, Level.THIRD_LEVEL);
 
-        CustomButton levelBoss = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL_BOSS, "level-1-4.tmx");
+        CustomButton levelBoss = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL_BOSS, Level.BOSS_LEVEL);
 
 
         loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
