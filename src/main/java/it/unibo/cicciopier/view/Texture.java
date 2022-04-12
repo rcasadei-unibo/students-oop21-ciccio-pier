@@ -19,7 +19,7 @@ public enum Texture {
     /**
      * Represents the texture of the player.
      */
-    PLAYER("/textures/blocks.png"),
+    PLAYER("/textures/player.png"),
     /**
      * Represents the texture of the boss.
      */
@@ -39,19 +39,19 @@ public enum Texture {
     /**
      * Represents the texture of the health bar decoration
      */
-    HEALTH_BAR_DECORATION("/textures/healthBarDecoration.png"),
+    HEALTH_BAR_DECORATION("/textures/gameHud/health_bar_decoration.png"),
     /**
      * Represents the texture of the stamina bar decoration
      */
-    STAMINA_BAR_DECORATION("/textures/staminaBarDecoration.png"),
+    STAMINA_BAR_DECORATION("/textures/gameHud/stamina_bar_decoration.png"),
     /**
      * Represents the texture od the health bar
      */
-    HEALTH_BAR("/textures/healthBar.png"),
+    HEALTH_BAR("/textures/gameHud/health_bar.png"),
     /**
      * Represents the texture od the stamina bar
      */
-    STAMINA_BAR("/textures/staminaBar.png"),
+    STAMINA_BAR("/textures/gameHud/stamina_bar.png"),
     /**
      * Represents the texture of the ShootingPea
      */
@@ -103,11 +103,11 @@ public enum Texture {
     /**
      * Represents the texture of the speed boost
      */
-    SPEED_BOOST("/textures/speedBoost.png"),
+    SPEED_BOOST("/textures/jumpBoost.png"),
     /**
      * Represents the texture of the speed boost
      */
-    INVULNERABILITY_BOOST("/textures/invulnerabilityBoost.png"),
+    INVULNERABILITY_BOOST("/textures/jumpBoost.png"),
     /**
      * Represents the texture of the chicken
      */

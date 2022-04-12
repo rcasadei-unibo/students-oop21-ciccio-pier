@@ -1,42 +1,29 @@
 package it.unibo.cicciopier.view.entities;
 
+import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.enemies.boss.Laser;
-import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.LoadAnimation;
+import it.unibo.cicciopier.utility.Pair;
+import it.unibo.cicciopier.view.Animation;
+import it.unibo.cicciopier.view.Texture;
 
 import java.awt.*;
 
-public class LaserView implements GameObjectView {
-    private static final int ANIMATION_SPEED = 2;
-
+public class LaserView extends SimpleEntityView {
+    public static final Animation ANIMATION = new Animation(Texture.FIRE, 65, 2, new Pair<>(0, 0), 100, 100);
     private final Laser laser;
-
-    private int aniTik;
-    private int currentIndex;
 
     public LaserView(final Laser laser) {
         this.laser = laser;
+        this.setTextureOffSet(new Pair<>(-50, -70));
     }
 
     /**
-     * Update the current sprite to render
+     * {@inheritDoc}
      */
-    private void updateAnimation() {
-        this.aniTik++;
-        if (aniTik >= LaserView.ANIMATION_SPEED) {
-            aniTik = 0;
-            this.currentIndex++;
-            if (currentIndex >= LoadAnimation.FIRE_NUM_SPRITES) {
-                this.currentIndex = 0;
-            }
-        }
-    }
-
     @Override
-    public void render(Graphics g) {
+    public void render(final Graphics g) {
         final Graphics2D g2d = (Graphics2D) g;
         final Stroke defaultStroke = g2d.getStroke();
-
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(4F));
         g2d.drawLine(this.laser.getStartLine().getX(),
@@ -44,13 +31,16 @@ public class LaserView implements GameObjectView {
                 this.laser.getEndLine().getX(),
                 this.laser.getEndLine().getY());
         g2d.setStroke(defaultStroke);
+        super.render(g);
+    }
 
-        this.updateAnimation();
-        //check if we arrived at the end of the array
-        g.drawImage(LoadAnimation.getLoadAnimation().getFireSprite(this.currentIndex),
-                this.laser.getEndLine().getX() - 50,
-                this.laser.getEndLine().getY() - 70,
-                null
-        );
+    @Override
+    public Entity getObject() {
+        return this.laser;
+    }
+
+    @Override
+    public Animation getAnimation() {
+        return ANIMATION;
     }
 }

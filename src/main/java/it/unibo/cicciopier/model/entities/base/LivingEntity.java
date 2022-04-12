@@ -1,5 +1,7 @@
 package it.unibo.cicciopier.model.entities.base;
 
+import it.unibo.cicciopier.model.entities.EntityState;
+
 /**
  * Represents an Entity whom can die
  */
@@ -53,6 +55,35 @@ public interface LivingEntity extends MovingEntity {
      * @return true if is on the ground else false
      */
     boolean isGround();
+
+    /**
+     * Get the entity  old state
+     *
+     * @return entity old state
+     */
+    EntityState getOldState();
+
+    /**
+     * Get the entity current state
+     *
+     * @return entity state
+     */
+    EntityState getCurrentState();
+
+    /**
+     * Set the current state to a given state only if the entity is
+     * {@link EntityState#IDLE} or {@link EntityState#RUNNING}
+     *
+     * @param state in what state to change in
+     */
+    void setCurrentState(final EntityState state);
+
+    /**
+     * Reset the current state to a given state
+     *
+     * @param state in what state to change in
+     */
+    void resetCurrentState(final EntityState state);
 
     /**
      * Checks if the Entity is facing right

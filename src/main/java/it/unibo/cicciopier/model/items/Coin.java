@@ -1,6 +1,5 @@
 package it.unibo.cicciopier.model.items;
 
-import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
@@ -12,8 +11,10 @@ import it.unibo.cicciopier.view.items.CoinView;
  * Create a coin object
  */
 public class Coin extends SimpleEntity {
-    private final Item coinItem;
-    private final CoinView coinView;
+    private final ItemEnum coinItem;
+    private CoinView coinView;
+    private boolean collides;
+    private int counter;
 
     /**
      * Constructor for this class
@@ -22,8 +23,10 @@ public class Coin extends SimpleEntity {
      */
     public Coin(final World world) {
         super(EntityType.COIN, world);
-        this.coinItem = Item.COIN;
+        this.coinItem = ItemEnum.COIN;
         this.coinView = new CoinView(this);
+        collides = false;
+        this.counter = 0;
     }
 
     /**
@@ -31,15 +34,32 @@ public class Coin extends SimpleEntity {
      */
     @Override
     public void tick(final long ticks) {
-
-        if (this.checkCollision(this.getWorld().getPlayer())) {
-            AudioController.getAudioController().playSound(Sound.COIN);
+        if (!this.collides && this.checkCollision(this.getWorld().getPlayer())) {
+            Sound.COIN.playSound(0);
+            this.collides = true;
             //remove the coin
-            this.remove();
             //add score
+            this.coinView = null;
             this.getWorld().getPlayer().addCoin();
             this.getWorld().getPlayer().addScore(this.coinItem.getScore());
         }
+
+        if (collides) {
+            this.counter++;
+            if(counter >= 2){
+                if (!Sound.COIN.isPlaying()) {
+                    Sound.COIN.close();
+                    this.remove();
+                }
+            }
+        }
+
+        /*if(this.tick >= 60){
+            Sound.COIN.close();
+            System.out.println("ho rimosso l audio");
+            this.remove();
+        }*/
+
     }
 
     /**

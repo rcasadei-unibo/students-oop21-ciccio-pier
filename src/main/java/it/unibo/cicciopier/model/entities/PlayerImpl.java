@@ -9,13 +9,12 @@ import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.PlayerView;
 
-import java.util.Comparator;
-
 public class PlayerImpl extends SimpleLivingEntity implements Player {
     private static final int SPEED = 7;
     private static final int ATTACK_RANGE = 5 * Block.SIZE;
     private static final int ATTACK_COOLDOWN = 1 * GameLoop.TPS;
     private static final int MAX_STAMINA = 100;
+    private static final int ATTACK_DURATION = 18;
     private final PlayerView playerView;
     private int attackCooldownTicks;
     private int stamina;
@@ -25,6 +24,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private int score;
     private int coin;
     private boolean won;
+    private int attackTimer;
 
     /**
      * Constructor for this class
@@ -40,8 +40,10 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         this.jumpModifier = 0;
         this.score = 0;
         this.coin = 0;
+        this.attackTimer = 0;
         this.won = false;
     }
+
 
     /**
      * {@inheritDoc}
@@ -142,14 +144,20 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public void attackNearest() {
+        //if the player is not in the ground, then it cannot attack
+        if (!this.isGround()) {
+            return;
+        }
         if (this.attackCooldownTicks == ATTACK_COOLDOWN) {
-            this.getWorld().getEntitiesInRange(this.getPos(), ATTACK_RANGE).stream().filter(t -> t instanceof LivingEntity)
-                    .map(LivingEntity.class::cast).sorted( (o1, o2) -> {
-                        if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
-                            return 1;
-                        }
-                        return -1;
-                    }).findFirst().ifPresent(t -> t.damage(this.getType().getAttackDamage()));
+            this.setCurrentState(EntityState.ATTACKING);
+            this.getWorld().getEntitiesInRange(this.getPos(), ATTACK_RANGE).stream()
+                    .filter(t -> t instanceof LivingEntity)
+                    .map(LivingEntity.class::cast).sorted((o1, o2) -> {
+                if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
+                    return 1;
+                }
+                return -1;
+            }).findFirst().ifPresent(t -> t.damage(this.getType().getAttackDamage()));
             this.attackCooldownTicks = 0;
         }
     }
@@ -161,6 +169,28 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         if (this.attackCooldownTicks < ATTACK_COOLDOWN) {
             this.attackCooldownTicks++;
         }
+        //update the time
+        if (this.getCurrentState() == EntityState.ATTACKING) {
+            this.attackTimer++;
+        }
+        if (this.attackTimer >= ATTACK_DURATION) {
+            this.resetCurrentState(EntityState.IDLE);
+        }
+        if (this.getOldState() == EntityState.ATTACKING && this.getCurrentState() != EntityState.ATTACKING) {
+            this.attackTimer = 0;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setCurrentState(final EntityState state) {
+        if (this.getCurrentState() == EntityState.IDLE ||
+                state == EntityState.DEAD ||
+                this.getCurrentState() == EntityState.RUNNING) {
+            this.resetCurrentState(state);
+        }
     }
 
     /**
@@ -171,6 +201,12 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         super.tick(ticks);
         this.updateAttackCooldown();
         this.move();
+        //update entity state
+        if (this.getVel().getX() != 0) {
+            this.setCurrentState(EntityState.RUNNING);
+        } else {
+            this.setCurrentState(EntityState.IDLE);
+        }
     }
 
     /**
@@ -195,7 +231,9 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
 
     @Override
     public void damage(int amount) {
-        if(!isInvulnerable) super.damage(amount);
+        if (!isInvulnerable) {
+            super.damage(amount);
+        }
     }
 
     @Override

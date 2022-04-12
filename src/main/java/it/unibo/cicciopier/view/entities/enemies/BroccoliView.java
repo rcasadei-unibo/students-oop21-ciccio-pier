@@ -1,24 +1,38 @@
 package it.unibo.cicciopier.view.entities.enemies;
 
+import it.unibo.cicciopier.model.entities.EntityState;
+import it.unibo.cicciopier.model.entities.base.LivingEntity;
+import it.unibo.cicciopier.model.entities.enemies.BossState;
 import it.unibo.cicciopier.model.entities.enemies.boss.Broccoli;
-import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.LoadAnimation;
+import it.unibo.cicciopier.utility.Pair;
+import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.entities.SimpleEntityView;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Simple class to render the boss Broccoli
  */
-public class BroccoliView implements GameObjectView {
+public class BroccoliView extends SimpleEntityView {
     private static final int HEALTH_BAR_WIDTH = 160;
     private static final int HEALTH_BAR_HEIGHT = 20;
-    private static final int ANIMATION_SPEED = 6;
+    public static final Map<EntityState, Animation> ANIMATIONS = new HashMap<>() {
+        {
+            final int w = 252;
+            final int h = 384;
+            put(BossState.IDLE, new Animation(Texture.BROCCOLI, 8, 6, new Pair<>(0, 0), w, h));
+            put(BossState.SEEK, new Animation(Texture.BROCCOLI, 8, 6, new Pair<>(0, 0), w, h));
+            put(BossState.MISSILE_LAUNCHER, new Animation(Texture.BROCCOLI, 4, 6, new Pair<>(w * 15, 0), w, h));
+            put(BossState.LASER, new Animation(Texture.BROCCOLI, 4, 6, new Pair<>(w * 11, 0), w, h));
+            put(BossState.METEOR_SHOWER, new Animation(Texture.BROCCOLI, 3, 6, new Pair<>(w * 8, 0), w, h));
+            put(BossState.DEAD, new Animation(Texture.BROCCOLI, 8, 6, new Pair<>(0, 0), w, h));
+        }
+    };
 
     private final Broccoli broccoli;
-    private int aniTik;
-    private int currentIndex;
-    private int currentIndexState;
 
     /**
      * Constructor for this class, create a instance of BroccoliView
@@ -27,49 +41,17 @@ public class BroccoliView implements GameObjectView {
      */
     public BroccoliView(final Broccoli broccoli) {
         this.broccoli = broccoli;
+        this.setTextureOffSet(new Pair<>(-75, -40));
     }
 
-    /**
-     * Update the index of the boss state
-     *
-     * @param currentIndexState what state to update
-     */
-    private void updateStateIndex(final int currentIndexState) {
-        if (aniTik >= BroccoliView.ANIMATION_SPEED) {
-            this.aniTik = 0;
-            this.currentIndex++;
-            if (currentIndex >= currentIndexState) {
-                this.currentIndex = 0;
-            }
-        }
+    @Override
+    public LivingEntity getObject() {
+        return this.broccoli;
     }
 
-    /**
-     * Update the current sprite to render
-     */
-    private void updateAnimation() {
-        this.aniTik++;
-
-        switch (this.broccoli.getCurrentState()) {
-            case IDLE:
-            case SEEK:
-            case DEATH:
-                this.currentIndexState = 0;
-                this.updateStateIndex(LoadAnimation.BOSS_IDLE_AND_RUN_FRAME);
-                break;
-            case METEOR_SHOWER:
-                this.currentIndexState = 1;
-                this.updateStateIndex(LoadAnimation.METEOR_FRAME);
-                break;
-            case LASER:
-                this.currentIndexState = 2;
-                this.updateStateIndex(LoadAnimation.LASER_FRAME);
-                break;
-            case MISSILE_LAUNCHER:
-                this.currentIndexState = 3;
-                this.updateStateIndex(LoadAnimation.MISSILE_FRAME);
-                break;
-        }
+    @Override
+    public Animation getAnimation() {
+        return ANIMATIONS.get(this.broccoli.getCurrentState());
     }
 
     /**
@@ -77,12 +59,7 @@ public class BroccoliView implements GameObjectView {
      */
     @Override
     public void render(Graphics g) {
-        this.updateAnimation();
-        g.drawImage(LoadAnimation.getLoadAnimation().getBossSprite(this.currentIndexState, this.currentIndex),
-                this.broccoli.getPos().getX() - 75,
-                this.broccoli.getPos().getY() - 40,
-                null
-        );
+        super.render(g);
         //draw boss healthBar
         g.drawImage(
                 Texture.ENTITY_HEALTH_BAR_DECORATION.getTexture(),

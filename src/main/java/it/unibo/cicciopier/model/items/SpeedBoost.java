@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class SpeedBoost extends SimpleEntity {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeedBoost.class);
-    private final Item speedBoost;
+    private final ItemEnum speedBoost;
     private SpeedBoostView speedBoostView;
     private boolean isActive;
     private int duration = 10 * GameLoop.TPS;
@@ -28,7 +28,7 @@ public final class SpeedBoost extends SimpleEntity {
      */
     public SpeedBoost(final World world) {
         super(EntityType.SPEED_BOOST, world);
-        this.speedBoost = Item.SPEED_BOOST;
+        this.speedBoost = ItemEnum.SPEED_BOOST;
         this.speedBoostView = new SpeedBoostView(this);
         this.isActive = false;
     }

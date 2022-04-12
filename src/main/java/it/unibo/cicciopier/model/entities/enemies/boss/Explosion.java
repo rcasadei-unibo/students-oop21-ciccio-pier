@@ -6,9 +6,13 @@ import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.ExplosionView;
 
+/**
+ * Create a simple explosion animation
+ */
 public class Explosion extends SimpleEntity {
+    private static final int DURATION = 48;
     private final ExplosionView explosionView;
-    private boolean isFinish;
+    private long start;
 
     /**
      * Constructor for this class
@@ -18,7 +22,7 @@ public class Explosion extends SimpleEntity {
     public Explosion(final World world) {
         super(EntityType.EXPLOSION, world);
         this.explosionView = new ExplosionView(this);
-        this.isFinish = false;
+        this.start = -1;
     }
 
     /**
@@ -30,18 +34,14 @@ public class Explosion extends SimpleEntity {
     }
 
     /**
-     * Set finish equals to true
-     */
-    public void finished() {
-        this.isFinish = true;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public void tick(final long ticks) {
-        if (this.isFinish) {
+        if(this.start == -1) {
+            this.start = ticks;
+        }
+        if (ticks - this.start >= DURATION) {
             this.remove();
         }
     }

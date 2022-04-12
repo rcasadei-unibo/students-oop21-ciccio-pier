@@ -17,7 +17,7 @@ public class Laser extends SimpleMovingEntity {
     private static final int MAX_DISTANCE = 400;
     private static final int MAX_SPEED = 2;
 
-    private final Vector2d endLine;
+    private Vector2d startLine;
     private int currentDistance;
     private final LaserView laserView;
     private boolean isOnce;
@@ -31,7 +31,7 @@ public class Laser extends SimpleMovingEntity {
         super(EntityType.LASER, world);
         this.currentDistance = 0;
         this.isOnce = false;
-        this.endLine = new Vector2d(0, 0);
+        //this.startLine = new Vector2d(0, 0);
         this.laserView = new LaserView(this);
     }
 
@@ -40,7 +40,7 @@ public class Laser extends SimpleMovingEntity {
      */
     private void seek() {
         // desired Velocity of the laser
-        final Vector2d desire = this.endLine.directionVector(this.getWorld().getPlayer().getPos().clone());
+        final Vector2d desire = this.getPos().directionVector(this.getWorld().getPlayer().getPos().clone());
 
         //set the y coordinate to 0 so the laser can only move in the X direction
         int xVel = desire.getX();
@@ -58,9 +58,9 @@ public class Laser extends SimpleMovingEntity {
      * Check if the laser collides with the player or a block or the map
      */
     public void laserCheckCollision() {
-        final int endLineOffsetX = endLine.getX() + this.getVel().getX();
+        final int endLineOffsetX = getPos().getX() + this.getVel().getX();
         final int x = (int) (Math.floor(endLineOffsetX) / Block.SIZE);
-        final int y = (int) (Math.floor(this.endLine.getY() + this.getVel().getY()) / Block.SIZE);
+        final int y = (int) (Math.floor(this.getPos().getY() + this.getVel().getY()) / Block.SIZE);
 
         //if its collides with the beginning or the end of the world
         if (endLineOffsetX <= 0 || endLineOffsetX >= Block.SIZE * this.getWorld().getWidth()) {
@@ -71,8 +71,8 @@ public class Laser extends SimpleMovingEntity {
         Line2D line2D = new Line2D.Double(
                 this.getPos().getDoubleX(),
                 this.getPos().getDoubleY(),
-                this.endLine.getDoubleX(),
-                this.endLine.getDoubleY()
+                this.getPos().getDoubleX(),
+                this.getPos().getDoubleY()
         );
         //damage the player if the line intersects with the player
         if (line2D.intersects(this.getWorld().getPlayer().getBounds())) {
@@ -95,7 +95,7 @@ public class Laser extends SimpleMovingEntity {
             this.isOnce = true;
         } else {
             this.laserCheckCollision();
-            this.endLine.add(this.getVel());
+            this.getPos().add(this.getVel());
             this.currentDistance += Laser.MAX_SPEED;
         }
         //if reached the max distance needed to move, remove the laser
@@ -110,7 +110,14 @@ public class Laser extends SimpleMovingEntity {
      * @return line starting position
      */
     public Vector2d getStartLine() {
-        return this.getPos();
+        return this.startLine;
+    }
+
+    /**
+     * Set the position of where the line will start
+     */
+    public void setStartLine(final Vector2d start) {
+        this.startLine = start;
     }
 
     /**
@@ -119,7 +126,7 @@ public class Laser extends SimpleMovingEntity {
      * @return line ending position
      */
     public Vector2d getEndLine() {
-        return this.endLine;
+        return this.getPos();
     }
 
     /**

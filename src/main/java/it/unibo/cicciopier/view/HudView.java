@@ -71,7 +71,7 @@ public class HudView extends JPanel {
                 null
         );
         //draw coin counter
-        g.drawString("" + p.getCoin(), 20 + 38, 144);
+        g.drawString(String.valueOf(p.getCoin()), 20 + 38, 144);
     }
 
     /**

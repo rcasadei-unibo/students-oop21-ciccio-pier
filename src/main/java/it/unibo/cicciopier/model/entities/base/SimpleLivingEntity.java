@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.model.entities.base;
 
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.EntityState;
 import it.unibo.cicciopier.utility.Vector2d;
 
 /**
@@ -19,6 +20,8 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
     private boolean isReady;
     private boolean facingRight;
     private int time;
+    private EntityState oldState;
+    private EntityState currentState;
 
     /**
      * Constructor for this class
@@ -35,6 +38,8 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
         this.gravity = new Vector2d(0, 1);
         this.isReady = true;
         this.facingRight = true;
+        this.currentState = EntityState.IDLE;
+        this.oldState = EntityState.IDLE;
         this.time = 0;
     }
 
@@ -114,6 +119,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      */
     @Override
     public void die() {
+        this.setCurrentState(EntityState.DEAD);
         this.dead = true;
     }
 
@@ -131,6 +137,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
     @Override
     public boolean jump() {
         if (this.isReady && this.ground) {
+            this.setCurrentState(EntityState.JUMPING);
             this.getVel().setY(-this.getJumpForce());
             this.isReady = false;
             this.time = 0;
@@ -143,7 +150,42 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * {@inheritDoc}
      */
     @Override
+    public EntityState getOldState() {
+        return this.oldState;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EntityState getCurrentState() {
+        return this.currentState;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setCurrentState(final EntityState state) {
+        if(this.currentState == EntityState.IDLE || state == EntityState.DEAD) {
+            this.currentState = state;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetCurrentState(final EntityState state) {
+        this.currentState = state;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void tick(final long ticks) {
+        this.oldState = this.getCurrentState();
         if (this.time >= MAX_TIME) {
             //is ready to jump
             this.isReady = true;
@@ -184,6 +226,9 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
             if (bottomOffset == 0) {
                 this.getVel().setY(0);
                 this.ground = true;
+                if(this.getCurrentState() == EntityState.JUMPING){
+                    this.resetCurrentState(EntityState.IDLE);
+                }
             } else if (bottomOffset > 0) {
                 this.getVel().setY(bottomOffset);
             } else if (bottomOffset == -1) {

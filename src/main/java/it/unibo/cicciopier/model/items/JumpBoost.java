@@ -2,14 +2,11 @@ package it.unibo.cicciopier.model.items;
 
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameLoop;
-import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleEntity;
-import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.items.CoinView;
 import it.unibo.cicciopier.view.items.JumpBoostView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class JumpBoost extends SimpleEntity {
     private static final Logger LOGGER = LoggerFactory.getLogger(JumpBoost.class);
-    private final Item jumpBoost;
+    private final ItemEnum jumpBoost;
     private JumpBoostView jumpBoostView;
     private boolean isActive;
     private int duration = 10 * GameLoop.TPS;
@@ -31,7 +28,7 @@ public final class JumpBoost extends SimpleEntity {
      */
     public JumpBoost(final World world) {
         super(EntityType.JUMP_BOOST, world);
-        this.jumpBoost = Item.JUMP_BOOST;
+        this.jumpBoost = ItemEnum.JUMP_BOOST;
         this.jumpBoostView = new JumpBoostView(this);
         this.isActive = false;
     }
