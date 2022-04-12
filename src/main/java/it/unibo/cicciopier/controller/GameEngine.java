@@ -2,6 +2,7 @@ package it.unibo.cicciopier.controller;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.model.GameWorld;
+import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.view.GameView;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 public class GameEngine implements Engine {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameEngine.class);
     private final MainMenuController menu;
+    private final Level level;
     private final InputController input;
     private final WorldLoader loader;
     private final World world;
@@ -26,14 +28,15 @@ public class GameEngine implements Engine {
     /**
      * Constructor for this class, it instantiates world, world loader, view, loop and game state.
      *
-     * @param menu  the menu
-     * @param level the file name of the world
+     * @param menu  the menu instance
+     * @param level the level to play
      */
-    public GameEngine(final MainMenuController menu, final String level) {
+    public GameEngine(final MainMenuController menu, final Level level) {
         this.menu = menu;
+        this.level = level;
         this.input = new InputController();
         this.world = new GameWorld();
-        this.loader = new TmxWorldLoader(this.getWorld(), level);
+        this.loader = new TmxWorldLoader(this.getWorld(), this.level.getFileName());
         this.view = new GameView(this);
         this.loop = new GameLoop(this);
         this.state = GameState.LOADING;
@@ -94,8 +97,8 @@ public class GameEngine implements Engine {
     public synchronized void stop() {
         LOGGER.info("Stopping game...");
         this.getLoop().stopLoop();
+        this.menu.endOfLevel(this.getWorld().getPlayer().getScore(), this.getState(), this.getLevel());
         this.view.close();
-        // TODO call function in MainMenuController to update user score
     }
 
     /**
@@ -219,4 +222,11 @@ public class GameEngine implements Engine {
         return this.world;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Level getLevel() {
+        return this.level;
+    }
 }

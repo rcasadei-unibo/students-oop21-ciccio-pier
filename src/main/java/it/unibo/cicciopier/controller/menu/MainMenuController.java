@@ -136,14 +136,14 @@ public final class MainMenuController implements MenuController {
         }
     }
 
-    public void startLevel(String levelName) {
+    public void startLevel(final Level level) {
         LOGGER.info("Starting level...");
 
         try {
             AudioController.getAudioController().stopMusic(Music.BACKGROUND);
             this.menu.setVisible(false);
             AudioController.getAudioController().playMusic(Music.GAME);
-            GameEngine gameEngine = new GameEngine(this, levelName);
+            GameEngine gameEngine = new GameEngine(this, level);
             gameEngine.load();
             gameEngine.start();
         } catch (Exception e) {

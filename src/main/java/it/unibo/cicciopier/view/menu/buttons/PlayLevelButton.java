@@ -28,7 +28,7 @@ public class PlayLevelButton extends ControllerButton {
     @Override
     protected void buttonAction() {
         if(this.getMainMenuController().getPlayer().getLevelScore(level.getJsonId()) != -1 || this.level == Level.FIRST_LEVEL || MainMenuController.isDeveloperModeOn){
-            this.getMainMenuController().startLevel(this.level.getFileName());
+            this.getMainMenuController().startLevel(this.level);
         }
     }
 }

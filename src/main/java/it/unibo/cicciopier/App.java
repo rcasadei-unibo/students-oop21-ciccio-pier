@@ -1,6 +1,7 @@
 package it.unibo.cicciopier;
 
 import it.unibo.cicciopier.controller.GameEngine;
+import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
@@ -56,7 +57,7 @@ public final class App {
             }
         }
         try {
-            GameEngine e = new GameEngine(null, "level-1-1.tmx");
+            GameEngine e = new GameEngine(null, Level.FIRST_LEVEL);
             e.load();
             e.start();
         } catch (Exception e) {

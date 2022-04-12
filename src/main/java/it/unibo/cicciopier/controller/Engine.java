@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.controller;
 
+import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.view.View;
 
@@ -44,6 +45,7 @@ public interface Engine {
 
     /**
      * Get the number of ticks updated from the game start.
+     *
      * @return the ticks
      */
     long getTicks();
@@ -89,5 +91,12 @@ public interface Engine {
      * @return the world
      */
     World getWorld();
+
+    /**
+     * Get the level currently playing
+     *
+     * @return the level
+     */
+    Level getLevel();
 
 }
