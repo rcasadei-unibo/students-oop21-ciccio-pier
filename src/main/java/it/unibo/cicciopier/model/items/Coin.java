@@ -35,31 +35,11 @@ public class Coin extends SimpleEntity {
     @Override
     public void tick(final long ticks) {
         if (!this.collides && this.checkCollision(this.getWorld().getPlayer())) {
-            Sound.COIN.playSound(0);
             this.collides = true;
             //remove the coin
-            //add score
-            this.coinView = null;
             this.getWorld().getPlayer().addCoin();
             this.getWorld().getPlayer().addScore(this.coinItem.getScore());
         }
-
-        if (collides) {
-            this.counter++;
-            if(counter >= 2){
-                if (!Sound.COIN.isPlaying()) {
-                    Sound.COIN.close();
-                    this.remove();
-                }
-            }
-        }
-
-        /*if(this.tick >= 60){
-            Sound.COIN.close();
-            System.out.println("ho rimosso l audio");
-            this.remove();
-        }*/
-
     }
 
     /**
