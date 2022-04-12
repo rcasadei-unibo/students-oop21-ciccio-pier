@@ -115,7 +115,9 @@ public class GameWorld implements World {
      **/
     @Override
     public List<Entity> getEntitiesInRange(final Vector2d pos, final int radius) {
-        return this.entities.stream().filter(e -> e.getPos().euclidDistance(pos) < radius).collect(Collectors.toList());
+        return this.entities.stream()
+                .filter(e -> Math.abs(e.getPos().getX() - pos.getX()) < radius)
+                .collect(Collectors.toList());
     }
 
     /**
