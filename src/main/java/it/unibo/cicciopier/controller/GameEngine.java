@@ -1,6 +1,6 @@
 package it.unibo.cicciopier.controller;
 
-import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.MenuController;
 import it.unibo.cicciopier.model.GameWorld;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.World;
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class GameEngine implements Engine {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameEngine.class);
-    private final MainMenuController menu;
+    private final MenuController menu;
     private final Level level;
     private final InputController input;
     private final WorldLoader loader;
@@ -31,7 +31,7 @@ public class GameEngine implements Engine {
      * @param menu  the menu instance
      * @param level the level to play
      */
-    public GameEngine(final MainMenuController menu, final Level level) {
+    public GameEngine(final MenuController menu, final Level level) {
         this.menu = menu;
         this.level = level;
         this.input = new InputController();
