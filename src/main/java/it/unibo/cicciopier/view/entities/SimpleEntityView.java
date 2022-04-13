@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.view.entities;
 
+import it.unibo.cicciopier.controller.menu.DeveloperMode;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 
@@ -79,11 +80,12 @@ public abstract class SimpleEntityView implements EntityView {
      * @param g graphic context
      */
     public void renderBounds(final Graphics g) {
-        // TODO render the bounds if debug is active
-        g.setColor(Color.BLACK);
-        g.drawRect(this.getObject().getPos().getX(),
-                this.getObject().getPos().getY(),
-                this.getObject().getWidth() - 1,
-                this.getObject().getHeight() - 1);
+        if (DeveloperMode.isActive()) {
+            g.setColor(Color.BLACK);
+            g.drawRect(this.getObject().getPos().getX(),
+                    this.getObject().getPos().getY(),
+                    this.getObject().getWidth() - 1,
+                    this.getObject().getHeight() - 1);
+        }
     }
 }

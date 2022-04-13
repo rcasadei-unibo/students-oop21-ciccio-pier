@@ -215,7 +215,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
     /**
      * Check collision on the bottom of the entity with blocks
      *
-     * @return -1 if doesn't collide,
+     * @return -1 if doesn't collide, -2 if collides with the bottom border
      * n >= 0  if collides and return how much distance is left from the block or mapEnd
      */
     protected int bottomCollision() {
@@ -226,8 +226,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         //check if the player collide with the end of the map
         if (entityHitBox.getMaxY() >= worldEndY) {
             //remove the entity
-            this.remove();
-            return -1;
+            return -2;
         }
         //get the position of the entity in block position
         final int lowerLeftX = (int) (Math.floor(entityHitBox.getX()) / Block.SIZE);

@@ -167,7 +167,7 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      */
     @Override
     public void setCurrentState(final EntityState state) {
-        if(this.currentState == EntityState.IDLE || state == EntityState.DEAD) {
+        if (this.currentState == EntityState.IDLE || state == EntityState.DEAD) {
             this.currentState = state;
         }
     }
@@ -196,18 +196,30 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
     }
 
     /**
-     * Function that check collisions and moves the entity
+     * What to do when entity collides
+     *
+     * @param collision type of collision
+     */
+    protected void onCollision(final Collision collision) {
+        if (collision == Collision.FALLING) {
+            this.die();
+        }
+    }
+
+    /**
+     * Method that check collisions and moves the entity
      */
     protected void move() {
         if (this.getVel().getX() > 0) {
             this.facingRight = true;
             //check right collision
             final int rightOffset = this.rightCollision();
-
             if (rightOffset == 0) {
                 this.getVel().setX(0);
+                this.onCollision(Collision.COLLIDING_RIGHT);
             } else if (rightOffset > 0) {
                 this.getVel().setX(rightOffset);
+                this.onCollision(Collision.NEAR_COLLIDING_RIGHT);
             }
         } else if (this.getVel().getX() < 0) {
             this.facingRight = false;
@@ -215,34 +227,39 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
             final int leftOffset = this.leftCollision();
             if (leftOffset == 0) {
                 this.getVel().setX(0);
+                this.onCollision(Collision.COLLIDING_LEFT);
             } else if (leftOffset < 0) {
                 this.getVel().setX(leftOffset);
+                this.onCollision(Collision.NEAR_COLLIDING_LEFT);
             }
         }
         if (this.getVel().getY() > 0) {
             //check bottom collision
             final int bottomOffset = this.bottomCollision();
-
             if (bottomOffset == 0) {
                 this.getVel().setY(0);
                 this.ground = true;
-                if(this.getCurrentState() == EntityState.JUMPING){
+                if (this.getCurrentState() == EntityState.JUMPING) {
                     this.resetCurrentState(EntityState.IDLE);
                 }
+                this.onCollision(Collision.COLLIDING_DOWN);
             } else if (bottomOffset > 0) {
                 this.getVel().setY(bottomOffset);
+                this.onCollision(Collision.NEAR_COLLIDING_DOWN);
             } else if (bottomOffset == -1) {
                 this.ground = false;
+            } else if (bottomOffset == -2) {
+                this.onCollision(Collision.FALLING);
             }
-
         } else if (this.getVel().getY() < 0) {
             //check up collision
             final int upOffset = this.upCollision();
-
             if (upOffset == 0) {
                 this.getVel().setY(0);
+                this.onCollision(Collision.COLLIDING_UP);
             } else if (upOffset < 0) {
                 this.getVel().setY(upOffset);
+                this.onCollision(Collision.NEAR_COLLIDING_UP);
             }
             this.ground = false;
         }
