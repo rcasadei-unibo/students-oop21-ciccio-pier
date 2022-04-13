@@ -154,6 +154,10 @@ public enum Texture {
      */
     GAMEOVER_BACKGROUND("/textures/backgrounds/gameover.png"),
     /**
+     * Represents the background shown when you pause a level
+     */
+    BRICKS_BACKGROUND("/textures/backgrounds/bricks.png"),
+    /**
      * Represents the button used to access the first level
      */
     SUBMIT_BUTTON("/textures/buttons/submitButton/submit.png"),

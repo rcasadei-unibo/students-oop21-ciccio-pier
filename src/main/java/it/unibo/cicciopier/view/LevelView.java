@@ -42,13 +42,16 @@ public class LevelView extends JPanel {
         this.cam.setOffsetMin(0);
         // Setup panel
         this.setBounds(0, 0, (int) this.getPreferredSize().getWidth(), (int) this.getPreferredSize().getHeight());
-        this.setBackground(Color.CYAN);
         this.setLayout(null);
         // Get background texture
         try {
             this.background = Texture.valueOf(this.engine.getWorldLoader().getBackground());
         } catch (IllegalArgumentException | NullPointerException e) {
             LOGGER.error("Invalid background id {}, ignoring it...", this.engine.getWorldLoader().getBackground());
+        }
+        // Set background color if no valid background has been declared
+        if (this.background == null) {
+            this.setBackground(Color.CYAN);
         }
     }
 
@@ -58,11 +61,14 @@ public class LevelView extends JPanel {
     @Override
     public void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        if (this.background != null) {
-            // TODO render background
-        }
         final Player p = this.engine.getWorld().getPlayer();
         this.cam.translate(p, g);
+        // render background if exists
+        if (this.background != null) {
+            for (int x = 0; x < this.engine.getWorld().getWidth() * Block.SIZE; x += this.background.getTexture().getWidth()) {
+                g.drawImage(this.background.getTexture(), x, 0, null);
+            }
+        }
         // render blocks
         for (Block b : this.engine.getWorld()) {
             b.getView().render(g);
