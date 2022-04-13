@@ -3,6 +3,7 @@ package it.unibo.cicciopier.view.menu;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.controller.menu.ViewPanels;
 import it.unibo.cicciopier.model.Level;
+import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.CustomButton;
@@ -11,10 +12,9 @@ import it.unibo.cicciopier.view.menu.buttons.ViewPanelButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+
 
 public class LevelSelectionView extends JPanel {
-    private final BufferedImage background;
     private final JLabel loggedUser;
     private final MainMenuController mainMenuController;
 
@@ -34,43 +34,55 @@ public class LevelSelectionView extends JPanel {
 
         CustomButton level3 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL3, Level.THIRD_LEVEL);
 
-        CustomButton levelBoss = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL_BOSS, Level.BOSS_LEVEL);
+        CustomButton level4 = new PlayLevelButton(this.mainMenuController, Buttons.LEVEL_BOSS, Level.BOSS_LEVEL);
 
 
-        loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
+        this.loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
         this.loggedUser.setForeground(Color.WHITE);
 
         Dimension size = new Dimension(1536, 768);
         this.setPreferredSize(size);
-        this.background = Texture.LEVEL_SELECTION_BACKGROUND.getTexture();
-
 
         this.setLayout(null);
+        this.add(this.loggedUser);
         this.add(home);
         this.add(settings);
         this.add(level1);
         this.add(level2);
         this.add(level3);
-        this.add(levelBoss);
-        this.add(loggedUser);
+        this.add(level4);
+
+        final int homeWidthOffset = size.width / 25;
+        final int settingsWidthOffset = size.width - settings.getPreferredSize().width - homeWidthOffset;
+        final int settingsHeightOffset = (int) (size.height / 38.4);
+        final Pair<Integer> level1Pos = new Pair<>((int) (size.width / 3.50), (int) (size.height / 1.30));
+        final Pair<Integer> level2Pos = new Pair<>((int) (size.width / 2.50), (int) (size.height / 1.97));
+        final Pair<Integer> level3Pos = new Pair<>((int) (size.width / 1.75), (int) (size.height / 1.97));
+        final Pair<Integer> level4Pos = new Pair<>((int) (size.width / 1.49), (int) (size.height / 1.30));
 
 
-        final Dimension sizeSettings = settings.getPreferredSize();
-        final int settingsWidthOffset = size.width - sizeSettings.width - 60;
-        final int homeWidthOffset = 60;
-        final Dimension levelButtonSize = level1.getPreferredSize();
-        final int settingsHeightOffset = 20;
+        this.loggedUser.setBounds(homeWidthOffset, settingsHeightOffset + settings.getPreferredSize().height,
+                this.loggedUser.getPreferredSize().width, this.loggedUser.getPreferredSize().height);
 
+        settings.setBounds(settingsWidthOffset, settingsHeightOffset, settings.getPreferredSize().width,
+                settings.getPreferredSize().height);
 
-        settings.setBounds(settingsWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
-        home.setBounds(homeWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
-        level1.setBounds(445, 600, levelButtonSize.width, levelButtonSize.height);
-        level2.setBounds(605, 390, levelButtonSize.width, levelButtonSize.height);
-        level3.setBounds(880, 390, levelButtonSize.width, levelButtonSize.height);
-        levelBoss.setBounds(1030, 610, levelButtonSize.width, levelButtonSize.height);
-        loggedUser.setBounds(homeWidthOffset, settingsHeightOffset + sizeSettings.height + 10, 300, 30);
+        home.setBounds(homeWidthOffset, settingsHeightOffset, home.getPreferredSize().width,
+                home.getPreferredSize().height);
 
+        level1.setBounds(level1Pos.getX(), level1Pos.getY(), level1.getPreferredSize().width,
+                level1.getPreferredSize().height);
+
+        level2.setBounds(level2Pos.getX(), level2Pos.getY(), level2.getPreferredSize().width,
+                level2.getPreferredSize().height);
+
+        level3.setBounds(level3Pos.getX(), level3Pos.getY(), level3.getPreferredSize().width,
+                level3.getPreferredSize().height);
+
+        level4.setBounds(level4Pos.getX(), level4Pos.getY(), level4.getPreferredSize().width,
+                level4.getPreferredSize().height);
     }
+
 
     /**
      * {@inheritDoc}
@@ -78,11 +90,16 @@ public class LevelSelectionView extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);
+        g.drawImage(Texture.LEVEL_SELECTION_BACKGROUND.getTexture(), 0, 0, null);
     }
 
+    /**
+     * This function update the current logged user username in the text area
+     */
     public void updateLoggedUser() {
         loggedUser.setText(("Logged user: " + mainMenuController.getUsername()));
+        this.loggedUser.setBounds(loggedUser.getBounds().x,loggedUser.getBounds().y,
+                this.loggedUser.getPreferredSize().width, this.loggedUser.getPreferredSize().height);
     }
 
 }

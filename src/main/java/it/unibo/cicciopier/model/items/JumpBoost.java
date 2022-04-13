@@ -37,7 +37,7 @@ public final class JumpBoost extends SimpleItem implements Boost {
     @Override
     public void tick(final long ticks) {
         super.tick(ticks);
-        if (ticks - this.startOfBoost >= JumpBoost.DURATION) {
+        if (ticks - this.startOfBoost >= JumpBoost.DURATION && isActive()) {
             this.getWorld().getPlayer().setJumpModifier(-JumpBoost.BOOST_STRENGTH);
             LOGGER.info("End of jump boost");
             this.remove();

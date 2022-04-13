@@ -54,9 +54,13 @@ public class LoginView extends JPanel {
         g.drawImage(background, 0, 0, null);
     }
 
+    /**
+     * This function update the current logged user username in the text area
+     */
     public String getUsername() {
         return this.textField.getText();
     }
+
     public void logout(){
         this.textField.setText("");
     }

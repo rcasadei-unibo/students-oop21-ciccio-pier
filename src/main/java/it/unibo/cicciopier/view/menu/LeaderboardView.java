@@ -4,6 +4,7 @@ import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.controller.menu.ViewPanels;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.User;
+import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.CustomButton;
@@ -15,20 +16,26 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class represents an instance of the leaderboard view
+ */
 public class LeaderboardView extends JPanel {
-    private final BufferedImage background;
     private final JLabel loggedUser;
     private final MainMenuController mainMenuController;
     private final JList<User> jList;
     private final DefaultListModel<User> test = new DefaultListModel<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(LeaderboardView.class);
 
+    /**
+     * This constructor creates the whole panel with all his components
+     *
+     * @param mainMenuController the instance of the {@link MainMenuController}
+     */
     public LeaderboardView(MainMenuController mainMenuController) {
         final JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         panel.setPreferredSize(new Dimension(600, 270));
@@ -76,13 +83,13 @@ public class LeaderboardView extends JPanel {
         this.loggedUser.setFont(font.deriveFont(Font.BOLD, 20));
         this.loggedUser.setForeground(Color.WHITE);
 
+        panel.add(jScrollPane);
 
         Dimension size = new Dimension(1536, 768);
         this.setPreferredSize(size);
-        this.background = Texture.LEADERBOARD_BACKGROUND.getTexture();
 
         this.setLayout(null);
-        panel.add(jScrollPane);
+        this.add(this.loggedUser);
         this.add(level1);
         this.add(level2);
         this.add(level3);
@@ -90,24 +97,50 @@ public class LeaderboardView extends JPanel {
         this.add(panel);
         this.add(home);
         this.add(settings);
-        this.add(loggedUser);
 
-        final Dimension sizeSettings = settings.getPreferredSize();
-        final int settingsWidthOffset = size.width - sizeSettings.width - 60;
-        final int listX = size.width / 2 - 300;
+
+        final int homeWidthOffset = size.width / 25;
+        final int settingsWidthOffset = size.width - settings.getPreferredSize().width - homeWidthOffset;
+        final int listX = size.width / 2 - panel.getPreferredSize().width;
         final int listY = size.height / 2;
-        final int buttonsStart = size.width / 2 - level1.getPreferredSize().width * 2 - 30;
-        final int homeWidthOffset = 60;
-        final int settingsHeightOffset = 20;
+        final int buttonsStart = size.width / 2 - level1.getPreferredSize().width * 2 - size.width / 50;
+        final int levelButtonHeightOffset = size.height / 80;
+        final int settingsHeightOffset = (int) (size.height / 38.4);
 
-        settings.setBounds(settingsWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
+        final Pair<Integer> level1Pos = new Pair<>(buttonsStart,
+                listY + panel.getPreferredSize().height + levelButtonHeightOffset);
+
+        final Pair<Integer> level2Pos = new Pair<>(buttonsStart + level2.getPreferredSize().width + settingsHeightOffset,
+                listY + panel.getPreferredSize().height + levelButtonHeightOffset);
+
+        final Pair<Integer> level3Pos = new Pair<>(buttonsStart + (level3.getPreferredSize().width + settingsHeightOffset) * 2,
+                listY + panel.getPreferredSize().height + levelButtonHeightOffset);
+
+        final Pair<Integer> level4Pos = new Pair<>(buttonsStart + (level4.getPreferredSize().width + settingsHeightOffset) * 3,
+                listY + panel.getPreferredSize().height + levelButtonHeightOffset);
+
+        this.loggedUser.setBounds(homeWidthOffset, settingsHeightOffset + settings.getPreferredSize().height + (size.height / 75),
+                this.loggedUser.getPreferredSize().width, this.loggedUser.getPreferredSize().height);
+
+        settings.setBounds(settingsWidthOffset, settingsHeightOffset, settings.getPreferredSize().width,
+                settings.getPreferredSize().height);
+
         panel.setBounds(listX, listY, panel.getPreferredSize().width, panel.getPreferredSize().height);
-        home.setBounds(homeWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
-        this.loggedUser.setBounds(homeWidthOffset, settingsHeightOffset + sizeSettings.height + 10, 300, 30);
-        level1.setBounds(buttonsStart, listY + panel.getPreferredSize().height + 10, level1.getPreferredSize().width, level1.getPreferredSize().height);
-        level2.setBounds(buttonsStart + level1.getPreferredSize().width + 20, listY + panel.getPreferredSize().height + 10, level2.getPreferredSize().width, level2.getPreferredSize().height);
-        level3.setBounds(buttonsStart + level1.getPreferredSize().width * 2 + 40, listY + panel.getPreferredSize().height + 10, level3.getPreferredSize().width, level3.getPreferredSize().height);
-        level4.setBounds(buttonsStart + level1.getPreferredSize().width * 3 + 60, listY + panel.getPreferredSize().height + 10, level4.getPreferredSize().width, level4.getPreferredSize().height);
+
+        home.setBounds(homeWidthOffset, settingsHeightOffset, home.getPreferredSize().width,
+                home.getPreferredSize().height);
+
+        level1.setBounds(level1Pos.getX(), level1Pos.getY(), level1.getPreferredSize().width,
+                level1.getPreferredSize().height);
+
+        level2.setBounds(level2Pos.getX(), level2Pos.getY(), level2.getPreferredSize().width,
+                level2.getPreferredSize().height);
+
+        level3.setBounds(level3Pos.getX(), level3Pos.getY(), level3.getPreferredSize().width,
+                level3.getPreferredSize().height);
+
+        level4.setBounds(level4Pos.getX(), level4Pos.getY(), level4.getPreferredSize().width,
+                level4.getPreferredSize().height);
 
 
     }
@@ -118,13 +151,24 @@ public class LeaderboardView extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);
+        g.drawImage(Texture.LEADERBOARD_BACKGROUND.getTexture(), 0, 0, null);
     }
 
+    /**
+     * This function update the current logged user username in the text area
+     */
     public void updateLoggedUser() {
-        loggedUser.setText(("Logged user: " + mainMenuController.getUsername()));
+
+        this.loggedUser.setBounds(loggedUser.getBounds().x, loggedUser.getBounds().y,
+                this.loggedUser.getPreferredSize().width, this.loggedUser.getPreferredSize().height);
+        this.loggedUser.setText(("Logged user: " + mainMenuController.getUsername()));
     }
 
+    /**
+     * This function updates the leaderboard showing the leaderboard of a given {@link Level}
+     *
+     * @param level the {@link Level} which you want to see the leaderboard of
+     */
     public void updateLeaderboard(Level level) {
         List<User> leaderboard = mainMenuController.getUsers().stream().filter(user -> user.getLevelScore(level.getJsonId()) >= 0).sorted(Comparator.comparingInt(user -> user.getLevelScore(level.getJsonId()))).collect(Collectors.toList());
         Collections.reverse(leaderboard);

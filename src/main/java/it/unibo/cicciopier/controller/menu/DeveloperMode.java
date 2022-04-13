@@ -1,9 +1,13 @@
 package it.unibo.cicciopier.controller.menu;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This class represents the developer mode setting
  */
 public class DeveloperMode {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeveloperMode.class);
     private static boolean DEVELOPER_MODE = false;
 
     /**
@@ -22,5 +26,6 @@ public class DeveloperMode {
      */
     public static void setActive(boolean developerMode) {
         DEVELOPER_MODE = developerMode;
+        LOGGER.info("Developer mode changed to: " + DEVELOPER_MODE);
     }
 }

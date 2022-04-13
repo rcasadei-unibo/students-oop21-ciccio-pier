@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.view;
 
+import it.unibo.cicciopier.controller.menu.DeveloperMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -216,6 +217,14 @@ public enum Texture {
      * Represents the button used to access the boss level while pressed
      */
     LEVEL_BUTTON_BOSS_PRESSED("/textures/buttons/level/level_boss_pressed.png"),
+    /**
+     * Represents the texture of the checkbox while {@link DeveloperMode} is turn onn
+     */
+    DEVELOPER_MODE_ON("/textures/buttons/developer_mode/on.png"),
+    /**
+     * Represents the texture of the checkbox while {@link DeveloperMode} is turn off
+     */
+    DEVELOPER_MODE_OFF("/textures/buttons/developer_mode/off.png"),
     /**
      * Represents the button used to access the main menu
      */

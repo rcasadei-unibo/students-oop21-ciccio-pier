@@ -43,8 +43,6 @@ public class MenuManagerView extends JFrame implements StaticView {
         this.getContentPane().removeAll();
         switch (viewPanels) {
             case LEVEL_SELECTION: {
-                LOGGER.info("Developer mode is: " + this.settingsView.getDeveloperMode());
-                DeveloperMode.setActive(this.settingsView.getDeveloperMode());
                 levelSelectionView.updateLoggedUser();
                 this.getContentPane().add(levelSelectionView);
                 levelSelectionView.repaint();

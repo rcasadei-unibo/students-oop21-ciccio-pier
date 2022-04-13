@@ -37,7 +37,7 @@ public final class SpeedBoost extends SimpleItem implements Boost {
     @Override
     public void tick(final long ticks) {
         super.tick(ticks);
-        if (ticks - this.startOfBoost >= SpeedBoost.DURATION) {
+        if (ticks - this.startOfBoost >= SpeedBoost.DURATION && isActive()) {
             this.getWorld().getPlayer().setSpeedModifier(-SpeedBoost.BOOST_STRENGTH);
             LOGGER.info("End of the speed boost");
             this.remove();
@@ -55,7 +55,7 @@ public final class SpeedBoost extends SimpleItem implements Boost {
             this.active = true;
             this.startOfBoost = ticks;
             this.getWorld().getPlayer().setSpeedModifier(SpeedBoost.BOOST_STRENGTH);
-            LOGGER.info("Speed oost Activated");
+            LOGGER.info("Speed boost Activated");
         }
     }
 
