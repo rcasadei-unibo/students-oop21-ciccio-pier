@@ -117,6 +117,10 @@ public abstract class CustomButton extends JComponent implements MouseListener {
         this.buttonStatus = 0;
         this.repaint();
     }
+
+    public void setButtonStatus(int buttonStatus) {
+        this.buttonStatus = buttonStatus;
+    }
 }
 
 

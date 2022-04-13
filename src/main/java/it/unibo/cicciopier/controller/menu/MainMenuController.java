@@ -26,7 +26,7 @@ public final class MainMenuController implements MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainMenuController.class);
     private static final int MAX_VOLUME = 1;
     private static final int MIN_VOLUME = 0;
-    public static boolean isDeveloperModeOn = false;
+    private static boolean DEVELOPER_MODE = false;
     private final Gson gson;
     private final MenuManagerView menu;
     private final File users_file;
@@ -200,6 +200,14 @@ public final class MainMenuController implements MenuController {
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public static boolean isDeveloperModeOn(){
+        return MainMenuController.DEVELOPER_MODE;
+    }
+
+    public static void setDeveloperMode(boolean developerMode){
+        MainMenuController.DEVELOPER_MODE = developerMode;
     }
 
     public MenuManagerView getMenu(){

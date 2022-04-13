@@ -24,28 +24,27 @@ public class LeaderboardView extends JPanel {
     private final BufferedImage background;
     private final JLabel loggedUser;
     private final MainMenuController mainMenuController;
-    private JList jList;
-    private JScrollPane jScrollPane;
-    private DefaultListModel test = new DefaultListModel();
+    private final JList<User> jList;
+    private final DefaultListModel<User> test = new DefaultListModel<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(LeaderboardView.class);
 
     public LeaderboardView(MainMenuController mainMenuController) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        final JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         panel.setPreferredSize(new Dimension(600, 270));
         panel.setOpaque(false);
         this.mainMenuController = mainMenuController;
 
         this.loggedUser = new JLabel("Logged user: " + this.mainMenuController.getUsername());
-        Font font = loggedUser.getFont().deriveFont(Font.BOLD, 24);
-        this.jList = new JList(this.test);
-        this.jScrollPane = new JScrollPane(jList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        final Font font = loggedUser.getFont().deriveFont(Font.BOLD, 24);
+        this.jList = new JList<>(this.test);
+        final JScrollPane jScrollPane = new JScrollPane(jList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        this.jScrollPane.setOpaque(false);
-        this.jScrollPane.getViewport().setOpaque(false);
-        this.jScrollPane.setPreferredSize(new Dimension(600, 270));
-        this.jScrollPane.setBorder(BorderFactory.createEmptyBorder());
-        this.jScrollPane.getVerticalScrollBar().setBackground(new Color(210, 175, 128, 255));
-        this.jScrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+        jScrollPane.setOpaque(false);
+        jScrollPane.getViewport().setOpaque(false);
+        jScrollPane.setPreferredSize(new Dimension(600, 270));
+        jScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        jScrollPane.getVerticalScrollBar().setBackground(new Color(210, 175, 128, 255));
+        jScrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             @Override
             protected void configureScrollBarColors() {
                 this.thumbColor = Color.BLACK;
@@ -82,7 +81,7 @@ public class LeaderboardView extends JPanel {
         this.background = Texture.LEADERBOARD_BACKGROUND.getTexture();
 
         this.setLayout(null);
-        panel.add(this.jScrollPane);
+        panel.add(jScrollPane);
         this.add(level1);
         this.add(level2);
         this.add(level3);
