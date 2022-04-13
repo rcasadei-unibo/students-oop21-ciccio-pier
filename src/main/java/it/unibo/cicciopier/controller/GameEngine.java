@@ -3,12 +3,15 @@ package it.unibo.cicciopier.controller;
 import it.unibo.cicciopier.controller.menu.MenuController;
 import it.unibo.cicciopier.model.GameWorld;
 import it.unibo.cicciopier.model.Level;
+import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.view.GameView;
 import it.unibo.cicciopier.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
 
 /**
  * Simple implementation of the interface {@link Engine}.
@@ -23,6 +26,7 @@ public class GameEngine implements Engine {
     private final View view;
     private final Loop loop;
     private GameState state;
+    private Music music;
     private long ticks;
 
     /**
@@ -51,6 +55,12 @@ public class GameEngine implements Engine {
         LOGGER.info("Loading game...");
         this.getWorldLoader().load();
         this.view.load();
+        // Get sound
+        try {
+            this.music = Music.valueOf(this.getWorldLoader().getMusic());
+        } catch (IllegalArgumentException | NullPointerException e) {
+            LOGGER.error("Invalid music id {}, ignoring it...", this.getWorldLoader().getMusic());
+        }
     }
 
     /**
@@ -228,5 +238,13 @@ public class GameEngine implements Engine {
     @Override
     public Level getLevel() {
         return this.level;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Music> getMusic() {
+        return Optional.ofNullable(this.music);
     }
 }

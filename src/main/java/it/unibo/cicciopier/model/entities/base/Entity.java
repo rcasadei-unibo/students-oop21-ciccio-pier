@@ -15,6 +15,11 @@ public interface Entity extends GameObject {
     EntityType getType();
 
     /**
+     * Load the entity
+     */
+    void load();
+
+    /**
      * Checks if Entity was removed
      * @return If removed
      */

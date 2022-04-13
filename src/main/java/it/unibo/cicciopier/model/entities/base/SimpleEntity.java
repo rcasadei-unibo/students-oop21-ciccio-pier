@@ -58,6 +58,14 @@ public abstract class SimpleEntity extends SimpleGameObject implements Entity {
      * {@inheritDoc}
      */
     @Override
+    public void load() {
+        // do nothing
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isRemoved() {
         return this.removed;
     }

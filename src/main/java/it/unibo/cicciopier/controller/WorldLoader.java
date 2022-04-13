@@ -55,4 +55,18 @@ public interface WorldLoader {
      */
     World getWorld();
 
+    /**
+     * Get the background of this level
+     *
+     * @return background
+     */
+    String getBackground();
+
+    /**
+     * Get the music of this level
+     *
+     * @return music
+     */
+    String getMusic();
+
 }

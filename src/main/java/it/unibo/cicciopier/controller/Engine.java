@@ -1,8 +1,11 @@
 package it.unibo.cicciopier.controller;
 
 import it.unibo.cicciopier.model.Level;
+import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.view.View;
+
+import java.util.Optional;
 
 /**
  * Controls the logic of the game.
@@ -98,5 +101,12 @@ public interface Engine {
      * @return the level
      */
     Level getLevel();
+
+    /**
+     * Get the music of this level
+     *
+     * @return music
+     */
+    Optional<Music> getMusic();
 
 }

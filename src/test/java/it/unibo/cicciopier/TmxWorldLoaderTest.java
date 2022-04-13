@@ -47,6 +47,20 @@ public class TmxWorldLoaderTest {
 
     @Test
     @Order(3)
+    @DisplayName("Background test")
+    public void testBackground() {
+        assertNull(loader.getBackground(), "Background is wrong!");
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Music test")
+    public void testMusic() {
+        assertEquals("GAME", loader.getMusic(), "Music is wrong!");
+    }
+
+    @Test
+    @Order(5)
     @DisplayName("Blocks test")
     public void testLoadBlocks() {
         loader.loadBlocks();
@@ -57,7 +71,7 @@ public class TmxWorldLoaderTest {
     }
 
     @Test
-    @Order(4)
+    @Order(6)
     @DisplayName("Entities test")
     public void testLoadEntities() {
         loader.loadEntities();
@@ -82,7 +96,7 @@ public class TmxWorldLoaderTest {
     }
 
     @Test
-    @Order(5)
+    @Order(7)
     @DisplayName("Player test")
     public void testLoadPlayer() {
         loader.loadPlayer();

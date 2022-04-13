@@ -20,9 +20,10 @@ import java.util.Optional;
  */
 public class TmxWorldLoader implements WorldLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(TmxWorldLoader.class);
-
     private final World world;
     private final String level;
+    private String background;
+    private String music;
     private Map map;
 
     /**
@@ -49,6 +50,13 @@ public class TmxWorldLoader implements WorldLoader {
         this.getWorld().setHeight(this.map.getHeight());
         this.getWorld().setWidth(this.map.getWidth());
         LOGGER.info("Loading map - height: {} - width: {}", this.getWorld().getHeight(), this.getWorld().getWidth());
+        Properties properties = map.getProperties();
+        // read background from map proprieties.
+        this.background = properties.getProperty("background");
+        LOGGER.info("Map background: {}", background);
+        // read music from map proprieties.
+        this.music = properties.getProperty("music");
+        LOGGER.info("Map sound: {}", music);
     }
 
     /**
@@ -111,6 +119,7 @@ public class TmxWorldLoader implements WorldLoader {
             }
             Entity e = opt.get();
             e.setPos(new Vector2d(object.getX(), object.getY()));
+            e.load();
             this.getWorld().addEntity(e);
             //LOGGER.info("  * Entity - type: {} - x: {} - y: {}", type, object.getX(), object.getY());
         }
@@ -144,4 +153,19 @@ public class TmxWorldLoader implements WorldLoader {
         return this.level;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getBackground() {
+        return background;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getMusic() {
+        return music;
+    }
 }
