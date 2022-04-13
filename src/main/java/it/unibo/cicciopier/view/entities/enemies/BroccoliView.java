@@ -17,18 +17,17 @@ import java.util.Map;
  * Simple class to render the boss Broccoli
  */
 public class BroccoliView extends SimpleEntityView {
-    private static final int HEALTH_BAR_WIDTH = 160;
-    private static final int HEALTH_BAR_HEIGHT = 20;
     public static final Map<EntityState, Animation> ANIMATIONS = new HashMap<>() {
         {
             final int w = 252;
             final int h = 384;
-            put(BossState.IDLE, new Animation(Texture.BROCCOLI, 8, 6, new Pair<>(0, 0), w, h));
-            put(BossState.SEEK, new Animation(Texture.BROCCOLI, 8, 6, new Pair<>(0, 0), w, h));
-            put(BossState.MISSILE_LAUNCHER, new Animation(Texture.BROCCOLI, 4, 6, new Pair<>(w * 15, 0), w, h));
-            put(BossState.LASER, new Animation(Texture.BROCCOLI, 4, 6, new Pair<>(w * 11, 0), w, h));
-            put(BossState.METEOR_SHOWER, new Animation(Texture.BROCCOLI, 3, 6, new Pair<>(w * 8, 0), w, h));
-            put(BossState.DEAD, new Animation(Texture.BROCCOLI, 8, 6, new Pair<>(0, 0), w, h));
+            final Animation idle = new Animation(Texture.BROCCOLI, 8, 6, new Pair<>(0, 0), w, h);
+            put(BossState.IDLE, idle);
+            put(BossState.SEEK, idle);
+            put(BossState.MISSILE_LAUNCHER, new Animation(Texture.BROCCOLI, 4, 6, new Pair<>(0, h), w, h));
+            put(BossState.METEOR_SHOWER, new Animation(Texture.BROCCOLI, 3, 6, new Pair<>(0, h * 2), w, h));
+            put(BossState.LASER, new Animation(Texture.BROCCOLI, 4, 6, new Pair<>(0, h * 3), w, h));
+            put(BossState.DEAD, idle);
         }
     };
 
@@ -44,11 +43,17 @@ public class BroccoliView extends SimpleEntityView {
         this.setTextureOffSet(new Pair<>(-75, -40));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LivingEntity getObject() {
         return this.broccoli;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Animation getAnimation() {
         return ANIMATIONS.get(this.broccoli.getCurrentState());
@@ -67,10 +72,12 @@ public class BroccoliView extends SimpleEntityView {
                 this.broccoli.getPos().getY() - 60,
                 null
         );
-        final int currentHealth = (this.broccoli.getHp() * HEALTH_BAR_WIDTH) / this.broccoli.getMaxHp();
+        final int currentHealth = (this.broccoli.getHp() * Texture.ENTITY_HEALTH_BAR.getTexture().getWidth()) /
+                this.broccoli.getMaxHp();
         if (currentHealth > 0) {
             g.drawImage(
-                    Texture.ENTITY_HEALTH_BAR.getTexture().getSubimage(0, 0, currentHealth, HEALTH_BAR_HEIGHT),
+                    Texture.ENTITY_HEALTH_BAR.getTexture()
+                            .getSubimage(0, 0, currentHealth, Texture.ENTITY_HEALTH_BAR.getTexture().getHeight()),
                     this.broccoli.getPos().getX() - 30,
                     this.broccoli.getPos().getY() - 60,
                     null

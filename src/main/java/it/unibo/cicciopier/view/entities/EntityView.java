@@ -5,6 +5,9 @@ import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.GameObjectView;
 
+/**
+ * Contains methods to animate an entity
+ */
 public interface EntityView extends GameObjectView {
     /**
      * Get the entity

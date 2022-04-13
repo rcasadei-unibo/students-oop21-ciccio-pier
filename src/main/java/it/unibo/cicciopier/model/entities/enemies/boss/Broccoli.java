@@ -28,7 +28,6 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
     private static final int LASER_DURATION = 5 * GameLoop.TPS;
     private static final int SEEK_WAITING = 3 * GameLoop.TPS;
 
-
     private final BroccoliView broccoliView;
     private long start;
 

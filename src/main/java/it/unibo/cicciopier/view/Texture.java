@@ -19,107 +19,107 @@ public enum Texture {
     /**
      * Represents the texture of the player.
      */
-    PLAYER("/textures/player.png"),
+    PLAYER("/textures/entities/player.png"),
     /**
      * Represents the texture of the boss.
      */
-    BROCCOLI("/textures/broccoli.png"),
+    BROCCOLI("/textures/entities/enemies/boss/broccoli.png"),
     /**
      * Represents the meteor texture
      */
-    METEOR("/textures/meteor.png"),
+    METEOR("/textures/entities/meteor.png"),
     /**
      * Represents the texture entity health bar decoration
      */
-    ENTITY_HEALTH_BAR_DECORATION("/textures/entityHealthBarDecoration.png"),
+    ENTITY_HEALTH_BAR_DECORATION("/textures/entities/enemies/boss/boss_health_bar_decoration.png"),
     /**
      * Represents the texture entity health bar
      */
-    ENTITY_HEALTH_BAR("/textures/entityHealthBar.png"),
+    ENTITY_HEALTH_BAR("/textures/entities/enemies/boss/boss_health_bar.png"),
     /**
      * Represents the texture of the health bar decoration
      */
-    HEALTH_BAR_DECORATION("/textures/gameHud/health_bar_decoration.png"),
+    HEALTH_BAR_DECORATION("/textures/hud/health_bar_decoration.png"),
     /**
      * Represents the texture of the stamina bar decoration
      */
-    STAMINA_BAR_DECORATION("/textures/gameHud/stamina_bar_decoration.png"),
+    STAMINA_BAR_DECORATION("/textures/hud/stamina_bar_decoration.png"),
     /**
      * Represents the texture od the health bar
      */
-    HEALTH_BAR("/textures/gameHud/health_bar.png"),
+    HEALTH_BAR("/textures/hud/health_bar.png"),
     /**
      * Represents the texture od the stamina bar
      */
-    STAMINA_BAR("/textures/gameHud/stamina_bar.png"),
+    STAMINA_BAR("/textures/hud/stamina_bar.png"),
     /**
      * Represents the texture of the ShootingPea
      */
-    SHOOTING_PEA("/textures/enemies/shootingPea.png"),
+    SHOOTING_PEA("/textures/entities/enemies/shootingPea.png"),
     /**
      * Represents the texture of the NinjaPotato
      */
-    NINJA_POTATO("/textures/enemies/ninjaPotato.png"),
+    NINJA_POTATO("/textures/entities/enemies/ninjaPotato.png"),
     /**
      * Represents the texture of the RollingPeach
      */
-    ROLLING_PEACH("/textures/enemies/rollingPeach.png"),
+    ROLLING_PEACH("/textures/entities/enemies/rollingPeach.png"),
     /**
      * Represents the texture of the CryingOnion
      */
-    CRYING_ONION("/textures/enemies/cryingOnion.png"),
+    CRYING_ONION("/textures/entities/enemies/cryingOnion.png"),
     /**
      * Represents the texture of the MindPineapple
      */
-    MIND_PINEAPPLE("/textures/enemies/mindPineapple.png"),
+    MIND_PINEAPPLE("/textures/entities/enemies/mindPineapple.png"),
     /**
      * Represents the texture of the Nut
      */
-    NUT("/textures/enemies/nut.png"),
+    NUT("/textures/entities/enemies/nut.png"),
     /**
      * Represents the texture of the Pea
      */
-    PEA("/textures/enemies/pea.png"),
+    PEA("/textures/entities/enemies/pea.png"),
     /**
      * Represents the texture of the Slash
      */
-    SLASH("/textures/enemies/slash.png"),
+    SLASH("/textures/entities/enemies/slash.png"),
     /**
      * Represents the texture of the spikes
      */
-    SPIKES("/textures/enemies/spikes.png"),
+    SPIKES("/textures/entities/enemies/spikes.png"),
     /**
      * Represents the texture of the Missile.
      */
-    MISSILE("/textures/missile.png"),
+    MISSILE("/textures/entities/missile.png"),
     /**
      * Represents the texture of the coin.
      */
-    COIN("/textures/coin.png"),
+    COIN("/textures/entities/items/coin.png"),
     /**
      * Represents the texture of the jump boost
      */
-    JUMP_BOOST("/textures/jumpBoost.png"),
+    JUMP_BOOST("/textures/entities/items/jumpBoost.png"),
     /**
      * Represents the texture of the speed boost
      */
-    SPEED_BOOST("/textures/jumpBoost.png"),
+    SPEED_BOOST("/textures/entities/items/jumpBoost.png"),
     /**
      * Represents the texture of the speed boost
      */
-    INVULNERABILITY_BOOST("/textures/jumpBoost.png"),
+    INVULNERABILITY_BOOST("/textures/entities/items/jumpBoost.png"),
     /**
      * Represents the texture of the chicken
      */
-    CHICKEN("/textures/chicken.png"),
+    CHICKEN("/textures/entities/items/chicken.png"),
     /**
      * Represents the texture of an explosion.
      */
-    EXPLOSION("/textures/explosion.png"),
+    EXPLOSION("/textures/entities/explosion.png"),
     /**
      * Represents the texture of the fire.
      */
-    FIRE("/textures/fire.png"),
+    FIRE("/textures/entities/fire.png"),
     /**
      * Represents the background of the menu
      */

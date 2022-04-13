@@ -2,6 +2,9 @@ package it.unibo.cicciopier.model.entities;
 
 import java.util.Objects;
 
+/**
+ * Simple class to store the instance of entities states
+ */
 public class EntityState {
     public static final EntityState IDLE = new EntityState("idle");
     public static final EntityState RUNNING = new EntityState("running");
@@ -11,6 +14,11 @@ public class EntityState {
 
     private final String id;
 
+    /**
+     * Constructor for this class, create a state instance
+     *
+     * @param id name to differentiate an id from another
+     */
     public EntityState(final String id) {
         this.id = id;
     }
@@ -47,6 +55,9 @@ public class EntityState {
         return Objects.hash(this.getId());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return this.id;

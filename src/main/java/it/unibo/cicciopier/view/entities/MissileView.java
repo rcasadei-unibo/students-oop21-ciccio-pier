@@ -6,16 +6,15 @@ import it.unibo.cicciopier.view.Texture;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 /**
- * class for creating a missile viewer
+ * Simple class to create a missile view
  */
 public class MissileView implements GameObjectView {
     private final Missile missile;
 
     /**
-     * Constructor for this class, create a instance of a missile View
+     * Constructor for this class, create an instance of a missile View
      *
      * @param missile what missile to render
      */

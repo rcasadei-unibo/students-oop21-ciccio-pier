@@ -8,10 +8,19 @@ import it.unibo.cicciopier.view.Texture;
 
 import java.awt.*;
 
+/**
+ * Simple class to render a laser
+ */
 public class LaserView extends SimpleEntityView {
-    public static final Animation ANIMATION = new Animation(Texture.FIRE, 65, 2, new Pair<>(0, 0), 100, 100);
+    public static final Animation ANIMATION = new Animation(Texture.FIRE, 65, 2, new Pair<>(0, 0),
+            100, 100);
     private final Laser laser;
 
+    /**
+     * Constructor for this class, create an instance of laser view
+     *
+     * @param laser what laser to render
+     */
     public LaserView(final Laser laser) {
         this.laser = laser;
         this.setTextureOffSet(new Pair<>(-50, -70));
@@ -34,11 +43,17 @@ public class LaserView extends SimpleEntityView {
         super.render(g);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Entity getObject() {
         return this.laser;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Animation getAnimation() {
         return ANIMATION;

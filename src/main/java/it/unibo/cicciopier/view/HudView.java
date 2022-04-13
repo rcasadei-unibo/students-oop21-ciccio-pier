@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class HudView extends JPanel {
-    private static final int BAR_HEIGHT = 27;
-    private static final int BAR_WIDTH = 179;
     private final Engine engine;
 
     public HudView(final Engine engine) {
@@ -36,12 +34,12 @@ public class HudView extends JPanel {
                 20,
                 20,
                 null);
-        final int playerHealth = (BAR_WIDTH * p.getHp()) / p.getMaxHp();
+        final int playerHealth = (Texture.HEALTH_BAR.getTexture().getWidth() * p.getHp()) / p.getMaxHp();
         // 0 or negative width can't be drawn
         if (playerHealth > 0) {
             //draw the health bar
             g.drawImage(
-                    Texture.HEALTH_BAR.getTexture().getSubimage(0, 0, playerHealth, BAR_HEIGHT),
+                    Texture.HEALTH_BAR.getTexture().getSubimage(0, 0, playerHealth, Texture.HEALTH_BAR.getTexture().getHeight()),
                     40,
                     20,
                     null);
@@ -51,12 +49,12 @@ public class HudView extends JPanel {
                 20,
                 50,
                 null);
-        final int playerStamina = (BAR_WIDTH * p.getStamina()) / p.getMaxStamina();
+        final int playerStamina = (Texture.STAMINA_BAR.getTexture().getWidth() * p.getStamina()) / p.getMaxStamina();
         // 0 or negative width can't be drawn
         if (playerStamina > 0) {
             //draw the stamina bar
             g.drawImage(
-                    Texture.STAMINA_BAR.getTexture().getSubimage(0, 0, playerStamina, BAR_HEIGHT),
+                    Texture.STAMINA_BAR.getTexture().getSubimage(0, 0, playerStamina, Texture.STAMINA_BAR.getTexture().getHeight()),
                     40,
                     50,
                     null);

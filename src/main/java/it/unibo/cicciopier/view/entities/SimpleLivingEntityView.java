@@ -4,6 +4,9 @@ import it.unibo.cicciopier.view.Animation;
 
 import java.awt.*;
 
+/**
+ * Simple class to render a living entity
+ */
 public abstract class SimpleLivingEntityView extends SimpleEntityView implements LivingEntityView {
 
     /**
@@ -13,18 +16,18 @@ public abstract class SimpleLivingEntityView extends SimpleEntityView implements
     public void render(final Graphics g) {
         //if the entity state changed, reset the counter
         if (this.getObject().getOldState() != this.getObject().getCurrentState()) {
-            this.animationTicks = 0;
+            this.resetAnimationTicks();
         }
         final Animation animation = getAnimation();
         if (this.getObject().isFacingRight()) {
             //looking right
-            g.drawImage(animation.getSprite(this.animationTicks / animation.getSpeed()),
+            g.drawImage(animation.getSprite(this.getAnimationTicks() / animation.getSpeed()),
                     this.getObject().getPos().getX() + this.getTextureOffSet().getX(),
                     this.getObject().getPos().getY() + this.getTextureOffSet().getY(),
                     null);
         } else {
             //looking left
-            g.drawImage(animation.getSprite(this.animationTicks / animation.getSpeed()),
+            g.drawImage(animation.getSprite(this.getAnimationTicks() / animation.getSpeed()),
                     this.getObject().getPos().getX() + this.getObject().getWidth() - this.getTextureOffSet().getX(),
                     this.getObject().getPos().getY() + this.getTextureOffSet().getY(),
                     -animation.getWidth(),
@@ -32,6 +35,6 @@ public abstract class SimpleLivingEntityView extends SimpleEntityView implements
                     null);
         }
         this.renderBounds(g);
-        this.animationTicks++;
+        this.increaseAnimationTicks();
     }
 }

@@ -18,11 +18,11 @@ public class PlayerView extends SimpleLivingEntityView {
         {
             final int w = 52;
             final int h = 64;
-            put(EntityState.IDLE, new Animation(Texture.PLAYER, 3, 6, new Pair<>(w * 6, 0), w, h));
-            put(EntityState.RUNNING, new Animation(Texture.PLAYER, 7, 6, new Pair<>(w * 9, 0), w, h));
-            put(EntityState.JUMPING, new Animation(Texture.PLAYER, 1, 6, new Pair<>(w * 2, 0), w, h));
-            put(EntityState.ATTACKING, new Animation(Texture.PLAYER, 3, 6, new Pair<>(w * 3, 0), w, h));
-            put(EntityState.DEAD, new Animation(Texture.PLAYER, 1, 6, new Pair<>(0, 0), w, h));
+            put(EntityState.IDLE, new Animation(Texture.PLAYER, 3, 6, new Pair<>(0, 0), w, h));
+            put(EntityState.RUNNING, new Animation(Texture.PLAYER, 7, 6, new Pair<>(0, h), w, h));
+            put(EntityState.JUMPING, new Animation(Texture.PLAYER, 1, 6, new Pair<>(0, h * 2), w, h));
+            put(EntityState.ATTACKING, new Animation(Texture.PLAYER, 3, 6, new Pair<>(0, h * 3), w, h));
+            put(EntityState.DEAD, new Animation(Texture.PLAYER, 1, 6, new Pair<>(0, h * 4), w, h));
         }
     };
 

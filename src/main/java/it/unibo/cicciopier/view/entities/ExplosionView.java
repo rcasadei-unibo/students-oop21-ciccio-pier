@@ -10,7 +10,8 @@ import it.unibo.cicciopier.view.Texture;
  * Simple class to render an explosion
  */
 public class ExplosionView extends SimpleEntityView {
-    public static final Animation ANIMATION = new Animation(Texture.EXPLOSION, 8, 6, new Pair<>(0, 0), 64, 64);
+    public static final Animation ANIMATION = new Animation(Texture.EXPLOSION, 8, 6,
+            new Pair<>(0, 0), 64, 64);
     private final Explosion explosion;
 
     /**

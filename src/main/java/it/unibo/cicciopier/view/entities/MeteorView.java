@@ -13,7 +13,6 @@ import java.awt.geom.AffineTransform;
 public class MeteorView implements GameObjectView {
     private static final double ANGULAR_VELOCITY = (Math.PI * 0.9) / 180;
     private static final double MAX_ANGLE = Math.PI * 2;
-    private static final int METEOR_SIZE = 64;
     private final Meteor meteor;
     private double currentAngle;
 
@@ -51,7 +50,7 @@ public class MeteorView implements GameObjectView {
                 this.meteor.getPos().getY() + this.meteor.getHeight() / 2d
         );
         g2d.drawImage(
-                Texture.METEOR.getTexture().getSubimage(0, 0, METEOR_SIZE, METEOR_SIZE),
+                Texture.METEOR.getTexture(),
                 this.meteor.getPos().getX(),
                 this.meteor.getPos().getY(),
                 null

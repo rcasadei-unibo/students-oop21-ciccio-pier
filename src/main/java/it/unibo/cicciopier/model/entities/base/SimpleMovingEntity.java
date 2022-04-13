@@ -1,11 +1,8 @@
 package it.unibo.cicciopier.model.entities.base;
 
-import it.unibo.cicciopier.model.GameObject;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
-import it.unibo.cicciopier.model.blocks.base.BlockType;
 import it.unibo.cicciopier.utility.Vector2d;
-import it.unibo.cicciopier.view.Texture;
 
 import java.awt.*;
 
