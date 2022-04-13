@@ -1,5 +1,6 @@
 package it.unibo.cicciopier;
 
+import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameEngine;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.Sound;
@@ -14,8 +15,6 @@ import it.unibo.cicciopier.view.items.CoinView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -24,6 +23,8 @@ public final class App {
 
     public static void main(final String[] args) {
         LOGGER.info("Starting...");
+        //load audio system
+        AudioController.getInstance().load();
         //load all the textures
         for (Texture t : Texture.values()) {
             try {
@@ -39,23 +40,6 @@ public final class App {
         loadAnimation(CoinView.ANIMATION);
         loadAnimation(ExplosionView.ANIMATION);
         loadAnimation(LaserView.ANIMATION);
-
-        //load all the sounds
-        for (Sound sound : Sound.values()) {
-            try {
-                sound.load();
-            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
-        //load all the music
-        for (Music music : Music.values()) {
-            try {
-                music.load();
-            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
         try {
             GameEngine e = new GameEngine(null, Level.FIRST_LEVEL);
             e.load();

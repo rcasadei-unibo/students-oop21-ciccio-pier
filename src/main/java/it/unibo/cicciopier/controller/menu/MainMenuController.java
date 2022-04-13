@@ -42,7 +42,7 @@ public final class MainMenuController implements MenuController {
      */
     public MainMenuController() {
         MainMenuController.LOGGER.info("Initializing MainMenuController... ");
-        AudioController.getAudioController().playMusic(Music.BACKGROUND);
+        AudioController.getInstance().playMusic(Music.BACKGROUND);
         this.gson = new Gson().newBuilder().serializeNulls().create();
         this.users = new ArrayList<>();
         try {
@@ -66,42 +66,42 @@ public final class MainMenuController implements MenuController {
     public void action(MenuAction menuAction) {
         switch (menuAction) {
             case INCREASE_MUSIC_AUDIO: {
-                if (AudioController.getAudioController().getMusicVolume() != MAX_VOLUME) {
-                    AudioController.getAudioController().setMusicVolume((float) ((Math.round(AudioController.getAudioController().getMusicVolume() * 100) + 10)) / 100);
-                    this.player.setMusicVolume((Math.round(AudioController.getAudioController().getMusicVolume() * 100)));
+                if (AudioController.getInstance().getMusicVolume() != MAX_VOLUME) {
+                    AudioController.getInstance().setMusicVolume((float) ((Math.round(AudioController.getInstance().getMusicVolume() * 100) + 10)) / 100);
+                    this.player.setMusicVolume((Math.round(AudioController.getInstance().getMusicVolume() * 100)));
                     this.updateUsers();
                     this.menu.getSettingsView().updateMusicAudioText();
-                    MainMenuController.LOGGER.info("Music volume set to:" + AudioController.getAudioController().getMusicVolume() * 100 + "%");
+                    MainMenuController.LOGGER.info("Music volume set to:" + AudioController.getInstance().getMusicVolume() * 100 + "%");
                 }
                 break;
             }
             case DECREASE_MUSIC_AUDIO: {
-                if (AudioController.getAudioController().getMusicVolume() != MIN_VOLUME) {
-                    AudioController.getAudioController().setMusicVolume((float) ((Math.round(AudioController.getAudioController().getMusicVolume() * 100) - 10)) / 100);
-                    this.player.setMusicVolume((Math.round(AudioController.getAudioController().getMusicVolume() * 100)));
+                if (AudioController.getInstance().getMusicVolume() != MIN_VOLUME) {
+                    AudioController.getInstance().setMusicVolume((float) ((Math.round(AudioController.getInstance().getMusicVolume() * 100) - 10)) / 100);
+                    this.player.setMusicVolume((Math.round(AudioController.getInstance().getMusicVolume() * 100)));
                     this.updateUsers();
                     this.menu.getSettingsView().updateMusicAudioText();
-                    MainMenuController.LOGGER.info("Music volume set to:" + AudioController.getAudioController().getMusicVolume() * 100 + "%");
+                    MainMenuController.LOGGER.info("Music volume set to:" + AudioController.getInstance().getMusicVolume() * 100 + "%");
                 }
                 break;
             }
             case INCREASE_GAME_AUDIO: {
-                if (AudioController.getAudioController().getSoundVolume() != MAX_VOLUME) {
-                    AudioController.getAudioController().setSoundVolume((float) ((Math.round(AudioController.getAudioController().getSoundVolume() * 100) + 10)) / 100);
-                    this.player.setSoundVolume((Math.round(AudioController.getAudioController().getSoundVolume() * 100)));
+                if (AudioController.getInstance().getSoundVolume() != MAX_VOLUME) {
+                    AudioController.getInstance().setSoundVolume((float) ((Math.round(AudioController.getInstance().getSoundVolume() * 100) + 10)) / 100);
+                    this.player.setSoundVolume((Math.round(AudioController.getInstance().getSoundVolume() * 100)));
                     this.updateUsers();
                     this.menu.getSettingsView().updateGameAudioText();
-                    MainMenuController.LOGGER.info("Game volume set to:" + AudioController.getAudioController().getSoundVolume() * 100 + "%");
+                    MainMenuController.LOGGER.info("Game volume set to:" + AudioController.getInstance().getSoundVolume() * 100 + "%");
                 }
                 break;
             }
             case DECREASE_GAME_AUDIO: {
-                if (AudioController.getAudioController().getSoundVolume() != MIN_VOLUME) {
-                    AudioController.getAudioController().setSoundVolume((float) ((Math.round(AudioController.getAudioController().getSoundVolume() * 100) - 10)) / 100);
-                    this.player.setSoundVolume((Math.round(AudioController.getAudioController().getSoundVolume() * 100)));
+                if (AudioController.getInstance().getSoundVolume() != MIN_VOLUME) {
+                    AudioController.getInstance().setSoundVolume((float) ((Math.round(AudioController.getInstance().getSoundVolume() * 100) - 10)) / 100);
+                    this.player.setSoundVolume((Math.round(AudioController.getInstance().getSoundVolume() * 100)));
                     this.updateUsers();
                     this.menu.getSettingsView().updateGameAudioText();
-                    MainMenuController.LOGGER.info("Game volume set to:" + AudioController.getAudioController().getSoundVolume() * 100 + "%");
+                    MainMenuController.LOGGER.info("Game volume set to:" + AudioController.getInstance().getSoundVolume() * 100 + "%");
                 }
                 break;
             }
@@ -115,9 +115,9 @@ public final class MainMenuController implements MenuController {
 
                     MainMenuController.LOGGER.info("User logged in: " + this.player.getUsername());
 
-                    AudioController.getAudioController().setSoundVolume((float) this.player.getSoundVolume() / 100);
+                    AudioController.getInstance().setSoundVolume((float) this.player.getSoundVolume() / 100);
                     this.menu.getSettingsView().updateGameAudioText();
-                    AudioController.getAudioController().setMusicVolume((float) this.player.getMusicVolume() / 100);
+                    AudioController.getInstance().setMusicVolume((float) this.player.getMusicVolume() / 100);
                     this.menu.getSettingsView().updateMusicAudioText();
 
                     this.show(ViewPanels.MAIN_MENU);
@@ -168,9 +168,8 @@ public final class MainMenuController implements MenuController {
         LOGGER.info("Starting level...");
 
         try {
-            AudioController.getAudioController().stopMusic(Music.BACKGROUND);
             this.menu.setVisible(false);
-            AudioController.getAudioController().playMusic(Music.GAME);
+            AudioController.getInstance().playMusic(Music.GAME);
             GameEngine gameEngine = new GameEngine(this, level);
             gameEngine.load();
             gameEngine.start();
@@ -242,8 +241,7 @@ public final class MainMenuController implements MenuController {
             player.setLevelScore(level.getJsonId(), score);
             updateUsers();
         }
-        AudioController.getAudioController().stopMusic(Music.GAME);
-        AudioController.getAudioController().playMusic(Music.BACKGROUND);
+        AudioController.getInstance().playMusic(Music.BACKGROUND);
         this.menu.setVisible(true);
 
 

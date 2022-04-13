@@ -1,7 +1,7 @@
 package it.unibo.cicciopier.model;
 
-import javax.sound.sampled.*;
 import java.io.*;
+import java.util.Arrays;
 
 /**
  * Enum to store all the sound files, and load them
@@ -57,58 +57,25 @@ public enum Sound {
     }
 
     /**
-     * Load all sound files
+     * Load sound file
      *
-     * @throws UnsupportedAudioFileException in case the data is not valid
-     * @throws IOException                   any type of I/O exception has occurred
-     * @throws LineUnavailableException      when the line cannot be opened
+     * @throws IOException          any type of I/O exception has occurred
+     * @throws NullPointerException if the given file is null
      */
-    public void load() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        final int minVolume = 0;
+    public void load() throws IOException, NullPointerException {
         InputStream is = getClass().getResourceAsStream(this.fileName);
-        assert is != null;
-        this.bytes = is.readAllBytes();
-        //use this solution, instead of adding a new dependency
-        //play all the sound once at the beginning, to prevent lag and freezing of the screen
-        try {
-            Clip clip = AudioSystem.getClip();
-            ByteArrayInputStream bis = new ByteArrayInputStream(this.bytes);
-            AudioInputStream ais = AudioSystem.getAudioInputStream(bis);
-            clip.open(ais);
-            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            volume.setValue(20F * (float) Math.log10(minVolume));
-            clip.flush();
-            clip.setFramePosition(0);
-            clip.start();
-            //close the streams
-            bis.close();
-            ais.close();
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
-            e.printStackTrace();
+        if (is == null) {
+            throw new NullPointerException("File " + this.fileName + " does not exists!");
         }
+        this.bytes = is.readAllBytes();
     }
 
-    /**
-     * Play the sound
-     *
-     * @param soundVolume how much the volume must be
-     */
-    public void playSound(final float soundVolume) {
-        try {
-            final float startingDecibel  = 80F;
-            Clip clip = AudioSystem.getClip();
-            ByteArrayInputStream bis = new ByteArrayInputStream(this.bytes);
-            AudioInputStream ais = AudioSystem.getAudioInputStream(bis);
-            clip.open(ais);
-            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            volume.setValue(startingDecibel * (float) Math.log10(soundVolume));
-            clip.setFramePosition(0);
-            clip.start();
-            //close the streams
-            bis.close();
-            ais.close();
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        }
+    public String getFileName() {
+        return this.fileName;
     }
+
+    public byte[] getBytes() {
+        return Arrays.copyOf(this.bytes, this.bytes.length);
+    }
+
 }

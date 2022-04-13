@@ -1,8 +1,8 @@
 package it.unibo.cicciopier.model;
 
-import javax.sound.sampled.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * Enum to store all the music files, and load them
@@ -12,7 +12,7 @@ public enum Music {
     GAME("/audios/game.wav");
 
     private final String fileName;
-    private Clip clip;
+    private byte[] bytes;
 
     /**
      * Constructor for this class
@@ -24,50 +24,25 @@ public enum Music {
     }
 
     /**
-     * load all music files
+     * Load music file
      *
-     * @throws UnsupportedAudioFileException in case the data is not valid
-     * @throws IOException                   any type of I/O exception has occurred
-     * @throws LineUnavailableException      when the line cannot be opened
+     * @throws IOException          any type of I/O exception has occurred
+     * @throws NullPointerException if the given file is null
      */
-    public void load() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public void load() throws IOException, NullPointerException {
         InputStream is = getClass().getResourceAsStream(this.fileName);
-        assert is != null;
-        AudioInputStream ais = AudioSystem.getAudioInputStream(is);
-        this.clip = AudioSystem.getClip();
-        this.clip.open(ais);
-        //close the streams
-        is.close();
-        ais.close();
+        if (is == null) {
+            throw new NullPointerException("File " + this.fileName + " does not exists!");
+        }
+        this.bytes = is.readAllBytes();
     }
 
-    /**
-     * play the music
-     *
-     * @param musicVolume how much the volume must be
-     */
-    public void play(final float musicVolume) {
-        this.changeVolume(musicVolume);
-        this.clip.setFramePosition(0);
-        this.clip.start();
-        this.clip.loop(Clip.LOOP_CONTINUOUSLY);
+    public String getFileName() {
+        return this.fileName;
     }
 
-    /**
-     * Stop the music from playing
-     */
-    public void stop() {
-        this.clip.stop();
+    public byte[] getBytes() {
+        return Arrays.copyOf(this.bytes, this.bytes.length);
     }
 
-    /**
-     * Change the volume of all the music
-     *
-     * @param musicVolume how much it needs to change
-     */
-    public void changeVolume(final float musicVolume) {
-        final float startingDecibel = 80F;
-        FloatControl volume = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(startingDecibel * (float) Math.log10(musicVolume));
-    }
 }

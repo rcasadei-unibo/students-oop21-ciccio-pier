@@ -50,7 +50,7 @@ public final class JumpBoost extends SimpleItem implements Boost {
     @Override
     public void onPickup(final long ticks) {
         if (!this.active) {
-            AudioController.getAudioController().playSound(Sound.ITEM);
+            AudioController.getInstance().playSound(Sound.ITEM);
             //activate the boost
             this.active = true;
             this.startOfBoost = ticks;

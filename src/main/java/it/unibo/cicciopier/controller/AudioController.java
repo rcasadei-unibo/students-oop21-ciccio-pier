@@ -2,23 +2,33 @@ package it.unibo.cicciopier.controller;
 
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.Music;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.sound.sampled.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 /**
  * Singleton class for controlling the audio system
  */
 public class AudioController {
-    private static AudioController audioController = null;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AudioController.class);
+    private static final AudioController INSTANCE = new AudioController();
     private static final float STARTING_VOLUME = 0.5F;
 
     private float musicVolume;
     private float soundVolume;
+    private Clip musicClip;
+    private boolean enabled;
 
     /**
      * Private Constructor for this class, so only one instance of this class can be created
      */
     private AudioController() {
-        this.musicVolume = AudioController.STARTING_VOLUME;
-        this.soundVolume = AudioController.STARTING_VOLUME;
+        this.musicVolume = STARTING_VOLUME;
+        this.soundVolume = STARTING_VOLUME;
+        this.enabled = true;
     }
 
     /**
@@ -26,11 +36,36 @@ public class AudioController {
      *
      * @return audioController
      */
-    public static AudioController getAudioController() {
-        if (audioController == null) {
-            AudioController.audioController = new AudioController();
+    public static AudioController getInstance() {
+        return AudioController.INSTANCE;
+    }
+
+    /**
+     * Load audio clip used for playing music
+     */
+    public void load() {
+        try {
+            this.musicClip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            LOGGER.error("Fatal error loading AudioController!", e);
+            this.enabled = false;
         }
-        return AudioController.audioController;
+        // load all the sounds
+        for (final Sound sound : Sound.values()) {
+            try {
+                sound.load();
+            } catch (NullPointerException | IOException e) {
+                LOGGER.error("Error loading sound {}", sound, e);
+            }
+        }
+        // load all the musics
+        for (final Music music : Music.values()) {
+            try {
+                music.load();
+            } catch (NullPointerException | IOException e) {
+                LOGGER.error("Error loading music {}", music, e);
+            }
+        }
     }
 
     /**
@@ -49,37 +84,9 @@ public class AudioController {
      */
     public void setMusicVolume(final float musicVolume) {
         this.musicVolume = musicVolume;
-        for (Music music : Music.values()) {
-            music.changeVolume(musicVolume);
+        if (this.enabled && this.musicClip.isOpen()) {
+            this.setClipVolume(this.musicClip, this.musicVolume);
         }
-    }
-
-    /**
-     * Play the music in loop
-     *
-     * @param music what music must play
-     */
-    public void playMusic(final Music music) {
-        music.play(this.musicVolume);
-
-    }
-
-    /**
-     * Stop the music from loop
-     *
-     * @param music what music must stop
-     */
-    public void stopMusic(final Music music) {
-        music.stop();
-    }
-
-    /**
-     * Play the sound
-     *
-     * @param sound what sound must  play
-     */
-    public void playSound(final Sound sound) {
-        sound.playSound(this.soundVolume);
     }
 
     /**
@@ -98,6 +105,77 @@ public class AudioController {
      */
     public void setSoundVolume(final float soundVolume) {
         this.soundVolume = soundVolume;
+    }
+
+    /**
+     * Set volume of a given clip
+     *
+     * @param clip   the clip
+     * @param volume the volume
+     */
+    private void setClipVolume(final Clip clip, final float volume) {
+        FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        control.setValue(20F * (float) Math.log10(volume));
+    }
+
+    /**
+     * Play the music in loop
+     *
+     * @param music what music must play
+     */
+    public void playMusic(final Music music) {
+        if (!this.enabled) {
+            return;
+        }
+        if (this.musicClip.isOpen()) {
+            this.stopMusic();
+        }
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(music.getBytes());
+             AudioInputStream ais = AudioSystem.getAudioInputStream(bis)) {
+            this.musicClip.open(ais);
+            this.setClipVolume(this.musicClip, this.musicVolume);
+            this.musicClip.setFramePosition(0);
+            this.musicClip.start();
+            this.musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+            LOGGER.error("Error playing music!", e);
+        }
+    }
+
+    /**
+     * Stop the music from loop
+     */
+    public void stopMusic() {
+        if (this.enabled && this.musicClip.isOpen()) {
+            this.musicClip.stop();
+            this.musicClip.close();
+        }
+    }
+
+    /**
+     * Play a sound until has finished
+     *
+     * @param sound sound
+     */
+    public void playSound(final Sound sound) {
+        if (!this.enabled) {
+            return;
+        }
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(sound.getBytes());
+             AudioInputStream ais = AudioSystem.getAudioInputStream(bis)) {
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
+            this.setClipVolume(clip, this.soundVolume);
+            clip.setFramePosition(0);
+            clip.start();
+            clip.addLineListener(e -> {
+                if (e.getType() == LineEvent.Type.STOP) {
+                    clip.close();
+                }
+            });
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+            LOGGER.error("Error playing sound!", e);
+        }
     }
 
 }

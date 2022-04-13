@@ -1,5 +1,7 @@
 package it.unibo.cicciopier.model.items;
 
+import it.unibo.cicciopier.controller.AudioController;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleEntity;
@@ -29,6 +31,7 @@ public class Coin extends SimpleEntity {
     @Override
     public void tick(final long ticks) {
         if (this.checkCollision(this.getWorld().getPlayer())) {
+            AudioController.getInstance().playSound(Sound.COIN);
             //remove the coin
             this.remove();
             this.getWorld().getPlayer().addCoin();

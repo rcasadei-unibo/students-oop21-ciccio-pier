@@ -44,8 +44,8 @@ public class SettingsView extends JPanel {
 
         this.developerMode.setSize(new Dimension(32,32));
 
-        this.gameAudio = new JLabel(Math.round(AudioController.getAudioController().getSoundVolume() * 100) + "%");
-        this.musicAudio = new JLabel(Math.round(AudioController.getAudioController().getMusicVolume() * 100) + "%");
+        this.gameAudio = new JLabel(Math.round(AudioController.getInstance().getSoundVolume() * 100) + "%");
+        this.musicAudio = new JLabel(Math.round(AudioController.getInstance().getMusicVolume() * 100) + "%");
         Font font = gameAudio.getFont().deriveFont(Font.BOLD, 25);
         gameAudio.setFont(font);
         musicAudio.setFont(font);
@@ -91,12 +91,12 @@ public class SettingsView extends JPanel {
     }
 
     public void updateGameAudioText() {
-        this.gameAudio.setText(Math.round(AudioController.getAudioController().getSoundVolume() * 100) + "%");
+        this.gameAudio.setText(Math.round(AudioController.getInstance().getSoundVolume() * 100) + "%");
         this.gameAudio.repaint();
     }
 
     public void updateMusicAudioText() {
-        this.musicAudio.setText(Math.round(AudioController.getAudioController().getMusicVolume() * 100) + "%");
+        this.musicAudio.setText(Math.round(AudioController.getInstance().getMusicVolume() * 100) + "%");
         this.musicAudio.repaint();
     }
 

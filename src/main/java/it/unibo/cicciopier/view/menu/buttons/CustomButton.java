@@ -77,7 +77,7 @@ public abstract class CustomButton extends JComponent implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        AudioController.getAudioController().playSound(Sound.MAIN_BUTTON);
+        AudioController.getInstance().playSound(Sound.MAIN_BUTTON);
         this.buttonStatus = 1;
         this.repaint();
     }
@@ -103,7 +103,7 @@ public abstract class CustomButton extends JComponent implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         if (this.button.hasHover()) {
-            AudioController.getAudioController().playSound(Sound.HOVER_BUTTON);
+            AudioController.getInstance().playSound(Sound.HOVER_BUTTON);
             this.buttonStatus = 2;
             this.repaint();
         }
