@@ -26,7 +26,7 @@ public class Chicken extends SimpleItem {
      * {@inheritDoc}
      */
     @Override
-    public void onPickup() {
+    public void onPickup(final long ticks) {
         this.remove();
         this.getWorld().getPlayer().addScore(SCORE);
         this.getWorld().getPlayer().addStamina(STAMINA);

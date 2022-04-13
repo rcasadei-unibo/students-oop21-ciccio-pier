@@ -5,21 +5,21 @@ import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
-import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.items.JumpBoostView;
+import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.items.SimpleItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Create a coin object
+ * Create a jump boost
  */
-public final class JumpBoost extends SimpleEntity {
+public final class JumpBoost extends SimpleItem implements Boost {
     private static final Logger LOGGER = LoggerFactory.getLogger(JumpBoost.class);
-    private final ItemEnum jumpBoost;
-    private JumpBoostView jumpBoostView;
-    private boolean isActive;
-    private int duration = 10 * GameLoop.TPS;
+    private static final int DURATION = 10 * GameLoop.TPS;
+    private static final int BOOST_STRENGTH = 5;
+    private boolean active;
+    private long startOfBoost;
 
     /**
      * Constructor for this class
@@ -27,10 +27,8 @@ public final class JumpBoost extends SimpleEntity {
      * @param world The game's world
      */
     public JumpBoost(final World world) {
-        super(EntityType.JUMP_BOOST, world);
-        this.jumpBoost = ItemEnum.JUMP_BOOST;
-        this.jumpBoostView = new JumpBoostView(this);
-        this.isActive = false;
+        super(EntityType.JUMP_BOOST, world, Texture.JUMP_BOOST);
+        this.active = false;
     }
 
     /**
@@ -38,23 +36,10 @@ public final class JumpBoost extends SimpleEntity {
      */
     @Override
     public void tick(final long ticks) {
-
-        if (this.checkCollision(this.getWorld().getPlayer()) && !this.isActive) {
-            AudioController.getAudioController().playSound(Sound.ITEM);
-            //remove the boost view
-            this.jumpBoostView = null;
-            //activate the boost
-            this.isActive = true;
-            this.getWorld().getPlayer().setJumpModifier(jumpBoost.getBoost());
-            LOGGER.info("Jump Boost Activated");
-
-        }
-        if(this.isActive){
-            this.duration--;
-        }
-        if (duration == 0){
-            this.getWorld().getPlayer().setJumpModifier(-jumpBoost.getBoost());
-            LOGGER.info("End of the boost");
+        super.tick(ticks);
+        if (ticks - this.startOfBoost >= JumpBoost.DURATION) {
+            this.getWorld().getPlayer().setJumpModifier(-JumpBoost.BOOST_STRENGTH);
+            LOGGER.info("End of jump boost");
             this.remove();
         }
     }
@@ -63,8 +48,33 @@ public final class JumpBoost extends SimpleEntity {
      * {@inheritDoc}
      */
     @Override
-    public GameObjectView getView() {
-        return this.jumpBoostView;
+    public void onPickup(final long ticks) {
+        if (!this.active) {
+            AudioController.getAudioController().playSound(Sound.ITEM);
+            //activate the boost
+            this.active = true;
+            this.startOfBoost = ticks;
+            this.getWorld().getPlayer().setJumpModifier(JumpBoost.BOOST_STRENGTH);
+            LOGGER.info("Jump boost Activated");
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isActive() {
+        return this.active;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObjectView getView() {
+        if(this.isActive()) {
+            return null;
+        }
+        return super.getView();
+    }
 }

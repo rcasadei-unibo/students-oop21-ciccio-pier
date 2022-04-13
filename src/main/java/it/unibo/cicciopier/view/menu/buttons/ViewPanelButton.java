@@ -1,7 +1,7 @@
 package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
-import it.unibo.cicciopier.view.menu.ViewPanels;
+import it.unibo.cicciopier.controller.menu.ViewPanels;
 
 /**
  * Define a button implementation with his {@link ViewPanels}

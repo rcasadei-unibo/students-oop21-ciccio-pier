@@ -1,6 +1,8 @@
 package it.unibo.cicciopier.view.menu;
 
+import it.unibo.cicciopier.controller.menu.DeveloperMode;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.ViewPanels;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.view.StaticView;
 import org.slf4j.Logger;
@@ -42,7 +44,7 @@ public class MenuManagerView extends JFrame implements StaticView {
         switch (viewPanels) {
             case LEVEL_SELECTION: {
                 LOGGER.info("Developer mode is: " + this.settingsView.getDeveloperMode());
-                MainMenuController.setDeveloperMode(this.settingsView.getDeveloperMode());
+                DeveloperMode.setActive(this.settingsView.getDeveloperMode());
                 levelSelectionView.updateLoggedUser();
                 this.getContentPane().add(levelSelectionView);
                 levelSelectionView.repaint();

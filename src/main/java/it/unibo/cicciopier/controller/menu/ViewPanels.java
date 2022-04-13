@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.view.menu;
+package it.unibo.cicciopier.controller.menu;
 
 public enum ViewPanels {
     LEVEL_SELECTION,

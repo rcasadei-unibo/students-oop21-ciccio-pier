@@ -5,21 +5,21 @@ import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
-import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.items.SpeedBoostView;
+import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.items.SimpleItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Create a coin object
+ * Create a speed boost
  */
-public final class SpeedBoost extends SimpleEntity {
+public final class SpeedBoost extends SimpleItem implements Boost {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeedBoost.class);
-    private final ItemEnum speedBoost;
-    private SpeedBoostView speedBoostView;
-    private boolean isActive;
-    private int duration = 10 * GameLoop.TPS;
+    private static final int DURATION = 10 * GameLoop.TPS;
+    private static final int BOOST_STRENGTH = 4;
+    private boolean active;
+    private long startOfBoost;
 
     /**
      * Constructor for this class
@@ -27,10 +27,8 @@ public final class SpeedBoost extends SimpleEntity {
      * @param world The game's world
      */
     public SpeedBoost(final World world) {
-        super(EntityType.SPEED_BOOST, world);
-        this.speedBoost = ItemEnum.SPEED_BOOST;
-        this.speedBoostView = new SpeedBoostView(this);
-        this.isActive = false;
+        super(EntityType.SPEED_BOOST, world, Texture.SPEED_BOOST);
+        this.active = false;
     }
 
     /**
@@ -38,22 +36,9 @@ public final class SpeedBoost extends SimpleEntity {
      */
     @Override
     public void tick(final long ticks) {
-
-        if (this.checkCollision(this.getWorld().getPlayer()) && !this.isActive) {
-            AudioController.getAudioController().playSound(Sound.ITEM);
-            //remove the boost view
-            this.speedBoostView = null;
-            //activate the boost
-            this.isActive = true;
-            this.getWorld().getPlayer().setSpeedModifier(speedBoost.getBoost());
-            LOGGER.info("Speed Boost Activated");
-
-        }
-        if(this.isActive){
-            this.duration--;
-        }
-        if (duration == 0){
-            this.getWorld().getPlayer().setSpeedModifier(-speedBoost.getBoost());
+        super.tick(ticks);
+        if (ticks - this.startOfBoost >= SpeedBoost.DURATION) {
+            this.getWorld().getPlayer().setSpeedModifier(-SpeedBoost.BOOST_STRENGTH);
             LOGGER.info("End of the speed boost");
             this.remove();
         }
@@ -63,8 +48,33 @@ public final class SpeedBoost extends SimpleEntity {
      * {@inheritDoc}
      */
     @Override
-    public GameObjectView getView() {
-        return this.speedBoostView;
+    public void onPickup(final long ticks) {
+        if (!this.active) {
+            AudioController.getAudioController().playSound(Sound.ITEM);
+            //activate the boost
+            this.active = true;
+            this.startOfBoost = ticks;
+            this.getWorld().getPlayer().setSpeedModifier(SpeedBoost.BOOST_STRENGTH);
+            LOGGER.info("Speed oost Activated");
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isActive() {
+        return this.active;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObjectView getView() {
+        if(this.isActive()) {
+            return null;
+        }
+        return super.getView();
+    }
 }

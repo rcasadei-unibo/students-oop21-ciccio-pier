@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.ViewPanels;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.User;
 import it.unibo.cicciopier.view.Texture;
@@ -103,10 +104,10 @@ public class LeaderboardView extends JPanel {
         panel.setBounds(listX, listY, panel.getPreferredSize().width, panel.getPreferredSize().height);
         home.setBounds(homeWidthOffset, settingsHeightOffset, sizeSettings.width, sizeSettings.height);
         this.loggedUser.setBounds(homeWidthOffset, settingsHeightOffset + sizeSettings.height + 10, 300, 30);
-        level1.setBounds(buttonsStart, listY + panel.getPreferredSize().height+10, level1.getPreferredSize().width, level1.getPreferredSize().height);
-        level2.setBounds(buttonsStart + level1.getPreferredSize().width + 20, listY + panel.getPreferredSize().height+10, level2.getPreferredSize().width, level2.getPreferredSize().height);
-        level3.setBounds(buttonsStart + level1.getPreferredSize().width * 2 + 40, listY + panel.getPreferredSize().height+10, level3.getPreferredSize().width, level3.getPreferredSize().height);
-        level4.setBounds(buttonsStart + level1.getPreferredSize().width * 3 + 60, listY + panel.getPreferredSize().height+10, level4.getPreferredSize().width, level4.getPreferredSize().height);
+        level1.setBounds(buttonsStart, listY + panel.getPreferredSize().height + 10, level1.getPreferredSize().width, level1.getPreferredSize().height);
+        level2.setBounds(buttonsStart + level1.getPreferredSize().width + 20, listY + panel.getPreferredSize().height + 10, level2.getPreferredSize().width, level2.getPreferredSize().height);
+        level3.setBounds(buttonsStart + level1.getPreferredSize().width * 2 + 40, listY + panel.getPreferredSize().height + 10, level3.getPreferredSize().width, level3.getPreferredSize().height);
+        level4.setBounds(buttonsStart + level1.getPreferredSize().width * 3 + 60, listY + panel.getPreferredSize().height + 10, level4.getPreferredSize().width, level4.getPreferredSize().height);
 
 
     }
@@ -132,7 +133,7 @@ public class LeaderboardView extends JPanel {
         this.jList.removeAll();
         this.jList.setModel(this.test);
         this.jList.setCellRenderer(new TransparentListCellRenderer(level));
-        LOGGER.info("Loading leaderboard from: "+level.getName());
+        LOGGER.info("Loading leaderboard from: " + level.getName());
 
     }
 }

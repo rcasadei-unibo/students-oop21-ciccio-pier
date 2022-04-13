@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.view.menu.buttons;
 
+import it.unibo.cicciopier.controller.menu.DeveloperMode;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.model.Level;
 
@@ -29,7 +30,8 @@ public class PlayLevelButton extends ControllerButton {
      */
     @Override
     protected void buttonAction() {
-        if (MainMenuController.isDeveloperModeOn() || this.level.getPrevLevel().isEmpty() || this.getMainMenuController().getPlayer().getLevelScore(this.level.getPrevLevel().get().getJsonId()) != -1) {
+        if (DeveloperMode.isActive() || this.level.getPrevLevel().isEmpty() || this.getMainMenuController().getPlayer()
+                .getLevelScore(this.level.getPrevLevel().get().getJsonId()) != -1) {
             this.getMainMenuController().startLevel(this.level);
         }
     }
@@ -40,7 +42,8 @@ public class PlayLevelButton extends ControllerButton {
     @Override
     public void paintComponent(Graphics g) {
         this.level.getPrevLevel().ifPresent(l -> {
-            if (!MainMenuController.isDeveloperModeOn() && this.getMainMenuController().getPlayer().getLevelScore(l.getJsonId()) == -1) {
+            if (!DeveloperMode.isActive() && this.getMainMenuController().getPlayer()
+                    .getLevelScore(l.getJsonId()) == -1) {
                 this.setButtonStatus(1);
             }
         });

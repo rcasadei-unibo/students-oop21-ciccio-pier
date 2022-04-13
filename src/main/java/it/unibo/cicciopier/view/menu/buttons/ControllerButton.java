@@ -21,9 +21,9 @@ public abstract class ControllerButton extends CustomButton {
     }
 
     /**
-     * Returns the instance of the controller
+     * Returns the instance of the controller used by this button
      *
-     * @return the controller
+     * @return the instance of the controller
      */
     public MainMenuController getMainMenuController() {
         return this.mainMenuController;

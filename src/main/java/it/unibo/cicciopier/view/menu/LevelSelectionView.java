@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.ViewPanels;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.buttons.Buttons;

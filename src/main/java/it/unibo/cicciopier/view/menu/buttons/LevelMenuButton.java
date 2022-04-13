@@ -22,6 +22,9 @@ public class LevelMenuButton extends CustomButton {
         this.engine = engine;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void buttonAction() {
         this.engine.action(this.action);

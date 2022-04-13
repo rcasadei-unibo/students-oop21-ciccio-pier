@@ -8,7 +8,7 @@ import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 
 public abstract class SimpleItem extends SimpleEntity implements Item {
-    private final StaticItemView view;
+    private final GameObjectView view;
 
     /**
      * Constructor for this class
@@ -35,7 +35,7 @@ public abstract class SimpleItem extends SimpleEntity implements Item {
     public void tick(final long ticks) {
         //check if item collides with the player
         if (this.checkCollision(this.getWorld().getPlayer())) {
-            this.onPickup();
+            this.onPickup(ticks);
         }
     }
 
