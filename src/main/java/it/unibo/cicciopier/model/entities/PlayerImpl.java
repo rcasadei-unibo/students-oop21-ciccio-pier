@@ -145,7 +145,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public void attackNearest() {
         //if the player is not in the ground, then it cannot attack
-        if (!this.isGround()) {
+        if (this.getCurrentState() == EntityState.JUMPING) {
             return;
         }
         if (this.attackCooldownTicks == ATTACK_COOLDOWN) {

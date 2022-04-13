@@ -3,16 +3,15 @@ package it.unibo.cicciopier.model.entities;
 import java.util.Objects;
 
 public class EntityState {
-    public static final EntityState IDLE = new EntityState(0);
-    public static final EntityState RUNNING = new EntityState(1);
-    public static final EntityState JUMPING = new EntityState(2);
-    public static final EntityState ATTACKING = new EntityState(3);
-    public static final EntityState DAMAGED = new EntityState(4);
-    public static final EntityState DEAD = new EntityState(5);
+    public static final EntityState IDLE = new EntityState("idle");
+    public static final EntityState RUNNING = new EntityState("running");
+    public static final EntityState JUMPING = new EntityState("jumping");
+    public static final EntityState ATTACKING = new EntityState("attacking");
+    public static final EntityState DEAD = new EntityState("dead");
 
-    private final int id;
+    private final String id;
 
-    public EntityState(final int id) {
+    public EntityState(final String id) {
         this.id = id;
     }
 
@@ -21,7 +20,7 @@ public class EntityState {
      *
      * @return id
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -37,7 +36,7 @@ public class EntityState {
             return false;
         }
         EntityState that = (EntityState) o;
-        return this.getId() == that.getId();
+        return this.getId().equals(that.getId());
     }
 
     /**
@@ -50,6 +49,6 @@ public class EntityState {
 
     @Override
     public String toString() {
-        return "State " + id;
+        return this.id;
     }
 }

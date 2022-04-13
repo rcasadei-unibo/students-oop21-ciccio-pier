@@ -22,7 +22,6 @@ public class PlayerView extends SimpleLivingEntityView {
             put(EntityState.RUNNING, new Animation(Texture.PLAYER, 7, 6, new Pair<>(w * 9, 0), w, h));
             put(EntityState.JUMPING, new Animation(Texture.PLAYER, 1, 6, new Pair<>(w * 2, 0), w, h));
             put(EntityState.ATTACKING, new Animation(Texture.PLAYER, 3, 6, new Pair<>(w * 3, 0), w, h));
-            put(EntityState.DAMAGED, new Animation(Texture.PLAYER, 1, 6, new Pair<>(w, 0), w, h));
             put(EntityState.DEAD, new Animation(Texture.PLAYER, 1, 6, new Pair<>(0, 0), w, h));
         }
     };
