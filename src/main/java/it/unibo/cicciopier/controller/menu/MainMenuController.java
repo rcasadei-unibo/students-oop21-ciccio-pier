@@ -109,7 +109,7 @@ public final class MainMenuController implements MenuController {
                 quitAction();
             }
             case LOGIN: {
-                if (!menu.getLoginView().getUsername().isBlank()) {
+                if (!menu.getLoginView().getUsername().isBlank() && menu.getLoginView().getUsername().length() < 15 ) {
                     this.username = menu.getLoginView().getUsername().toLowerCase().trim();
                     this.player = this.users.stream().filter(user -> user.getUsername().equals(this.username)).findFirst().orElseGet(this::createUser);
 
@@ -169,9 +169,10 @@ public final class MainMenuController implements MenuController {
 
         try {
             this.menu.setVisible(false);
-            AudioController.getInstance().playMusic(Music.GAME);
             GameEngine gameEngine = new GameEngine(this, level);
             gameEngine.load();
+            AudioController.getInstance().stopMusic();
+            gameEngine.getMusic().ifPresent(m -> AudioController.getInstance().playMusic(m));
             gameEngine.start();
         } catch (Exception e) {
             LOGGER.error("Error starting game...", e);

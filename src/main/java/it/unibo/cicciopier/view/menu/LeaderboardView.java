@@ -101,7 +101,7 @@ public class LeaderboardView extends JPanel {
 
         final int homeWidthOffset = size.width / 25;
         final int settingsWidthOffset = size.width - settings.getPreferredSize().width - homeWidthOffset;
-        final int listX = size.width / 2 - panel.getPreferredSize().width;
+        final int listX = size.width / 2 - panel.getPreferredSize().width / 2;
         final int listY = size.height / 2;
         final int buttonsStart = size.width / 2 - level1.getPreferredSize().width * 2 - size.width / 50;
         final int levelButtonHeightOffset = size.height / 80;
@@ -158,10 +158,9 @@ public class LeaderboardView extends JPanel {
      * This function update the current logged user username in the text area
      */
     public void updateLoggedUser() {
-
+        this.loggedUser.setText(("Logged user: " + mainMenuController.getUsername()));
         this.loggedUser.setBounds(loggedUser.getBounds().x, loggedUser.getBounds().y,
                 this.loggedUser.getPreferredSize().width, this.loggedUser.getPreferredSize().height);
-        this.loggedUser.setText(("Logged user: " + mainMenuController.getUsername()));
     }
 
     /**
