@@ -20,6 +20,14 @@ public enum Sound {
      */
     EXPLOSION("/audios/explosion.wav"),
     /**
+     * Represents the audio for the laser
+     */
+    LASER("/audios/laser.wav"),
+    /**
+     * Represents the audio for the meteor
+     */
+    METEOR("/audios/meteor.wav"),
+    /**
      * Represents the audio when the missile get launched
      */
     LAUNCH("/audios/launch.wav"),
@@ -42,7 +50,11 @@ public enum Sound {
     /**
      * Represents the audio for the click in side buttons
      */
-    SIDE_BUTTON("/audios/menu/sideButton.wav");
+    SIDE_BUTTON("/audios/menu/sideButton.wav"),
+    /**
+     * Represents the audio for the typing
+     */
+    TYPING("/audios/menu/typing.wav");
 
     private final String fileName;
     private byte[] bytes;
@@ -70,10 +82,20 @@ public enum Sound {
         this.bytes = is.readAllBytes();
     }
 
+    /**
+     * Get the sound file name
+     *
+     * @return file name
+     */
     public String getFileName() {
         return this.fileName;
     }
 
+    /**
+     * Get the byte code of the audio
+     *
+     * @return byte array
+     */
     public byte[] getBytes() {
         return Arrays.copyOf(this.bytes, this.bytes.length);
     }

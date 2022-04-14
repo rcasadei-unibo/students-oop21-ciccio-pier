@@ -1,6 +1,8 @@
 package it.unibo.cicciopier.model.entities.enemies.boss;
 
+import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameLoop;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.EntityState;
@@ -25,8 +27,10 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
     private static final int IDLE_DURATION = GameLoop.TPS;
     private static final int MISSILE_DURATION = 4 * GameLoop.TPS;
     private static final int METEOR_DURATION = 5 * GameLoop.TPS;
-    private static final int LASER_DURATION = 5 * GameLoop.TPS;
+    private static final int LASER_DURATION = 11 * GameLoop.TPS;
+    private static final int LASER_LOADING_DURATION = 3 * GameLoop.TPS;
     private static final int SEEK_WAITING = 3 * GameLoop.TPS;
+    private static final int SEEK_MAX_WAITING = 13 * GameLoop.TPS;
 
     private final BroccoliView broccoliView;
     private long start;
@@ -68,6 +72,13 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
         if (ticks - this.start <= SEEK_WAITING) {
             return;
         }
+        //if seeking take too long go to missile state
+        if (ticks - this.start >= SEEK_MAX_WAITING) {
+            this.resetCurrentState(BossState.IDLE);
+            this.start = ticks;
+            this.setCurrentState(BossState.MISSILE_LAUNCHER);
+            return;
+        }
         Vector2d desire = getPos().directionVector(getWorld().getPlayer().getPos());
         desire.setY(0);
         double distance = 0;
@@ -94,10 +105,10 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
             final int randNum = (int) (Math.random() * NUM_OF_ATTACKS);
             switch (randNum) {
                 case 0:
-                    this.setCurrentState(BossState.METEOR_SHOWER);
+                    this.setCurrentState(BossState.LASER);
                     break;
                 case 1:
-                    this.setCurrentState(BossState.LASER);
+                    this.setCurrentState(BossState.METEOR_SHOWER);
                     break;
                 default:
                     this.setCurrentState(BossState.MISSILE_LAUNCHER);
@@ -132,6 +143,9 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
      */
     private void meteorShower(final long ticks) {
         getVel().setX(0);
+        if (ticks - this.start == 1) {
+            AudioController.getInstance().playSound(Sound.METEOR);
+        }
         if ((ticks - this.start) % 50 == 0) {
             for (int i = 0; i < MAX_NUM_METEORS; i++) {
                 //meteor starting x position
@@ -168,8 +182,15 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
      */
     private void laserAttack(final long ticks) {
         getVel().setX(0);
-        //create only one time
         if (ticks - this.start == 1) {
+            AudioController.getInstance().playSound(Sound.LASER);
+        }
+        //wait before launching laser
+        if (ticks - this.start < LASER_LOADING_DURATION) {
+            return;
+        }
+        //create only one time
+        if (ticks - this.start == LASER_LOADING_DURATION) {
             final int startingOffset = 5;
             //create a laser
             Optional<Entity> opt = getWorld().getEntityFactory().createEntity(EntityType.LASER);

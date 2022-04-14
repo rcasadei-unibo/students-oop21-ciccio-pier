@@ -14,8 +14,8 @@ import java.awt.geom.Line2D;
  * Create a simple laser attack
  */
 public class Laser extends SimpleMovingEntity {
-    private static final int MAX_DISTANCE = 400;
-    private static final int MAX_SPEED = 2;
+    private static final int MAX_DISTANCE = 1500;
+    private static final int MAX_SPEED = 4;
 
     private Vector2d startLine;
     private int currentDistance;
@@ -69,10 +69,10 @@ public class Laser extends SimpleMovingEntity {
         }
         Block block = getWorld().getBlock(x, y - 1);
         Line2D line2D = new Line2D.Double(
-                this.getPos().getDoubleX(),
-                this.getPos().getDoubleY(),
-                this.getPos().getDoubleX(),
-                this.getPos().getDoubleY()
+                this.getStartLine().getDoubleX(),
+                this.getStartLine().getDoubleY(),
+                this.getEndLine().getDoubleX(),
+                this.getEndLine().getDoubleY()
         );
         //damage the player if the line intersects with the player
         if (line2D.intersects(this.getWorld().getPlayer().getBounds())) {

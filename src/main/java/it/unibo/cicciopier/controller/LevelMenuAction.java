@@ -1,6 +1,6 @@
 package it.unibo.cicciopier.controller;
 
-import it.unibo.cicciopier.view.LevelView;
+import it.unibo.cicciopier.view.level.LevelView;
 
 /**
  * Represents an action executed pressing a button in the {@link LevelView}.

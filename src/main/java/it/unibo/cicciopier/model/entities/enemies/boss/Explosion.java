@@ -1,5 +1,7 @@
 package it.unibo.cicciopier.model.entities.enemies.boss;
 
+import it.unibo.cicciopier.controller.AudioController;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleEntity;
@@ -23,6 +25,7 @@ public class Explosion extends SimpleEntity {
         super(EntityType.EXPLOSION, world);
         this.explosionView = new ExplosionView(this);
         this.start = -1;
+        AudioController.getInstance().playSound(Sound.EXPLOSION);
     }
 
     /**
@@ -38,7 +41,7 @@ public class Explosion extends SimpleEntity {
      */
     @Override
     public void tick(final long ticks) {
-        if(this.start == -1) {
+        if (this.start == -1) {
             this.start = ticks;
         }
         if (ticks - this.start >= DURATION) {

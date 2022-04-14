@@ -2,6 +2,7 @@ package it.unibo.cicciopier.view.menu.buttons;
 
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.model.Sound;
+import it.unibo.cicciopier.model.settings.Screen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +38,12 @@ public abstract class CustomButton extends JComponent implements MouseListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(button.getTextures()[buttonStatus], 0, 0, null);
+        g.drawImage(this.button.getTextures()[this.buttonStatus],
+                0,
+                0,
+                (int) (this.button.getTextures()[this.buttonStatus].getWidth() * Screen.getScale()),
+                (int) (this.button.getTextures()[this.buttonStatus].getHeight() * Screen.getScale()),
+                null);
     }
 
     /**
@@ -45,7 +51,7 @@ public abstract class CustomButton extends JComponent implements MouseListener {
      */
     @Override
     public Dimension getPreferredSize() {
-        return dimension;
+        return new Dimension((int) (this.dimension.width * Screen.getScale()), (int) (this.dimension.height * Screen.getScale()));
     }
 
     /**

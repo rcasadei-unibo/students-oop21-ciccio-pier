@@ -11,11 +11,15 @@ import it.unibo.cicciopier.controller.GameState;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.model.User;
+import it.unibo.cicciopier.model.settings.CustomFont;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.menu.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -28,6 +32,7 @@ public final class MainMenuController implements MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainMenuController.class);
     private static final int MAX_VOLUME = 1;
     private static final int MIN_VOLUME = 0;
+    private final Timer timer;
     private final Gson gson;
     private final MenuManagerView menu;
     private final File usersFile;
@@ -46,17 +51,25 @@ public final class MainMenuController implements MenuController {
         this.gson = new Gson().newBuilder().serializeNulls().create();
         this.users = new ArrayList<>();
         try {
-            this.jarFolder = new File(MainMenuController.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            this.jarFolder = new File(MainMenuController.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
             LOGGER.info("JarPath : " + this.jarFolder.getPath());
         } catch (URISyntaxException e) {
-            e.printStackTrace();
             LOGGER.error("Jar folder not found!!!", e);
             System.exit(1);
         }
-        this.usersFile = new File(jarFolder,"users.json");
+        this.usersFile = new File(jarFolder, "users.json");
         this.loadUsers();
+        try {
+            LOGGER.info("Loading font...");
+            CustomFont.getInstance().load();
+            LOGGER.info("Font loaded successfully");
+        } catch (IOException | FontFormatException e) {
+            LOGGER.error("Error loading font!", e);
+        }
         this.menu = new MenuManagerView(this);
         this.show(ViewPanels.LOGIN);
+        this.timer = new Timer(1000 / 60, e -> menu.updateAnimations());
+        this.timer.start();
     }
 
     /**
@@ -109,12 +122,15 @@ public final class MainMenuController implements MenuController {
                 quitAction();
             }
             case LOGIN: {
-                if (!menu.getLoginView().getUsername().isBlank()) {
+                if (!menu.getLoginView().getUsername().isBlank() && menu.getLoginView().getUsername().length() < 15) {
                     this.username = menu.getLoginView().getUsername().toLowerCase().trim();
                     this.player = this.users.stream().filter(user -> user.getUsername().equals(this.username)).findFirst().orElseGet(this::createUser);
 
                     MainMenuController.LOGGER.info("User logged in: " + this.player.getUsername());
 
+                    menu.getSettingsView().getList().setSelectedValue(player.getResolution(),true);
+                    LOGGER.info("" + player.getResolution());
+                    Screen.setCurrentDimension(player.getResolution());
                     AudioController.getInstance().setSoundVolume((float) this.player.getSoundVolume() / 100);
                     this.menu.getSettingsView().updateGameAudioText();
                     AudioController.getInstance().setMusicVolume((float) this.player.getMusicVolume() / 100);
@@ -127,10 +143,19 @@ public final class MainMenuController implements MenuController {
             case LOGOUT: {
                 MainMenuController.LOGGER.info("Logging out...");
                 this.username = null;
-                this.player = null;
                 this.menu.getLoginView().logout();
+                AudioController.getInstance().setMusicVolume(0.5F);
+                AudioController.getInstance().setSoundVolume(0.5F);
+                Screen.setCurrentDimension(Screen.getScreenMaxSize());
                 this.show(ViewPanels.LOGIN);
-
+                this.player = null;
+                break;
+            }
+            case CHANGE_RESOLUTION: {
+                LOGGER.info("Setting screen size to " + this.menu.getSettingsView().getList().getSelectedValue());
+                Screen.setCurrentDimension(this.menu.getSettingsView().getList().getSelectedValue());
+                this.player.setResolution(this.menu.getSettingsView().getList().getSelectedValue());
+                this.updateUsers();
             }
         }
     }
@@ -169,9 +194,10 @@ public final class MainMenuController implements MenuController {
 
         try {
             this.menu.setVisible(false);
-            AudioController.getInstance().playMusic(Music.GAME);
             GameEngine gameEngine = new GameEngine(this, level);
             gameEngine.load();
+            AudioController.getInstance().stopMusic();
+            gameEngine.getMusic().ifPresent(m -> AudioController.getInstance().playMusic(m));
             gameEngine.start();
         } catch (Exception e) {
             LOGGER.error("Error starting game...", e);
@@ -181,12 +207,12 @@ public final class MainMenuController implements MenuController {
 
     /**
      * This function is called to load the users from the json file and update their levels if they are missing using
-     * {@link User#updatelevels()} called after any update to the users and after the creation of
+     * {@link User#updateLevels()} called after any update to the users and after the creation of
      * {@link MainMenuController}
      */
     private void loadUsers() {
         LOGGER.info("Loading users file...");
-        if(this.usersFile.getParentFile().mkdirs()){
+        if (this.usersFile.getParentFile().mkdirs()) {
             LOGGER.info("Generated dir path for users file");
         }
         boolean isCreated = false;
@@ -206,7 +232,7 @@ public final class MainMenuController implements MenuController {
             if (this.users == null) {
                 this.users = new ArrayList<>();
             }
-            this.users.forEach(User::updatelevels);
+            this.users.forEach(User::updateLevels);
         } else {
             LOGGER.info("Generated users file");
             this.users = new ArrayList<>();
@@ -265,7 +291,7 @@ public final class MainMenuController implements MenuController {
      * {@inheritDoc}
      */
     public List<User> getUsers() {
-        return users;
+        return new ArrayList<>(this.users);
     }
 
     /**

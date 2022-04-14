@@ -8,8 +8,18 @@ import java.util.Arrays;
  * Enum to store all the music files, and load them
  */
 public enum Music {
+    /**
+     * Music for the main menu
+     */
     BACKGROUND("/audios/menu.wav"),
-    GAME("/audios/game.wav");
+    /**
+     * Music for the normal game levels
+     */
+    GAME("/audios/game.wav"),
+    /**
+     * Music for the boss levels
+     */
+    BOSS("/audios/boss_music.wav");
 
     private final String fileName;
     private byte[] bytes;
@@ -37,10 +47,20 @@ public enum Music {
         this.bytes = is.readAllBytes();
     }
 
+    /**
+     * Get the sound file name
+     *
+     * @return file name
+     */
     public String getFileName() {
         return this.fileName;
     }
 
+    /**
+     * Get the byte code of the audio
+     *
+     * @return byte array
+     */
     public byte[] getBytes() {
         return Arrays.copyOf(this.bytes, this.bytes.length);
     }

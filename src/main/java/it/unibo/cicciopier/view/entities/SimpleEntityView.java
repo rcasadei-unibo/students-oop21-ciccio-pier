@@ -1,6 +1,6 @@
 package it.unibo.cicciopier.view.entities;
 
-import it.unibo.cicciopier.controller.menu.DeveloperMode;
+import it.unibo.cicciopier.model.settings.DeveloperMode;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 

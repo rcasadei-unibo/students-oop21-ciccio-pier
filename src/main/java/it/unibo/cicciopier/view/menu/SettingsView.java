@@ -1,126 +1,168 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.AudioController;
-import it.unibo.cicciopier.controller.menu.DeveloperMode;
+import it.unibo.cicciopier.model.Level;
+import it.unibo.cicciopier.model.settings.CustomFont;
+import it.unibo.cicciopier.model.settings.DeveloperMode;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.controller.menu.ViewPanels;
 import it.unibo.cicciopier.model.Sound;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.menu.buttons.Buttons;
-import it.unibo.cicciopier.view.menu.buttons.CustomButton;
-import it.unibo.cicciopier.view.menu.buttons.MenuActionButton;
-import it.unibo.cicciopier.view.menu.buttons.ViewPanelButton;
+import it.unibo.cicciopier.view.menu.buttons.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 
-public class SettingsView extends JPanel {
+public class SettingsView extends JPanel implements MenuPanel {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SettingsView.class);
     private final JLabel gameAudio;
     private final JLabel musicAudio;
     private final JLabel loggedUser;
     private final MainMenuController mainMenuController;
-    private final JCheckBox developerMode;
+    private final CustomCheckBox developerMode;
+    private final CustomButton home;
+    private final CustomButton plusSound;
+    private final CustomButton minusSound;
+    private final CustomButton plusMusic;
+    private final CustomButton minusMusic;
+    private final CustomButton logout;
+    private final DefaultListModel<Dimension> resolutionSettingListModel = new DefaultListModel<>();
+    private final JList<Dimension> jList;
+    private final JScrollPane jScrollPane;
+    private final JPanel panel;
 
     public SettingsView(MainMenuController mainMenuController) {
-
+        SettingsView.LOGGER.info("Initializing the class...");
         this.mainMenuController = mainMenuController;
-
         this.loggedUser = new JLabel("Logged user: " + mainMenuController.getUsername());
-
-        CustomButton home = new ViewPanelButton(mainMenuController, Buttons.HOME, ViewPanels.MAIN_MENU);
-
-        CustomButton plusSound = new MenuActionButton(mainMenuController, Buttons.PLUS_GAME_AUDIO, MenuAction.INCREASE_GAME_AUDIO);
-
-        CustomButton minusSound = new MenuActionButton(mainMenuController, Buttons.MINUS_GAME_AUDIO, MenuAction.DECREASE_GAME_AUDIO);
-
-        CustomButton plusMusic = new MenuActionButton(mainMenuController, Buttons.PLUS_MUSIC_AUDIO, MenuAction.INCREASE_MUSIC_AUDIO);
-
-        CustomButton minusMusic = new MenuActionButton(mainMenuController, Buttons.MINUS_MUSIC_AUDIO, MenuAction.DECREASE_MUSIC_AUDIO);
-
-        CustomButton logout = new MenuActionButton(mainMenuController, Buttons.LOGOUT, MenuAction.LOGOUT);
-
-        this.developerMode = new JCheckBox();
-
+        this.home = new ViewPanelButton(mainMenuController, Buttons.HOME, ViewPanels.MAIN_MENU);
+        this.plusSound = new MenuActionButton(mainMenuController, Buttons.PLUS_GAME_AUDIO, MenuAction.INCREASE_GAME_AUDIO);
+        this.minusSound = new MenuActionButton(mainMenuController, Buttons.MINUS_GAME_AUDIO, MenuAction.DECREASE_GAME_AUDIO);
+        this.plusMusic = new MenuActionButton(mainMenuController, Buttons.PLUS_MUSIC_AUDIO, MenuAction.INCREASE_MUSIC_AUDIO);
+        this.minusMusic = new MenuActionButton(mainMenuController, Buttons.MINUS_MUSIC_AUDIO, MenuAction.DECREASE_MUSIC_AUDIO);
+        this.panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        this.jList = new JList<>(this.resolutionSettingListModel);
+        this.jScrollPane = new JScrollPane(jList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.logout = new MenuActionButton(mainMenuController, Buttons.LOGOUT, MenuAction.LOGOUT);
+        this.developerMode = new CustomCheckBox(Texture.DEVELOPER_MODE_OFF.getTexture(),Texture.DEVELOPER_MODE_ON.getTexture());
         this.gameAudio = new JLabel(Math.round(AudioController.getInstance().getSoundVolume() * 100) + "%");
         this.musicAudio = new JLabel(Math.round(AudioController.getInstance().getMusicVolume() * 100) + "%");
-        Font font = gameAudio.getFont().deriveFont(Font.BOLD, 25);
-        this.gameAudio.setFont(font);
-        this.musicAudio.setFont(font);
-        this.gameAudio.setPreferredSize(new Dimension(70,60));
-        this.musicAudio.setPreferredSize(new Dimension(70,60));
 
-        this.loggedUser.setFont(loggedUser.getFont().deriveFont(Font.BOLD, 20));
-        this.loggedUser.setForeground(Color.WHITE);
+        this.load();
 
-        Dimension size = new Dimension(1536, 768);
-        this.setPreferredSize(size);
 
-        this.developerMode.setIcon(new ImageIcon(Texture.DEVELOPER_MODE_OFF.getTexture()));
-        this.developerMode.setSelectedIcon(new ImageIcon(Texture.DEVELOPER_MODE_ON.getTexture()));
-        this.developerMode.setOpaque(false);
-        this.developerMode.addItemListener(e -> {
-            DeveloperMode.setActive(developerMode.isSelected());
-            AudioController.getInstance().playSound(Sound.MAIN_BUTTON);
-        });
+    }
 
-        this.setLayout(null);
-        this.add(this.gameAudio);
-        this.add(this.musicAudio);
-        this.add(this.loggedUser);
-        this.add(this.developerMode);
-        this.add(home);
-        this.add(plusSound);
-        this.add(plusMusic);
-        this.add(minusSound);
-        this.add(minusMusic);
+    public void updateGameAudioText() {
+        this.gameAudio.setText(Math.round(AudioController.getInstance().getSoundVolume() * 100) + "%");
+        this.update();
+    }
 
-        this.add(logout);
+    public void updateMusicAudioText() {
+        this.musicAudio.setText(Math.round(AudioController.getInstance().getMusicVolume() * 100) + "%");
+        this.update();
+    }
 
-        final int audioWidthOffset = size.width / 2 - plusMusic.getPreferredSize().width;
-        final int audioHeightOffset = (int) (size.height / 2 - minusMusic.getPreferredSize().height + size.height / 15.36);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(Texture.SETTINGS_BACKGROUND.getTexture(), 0, 0, Screen.getCurrentDimension().width, Screen.getCurrentDimension().height, null);
 
-        final Pair<Integer> homePos = new Pair<>((int) (size.width / 25.6),
-                (int) (size.height / 38.4));
+    }
 
-        final Pair<Integer> loggedUserPos = new Pair<>(homePos.getX(),
-                (int) (homePos.getY() + home.getPreferredSize().height + size.height / 78.6));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateLoggedUser() {
+        this.loggedUser.setText(("Logged user: " + this.mainMenuController.getUsername()));
+        this.loggedUser.setBounds(this.loggedUser.getBounds().x, this.loggedUser.getBounds().y,
+                this.loggedUser.getPreferredSize().width, this.loggedUser.getPreferredSize().height);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateAnimations() {
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update() {
+        SettingsView.LOGGER.info("Updating the class...");
+        this.setPreferredSize(Screen.getCurrentDimension());
+
+        this.panel.setPreferredSize(new Dimension((int) (225 * Screen.getScale()), (int) (105 * Screen.getScale())));
+        this.jList.setFixedCellWidth(this.panel.getPreferredSize().width);
+        this.jScrollPane.setPreferredSize(new Dimension(this.panel.getPreferredSize().width,
+                this.panel.getPreferredSize().height));
+
+        this.jList.setFont(CustomFont.getInstance().getFontOrDefault());
+        this.gameAudio.setFont(CustomFont.getInstance().getFontOrDefault());
+        this.musicAudio.setFont(CustomFont.getInstance().getFontOrDefault());
+        this.loggedUser.setFont(CustomFont.getInstance().getFontOrDefault());
+        this.gameAudio.setPreferredSize(new Dimension((int) (70 * Screen.getScale()), (int) (60 * Screen.getScale())));
+        this.musicAudio.setPreferredSize(new Dimension((int) (70 * Screen.getScale()), (int) (60 * Screen.getScale())));
+        this.updateLoggedUser();
+        final int audioWidthOffset = this.getPreferredSize().width / 2 - plusMusic.getPreferredSize().width;
+        final int audioHeightOffset = (int) (this.getPreferredSize().height / 2 - minusMusic.getPreferredSize().height + this.getPreferredSize().height / 15.36);
+
+        final Pair<Integer> homePos = new Pair<>((int) (this.getPreferredSize().width / 25.6),
+                (int) (this.getPreferredSize().height / 38.4));
+
+        final Pair<Integer> loggedUserPos = new Pair<>(this.getPreferredSize().width / 25,
+                (int) (this.getPreferredSize().height / 1.01 - this.loggedUser.getPreferredSize().height));
 
         final Pair<Integer> plusSoundPos = new Pair<>(audioWidthOffset, audioHeightOffset);
 
-        final Pair<Integer> plusMusicPos = new Pair<>(audioWidthOffset, (int) (audioHeightOffset + size.height / 12.8));
+        final Pair<Integer> plusMusicPos = new Pair<>(audioWidthOffset, (int) (audioHeightOffset + this.getPreferredSize().height / 12.8));
 
-        final Pair<Integer> minusSoundPos = new Pair<>((int) (audioWidthOffset + size.width / 10.24), audioHeightOffset);
+        final Pair<Integer> minusSoundPos = new Pair<>((int) (audioWidthOffset + this.getPreferredSize().width / 10.24), audioHeightOffset);
 
-        final Pair<Integer> minusMusicPos = new Pair<>((int) (audioWidthOffset + size.width / 10.24),
-                (int) (audioHeightOffset + size.height / 12.8));
+        final Pair<Integer> minusMusicPos = new Pair<>((int) (audioWidthOffset + this.getPreferredSize().width / 10.24),
+                (int) (audioHeightOffset + this.getPreferredSize().height / 12.8));
 
-        final Pair<Integer> logoutPos = new Pair<>(size.width / 2 - logout.getPreferredSize().width / 2,
-                (int) (audioHeightOffset + size.height / 3.66));
+        final Pair<Integer> logoutPos = new Pair<>(this.getPreferredSize().width / 2 + logout.getPreferredSize().width,
+                (int) (audioHeightOffset + this.getPreferredSize().height / 3.66));
 
-        final Pair<Integer> gameAudioPos = new Pair<>((int) (plusSoundPos.getX() + (minusSoundPos.getX() - plusSoundPos.getX()) / 2 + plusSound.getPreferredSize().width - (musicAudio.getPreferredSize().width/1.5)),
+        final Pair<Integer> panelPos = new Pair<>(this.getPreferredSize().width / 2 - this.panel.getPreferredSize().width / 2,
+                (int) (audioHeightOffset + this.getPreferredSize().height / 4.10));
+
+        final Pair<Integer> gameAudioPos = new Pair<>((int) (plusSoundPos.getX() + (minusSoundPos.getX() - plusSoundPos.getX()) / 2 + plusSound.getPreferredSize().width - (musicAudio.getPreferredSize().width / 1.5)),
                 audioHeightOffset);
 
         final Pair<Integer> musicAudioPos = new Pair<>(gameAudioPos.getX(),
-                (int) (audioHeightOffset + size.height / 12.8));
+                (int) (audioHeightOffset + this.getPreferredSize().height / 12.8));
 
-        final Pair<Integer> developerModePos = new Pair<>((int) (audioWidthOffset + size.width/153.6),
-                (int) (audioHeightOffset + size.height / 5.12));
+        final Pair<Integer> developerModePos = new Pair<>(audioWidthOffset + this.getPreferredSize().width / 100,
+                (int) (audioHeightOffset + this.getPreferredSize().height / 5.65));
 
 
-        home.setBounds(homePos.getX(), homePos.getY(), home.getPreferredSize().width, home.getPreferredSize().height);
+        this.home.setBounds(homePos.getX(), homePos.getY(), home.getPreferredSize().width, home.getPreferredSize().height);
 
-        plusSound.setBounds(plusSoundPos.getX(), plusSoundPos.getY(), plusSound.getPreferredSize().width,
+        this.plusSound.setBounds(plusSoundPos.getX(), plusSoundPos.getY(), plusSound.getPreferredSize().width,
                 plusSound.getPreferredSize().height);
 
-        plusMusic.setBounds(plusMusicPos.getX(), plusMusicPos.getY(), plusSound.getPreferredSize().width,
+        this.plusMusic.setBounds(plusMusicPos.getX(), plusMusicPos.getY(), plusSound.getPreferredSize().width,
                 plusSound.getPreferredSize().height);
 
-        minusSound.setBounds(minusSoundPos.getX(), minusSoundPos.getY(), plusSound.getPreferredSize().width,
+        this.minusSound.setBounds(minusSoundPos.getX(), minusSoundPos.getY(), plusSound.getPreferredSize().width,
                 plusSound.getPreferredSize().height);
 
-        minusMusic.setBounds(minusMusicPos.getX(), minusMusicPos.getY(), plusSound.getPreferredSize().width,
+        this.minusMusic.setBounds(minusMusicPos.getX(), minusMusicPos.getY(), plusSound.getPreferredSize().width,
                 plusSound.getPreferredSize().height);
 
         this.gameAudio.setBounds(gameAudioPos.getX(), gameAudioPos.getY(), this.gameAudio.getPreferredSize().width,
@@ -132,35 +174,67 @@ public class SettingsView extends JPanel {
         this.loggedUser.setBounds(loggedUserPos.getX(), loggedUserPos.getY(), this.loggedUser.getPreferredSize().width,
                 this.loggedUser.getPreferredSize().height);
 
-        logout.setBounds(logoutPos.getX(), logoutPos.getY(), logout.getPreferredSize().width,
+        this.logout.setBounds(logoutPos.getX(), logoutPos.getY(), logout.getPreferredSize().width,
                 logout.getPreferredSize().height);
 
         this.developerMode.setBounds(developerModePos.getX(), developerModePos.getY(),
-                this.developerMode.getPreferredSize().width, this.developerMode.getPreferredSize().height);
+                (int) (this.developerMode.getPreferredSize().width * Screen.getScale()),
+                (int) (this.developerMode.getPreferredSize().height * Screen.getScale()));
 
+        this.panel.setBounds(panelPos.getX(),panelPos.getY(),this.panel.getPreferredSize().width,
+                this.panel.getPreferredSize().height);
+
+        this.repaint();
     }
 
-    public void updateGameAudioText() {
-        this.gameAudio.setText(Math.round(AudioController.getInstance().getSoundVolume() * 100) + "%");
-        this.gameAudio.repaint();
-    }
-
-    public void updateMusicAudioText() {
-        this.musicAudio.setText(Math.round(AudioController.getInstance().getMusicVolume() * 100) + "%");
-        this.musicAudio.repaint();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(Texture.SETTINGS_BACKGROUND.getTexture(), 0, 0, null);
+    public void load() {
+        SettingsView.LOGGER.info("Loading the class...");
+
+        this.panel.setOpaque(false);
+        this.resolutionSettingListModel.addAll(Screen.getResolutions());
+        this.jList.setLayoutOrientation(JList.VERTICAL);
+        this.jList.setOpaque(false);
+        this.jList.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        this.jList.setVisibleRowCount(1);
+        this.jList.setCellRenderer(new TransparentListCellRenderer(Level.FIRST_LEVEL));
+
+        this.jScrollPane.setOpaque(false);
+        this.jScrollPane.getViewport().setOpaque(false);
+        this.jScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        this.jScrollPane.getVerticalScrollBar().setBackground(new Color(210, 175, 128, 255));
+        this.jScrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.BLACK;
+            }
+        });
+        this.panel.add(this.jScrollPane);
+        this.loggedUser.setForeground(Color.WHITE);
+
+        this.developerMode.setOpaque(false);
+        this.developerMode.setPreferredSize(new Dimension(80,40));
+        this.developerMode.addItemListener(e -> {
+            DeveloperMode.setActive(developerMode.isSelected());
+            AudioController.getInstance().playSound(Sound.MAIN_BUTTON);
+        });
+
+
+        this.setLayout(null);
+        this.add(this.panel);
+        this.add(this.gameAudio);
+        this.add(this.musicAudio);
+        this.add(this.loggedUser);
+        this.add(this.developerMode);
+        this.add(this.home);
+        this.add(this.plusSound);
+        this.add(this.plusMusic);
+        this.add(this.minusSound);
+        this.add(this.minusMusic);
+        this.add(this.logout);
     }
 
-    public void updateLoggedUser() {
-        this.loggedUser.setText("Logged user: " + this.mainMenuController.getUsername());
-        this.loggedUser.setBounds(loggedUser.getBounds().x,loggedUser.getBounds().y,
-                this.loggedUser.getPreferredSize().width, this.loggedUser.getPreferredSize().height);}
+    public JList<Dimension> getList() {
+        return jList;
+    }
 }

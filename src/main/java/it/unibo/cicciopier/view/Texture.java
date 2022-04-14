@@ -1,6 +1,6 @@
 package it.unibo.cicciopier.view;
 
-import it.unibo.cicciopier.controller.menu.DeveloperMode;
+import it.unibo.cicciopier.model.settings.DeveloperMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -153,6 +153,10 @@ public enum Texture {
      * Represents the background shown when you pause a level
      */
     GAMEOVER_BACKGROUND("/textures/backgrounds/gameover.png"),
+    /**
+     * Represents the background shown when you pause a level
+     */
+    BRICKS_BACKGROUND("/textures/backgrounds/bricks.png"),
     /**
      * Represents the button used to access the first level
      */
