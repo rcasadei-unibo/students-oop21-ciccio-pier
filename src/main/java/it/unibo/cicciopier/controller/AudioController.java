@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Singleton class for controlling the audio system
@@ -17,6 +19,7 @@ public class AudioController {
     private static final AudioController INSTANCE = new AudioController();
     private static final float STARTING_VOLUME = 0.5F;
 
+    private final ExecutorService executor;
     private float musicVolume;
     private float soundVolume;
     private Clip musicClip;
@@ -26,6 +29,7 @@ public class AudioController {
      * Private Constructor for this class, so only one instance of this class can be created
      */
     private AudioController() {
+        this.executor = Executors.newFixedThreadPool(25);
         this.musicVolume = STARTING_VOLUME;
         this.soundVolume = STARTING_VOLUME;
         this.enabled = true;
@@ -161,21 +165,25 @@ public class AudioController {
         if (!this.enabled) {
             return;
         }
-        try (ByteArrayInputStream bis = new ByteArrayInputStream(sound.getBytes());
-             AudioInputStream ais = AudioSystem.getAudioInputStream(bis)) {
-            Clip clip = AudioSystem.getClip();
-            clip.open(ais);
-            this.setClipVolume(clip, this.soundVolume);
-            clip.setFramePosition(0);
-            clip.start();
-            clip.addLineListener(e -> {
-                if (e.getType() == LineEvent.Type.STOP) {
-                    clip.close();
-                }
-            });
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
-            LOGGER.error("Error playing sound!", e);
-        }
+        long time = System.currentTimeMillis();
+        this.executor.submit(() -> {
+            try (ByteArrayInputStream bis = new ByteArrayInputStream(sound.getBytes());
+                 AudioInputStream ais = AudioSystem.getAudioInputStream(bis)) {
+                final Clip clip = AudioSystem.getClip();
+                clip.open(ais);
+                this.setClipVolume(clip, this.soundVolume);
+                clip.setFramePosition(0);
+                clip.start();
+                clip.addLineListener(e -> {
+                    if (e.getType() == LineEvent.Type.STOP) {
+                        clip.close();
+                    }
+                });
+            } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+                LOGGER.error("Error playing sound!", e);
+            }
+        });
+        LOGGER.info("Playing {} took {}ms", sound, System.currentTimeMillis() - time);
     }
 
 }
