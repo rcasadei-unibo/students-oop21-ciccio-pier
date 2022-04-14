@@ -10,7 +10,7 @@ public enum Sound {
     /**
      * Represents the audio of a coin
      */
-    COIN("/audios/coin.wav"),
+    COIN("/audios/coin_prova.wav"),
     /**
      * Represents the audio for player jump
      */
@@ -19,6 +19,14 @@ public enum Sound {
      * Represents the audio for the explosion
      */
     EXPLOSION("/audios/explosion.wav"),
+    /**
+     * Represents the audio for the laser
+     */
+    LASER("/audios/laser.wav"),
+    /**
+     * Represents the audio for the meteor
+     */
+    METEOR("/audios/meteor.wav"),
     /**
      * Represents the audio when the missile get launched
      */

@@ -210,29 +210,6 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * Method that check collisions and moves the entity
      */
     protected void move() {
-        if (this.getVel().getX() > 0) {
-            this.facingRight = true;
-            //check right collision
-            final int rightOffset = this.rightCollision();
-            if (rightOffset == 0) {
-                this.getVel().setX(0);
-                this.onCollision(Collision.COLLIDING_RIGHT);
-            } else if (rightOffset > 0) {
-                this.getVel().setX(rightOffset);
-                this.onCollision(Collision.NEAR_COLLIDING_RIGHT);
-            }
-        } else if (this.getVel().getX() < 0) {
-            this.facingRight = false;
-            //check left collision
-            final int leftOffset = this.leftCollision();
-            if (leftOffset == 0) {
-                this.getVel().setX(0);
-                this.onCollision(Collision.COLLIDING_LEFT);
-            } else if (leftOffset < 0) {
-                this.getVel().setX(leftOffset);
-                this.onCollision(Collision.NEAR_COLLIDING_LEFT);
-            }
-        }
         if (this.getVel().getY() > 0) {
             //check bottom collision
             final int bottomOffset = this.bottomCollision();
@@ -262,6 +239,29 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
                 this.onCollision(Collision.NEAR_COLLIDING_UP);
             }
             this.ground = false;
+        }
+        if (this.getVel().getX() > 0) {
+            this.facingRight = true;
+            //check right collision
+            final int rightOffset = this.rightCollision();
+            if (rightOffset == 0) {
+                this.getVel().setX(0);
+                this.onCollision(Collision.COLLIDING_RIGHT);
+            } else if (rightOffset > 0) {
+                this.getVel().setX(rightOffset);
+                this.onCollision(Collision.NEAR_COLLIDING_RIGHT);
+            }
+        } else if (this.getVel().getX() < 0) {
+            this.facingRight = false;
+            //check left collision
+            final int leftOffset = this.leftCollision();
+            if (leftOffset == 0) {
+                this.getVel().setX(0);
+                this.onCollision(Collision.COLLIDING_LEFT);
+            } else if (leftOffset < 0) {
+                this.getVel().setX(leftOffset);
+                this.onCollision(Collision.NEAR_COLLIDING_LEFT);
+            }
         }
         this.getPos().add(this.getVel());
         //add gravity to the entity

@@ -1,6 +1,8 @@
 package it.unibo.cicciopier.model.entities;
 
+import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameLoop;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.base.EntityType;
@@ -217,6 +219,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         final boolean jumped = super.jump();
         if (jumped) {
             this.decreaseStamina(5);
+            AudioController.getInstance().playSound(Sound.JUMP);
         }
         return jumped;
     }
