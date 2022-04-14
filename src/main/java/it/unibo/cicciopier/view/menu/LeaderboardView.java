@@ -31,7 +31,7 @@ public class LeaderboardView extends JPanel implements MenuPanel {
     private final JLabel loggedUser;
     private final MainMenuController mainMenuController;
     private final JList<User> jList;
-    private final DefaultListModel<User> test = new DefaultListModel<>();
+    private final DefaultListModel<User> userDefaultListModel = new DefaultListModel<>();
     private final CustomButton level1;
     private final CustomButton level2;
     private final CustomButton level3;
@@ -50,7 +50,7 @@ public class LeaderboardView extends JPanel implements MenuPanel {
         LeaderboardView.LOGGER.info("Initializing the class... ");
         this.mainMenuController = mainMenuController;
         this.panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        this.jList = new JList<>(this.test);
+        this.jList = new JList<>(this.userDefaultListModel);
         this.jScrollPane = new JScrollPane(jList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.loggedUser = new JLabel();
         this.settings = new ViewPanelButton(this.mainMenuController, Buttons.SETTINGS, ViewPanels.SETTINGS);
@@ -185,8 +185,6 @@ public class LeaderboardView extends JPanel implements MenuPanel {
         this.loggedUser.setFont(CustomFont.getInstance().getFontOrDefault());
         this.loggedUser.setForeground(Color.WHITE);
 
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-
         this.panel.add(this.jScrollPane);
 
         this.setLayout(null);
@@ -208,10 +206,10 @@ public class LeaderboardView extends JPanel implements MenuPanel {
     public void updateLeaderboard(Level level) {
         List<User> leaderboard = mainMenuController.getUsers().stream().filter(user -> user.getLevelScore(level.getJsonId()) >= 0).sorted(Comparator.comparingInt(user -> user.getLevelScore(level.getJsonId()))).collect(Collectors.toList());
         Collections.reverse(leaderboard);
-        test.removeAllElements();
-        leaderboard.forEach(test::addElement);
+        userDefaultListModel.removeAllElements();
+        leaderboard.forEach(userDefaultListModel::addElement);
         this.jList.removeAll();
-        this.jList.setModel(this.test);
+        this.jList.setModel(this.userDefaultListModel);
         this.jList.setCellRenderer(new TransparentListCellRenderer(level));
         LOGGER.info("Loading leaderboard from: " + level.getName());
 

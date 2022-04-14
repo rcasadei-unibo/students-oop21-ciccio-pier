@@ -1,7 +1,9 @@
 package it.unibo.cicciopier.view.menu;
 
+import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.controller.menu.MenuAction;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.settings.CustomFont;
 import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;
@@ -14,14 +16,20 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class LoginView extends JPanel implements MenuPanel {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginView.class);
     private final JTextField textField;
     private final CustomButton submitButton;
+    private final MainMenuController mainMenuController;
 
     public LoginView(MainMenuController mainMenuController) {
         LoginView.LOGGER.info("Initializing the class...");
+        this.mainMenuController = mainMenuController;
         this.submitButton = new MenuActionButton(mainMenuController, Buttons.SUBMIT, MenuAction.LOGIN);
         this.textField = new JTextField("", JTextField.CENTER);
 
@@ -37,6 +45,22 @@ public class LoginView extends JPanel implements MenuPanel {
         this.textField.setHorizontalAlignment(JTextField.CENTER);
         this.textField.setOpaque(false);
         this.textField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        this.textField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                AudioController.getInstance().playSound(Sound.TYPING);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        this.textField.addActionListener(e -> mainMenuController.action(MenuAction.LOGIN));
 
         this.setLayout(null);
         this.add(this.submitButton);

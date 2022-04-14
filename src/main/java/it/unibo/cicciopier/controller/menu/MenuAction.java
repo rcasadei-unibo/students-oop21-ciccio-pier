@@ -7,7 +7,7 @@ public enum MenuAction {
     DECREASE_GAME_AUDIO(),
     QUIT(),
     LOGIN(),
-    LOGOUT
+    CHANGE_RESOLUTION, LOGOUT
 
 
 

@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.menu;
 
 import it.unibo.cicciopier.controller.menu.MainMenuController;
+import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.controller.menu.ViewPanels;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.settings.Screen;
@@ -9,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import java.awt.*;
+import java.util.Objects;
 
 public class MenuManagerView extends JFrame implements StaticView {
     private static final Logger LOGGER = LoggerFactory.getLogger(MenuManagerView.class);
@@ -18,11 +19,12 @@ public class MenuManagerView extends JFrame implements StaticView {
     private final SettingsView settingsView;
     private final LeaderboardView leaderboardView;
     private final LoginView loginView;
+    private final MainMenuController controller;
     private MenuPanel activePanel;
 
     public MenuManagerView(MainMenuController mainMenuController) {
         this.setTitle("CICCIO PIER THE GAME!");
-
+        this.controller = mainMenuController;
         this.mainMenuView = new MainMenuView(mainMenuController);
         this.levelSelectionView = new LevelSelectionView(mainMenuController);
         this.settingsView = new SettingsView(mainMenuController);
@@ -30,10 +32,10 @@ public class MenuManagerView extends JFrame implements StaticView {
         this.loginView = new LoginView(mainMenuController);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setUndecorated(true);
         this.setResizable(false);
         this.setVisible(true);
-
-        Screen.setCurrentDimension(new Dimension(1920,1080));
+        Screen.setCurrentDimension(Screen.getScreenMaxSize());
     }
 
 
@@ -44,6 +46,10 @@ public class MenuManagerView extends JFrame implements StaticView {
 
     public void setVisible(ViewPanels viewPanels) {
         this.getContentPane().removeAll();
+        if (this.activePanel == this.settingsView && !Objects.equals(this.settingsView.getList().getSelectedValue(), Screen.getCurrentDimension()) && viewPanels != ViewPanels.LOGIN) {
+            this.controller.action(MenuAction.CHANGE_RESOLUTION);
+            this.settingsView.getList().setSelectedValue(Screen.getCurrentDimension(), true);
+        }
         switch (viewPanels) {
             case LEVEL_SELECTION: {
                 this.getContentPane().add(this.levelSelectionView);
@@ -89,7 +95,7 @@ public class MenuManagerView extends JFrame implements StaticView {
         return leaderboardView;
     }
 
-    public void updateAnimations(){
+    public void updateAnimations() {
         this.activePanel.updateAnimations();
     }
 }
