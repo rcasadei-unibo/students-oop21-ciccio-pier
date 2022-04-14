@@ -56,23 +56,23 @@ public enum Texture {
     /**
      * Represents the texture of the ShootingPea
      */
-    SHOOTING_PEA("/textures/entities/enemies/shootingPea.png"),
+    SHOOTING_PEA("/textures/entities/enemies/shooting_pea.png"),
     /**
      * Represents the texture of the NinjaPotato
      */
-    NINJA_POTATO("/textures/entities/enemies/ninjaPotato.png"),
+    NINJA_POTATO("/textures/entities/enemies/ninja_potato.png"),
     /**
      * Represents the texture of the RollingPeach
      */
-    ROLLING_PEACH("/textures/entities/enemies/rollingPeach.png"),
+    ROLLING_PEACH("/textures/entities/enemies/rolling_peach.png"),
     /**
      * Represents the texture of the CryingOnion
      */
-    CRYING_ONION("/textures/entities/enemies/cryingOnion.png"),
+    CRYING_ONION("/textures/entities/enemies/crying_onion.png"),
     /**
      * Represents the texture of the MindPineapple
      */
-    MIND_PINEAPPLE("/textures/entities/enemies/mindPineapple.png"),
+    MIND_PINEAPPLE("/textures/entities/enemies/mind_pineapple.png"),
     /**
      * Represents the texture of the Nut
      */

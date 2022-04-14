@@ -3,10 +3,10 @@ package it.unibo.cicciopier.model.entities.enemies;
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
+import it.unibo.cicciopier.model.entities.base.Collision;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.entities.enemies.EnemyView;
+import it.unibo.cicciopier.view.entities.enemies.CryingOnionView;
 
 /**
  * Represents the enemy CryingOnion, a walking onion whom attack consists into crying
@@ -14,17 +14,17 @@ import it.unibo.cicciopier.view.entities.enemies.EnemyView;
  */
 public class CryingOnion extends SimplePathEnemy {
     private static final int SCORE_VALUE = 50;
-    private static final double IDLE_DURATION = 2 * GameLoop.TPS;
-    private static final double MOVEMENT_SPEED = (0.8d * Block.SIZE) / GameLoop.TPS;
-    private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
-    private static final int ATTACK_RANGE = 5 * Block.SIZE;
-    private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
-    private static final int JUMP_FORCE = 9;
-    private static final double RUNNING_SPEED = (10d * Block.SIZE) / GameLoop.TPS;
     private static final int HEALTH_VALUE = 50;
     private static final int STAMINA_VALUE = 50;
+    private static final int ATTACK_RANGE = 5 * Block.SIZE;
+    private static final double IDLE_DURATION = 2 * GameLoop.TPS;
+    private static final double MOVEMENT_SPEED = (0.8d * Block.SIZE) / GameLoop.TPS;
+    private static final double RUNNING_SPEED = (10d * Block.SIZE) / GameLoop.TPS;
+    private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
+    private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
+    private static final int JUMP_FORCE = 9;
 
-    private final EnemyView view;
+    private final CryingOnionView view;
     private boolean suicidal;
     private int jumped;
     private int localTicks;
@@ -38,13 +38,12 @@ public class CryingOnion extends SimplePathEnemy {
      */
     public CryingOnion(final World world) {
         super(EntityType.CRYING_ONION, world);
-        this.setStatus(EnemyStatuses.CRYING_ONION_WALKING_CRYING);
         this.angered = false;
         this.localTicks = 0;
         this.attacking = false;
         this.jumped = 0;
         this.suicidal = false;
-        this.view = new EnemyView(this, Texture.CRYING_ONION);
+        this.view = new CryingOnionView(this);
     }
 
     /**
@@ -59,48 +58,19 @@ public class CryingOnion extends SimplePathEnemy {
      * {@inheritDoc}
      */
     @Override
-    public boolean isTextureSpecular() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getDyingStatus() {
-        return EnemyStatuses.CRYING_ONION_DYING;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getIdleStatus() {
-        return EnemyStatuses.CRYING_ONION_IDLE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getWalkingStatus() {
-        return EnemyStatuses.CRYING_ONION_WALKING_NORMAL;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getHealValue() {
-        if (this.suicidal){
+        if (this.suicidal) {
             return 0;
         }
         return HEALTH_VALUE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getStaminaValue() {
-        if (this.suicidal){
+        if (this.suicidal) {
             return 0;
         }
         return STAMINA_VALUE;
@@ -111,7 +81,7 @@ public class CryingOnion extends SimplePathEnemy {
      */
     @Override
     public int getScoreValue() {
-        if (this.suicidal){
+        if (this.suicidal) {
             return 0;
         }
         return SCORE_VALUE;
@@ -149,10 +119,6 @@ public class CryingOnion extends SimplePathEnemy {
         return MAX_RIGHT_OFFSET;
     }
 
-
-
-
-
     /**
      * Utility method used to update the local ticks when needed
      */
@@ -174,9 +140,9 @@ public class CryingOnion extends SimplePathEnemy {
      * Method used to make the CryingOnion cry before attacking
      */
     private void startCrying() {
-        this.setStatus(EnemyStatuses.CRYING_ONION_CRYING);
+        this.resetCurrentState(EnemyState.ANGERED);
         this.updateLocalTicks();
-        if (this.localTicks >= EnemyStatuses.CRYING_ONION_CRYING.getDurationTicks()) {
+        if (this.localTicks == 80) {
             this.localTicks = 0;
             this.angered = true;
         }
@@ -187,8 +153,13 @@ public class CryingOnion extends SimplePathEnemy {
      */
     @Override
     public boolean jump() {
-        this.jumped++;
-        return super.jump();
+        if (this.jumped == 2) {
+            return true;
+        }
+        if (super.jump()) {
+            this.jumped++;
+        }
+        return false;
     }
 
     /**
@@ -200,21 +171,22 @@ public class CryingOnion extends SimplePathEnemy {
             this.startCrying();
             return;
         }
-        this.setStatus(EnemyStatuses.CRYING_ONION_WALKING_CRYING);
-        if (this.jumped < 2){
-            this.jump();
+        this.resetCurrentState(EnemyState.ANGERED_RUNNING);
+        if (!this.jump()) {
             return;
         }
-        this.running();
+        this.getVel().setX(this.isFacingRight() ? RUNNING_SPEED : -RUNNING_SPEED);
+        this.move();
     }
 
     /**
-     * Method used to set the CryingOnion running, detecting if it hit a block.
-     * In that case it dies
+     * {@inheritDoc}
      */
-    private void running(){
-        this.getVel().setX(this.isFacingRight() ? RUNNING_SPEED : -RUNNING_SPEED);
-        if( (this.isFacingRight() && this.rightCollision() >= 0) || (!this.isFacingRight() && this.leftCollision() <= 0) ){
+    @Override
+    protected void onCollision(Collision collision) {
+        super.onCollision(collision);
+        if ((this.isFacingRight() && collision == Collision.COLLIDING_RIGHT) ||
+                (!this.isFacingRight() && collision == Collision.COLLIDING_LEFT)) {
             this.suicidal = true;
             this.die();
         }
@@ -226,13 +198,12 @@ public class CryingOnion extends SimplePathEnemy {
     @Override
     protected boolean attackBehaviour() {
         this.checkAttackConditions();
-        if (this.isAttacking()){
+        if (this.isAttacking()) {
             this.attacking = true;
             this.getVel().setX(0);
         }
-        if (attacking){
+        if (attacking) {
             this.attacking();
-            this.move();
             return true;
         }
         return false;

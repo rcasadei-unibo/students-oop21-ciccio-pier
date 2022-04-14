@@ -3,12 +3,12 @@ package it.unibo.cicciopier.model.entities.enemies;
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
+import it.unibo.cicciopier.model.entities.base.Collision;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.entities.enemies.EnemyView;
+import it.unibo.cicciopier.view.entities.enemies.RollingPeachView;
 
 import java.util.Optional;
 
@@ -18,16 +18,16 @@ import java.util.Optional;
  */
 public class RollingPeach extends SimplePathEnemy {
     private final int SCORE_VALUE = 50;
-    private final double IDLE_DURATION = 3 * GameLoop.TPS;
-    private final double MOVEMENT_SPEED = 0.6;
-    private final int ATTACK_RANGE = 5 * Block.SIZE;
-    private final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
-    private static final double ROLLING_SPEED = (8.5d * Block.SIZE) / GameLoop.TPS;
-    private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
     private static final int HEALTH_VALUE = 50;
     private static final int STAMINA_VALUE = 50;
+    private final int ATTACK_RANGE = 5 * Block.SIZE;
+    private final double IDLE_DURATION = 3 * GameLoop.TPS;
+    private final double MOVEMENT_SPEED = 0.6;
+    private static final double ROLLING_SPEED = (8.5d * Block.SIZE) / GameLoop.TPS;
+    private final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
+    private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
 
-    private final EnemyView view;
+    private final RollingPeachView view;
     private boolean angered;
     private boolean jumped;
     private boolean attacking;
@@ -41,13 +41,12 @@ public class RollingPeach extends SimplePathEnemy {
      */
     public RollingPeach(final World world) {
         super(EntityType.ROLLING_PEACH, world);
-        this.setStatus(EnemyStatuses.ROLLING_PEACH_IDLE);
         this.localTicks = 0;
         this.attacking = false;
         this.jumped = false;
         this.angered = false;
         this.suicidal = false;
-        this.view = new EnemyView(this, Texture.ROLLING_PEACH);
+        this.view = new RollingPeachView(this);
     }
 
     /**
@@ -56,38 +55,6 @@ public class RollingPeach extends SimplePathEnemy {
     @Override
     public GameObjectView getView() {
         return this.view;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isTextureSpecular() {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getDyingStatus() {
-        return EnemyStatuses.ROLLING_PEACH_DYING;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getIdleStatus() {
-        return EnemyStatuses.ROLLING_PEACH_IDLE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getWalkingStatus() {
-        return EnemyStatuses.ROLLING_PEACH_WALKING;
     }
 
     /**
@@ -155,11 +122,6 @@ public class RollingPeach extends SimplePathEnemy {
         return MAX_RIGHT_OFFSET;
     }
 
-
-
-
-
-
     /**
      * Utility method used to update the local ticks when needed
      */
@@ -178,21 +140,19 @@ public class RollingPeach extends SimplePathEnemy {
         return super.jump();
     }
 
-
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void shoot(int dir, EntityType type) {
+    protected void shoot(final double projectileSpeed, final EntityType type) {
         Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(type);
         if (opt.isPresent()) {
             SimpleProjectile e = ((SimpleProjectile) opt.get());
             e.setPos(this.getPos().addVector(new Vector2d(0, this.getType().getHeight() - type.getHeight())));
-            e.setDir(dir);
+            e.setDirAndSpeed(this.isFacingRight() ? 1 : -1,projectileSpeed);
             this.getWorld().addEntity(e);
         }
     }
-
 
     /**
      * {@inheritDoc}
@@ -209,9 +169,9 @@ public class RollingPeach extends SimplePathEnemy {
      * Method used to make the RollingPeach get angry before attacking
      */
     private void anger() {
-        this.setStatus(EnemyStatuses.ROLLING_PEACH_ANGERED);
+        this.resetCurrentState(EnemyState.ANGERED);
         this.updateLocalTicks();
-        if (this.localTicks >= EnemyStatuses.ROLLING_PEACH_ANGERED.getDurationTicks()) {
+        if (this.localTicks == 40) {
             this.localTicks = 0;
             this.angered = true;
         }
@@ -230,9 +190,9 @@ public class RollingPeach extends SimplePathEnemy {
             this.jump();
             return;
         }
-        this.setStatus(EnemyStatuses.ROLLING_PEACH_ROLLING);
-
-        this.rolling();
+        this.resetCurrentState(EnemyState.ANGERED_RUNNING);
+        this.getVel().setX(this.isFacingRight() ? ROLLING_SPEED : -ROLLING_SPEED);
+        this.move();
     }
 
     /**
@@ -244,6 +204,19 @@ public class RollingPeach extends SimplePathEnemy {
             Entity e = opt.get();
             e.setPos(this.getPos());
             this.getWorld().addEntity(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onCollision(Collision collision) {
+        super.onCollision(collision);
+        if ((this.isFacingRight() && collision == Collision.COLLIDING_RIGHT) ||
+                (!this.isFacingRight() && collision == Collision.COLLIDING_LEFT)) {
+            this.suicidal = true;
+            this.die();
         }
     }
 
@@ -263,18 +236,6 @@ public class RollingPeach extends SimplePathEnemy {
     }
 
     /**
-     * Method used to set the RollingPeach rolling, detecting if it hit a block.
-     * In that case it dies
-     */
-    private void rolling() {
-        this.getVel().setX(this.isFacingRight() ? ROLLING_SPEED : -ROLLING_SPEED);
-        if ((this.isFacingRight() && this.rightCollision() >= 0) || (!this.isFacingRight() && this.leftCollision() <= 0)) {
-            this.suicidal = true;
-            this.die();
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -286,7 +247,6 @@ public class RollingPeach extends SimplePathEnemy {
         }
         if (attacking) {
             this.attacking();
-            this.move();
             return true;
         }
         return false;

@@ -9,16 +9,17 @@ import it.unibo.cicciopier.utility.Vector2d;
 
 import java.util.Optional;
 
-
+/**
+ * Abstract class for a generic basic Enemy
+ */
 public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     private static final int HIT_COOLDOWN = 2 * GameLoop.TPS;
-
+    public static final int DEATH_DURATION = 2 * GameLoop.TPS;
     private final int attackDamage;
     private int shootingCooldownTicks;
     private int hitTicks;
     private int deathTicks;
     private boolean attacking;
-    private EnemyStatuses status;
 
     /**
      * Constructor for this class.
@@ -171,11 +172,11 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
      */
     private boolean checkDyingBehaviour() {
         if (this.isDead()) {
-            this.setStatus(this.getDyingStatus());
+            this.resetCurrentState(EnemyState.DEAD);
         }
-        if (this.getStatus() == this.getDyingStatus()) {
+        if (this.getCurrentState() == EnemyState.DEAD) {
             this.deathTicks++;
-            if (this.deathTicks >= this.getDyingStatus().getDurationTicks()) {
+            if (this.deathTicks == DEATH_DURATION) {
                 this.remove();
             }
             return true;
@@ -184,37 +185,19 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     }
 
     /**
-     * Utility method to spawn projectiles simulating them being shot.
+     * Utility method to spawn a generic projectile
      *
-     * @param dir  The direction of the projectile
-     * @param type The type of projectile to be spawned
+     * @param projectileSpeed The travel speed of the projectile
+     * @param type            The type of projectile
      */
-    protected void shoot(final int dir, final EntityType type) {
+    protected void shoot(final double projectileSpeed, final EntityType type) {
         Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(type);
         if (opt.isPresent()) {
             SimpleProjectile e = ((SimpleProjectile) opt.get());
-            e.setPos(this.getPos().addVector(new Vector2d(0, this.getType().getHeight() / 2)));
-            e.setDir(dir);
+            e.setPos(this.getPos().addVector(new Vector2d(0, this.getType().getHeight() / 2d)));
+            e.setDirAndSpeed(this.isFacingRight() ? 1 : -1, projectileSpeed);
             this.getWorld().addEntity(e);
         }
-    }
-
-    /**
-     * Returns the entity's status
-     *
-     * @return the status
-     */
-    public EnemyStatuses getStatus() {
-        return this.status;
-    }
-
-    /**
-     * Set the entity's status
-     *
-     * @param status
-     */
-    public void setStatus(final EnemyStatuses status) {
-        this.status = status;
     }
 
     /**

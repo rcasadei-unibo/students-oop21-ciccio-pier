@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.model.entities.enemies;
 
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.EntityState;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 
 /**
@@ -10,7 +11,6 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
     private int leftPathfurthest;
     private int rightPathfurthest;
     private int currentDest;
-    private boolean pathInitialized;
     private int idleTicks;
 
     /**
@@ -22,7 +22,6 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
      */
     protected SimplePathEnemy(final EntityType type, final World world) {
         super(type, world);
-        this.pathInitialized = false;
     }
 
     /**
@@ -34,46 +33,9 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
      * @param maxRightOffset The offset for the right extreme of this path
      */
     protected void initializePath(final int maxRightOffset) {
-        if (!this.pathInitialized) {
-            this.leftPathfurthest = this.getPos().getX();
-            this.rightPathfurthest = this.leftPathfurthest + maxRightOffset;
-            this.currentDest = this.leftPathfurthest;
-            this.pathInitialized = true;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getLeftPathfurthest() {
-        return this.leftPathfurthest;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getRightPathfurthest() {
-        return this.rightPathfurthest;
-    }
-
-    /**
-     * Retrieves the current destination
-     *
-     * @return The Enemy current destination
-     */
-    public int getCurrentDest() {
-        return this.currentDest;
-    }
-
-    /**
-     * Sets the Enemy current destination for the movement path behaviour
-     *
-     * @param currentDest
-     */
-    protected void setCurrentDest(final int currentDest) {
-        this.currentDest = currentDest;
+        this.leftPathfurthest = this.getPos().getX();
+        this.rightPathfurthest = this.leftPathfurthest + maxRightOffset;
+        this.currentDest = this.leftPathfurthest;
     }
 
     /**
@@ -130,25 +92,29 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
      * Method that defines the common movement behaviour for all path enemies.
      *
      * @param movementSpeed The speed of the movement
-     * @param idleDuration THe duration of the idle at each extreme
+     * @param idleDuration  THe duration of the idle at each extreme
      */
     private void pathMovementBehaviour(final double movementSpeed, final double idleDuration) {
-        if (this.getPos().getX() == this.getCurrentDest()
+        if (this.getPos().getX() == this.currentDest
                 && this.idleTicks < idleDuration) {
-            this.setStatus(this.getIdleStatus());
+            this.resetCurrentState(EntityState.IDLE);
             this.getVel().setX(0);
             this.idleTicks++;
-        } else if (this.getPos().getX() == this.getCurrentDest()) {
-            this.setCurrentDest(this.getCurrentDest() == this.getLeftPathfurthest() ?
-                    this.getRightPathfurthest() : this.getLeftPathfurthest());
+        } else if (this.getPos().getX() == this.currentDest) {
+            this.currentDest = this.currentDest == this.leftPathfurthest ? this.rightPathfurthest : this.leftPathfurthest;
             this.idleTicks = 0;
-            this.setStatus(this.getWalkingStatus());
+            this.resetCurrentState(EnemyState.RUNNING);
             this.setFacingRight(!this.isFacingRight());
         } else {
-            this.getVel().setX(this.getCurrentDest() == this.getLeftPathfurthest() ?
-                    -movementSpeed : movementSpeed);
+            this.getVel().setX(this.currentDest == this.leftPathfurthest ? -movementSpeed : movementSpeed);
+            this.resetCurrentState(EntityState.RUNNING);
         }
         this.move();
+    }
+
+    @Override
+    public void load() {
+        this.initializePath(this.getMaxRightOffset());
     }
 
     /**
@@ -156,14 +122,13 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
      */
     @Override
     public void tick(final long ticks) {
-        this.initializePath(this.getMaxRightOffset());
         super.tick(ticks);
         if (this.isDead()) {
             return;
         }
-        if (this.attackBehaviour()){
+        if (this.attackBehaviour()) {
             return;
         }
-        this.pathMovementBehaviour(this.getMovementSpeed(),this.getIdleDuration());
+        this.pathMovementBehaviour(this.getMovementSpeed(), this.getIdleDuration());
     }
 }

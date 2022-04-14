@@ -2,11 +2,15 @@ package it.unibo.cicciopier.model.entities.enemies;
 
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.view.GameObjectView;
+import it.unibo.cicciopier.view.entities.enemies.PeaView;
 
 /**
  * Class representing the Pea projectile
  */
 public class Pea extends SimpleProjectile {
+
+    private PeaView view;
 
     /**
      * Constructor for this class
@@ -14,7 +18,23 @@ public class Pea extends SimpleProjectile {
      * @param world The game's world
      */
     public Pea(final World world) {
-        super(EntityType.PEA, world, Projectiles.PEA, false);
+        super(EntityType.PEA, world, ShootingPea.ATTACK_DURATION_TICKS);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObjectView getView() {
+        return this.view;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void createView() {
+        this.view = new PeaView(this, this.getDir() == 1);
     }
 
     /**

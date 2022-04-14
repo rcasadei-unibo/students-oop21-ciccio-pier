@@ -5,61 +5,58 @@ import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
-import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.entities.enemies.ProjectileView;
 
 import java.util.Optional;
 
 /**
- * Abstract class for a generic moving Projectile
+ * Abstract class for Projectiles
  */
 public abstract class SimpleProjectile extends SimpleMovingEntity {
-    private final boolean specularTexture;
-    private final ProjectileView view;
-    private final Projectiles projectile;
-    private final double movementPerTick;
-    private int ticks;
+    private final int durationTicks;
     private int dir;
+    private double projectileSpeed;
+    private int localTicks;
 
     /**
-     * Constructor for a generic moving Projectile
+     * Constructor for this class
      *
-     * @param type       The entity type
-     * @param world      The game's world
-     * @param projectile The projectile information
-     * @param bool       If the projectile's texture is facing right
+     * @param type          The type of this projectile
+     * @param world         The game's world
+     * @param durationTicks The duration ticks of this projectile
      */
-    protected SimpleProjectile(final EntityType type, final World world, final Projectiles projectile, final boolean bool) {
+    protected SimpleProjectile(final EntityType type, final World world, final int durationTicks) {
         super(type, world);
-        this.projectile = projectile;
-        this.ticks = 0;
-        this.movementPerTick = this.projectile.getRange() / this.projectile.getDuration();
-        this.specularTexture = bool;
-        this.view = new ProjectileView(this, projectile.getTexture());
+        this.durationTicks = durationTicks;
+        this.localTicks = 0;
     }
 
     /**
-     * Utility method to check if the projectile has to be rendered specularly
-     */
-    private void setSpecular() {
-        if (this.specularTexture && this.dir == -1
-                || !this.specularTexture && this.dir == 1) {
-            this.view.setSpecularRender(true);
-        }
-    }
-
-    /**
-     * Method to set the direction of the projectile
+     * Method used to set the direction and the speed of the projectile
      *
-     * @param dir Any positive integer represents the right, any negative the left
+     * @param dir             The direction of the projectile
+     * @param projectileSpeed The speed of the projectile
      */
-    public void setDir(final int dir) {
-        if (dir > 0) {
-            this.dir = 1;
-        } else {
-            this.dir = -1;
-        }
-        this.setSpecular();
+    public void setDirAndSpeed(final int dir, final double projectileSpeed) {
+        this.dir = dir;
+        this.projectileSpeed = projectileSpeed;
+        this.createView();
+    }
+
+    /**
+     * Method used to create the view of the Projectile.
+     * Left empty, is to be overridden in individual Projectile's classes
+     */
+    protected void createView() {
+
+    }
+
+    /**
+     * Retrieve the direction of the Projectile
+     *
+     * @return The Projectile's direction
+     */
+    protected int getDir() {
+        return this.dir;
     }
 
     /**
@@ -100,20 +97,12 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
      * {@inheritDoc}
      */
     @Override
-    public GameObjectView getView() {
-        return this.view;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void tick(final long ticks) {
-        this.ticks++;
-        if (this.ticks == this.projectile.getDuration()) {
+        this.localTicks++;
+        if (this.localTicks > this.durationTicks) {
             this.remove();
         }
-        this.setPos(new Vector2d(this.getPos().getX() + (this.dir * this.movementPerTick), this.getPos().getY()));
+        this.setPos(new Vector2d(this.getPos().getX() + this.dir * this.projectileSpeed, this.getPos().getY()));
         this.checkPlayerHit();
         this.checkCollisionsHit();
     }

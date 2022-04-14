@@ -3,10 +3,10 @@ package it.unibo.cicciopier.model.entities.enemies;
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
+import it.unibo.cicciopier.model.entities.EntityState;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.entities.enemies.EnemyView;
+import it.unibo.cicciopier.view.entities.enemies.ShootingPeaView;
 
 /**
  * Represents the enemy ShootingPea, a walking pea whom attack consists into shooting
@@ -14,15 +14,18 @@ import it.unibo.cicciopier.view.entities.enemies.EnemyView;
  */
 public class ShootingPea extends SimplePathEnemy {
     private static final int SCORE_VALUE = 50;
-    private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
-    private static final int ATTACK_RANGE = 7 * Block.SIZE;
-    private static final int IDLE_DURATION = 2 * GameLoop.TPS;
-    private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
-    private static final double MOVEMENT_SPEED = (0.7 * Block.SIZE) / GameLoop.TPS;
     private static final int HEALTH_VALUE = 50;
     private static final int STAMINA_VALUE = 50;
+    private static final int ATTACK_RANGE = 7 * Block.SIZE;
+    private static final int IDLE_DURATION = 2 * GameLoop.TPS;
+    private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
+    private static final double ATTACK_SPEED = 9d * Block.SIZE / GameLoop.TPS;
+    private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
+    public static final int ATTACK_DURATION_TICKS = 90;
+    private static final double MOVEMENT_SPEED = (0.7 * Block.SIZE) / GameLoop.TPS;
+    public static final int ATTACK_DURATION = 2 * GameLoop.TPS;
 
-    private final EnemyView view;
+    private final ShootingPeaView view;
     private boolean shot;
     private int attackDurationTicks;
 
@@ -33,10 +36,9 @@ public class ShootingPea extends SimplePathEnemy {
      */
     public ShootingPea(final World world) {
         super(EntityType.SHOOTING_PEA, world);
-        this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
         this.attackDurationTicks = 0;
         this.shot = false;
-        this.view = new EnemyView(this, Texture.SHOOTING_PEA);
+        this.view = new ShootingPeaView(this);
     }
 
     /**
@@ -47,38 +49,6 @@ public class ShootingPea extends SimplePathEnemy {
         return this.view;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isTextureSpecular() {
-        return true;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getIdleStatus() {
-        return EnemyStatuses.SHOOTING_PEA_IDLE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getWalkingStatus() {
-        return EnemyStatuses.SHOOTING_PEA_WALKING;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public EnemyStatuses getDyingStatus() {
-        return EnemyStatuses.SHOOTING_PEA_DYING;
-    }
 
     /**
      * {@inheritDoc}
@@ -147,20 +117,19 @@ public class ShootingPea extends SimplePathEnemy {
         this.getVel().setX(0);
         if (this.getShootingCooldownTicks() == 0) {
             this.shot = false;
-            this.setStatus(EnemyStatuses.SHOOTING_PEA_SHOOTING);
+            this.resetCurrentState(EntityState.ATTACKING);
         }
-        if (this.getStatus() == EnemyStatuses.SHOOTING_PEA_SHOOTING) {
+        if (this.getCurrentState() == EnemyState.ATTACKING) {
             this.attackDurationTicks++;
         }
-        if (this.attackDurationTicks >= EnemyStatuses.SHOOTING_PEA_SHOOTING.getDurationTicks()) {
+        if (this.attackDurationTicks >= ATTACK_DURATION) {
             this.setShootingCooldownTicks(ATTACK_COOLDOWN);
             this.attackDurationTicks = 0;
-            this.setStatus(EnemyStatuses.SHOOTING_PEA_IDLE);
-        } else if (this.attackDurationTicks >= EnemyStatuses.SHOOTING_PEA_SHOOTING.getDurationTicks() / 2
-                && !this.shot) {
-            this.shoot(this.isFacingRight() ? 1 : -1, EntityType.PEA);
+            this.resetCurrentState(EntityState.IDLE);
+        } else if (this.attackDurationTicks >= ATTACK_DURATION / 2 && !this.shot) {
+            this.shoot(ATTACK_SPEED, EntityType.PEA);
             this.shot = true;
-            this.setShootingCooldownTicks((int) Math.ceil(EnemyStatuses.SHOOTING_PEA_SHOOTING.getDurationTicks()));
+            this.setShootingCooldownTicks(ATTACK_COOLDOWN);
         }
     }
 
@@ -170,7 +139,6 @@ public class ShootingPea extends SimplePathEnemy {
     @Override
     protected void notAttacking() {
         this.attackDurationTicks = 0;
-        this.setStatus(EnemyStatuses.SHOOTING_PEA_WALKING);
     }
 
     /**

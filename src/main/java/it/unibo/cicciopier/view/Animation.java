@@ -43,7 +43,7 @@ public class Animation {
         BufferedImage image = this.texture.getTexture().getSubimage(
                 this.start.getX(),
                 this.start.getY(),
-                this.width * this.frames,
+                Math.abs(this.width * this.frames),
                 this.height);
         //load all the animation
         for (int i = 0; i < this.frames; i++) {

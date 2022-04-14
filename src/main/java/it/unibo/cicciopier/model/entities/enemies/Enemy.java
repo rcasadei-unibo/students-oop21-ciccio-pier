@@ -20,21 +20,6 @@ public interface Enemy extends LivingEntity {
     void attackPlayer();
 
     /**
-     * Method used to retrieve individual dying status
-     *
-     * @return The individual dying status
-     */
-    EnemyStatuses getDyingStatus();
-
-    /**
-     * Utility method for the view to retrieve information about the Enemy texture.
-     * Specular means that on the image, the Enemy is facing right.
-     *
-     * @return True, if the texture is specular
-     */
-    boolean isTextureSpecular();
-
-    /**
      * Method used to retrieve the score given for killing this enemy
      *
      * @return The score value

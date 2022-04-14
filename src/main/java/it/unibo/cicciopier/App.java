@@ -4,13 +4,15 @@ import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameEngine;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.Sound;
+import it.unibo.cicciopier.model.entities.enemies.CryingOnion;
+import it.unibo.cicciopier.model.entities.enemies.MindPineapple;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.view.entities.ExplosionView;
 import it.unibo.cicciopier.view.entities.LaserView;
 import it.unibo.cicciopier.view.entities.PlayerView;
-import it.unibo.cicciopier.view.entities.enemies.BroccoliView;
+import it.unibo.cicciopier.view.entities.enemies.*;
 import it.unibo.cicciopier.view.items.CoinView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,11 @@ public final class App {
         loadAnimation(CoinView.ANIMATION);
         loadAnimation(ExplosionView.ANIMATION);
         loadAnimation(LaserView.ANIMATION);
+        loadAnimations(ShootingPeaView.ANIMATIONS.values());
+        loadAnimations(NinjaPotatoView.ANIMATIONS.values());
+        loadAnimations(RollingPeachView.ANIMATIONS.values());
+        loadAnimations(MindPineappleView.ANIMATIONS.values());
+        loadAnimations(CryingOnionView.ANIMATIONS.values());
         try {
             GameEngine e = new GameEngine(null, Level.FIRST_LEVEL);
             e.load();
