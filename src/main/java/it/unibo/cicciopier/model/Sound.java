@@ -10,7 +10,7 @@ public enum Sound {
     /**
      * Represents the audio of a coin
      */
-    COIN("/audios/coin_prova.wav"),
+    COIN("/audios/coin.wav"),
     /**
      * Represents the audio for player jump
      */
