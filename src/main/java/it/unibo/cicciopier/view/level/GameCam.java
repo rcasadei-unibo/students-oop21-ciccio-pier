@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.view;
+package it.unibo.cicciopier.view.level;
 
 import it.unibo.cicciopier.model.GameObject;
 

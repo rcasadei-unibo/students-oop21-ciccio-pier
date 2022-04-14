@@ -1,7 +1,8 @@
-package it.unibo.cicciopier.view;
+package it.unibo.cicciopier.view.level;
 
 import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.model.entities.Player;
+import it.unibo.cicciopier.view.Texture;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,8 @@ public class HudView extends JPanel {
      */
     public void load() {
         // Setup panel
-        this.setBounds(0, 0, (int) this.getPreferredSize().getWidth() - 1, (int) this.getPreferredSize().getHeight());
+        this.setBounds(0, 0, (int) (this.getPreferredSize().getWidth() * 0.25), (int) (this.getPreferredSize().getHeight() * 0.25));
+        this.setOpaque(false);
         this.setLayout(null);
     }
 
@@ -77,11 +79,11 @@ public class HudView extends JPanel {
      */
     @Override
     protected void paintComponent(final Graphics g) {
-        //super.paintComponent(g);
+        super.paintComponent(g);
         final Player p = this.engine.getWorld().getPlayer();
         // render game hud
         this.renderHud(p, g);
         // dispose
-        //g.dispose();
+        g.dispose();
     }
 }

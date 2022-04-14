@@ -3,6 +3,7 @@ package it.unibo.cicciopier.view;
 import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.controller.Input;
 import it.unibo.cicciopier.model.blocks.base.Block;
+import it.unibo.cicciopier.view.level.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,9 @@ public class GameView extends JFrame implements View, KeyListener {
     private final JLayeredPane pane;
     private final LevelView level;
     private final HudView hud;
-    private final LevelMenuView menu;
+    private final LevelPausedView paused;
+    private final LevelOverView over;
+    private final LevelWonView won;
 
     /**
      * Constructor for this class.
@@ -30,7 +33,9 @@ public class GameView extends JFrame implements View, KeyListener {
         this.pane = new JLayeredPane();
         this.level = new LevelView(engine);
         this.hud = new HudView(engine);
-        this.menu = new LevelMenuView(engine);
+        this.paused = new LevelPausedView(engine);
+        this.over = new LevelOverView(engine);
+        this.won = new LevelWonView(engine);
     }
 
     /**
@@ -50,10 +55,18 @@ public class GameView extends JFrame implements View, KeyListener {
         this.hud.setPreferredSize(new Dimension(h * 16 / 9, h));
         this.hud.load();
         this.pane.add(this.hud, Integer.valueOf(1));
-        // Setup menu
-        this.menu.setPreferredSize(new Dimension(h * 16 / 9, h));
-        this.menu.load();
-        this.pane.add(this.menu, Integer.valueOf(2));
+        // Setup paused view
+        this.paused.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.paused.load();
+        this.pane.add(this.paused, Integer.valueOf(2));
+        // Setup over view
+        this.over.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.over.load();
+        this.pane.add(this.over, Integer.valueOf(3));
+        // Setup won view
+        this.won.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.won.load();
+        this.pane.add(this.won, Integer.valueOf(4));
         // Setup JFrame
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

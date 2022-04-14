@@ -1,10 +1,11 @@
-package it.unibo.cicciopier.view;
+package it.unibo.cicciopier.view.level;
 
 import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.model.settings.DeveloperMode;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.model.entities.base.Entity;
+import it.unibo.cicciopier.view.Texture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +79,7 @@ public class LevelView extends JPanel {
             if (e.getView() != null) {
                 e.getView().render(g);
             } else if (DeveloperMode.isActive()) {
-                // Render even if the view is null - developing purpose
+                // Render even if the view is null - developing purposes
                 g.setColor(Color.RED);
                 g.drawRect(e.getPos().getX(), e.getPos().getY(), e.getWidth() - 1, e.getHeight() - 1);
             }
@@ -87,12 +88,12 @@ public class LevelView extends JPanel {
         if (p.getView() != null) {
             p.getView().render(g);
         } else if (DeveloperMode.isActive()) {
-            // Render even if the view is null - developing purpose
+            // Render even if the view is null - developing purposes
             g.setColor(Color.BLACK);
             g.drawRect(p.getPos().getX(), p.getPos().getY(), p.getWidth() - 1, p.getHeight() - 1);
         }
         // dispose
-        //g.dispose();
+        g.dispose();
     }
 
 }

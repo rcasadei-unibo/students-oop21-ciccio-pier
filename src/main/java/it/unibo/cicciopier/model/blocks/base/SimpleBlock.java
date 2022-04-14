@@ -13,6 +13,8 @@ public class SimpleBlock extends SimpleGameObject implements Block {
 
     /**
      * Constructor for this class, it instantiates a block with the specific {@link BlockType}.
+     *
+     * @param type block type
      */
     public SimpleBlock(final BlockType type) {
         super();

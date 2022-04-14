@@ -2,6 +2,8 @@ package it.unibo.cicciopier.model.entities.base;
 
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
+import it.unibo.cicciopier.model.blocks.base.BlockType;
+import it.unibo.cicciopier.model.blocks.base.ShapelessBlock;
 import it.unibo.cicciopier.utility.Vector2d;
 
 import java.awt.*;
@@ -75,6 +77,9 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxY() - this.getPos().getY());
+            } else if(block.getType() != BlockType.AIR && !block.isSolid()) {
+                ShapelessBlock shapeless = (ShapelessBlock) block;
+                shapeless.onCollision(this);
             }
         }
         return 1;
@@ -102,6 +107,9 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getX() - this.getBounds().getMaxX());
+            } else if(block.getType() != BlockType.AIR && !block.isSolid()) {
+                ShapelessBlock shapeless = (ShapelessBlock) block;
+                shapeless.onCollision(this);
             }
         }
         return -1;
@@ -128,6 +136,9 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxX() - this.getPos().getX());
+            } else if(block.getType() != BlockType.AIR && !block.isSolid()) {
+                ShapelessBlock shapeless = (ShapelessBlock) block;
+                shapeless.onCollision(this);
             }
         }
         return 1;
@@ -156,6 +167,9 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getY() - this.getBounds().getMaxY());
+            } else if(block.getType() != BlockType.AIR && !block.isSolid()) {
+                ShapelessBlock shapeless = (ShapelessBlock) block;
+                shapeless.onCollision(this);
             }
         }
         return -1;

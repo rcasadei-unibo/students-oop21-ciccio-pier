@@ -65,9 +65,7 @@ public class GameLoop extends Thread implements Loop {
                 LOGGER.warn("Can't keep up! Did the system time change, or is the game overloaded? Running {}ms behind, skipping {} tick(s)", behind, behind / TPS);
             }
             lastLoopTime = System.currentTimeMillis();
-            if (this.engine.getState() == GameState.RUNNING
-                    || this.engine.getState() == GameState.PAUSED
-                    || this.engine.getState() == GameState.OVER) {
+            if (this.engine.getState() != GameState.LOADING) {
                 this.engine.update();
             }
         }
