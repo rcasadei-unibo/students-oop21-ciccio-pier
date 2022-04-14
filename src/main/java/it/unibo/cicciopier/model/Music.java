@@ -47,10 +47,20 @@ public enum Music {
         this.bytes = is.readAllBytes();
     }
 
+    /**
+     * Get the sound file name
+     *
+     * @return file name
+     */
     public String getFileName() {
         return this.fileName;
     }
 
+    /**
+     * Get the byte code of the audio
+     *
+     * @return byte array
+     */
     public byte[] getBytes() {
         return Arrays.copyOf(this.bytes, this.bytes.length);
     }
