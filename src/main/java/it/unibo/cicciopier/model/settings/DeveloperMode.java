@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.controller.menu;
+package it.unibo.cicciopier.model.settings;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package it.unibo.cicciopier.view;
 
 import it.unibo.cicciopier.controller.Engine;
-import it.unibo.cicciopier.controller.menu.DeveloperMode;
+import it.unibo.cicciopier.model.settings.DeveloperMode;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.Player;
 import it.unibo.cicciopier.model.entities.base.Entity;

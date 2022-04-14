@@ -1,6 +1,6 @@
 package it.unibo.cicciopier.view;
 
-import it.unibo.cicciopier.controller.menu.DeveloperMode;
+import it.unibo.cicciopier.model.settings.DeveloperMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

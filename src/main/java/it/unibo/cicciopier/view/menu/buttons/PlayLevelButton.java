@@ -1,6 +1,6 @@
 package it.unibo.cicciopier.view.menu.buttons;
 
-import it.unibo.cicciopier.controller.menu.DeveloperMode;
+import it.unibo.cicciopier.model.settings.DeveloperMode;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.model.Level;
 

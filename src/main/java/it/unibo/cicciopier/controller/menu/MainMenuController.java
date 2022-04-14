@@ -11,11 +11,17 @@ import it.unibo.cicciopier.controller.GameState;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.model.User;
+import it.unibo.cicciopier.model.settings.CustomFont;
+import it.unibo.cicciopier.view.Texture;
 import it.unibo.cicciopier.view.menu.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -28,6 +34,7 @@ public final class MainMenuController implements MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainMenuController.class);
     private static final int MAX_VOLUME = 1;
     private static final int MIN_VOLUME = 0;
+    private final Timer timer;
     private final Gson gson;
     private final MenuManagerView menu;
     private final File usersFile;
@@ -46,17 +53,25 @@ public final class MainMenuController implements MenuController {
         this.gson = new Gson().newBuilder().serializeNulls().create();
         this.users = new ArrayList<>();
         try {
-            this.jarFolder = new File(MainMenuController.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            this.jarFolder = new File(MainMenuController.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
             LOGGER.info("JarPath : " + this.jarFolder.getPath());
         } catch (URISyntaxException e) {
-            e.printStackTrace();
             LOGGER.error("Jar folder not found!!!", e);
             System.exit(1);
         }
         this.usersFile = new File(jarFolder,"users.json");
         this.loadUsers();
+        try {
+            LOGGER.info("Loading font...");
+            CustomFont.getInstance().load();
+            LOGGER.info("Font loaded successfully");
+        } catch (IOException | FontFormatException e) {
+            LOGGER.error("Error loading font!", e);
+        }
         this.menu = new MenuManagerView(this);
         this.show(ViewPanels.LOGIN);
+        this.timer = new Timer(1000/60, e -> menu.updateAnimations());
+        this.timer.start();
     }
 
     /**
@@ -266,7 +281,7 @@ public final class MainMenuController implements MenuController {
      * {@inheritDoc}
      */
     public List<User> getUsers() {
-        return users;
+        return new ArrayList<>(this.users);
     }
 
     /**
