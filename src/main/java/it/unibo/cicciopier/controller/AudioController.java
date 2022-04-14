@@ -165,7 +165,6 @@ public class AudioController {
         if (!this.enabled) {
             return;
         }
-        long time = System.currentTimeMillis();
         this.executor.submit(() -> {
             try (ByteArrayInputStream bis = new ByteArrayInputStream(sound.getBytes());
                  AudioInputStream ais = AudioSystem.getAudioInputStream(bis)) {
@@ -183,7 +182,6 @@ public class AudioController {
                 LOGGER.error("Error playing sound!", e);
             }
         });
-        LOGGER.info("Playing {} took {}ms", sound, System.currentTimeMillis() - time);
     }
 
 }
