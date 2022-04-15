@@ -91,6 +91,9 @@ public class GameWorld implements World {
      **/
     @Override
     public Block getBlock(final int x, final int y) {
+        if (x >= this.getWidth() || y >= this.getHeight()) {
+            return null;
+        }
         return this.blocks[y][x];
     }
 
@@ -116,7 +119,10 @@ public class GameWorld implements World {
     @Override
     public List<Entity> getEntitiesInRange(final Vector2d pos, final int radius) {
         return this.entities.stream()
-                .filter(e -> Math.abs(e.getPos().getX() - pos.getX()) < radius)
+                .filter(e -> Math.abs(e.getPos().getX() - pos.getX()) < radius ||
+                        Math.abs(e.getBounds().getMaxX() - pos.getX()) < radius)
+                .filter(e -> Math.abs(e.getPos().getY() - pos.getY()) < radius ||
+                        Math.abs(e.getBounds().getMaxY() - pos.getY()) < radius)
                 .collect(Collectors.toList());
     }
 

@@ -67,7 +67,10 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int endX = (int) ((entityHitBox.getMaxX() - 1) / Block.SIZE);
         final int y = (int) (entityHitBox.getY() / Block.SIZE);
         for (int i = startX; i <= endX; i++) {
-            Block block = this.getWorld().getBlock(i, y);
+            final Block block = this.getWorld().getBlock(i, y);
+            if (block == null) {
+                continue;
+            }
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxY() - this.getPos().getY());
@@ -97,7 +100,10 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int endY = (int) ((entityHitBox.getMaxY() - 1) / Block.SIZE);
         final int x = (int) ((entityHitBox.getMaxX() - 1) / Block.SIZE);
         for (int i = startY; i <= endY; i++) {
-            Block block = this.getWorld().getBlock(x, i);
+            final Block block = this.getWorld().getBlock(x, i);
+            if (block == null) {
+                continue;
+            }
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getX() - this.getBounds().getMaxX());
@@ -126,7 +132,10 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int endY = (int) ((entityHitBox.getMaxY() - 1) / Block.SIZE);
         final int x = (int) (entityHitBox.getX() / Block.SIZE);
         for (int i = startY; i <= endY; i++) {
-            Block block = this.getWorld().getBlock(x, i);
+            final Block block = this.getWorld().getBlock(x, i);
+            if (block == null) {
+                continue;
+            }
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxX() - this.getPos().getX());
@@ -146,13 +155,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      */
     protected int bottomCollision() {
         //create rectangle with offset of velocity
-        Rectangle entityHitBox  = this.rectangleOffset();
-        final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
-        //check if the player collide with the end of the map
-        if (entityHitBox.getMaxX() >= worldEndX) {
-            this.getVel().setX(worldEndX - (this.getPos().getX() + this.getWidth()));
-        }
-        entityHitBox  = this.rectangleOffset();
+        Rectangle entityHitBox = this.rectangleOffset();
         final int worldEndY = this.getWorld().getHeight() * Block.SIZE;
         //check if the player collide with the end of the map
         if (entityHitBox.getMaxY() >= worldEndY) {
@@ -162,7 +165,10 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         final int endX = (int) ((entityHitBox.getMaxX() - 1) / Block.SIZE);
         final int y = (int) ((entityHitBox.getMaxY() - 1) / Block.SIZE);
         for (int i = startX; i <= endX; i++) {
-            Block block = this.getWorld().getBlock(i, y);
+            final Block block = this.getWorld().getBlock(i, y);
+            if (block == null) {
+                continue;
+            }
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getY() - this.getBounds().getMaxY());

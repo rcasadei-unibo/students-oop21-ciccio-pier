@@ -45,7 +45,7 @@ public class GameWorldTest {
         assertEquals(1, this.world.getEntitiesInRange(new Vector2d(25, 100), 100).size(), "Entity inRange not working!");
         assertEquals(1, this.world.getEntitiesInRange(new Vector2d(175, 100), 100).size(), "Entity inRange not working!");
         assertEquals(0, this.world.getEntitiesInRange(new Vector2d(250, 100), 100).size(), "Entity inRange not working!");
-        assertEquals(1, this.world.getEntitiesInRange(new Vector2d(50, 300), 100).size(), "Entity inRange not working!");
+        assertEquals(0, this.world.getEntitiesInRange(new Vector2d(50, 300), 100).size(), "Entity inRange not working!");
         // Test remove
         this.world.removeEntity(e.get());
         assertFalse(this.world.getEntities().contains(e.get()), "Entity remove not working!");
@@ -65,7 +65,7 @@ public class GameWorldTest {
         assertEquals(b.get(), this.world.getBlock(0, 0), "Block get not working!");
         assertNull(this.world.getBlock(1, 0), "Block get not working!");
         assertNull(this.world.getBlock(10, 0), "Block get not working!");
-        assertThrowsExactly(ArrayIndexOutOfBoundsException.class, () -> this.world.getBlock(WORLD_SIZE, 0), "Block get not working!");
+        assertNull(this.world.getBlock(WORLD_SIZE, 0), "Block get not working!");
         // Test iterator
         final Iterator<Block> i = this.world.iterator();
         assertEquals(b.get(), i.next(), "Block iterator not working!");
