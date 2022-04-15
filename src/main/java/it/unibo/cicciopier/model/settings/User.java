@@ -1,7 +1,8 @@
-package it.unibo.cicciopier.model;
+package it.unibo.cicciopier.model.settings;
 
 
 import com.google.gson.annotations.SerializedName;
+import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.settings.Screen;
 
 import java.awt.*;

@@ -142,6 +142,10 @@ public enum Texture {
      */
     SETTINGS_BACKGROUND("/textures/backgrounds/settings.png"),
     /**
+     * Represents the background of the tutorial view
+     */
+    TUTORIAL_BACKGROUND("/textures/backgrounds/tutorial.png"),
+    /**
      * Represents the background shown when you win a level
      */
     VICTORY_BACKGROUND("/textures/backgrounds/victory.png"),
@@ -241,6 +245,18 @@ public enum Texture {
      * Represents the button used to access the main menu while hover it
      */
     HOME_BUTTON_HOVER("/textures/buttons/home/home_hover.png"),
+    /**
+     * Represents the button used to access the tutorial menu
+     */
+    TUTORIAL_BUTTON("/textures/buttons/tutorial/tutorial.png"),
+    /**
+     * Represents the button used to access the tutorial while pressed
+     */
+    TUTORIAL_BUTTON_PRESSED("/textures/buttons/tutorial/tutorial_pressed.png"),
+    /**
+     * Represents the button used to access the tutorial while hover it
+     */
+    TUTORIAL_BUTTON_HOVER("/textures/buttons/tutorial/tutorial_hover.png"),
     /**
      * Represents the level restart button
      */

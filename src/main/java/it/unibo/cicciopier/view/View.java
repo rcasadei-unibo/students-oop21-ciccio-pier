@@ -3,7 +3,7 @@ package it.unibo.cicciopier.view;
 /**
  * Contains view objects and manages the game windows.
  */
-public interface View extends StaticView {
+public interface View {
 
     /**
      * Load game window.
@@ -11,6 +11,11 @@ public interface View extends StaticView {
      * @throws Exception error
      */
     void load() throws Exception;
+
+    /**
+     * Open the game window.
+     */
+    void start();
 
     /**
      * Close game window.
