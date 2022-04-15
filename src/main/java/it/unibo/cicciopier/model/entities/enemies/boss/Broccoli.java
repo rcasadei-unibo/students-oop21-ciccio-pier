@@ -14,7 +14,7 @@ import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.enemies.BroccoliView;
 
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Simple class to spawn the boss
@@ -22,7 +22,6 @@ import java.util.Optional;
 public class Broccoli extends SimpleLivingEntity implements Boss {
     private static final int MAX_RANGE = 40;
     private static final int MAX_SPEED = 5;
-    private static final int NUM_OF_ATTACKS = 3;
     private static final int MAX_NUM_METEORS = 4;
     private static final int IDLE_DURATION = GameLoop.TPS;
     private static final int MISSILE_DURATION = 4 * GameLoop.TPS;
@@ -33,7 +32,10 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
     private static final int SEEK_MAX_WAITING = 13 * GameLoop.TPS;
 
     private final BroccoliView broccoliView;
+    private final Random random;
     private long start;
+    private final BossState[] attacks;
+    private BossState lastAttack;
 
     /**
      * Constructor for this class
@@ -43,7 +45,10 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
     public Broccoli(final World world) {
         super(EntityType.BROCCOLI, world);
         this.start = -1;
+        this.random = new Random();
         this.broccoliView = new BroccoliView(this);
+        this.attacks = new BossState[]{BossState.LASER, BossState.METEOR_SHOWER, BossState.MISSILE_LAUNCHER};
+        this.lastAttack = BossState.SEEK;
     }
 
     /**
@@ -102,17 +107,19 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
             this.resetCurrentState(BossState.IDLE);
             this.start = ticks;
             //choose a random attack
-            final int randNum = (int) (Math.random() * NUM_OF_ATTACKS);
-            switch (randNum) {
-                case 0:
-                    this.setCurrentState(BossState.LASER);
-                    break;
-                case 1:
-                    this.setCurrentState(BossState.METEOR_SHOWER);
-                    break;
-                default:
-                    this.setCurrentState(BossState.MISSILE_LAUNCHER);
+            int randNum = this.random.nextInt(this.attacks.length);
+            if (this.lastAttack == this.attacks[randNum]) {
+                final List<BossState> remainingAttacks = new ArrayList<>(Arrays.asList(this.attacks));
+                final int weightedRandom = this.random.nextInt(100);
+                if (weightedRandom < 90) {
+                    remainingAttacks.remove(this.lastAttack);
+                    randNum = this.random.nextInt(remainingAttacks.size());
+                    this.lastAttack = remainingAttacks.get(randNum);
+                }
+            } else {
+                this.lastAttack = this.attacks[randNum];
             }
+            this.setCurrentState(this.lastAttack);
             return;
         }
         //max speed that the boss can move
@@ -151,10 +158,10 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
                 //meteor starting x position
                 int meteorX = getWorld().getPlayer().getPos().getX();
                 //find a random offset
-                final int offSet = (int) (Math.random() * 500);
+                final int offSet = this.random.nextInt(500);
 
                 //flip a coin, add the offset to the meteor x position
-                meteorX += Math.random() >= 0.5 ? offSet : -offSet;
+                meteorX += this.random.nextBoolean() ? offSet : -offSet;
                 //check if the X position is out of the bounds of the map
                 if (meteorX < 0) {
                     meteorX = 0;
@@ -169,7 +176,7 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
                         meteorX = Block.SIZE * (getWorld().getWidth() - this.getWidth() / Block.SIZE);
                     }
                     //random y offset
-                    e.setPos(new Vector2d(meteorX, -Math.random() * 150 + 40));
+                    e.setPos(new Vector2d(meteorX, -this.random.nextInt(110) - 40));
                     getWorld().addEntity(e);
                 }
             }

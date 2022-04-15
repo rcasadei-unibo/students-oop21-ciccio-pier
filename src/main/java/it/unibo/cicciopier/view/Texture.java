@@ -22,6 +22,10 @@ public enum Texture {
      */
     PLAYER("/textures/entities/player.png"),
     /**
+     * Represents the texture of the blood particle.
+     */
+    BLOOD_PARTICLE("/textures/entities/blood.png"),
+    /**
      * Represents the texture of the boss.
      */
     BROCCOLI("/textures/entities/enemies/boss/broccoli.png"),
@@ -113,6 +117,14 @@ public enum Texture {
      * Represents the texture of the chicken
      */
     CHICKEN("/textures/entities/items/chicken.png"),
+    /**
+     * Represents the texture of the potatoes
+     */
+    POTATOES("/textures/entities/items/potatoes.png"),
+    /**
+     * Represents the texture of the burger
+     */
+    BURGER("/textures/entities/items/burger.png"),
     /**
      * Represents the texture of an explosion.
      */

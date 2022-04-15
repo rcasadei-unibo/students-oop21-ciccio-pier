@@ -9,10 +9,10 @@ import it.unibo.cicciopier.view.items.SimpleItem;
 import java.util.Random;
 
 /**
- * Class to create a simple chicken item for the player
+ * Class to create a simple burger item for the player
  */
-public class Chicken extends SimpleItem {
-    private static final int SCORE = 15;
+public class Burger extends SimpleItem {
+    private static final int SCORE = 20;
     private final Random random;
 
     /**
@@ -20,8 +20,8 @@ public class Chicken extends SimpleItem {
      *
      * @param world the game's world
      */
-    public Chicken(final World world) {
-        super(EntityType.CHICKEN, world, Texture.CHICKEN);
+    public Burger(World world) {
+        super(EntityType.BURGER, world, Texture.BURGER);
         this.random = new Random();
     }
 
@@ -33,7 +33,7 @@ public class Chicken extends SimpleItem {
         this.remove();
         this.getWorld().getPlayer().addScore(SCORE);
         this.getWorld().getPlayer().addStamina(this.random.
-                nextInt(Stamina.MAX_JUNK_FOOD -Stamina.MIN_JUNK_FOOD)+Stamina.MIN_JUNK_FOOD);
-        this.getWorld().getPlayer().damage(EntityType.CHICKEN.getAttackDamage());
+                nextInt(Stamina.MAX_JUNK_FOOD - Stamina.MIN_JUNK_FOOD) + Stamina.MIN_JUNK_FOOD);
+        this.getWorld().getPlayer().damage(EntityType.BURGER.getAttackDamage());
     }
 }
