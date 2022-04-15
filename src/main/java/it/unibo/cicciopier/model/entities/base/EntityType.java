@@ -29,15 +29,15 @@ public enum EntityType {
     /**
      * Represents a fried chicken, an unhealthy food
      */
-    CHICKEN(32, 32, 0, Stamina.JUNK_FOOD_DAMAGE),
+    CHICKEN(20, 20, 0, Stamina.JUNK_FOOD_DAMAGE),
     /**
      * Represents potatoes chips, an unhealthy food
      */
-    POTATOES(32, 32, 0, Stamina.JUNK_FOOD_DAMAGE),
+    POTATOES(20, 20, 0, Stamina.JUNK_FOOD_DAMAGE),
     /**
      * Represents a burger, an unhealthy food
      */
-    BURGER(32, 32, 0, Stamina.JUNK_FOOD_DAMAGE),
+    BURGER(20, 20, 0, Stamina.JUNK_FOOD_DAMAGE),
     /**
      * Represents jumping power-up
      */

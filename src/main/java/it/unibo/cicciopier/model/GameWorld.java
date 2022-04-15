@@ -91,6 +91,9 @@ public class GameWorld implements World {
      **/
     @Override
     public Block getBlock(final int x, final int y) {
+        if (x >= this.getWidth() || y >= this.getHeight()) {
+            return null;
+        }
         return this.blocks[y][x];
     }
 
