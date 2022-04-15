@@ -46,30 +46,18 @@ public class AudioController {
 
     /**
      * Load audio clip used for playing music
+     *
+     * @throws LineUnavailableException thrown by {@link AudioSystem#getClip()}
      */
-    public void load() {
-        try {
-            this.musicClip = AudioSystem.getClip();
-        } catch (LineUnavailableException e) {
-            LOGGER.error("Fatal error loading AudioController!", e);
-            this.enabled = false;
-        }
-        // load all the sounds
-        for (final Sound sound : Sound.values()) {
-            try {
-                sound.load();
-            } catch (NullPointerException | IOException e) {
-                LOGGER.error("Error loading sound {}", sound, e);
-            }
-        }
-        // load all the musics
-        for (final Music music : Music.values()) {
-            try {
-                music.load();
-            } catch (NullPointerException | IOException e) {
-                LOGGER.error("Error loading music {}", music, e);
-            }
-        }
+    public void load() throws LineUnavailableException {
+        this.musicClip = AudioSystem.getClip();
+    }
+
+    /**
+     * Disable audio system
+     */
+    public void disable() {
+        this.enabled = false;
     }
 
     /**

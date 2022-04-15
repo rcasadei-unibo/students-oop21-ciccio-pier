@@ -333,11 +333,17 @@ public enum Texture {
 
     /**
      * Load the specific texture.
+     *
+     * @throws IOException              error while reading image
+     * @throws IllegalArgumentException if the file is null
+     * @throws NullPointerException     if the given file is null
      */
-    public void load() throws IOException, IllegalArgumentException {
+    public void load() throws IOException, IllegalArgumentException, NullPointerException {
         LOGGER.info("Loading texture {} from file {}...", this.name(), this.fileName);
         final InputStream is = getClass().getResourceAsStream(this.fileName);
-        assert is != null;
+        if (is == null) {
+            throw new NullPointerException("File " + this.fileName + " does not exists!");
+        }
         this.img = ImageIO.read(is);
         is.close();
     }
