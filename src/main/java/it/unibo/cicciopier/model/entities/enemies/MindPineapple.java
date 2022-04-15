@@ -1,6 +1,8 @@
 package it.unibo.cicciopier.model.entities.enemies;
 
+import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameLoop;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.base.Entity;
@@ -114,7 +116,7 @@ public class MindPineapple extends SimplePathEnemy {
     private void angered() {
         this.localTicks++;
         this.resetCurrentState(EnemyState.ANGERED);
-        if (this.localTicks == ANGERED_TICKS) {
+        if (this.localTicks == ANGERED_TICKS) { 
             this.angered = true;
             this.localTicks = 0;
         }
@@ -148,6 +150,7 @@ public class MindPineapple extends SimplePathEnemy {
         } else {
             this.resetCurrentState(EnemyState.ATTACKING);
             if (this.getShootingCooldownTicks() == 0) {
+                AudioController.getInstance().playSound(Sound.SPIKES);
                 this.manifestSpikes();
                 this.setShootingCooldownTicks(ATTACK_COOLDOWN);
             }
@@ -160,6 +163,7 @@ public class MindPineapple extends SimplePathEnemy {
     @Override
     protected void notAttacking() {
         this.angered = false;
+        this.localTicks = 0;
     }
 
     /**

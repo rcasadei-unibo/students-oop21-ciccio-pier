@@ -54,7 +54,19 @@ public enum Sound {
     /**
      * Represents the audio for the typing
      */
-    TYPING("/audios/menu/typing.wav");
+    TYPING("/audios/menu/typing.wav"),
+    /**
+     * Represents the sound of the ShootingPea attacking
+     */
+    POP("/audios/pop.wav"),
+    /**
+     * Represents the sound of the NinjaPotato attacking
+     */
+    SLASH("/audios/slash.wav"),
+    /**
+     * Represents the MindPineapple attacking
+     */
+    SPIKES("/audios/spikes.wav");
 
     private final String fileName;
     private byte[] bytes;

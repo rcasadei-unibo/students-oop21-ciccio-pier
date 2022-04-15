@@ -1,6 +1,8 @@
 package it.unibo.cicciopier.model.entities.enemies;
 
+import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameLoop;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.base.EntityType;
@@ -139,6 +141,7 @@ public class NinjaPotato extends SimpleEnemy {
             if (this.localTicks == SLASH_OUT_TICK_DURATION) {
                 this.localTicks = 0;
                 this.checkSpecular();
+                AudioController.getInstance().playSound(Sound.SLASH);
                 this.shoot(PROJECTILE_SPEED, EntityType.SLASH);
                 this.resetCurrentState(EnemyState.SLASH_IN);
             }

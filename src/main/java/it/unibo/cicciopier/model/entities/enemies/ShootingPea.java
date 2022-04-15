@@ -1,6 +1,8 @@
 package it.unibo.cicciopier.model.entities.enemies;
 
+import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameLoop;
+import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.EntityState;
@@ -123,6 +125,7 @@ public class ShootingPea extends SimplePathEnemy {
             this.attackDurationTicks = 0;
             this.resetCurrentState(EntityState.IDLE);
         } else if (this.attackDurationTicks >= ATTACK_DURATION / 2 && !this.shot) {
+            AudioController.getInstance().playSound(Sound.POP);
             this.shoot(PROJECTILE_SPEED, EntityType.PEA);
             this.shot = true;
             this.setShootingCooldownTicks(ATTACK_COOLDOWN);
