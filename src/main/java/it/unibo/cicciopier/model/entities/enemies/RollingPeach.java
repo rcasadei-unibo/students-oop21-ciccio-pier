@@ -213,10 +213,13 @@ public class RollingPeach extends SimplePathEnemy {
     @Override
     protected void onCollision(Collision collision) {
         super.onCollision(collision);
-        if ((this.isFacingRight() && collision == Collision.COLLIDING_RIGHT) ||
-                (!this.isFacingRight() && collision == Collision.COLLIDING_LEFT)) {
-            this.suicidal = true;
-            this.die();
+        if (this.angered){
+
+            if ((this.isFacingRight() && collision == Collision.COLLIDING_RIGHT) ||
+                    (!this.isFacingRight() && collision == Collision.COLLIDING_LEFT)) {
+                this.suicidal = true;
+                this.die();
+            }
         }
     }
 
