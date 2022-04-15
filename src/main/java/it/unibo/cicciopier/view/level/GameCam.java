@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.level;
 
 import it.unibo.cicciopier.model.GameObject;
+import it.unibo.cicciopier.model.settings.Screen;
 
 import java.awt.*;
 
@@ -20,7 +21,7 @@ public class GameCam {
      * @param graphics the graphics object
      */
     public void translate(final GameObject object, final Graphics graphics) {
-        int camX = ((int) object.getBounds().getCenterX()) - (this.getViewportWidth() / 2);
+        int camX = Screen.scale(object.getBounds().getCenterX()) - this.getViewportWidth() / 2;
         if (camX > this.getOffsetMax()) {
             camX = this.getOffsetMax();
         }

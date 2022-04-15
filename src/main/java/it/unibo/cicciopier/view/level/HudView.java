@@ -2,6 +2,7 @@ package it.unibo.cicciopier.view.level;
 
 import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.model.entities.Player;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.Texture;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ public class HudView extends JPanel {
      */
     public void load() {
         // Setup panel
-        this.setBounds(0, 0, (int) (this.getPreferredSize().getWidth() * 0.25), (int) (this.getPreferredSize().getHeight() * 0.25));
+        this.setBounds(0, 0, (int) (this.getPreferredSize().getWidth()), (int) (this.getPreferredSize().getHeight()));
         this.setOpaque(false);
         this.setLayout(null);
     }
@@ -33,44 +34,53 @@ public class HudView extends JPanel {
     private void renderHud(final Player p, final Graphics g) {
         //draw health bar decoration
         g.drawImage(Texture.HEALTH_BAR_DECORATION.getTexture(),
-                20,
-                20,
+                Screen.scale(20),
+                Screen.scale(20),
+                Screen.scale(Texture.HEALTH_BAR_DECORATION.getTexture().getWidth()),
+                Screen.scale(Texture.HEALTH_BAR_DECORATION.getTexture().getHeight()),
                 null);
-        final int playerHealth = (Texture.HEALTH_BAR.getTexture().getWidth() * p.getHp()) / p.getMaxHp();
+        final int health = Texture.HEALTH_BAR.getTexture().getWidth() * p.getHp() / p.getMaxHp();
         // 0 or negative width can't be drawn
-        if (playerHealth > 0) {
+        if (health > 0) {
             //draw the health bar
-            g.drawImage(
-                    Texture.HEALTH_BAR.getTexture().getSubimage(0, 0, playerHealth, Texture.HEALTH_BAR.getTexture().getHeight()),
-                    40,
-                    20,
+            g.drawImage(Texture.HEALTH_BAR.getTexture().getSubimage(0, 0, health, Texture.HEALTH_BAR.getTexture().getHeight()),
+                    Screen.scale(40),
+                    Screen.scale(20),
+                    Screen.scale(health),
+                    Screen.scale(Texture.HEALTH_BAR.getTexture().getHeight()),
                     null);
         }
         //draw stamina bar decoration
         g.drawImage(Texture.STAMINA_BAR_DECORATION.getTexture(),
-                20,
-                50,
+                Screen.scale(20),
+                Screen.scale(50),
+                Screen.scale(Texture.STAMINA_BAR_DECORATION.getTexture().getWidth()),
+                Screen.scale(Texture.STAMINA_BAR_DECORATION.getTexture().getHeight()),
                 null);
-        final int playerStamina = (Texture.STAMINA_BAR.getTexture().getWidth() * p.getStamina()) / p.getMaxStamina();
+        final int stamina = Texture.STAMINA_BAR.getTexture().getWidth() * p.getStamina() / p.getMaxStamina();
         // 0 or negative width can't be drawn
-        if (playerStamina > 0) {
+        if (stamina > 0) {
             //draw the stamina bar
-            g.drawImage(
-                    Texture.STAMINA_BAR.getTexture().getSubimage(0, 0, playerStamina, Texture.STAMINA_BAR.getTexture().getHeight()),
-                    40,
-                    50,
+            g.drawImage(Texture.STAMINA_BAR.getTexture().getSubimage(0, 0, stamina, Texture.STAMINA_BAR.getTexture().getHeight()),
+                    Screen.scale(40),
+                    Screen.scale(50),
+                    Screen.scale(stamina),
+                    Screen.scale(Texture.STAMINA_BAR.getTexture().getHeight()),
                     null);
         }
         //draw score counter
+        // TODO scale score string
         g.drawString("Score: " + p.getScore(), 20, 110);
         //draw coin
-        g.drawImage(
-                Texture.COIN.getTexture().getSubimage(0, 0, 20, 20),
-                20,
-                130,
+        g.drawImage(Texture.COIN.getTexture().getSubimage(0, 0, 20, 20),
+                Screen.scale(20),
+                Screen.scale(130),
+                Screen.scale(Texture.COIN.getTexture().getHeight()),
+                Screen.scale(Texture.COIN.getTexture().getHeight()),
                 null
         );
         //draw coin counter
+        // TODO scale coin string
         g.drawString(String.valueOf(p.getCoin()), 20 + 38, 144);
     }
 

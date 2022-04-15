@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.entities.enemies;
 
 import it.unibo.cicciopier.model.entities.enemies.SimpleProjectile;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 
@@ -40,10 +41,10 @@ abstract class SimpleProjectileView implements GameObjectView {
             colRight = 0;
         }
         g.drawImage(this.texture.getTexture(),
-                this.projectile.getPos().getX(),
-                this.projectile.getPos().getY(),
-                this.projectile.getPos().getX() + this.width,
-                this.projectile.getPos().getY() + this.height,
+                Screen.scale(this.projectile.getPos().getX()),
+                Screen.scale(this.projectile.getPos().getY()),
+                Screen.scale(this.projectile.getPos().getX() + this.width),
+                Screen.scale(this.projectile.getPos().getY() + this.height),
                 colLeft, 0, colRight, this.height, null);
     }
 }

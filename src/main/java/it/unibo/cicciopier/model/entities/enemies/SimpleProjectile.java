@@ -70,7 +70,8 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         if (this.localTicks > this.durationTicks) {
             this.remove();
         }
-        this.setPos(this.getPos().addVector(this.getVel()));
+        this.getPos().add(this.getVel());
+        //this.setPos(this.getPos().addVector(this.getVel()));
         this.checkPlayerHit();
         this.checkCollisionsHit();
     }

@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.entities;
 
 import it.unibo.cicciopier.model.entities.enemies.boss.Missile;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 
@@ -29,15 +30,15 @@ public class MissileView implements GameObjectView {
     public void render(final Graphics g) {
         final Graphics2D g2d = (Graphics2D) g;
         AffineTransform oldXForm = g2d.getTransform();
-        g2d.rotate(
-                Math.PI / 2 + this.missile.getVel().getAngle(),
-                this.missile.getPos().getX(),
-                this.missile.getPos().getY()
+        g2d.rotate(Math.PI / 2 + this.missile.getVel().getAngle(),
+                Screen.scale(this.missile.getPos().getX()),
+                Screen.scale(this.missile.getPos().getY())
         );
-        g2d.drawImage(
-                Texture.MISSILE.getTexture(),
-                this.missile.getPos().getX() - 15,
-                this.missile.getPos().getY() - 5,
+        g2d.drawImage(Texture.MISSILE.getTexture(),
+                Screen.scale(this.missile.getPos().getX() - 15),
+                Screen.scale(this.missile.getPos().getY() - 5),
+                Screen.scale(Texture.MISSILE.getTexture().getWidth()),
+                Screen.scale(Texture.MISSILE.getTexture().getHeight()),
                 null
         );
         g2d.setTransform(oldXForm);

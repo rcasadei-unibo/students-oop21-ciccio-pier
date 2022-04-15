@@ -4,6 +4,7 @@ import it.unibo.cicciopier.model.entities.EntityState;
 import it.unibo.cicciopier.model.entities.base.LivingEntity;
 import it.unibo.cicciopier.model.entities.enemies.BossState;
 import it.unibo.cicciopier.model.entities.enemies.boss.Broccoli;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
@@ -66,20 +67,22 @@ public class BroccoliView extends SimpleEntityView {
     public void render(Graphics g) {
         super.render(g);
         //draw boss healthBar
-        g.drawImage(
-                Texture.ENTITY_HEALTH_BAR_DECORATION.getTexture(),
-                this.broccoli.getPos().getX() - 30,
-                this.broccoli.getPos().getY() - 60,
+        g.drawImage(Texture.ENTITY_HEALTH_BAR_DECORATION.getTexture(),
+                Screen.scale(this.broccoli.getPos().getX() - 30),
+                Screen.scale(this.broccoli.getPos().getY() - 60),
+                Screen.scale(Texture.ENTITY_HEALTH_BAR_DECORATION.getTexture().getWidth()),
+                Screen.scale(Texture.ENTITY_HEALTH_BAR_DECORATION.getTexture().getHeight()),
                 null
         );
         final int currentHealth = (this.broccoli.getHp() * Texture.ENTITY_HEALTH_BAR.getTexture().getWidth()) /
                 this.broccoli.getMaxHp();
         if (currentHealth > 0) {
-            g.drawImage(
-                    Texture.ENTITY_HEALTH_BAR.getTexture()
+            g.drawImage(Texture.ENTITY_HEALTH_BAR.getTexture()
                             .getSubimage(0, 0, currentHealth, Texture.ENTITY_HEALTH_BAR.getTexture().getHeight()),
-                    this.broccoli.getPos().getX() - 30,
-                    this.broccoli.getPos().getY() - 60,
+                    Screen.scale(this.broccoli.getPos().getX() - 30),
+                    Screen.scale(this.broccoli.getPos().getY() - 60),
+                    Screen.scale(Texture.ENTITY_HEALTH_BAR.getTexture().getWidth()),
+                    Screen.scale(Texture.ENTITY_HEALTH_BAR.getTexture().getHeight()),
                     null
             );
         }

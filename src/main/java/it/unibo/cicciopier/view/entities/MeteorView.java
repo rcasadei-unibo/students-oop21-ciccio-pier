@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.entities;
 
 import it.unibo.cicciopier.model.entities.enemies.boss.Meteor;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 
@@ -44,15 +45,15 @@ public class MeteorView implements GameObjectView {
         this.rotateMeteor();
         final Graphics2D g2d = (Graphics2D) g;
         AffineTransform oldXForm = g2d.getTransform();
-        g2d.rotate(
-                this.currentAngle,
-                this.meteor.getPos().getX() + this.meteor.getWidth() / 2d,
-                this.meteor.getPos().getY() + this.meteor.getHeight() / 2d
+        g2d.rotate(this.currentAngle,
+                Screen.scale(this.meteor.getPos().getX() + this.meteor.getWidth() / 2d),
+                Screen.scale(this.meteor.getPos().getY() + this.meteor.getHeight() / 2d)
         );
-        g2d.drawImage(
-                Texture.METEOR.getTexture(),
-                this.meteor.getPos().getX(),
-                this.meteor.getPos().getY(),
+        g2d.drawImage(Texture.METEOR.getTexture(),
+                Screen.scale(this.meteor.getPos().getX()),
+                Screen.scale(this.meteor.getPos().getY()),
+                Screen.scale(Texture.METEOR.getTexture().getWidth()),
+                Screen.scale(Texture.METEOR.getTexture().getHeight()),
                 null
         );
         g2d.setTransform(oldXForm);

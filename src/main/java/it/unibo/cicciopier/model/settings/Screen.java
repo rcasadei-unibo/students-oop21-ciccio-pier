@@ -50,6 +50,10 @@ public class Screen {
         return Screen.SCALE;
     }
 
+    public static int scale(final double value) {
+        return (int) (Screen.SCALE * value);
+    }
+
     public static Dimension getScreenMaxSize() {
         if (Screen.MAX_DIMENSION == null) {
             Dimension maxDimension = Toolkit.getDefaultToolkit().getScreenSize();

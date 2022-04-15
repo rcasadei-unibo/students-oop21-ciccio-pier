@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.view.entities;
 
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.Animation;
 
 import java.awt.*;
@@ -22,17 +23,21 @@ public abstract class SimpleLivingEntityView extends SimpleEntityView implements
         if (this.getObject().isFacingRight()) {
             //looking right
             g.drawImage(animation.getSprite(this.getAnimationTicks() / animation.getSpeed()),
-                    this.getObject().getPos().getX() + this.getTextureOffSet().getX(),
-                    this.getObject().getPos().getY() + this.getTextureOffSet().getY(),
-                    null);
+                    Screen.scale(this.getObject().getPos().getX() + this.getTextureOffSet().getX()),
+                    Screen.scale(this.getObject().getPos().getY() + this.getTextureOffSet().getY()),
+                    Screen.scale(animation.getWidth()),
+                    Screen.scale(animation.getHeight()),
+                    null
+            );
         } else {
             //looking left
             g.drawImage(animation.getSprite(this.getAnimationTicks() / animation.getSpeed()),
-                    this.getObject().getPos().getX() + this.getObject().getWidth() - this.getTextureOffSet().getX(),
-                    this.getObject().getPos().getY() + this.getTextureOffSet().getY(),
-                    -animation.getWidth(),
-                    animation.getHeight(),
-                    null);
+                    Screen.scale(this.getObject().getPos().getX() + this.getObject().getWidth() - this.getTextureOffSet().getX()),
+                    Screen.scale(this.getObject().getPos().getY() + this.getTextureOffSet().getY()),
+                    Screen.scale(-animation.getWidth()),
+                    Screen.scale(animation.getHeight()),
+                    null
+            );
         }
         this.renderBounds(g);
         this.increaseAnimationTicks();

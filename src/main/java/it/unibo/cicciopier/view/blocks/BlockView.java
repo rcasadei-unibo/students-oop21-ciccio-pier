@@ -2,6 +2,7 @@ package it.unibo.cicciopier.view.blocks;
 
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.blocks.base.BlockType;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
@@ -34,15 +35,16 @@ public class BlockView implements GameObjectView {
             return;
         }
         g.drawImage(Texture.BLOCK.getTexture(),
-                this.block.getPos().getX(),
-                this.block.getPos().getY(),
-                this.block.getPos().getX() + Block.SIZE,
-                this.block.getPos().getY() + Block.SIZE,
+                Screen.scale(this.block.getPos().getX()),
+                Screen.scale(this.block.getPos().getY()),
+                Screen.scale(this.block.getPos().getX() + Block.SIZE),
+                Screen.scale(this.block.getPos().getY() + Block.SIZE),
                 this.coordinates.getX(),
                 this.coordinates.getY(),
                 this.coordinates.getX() + Block.SIZE,
                 this.coordinates.getY() + Block.SIZE,
-                null);
+                null
+        );
     }
 
 }
