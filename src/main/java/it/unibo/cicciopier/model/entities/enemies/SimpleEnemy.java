@@ -193,9 +193,10 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     protected void shoot(final double projectileSpeed, final EntityType type) {
         Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(type);
         if (opt.isPresent()) {
+            int dir = this.isFacingRight() ? 1 : -1;
             SimpleProjectile e = ((SimpleProjectile) opt.get());
             e.setPos(this.getPos().addVector(new Vector2d(0, this.getType().getHeight() / 2d)));
-            e.setDirAndSpeed(this.isFacingRight() ? 1 : -1, projectileSpeed);
+            e.getVel().setX(dir * projectileSpeed);
             this.getWorld().addEntity(e);
         }
     }

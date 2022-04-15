@@ -24,7 +24,7 @@ public class MindPineapple extends SimplePathEnemy {
     private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
     private static final double MOVEMENT_SPEED = (2d * Block.SIZE) / GameLoop.TPS;
     private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
-    private static final double ATTACK_SPEED = 2d * Block.SIZE / GameLoop.TPS;
+    public static final double PROJECTILE_SPEED = 2d * Block.SIZE / GameLoop.TPS;
     public static final int ATTACK_DURATION_TICKS = 60;
     public static final int ANGERED_TICKS = 90;
 
@@ -108,7 +108,6 @@ public class MindPineapple extends SimplePathEnemy {
         return MAX_RIGHT_OFFSET;
     }
 
-
     /**
      * Utility method called to set the MindPineapple angry
      */
@@ -121,7 +120,6 @@ public class MindPineapple extends SimplePathEnemy {
         }
     }
 
-
     /**
      * Utility method called when the MindPineapple manifests some spikes, attacking the Player.
      * The spikes are intended to slow down the pace of the player, therefore they do not behave
@@ -132,7 +130,7 @@ public class MindPineapple extends SimplePathEnemy {
         if (opt.isPresent()) {
             int dir = this.isFacingRight() ? 1 : -1;
             SimpleProjectile e = ((SimpleProjectile) opt.get());
-            e.setDirAndSpeed(dir, ATTACK_SPEED);
+            e.getVel().setX(dir * PROJECTILE_SPEED);
             e.setPos(this.getWorld().getPlayer().getPos().addVector(new Vector2d(-dir * this.getType().getWidth(), 0)));
             this.getWorld().addEntity(e);
         }

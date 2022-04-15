@@ -19,6 +19,7 @@ public class Pea extends SimpleProjectile {
      */
     public Pea(final World world) {
         super(EntityType.PEA, world, ShootingPea.ATTACK_DURATION_TICKS);
+        this.view = new PeaView(this);
     }
 
     /**
@@ -27,14 +28,6 @@ public class Pea extends SimpleProjectile {
     @Override
     public GameObjectView getView() {
         return this.view;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void createView() {
-        this.view = new PeaView(this, this.getDir() == 1);
     }
 
     /**

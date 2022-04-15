@@ -12,9 +12,8 @@ public class NutView extends SimpleProjectileView {
      * Constructor for this class
      *
      * @param nut         The Nut of this view
-     * @param facingRight Flag regarding the direction of this projectile
      */
-    public NutView(final Nut nut, final boolean facingRight) {
-        super(nut, Texture.NUT, facingRight);
+    public NutView(final Nut nut) {
+        super(nut, Texture.NUT);
     }
 }

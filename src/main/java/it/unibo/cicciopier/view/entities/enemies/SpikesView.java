@@ -12,9 +12,8 @@ public class SpikesView extends SimpleProjectileView {
      * Constructor for this class
      *
      * @param spikes      The Spikes of this view
-     * @param facingRight Flag regarding the direction of this projectile
      */
-    public SpikesView(final Spikes spikes, final boolean facingRight) {
-        super(spikes, Texture.SPIKES, facingRight);
+    public SpikesView(final Spikes spikes) {
+        super(spikes, Texture.SPIKES);
     }
 }

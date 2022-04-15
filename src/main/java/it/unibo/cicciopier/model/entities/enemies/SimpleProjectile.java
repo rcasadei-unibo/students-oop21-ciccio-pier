@@ -4,7 +4,6 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
-import it.unibo.cicciopier.utility.Vector2d;
 
 import java.util.Optional;
 
@@ -13,8 +12,6 @@ import java.util.Optional;
  */
 public abstract class SimpleProjectile extends SimpleMovingEntity {
     private final int durationTicks;
-    private int dir;
-    private double projectileSpeed;
     private int localTicks;
 
     /**
@@ -28,35 +25,6 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         super(type, world);
         this.durationTicks = durationTicks;
         this.localTicks = 0;
-    }
-
-    /**
-     * Method used to set the direction and the speed of the projectile
-     *
-     * @param dir             The direction of the projectile
-     * @param projectileSpeed The speed of the projectile
-     */
-    public void setDirAndSpeed(final int dir, final double projectileSpeed) {
-        this.dir = dir;
-        this.projectileSpeed = projectileSpeed;
-        this.createView();
-    }
-
-    /**
-     * Method used to create the view of the Projectile.
-     * Left empty, is to be overridden in individual Projectile's classes
-     */
-    protected void createView() {
-
-    }
-
-    /**
-     * Retrieve the direction of the Projectile
-     *
-     * @return The Projectile's direction
-     */
-    protected int getDir() {
-        return this.dir;
     }
 
     /**
@@ -102,7 +70,7 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         if (this.localTicks > this.durationTicks) {
             this.remove();
         }
-        this.setPos(new Vector2d(this.getPos().getX() + this.dir * this.projectileSpeed, this.getPos().getY()));
+        this.setPos(this.getPos().addVector(this.getVel()));
         this.checkPlayerHit();
         this.checkCollisionsHit();
     }

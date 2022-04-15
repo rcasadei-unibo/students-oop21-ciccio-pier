@@ -14,21 +14,18 @@ abstract class SimpleProjectileView implements GameObjectView {
     private final Texture texture;
     private final int width;
     private final int height;
-    private final boolean facingRight;
 
     /**
      * Constructor for a generic Projectile render
      *
-     * @param projectile  The projectile to be rendered
-     * @param texture     The projectile's texture
-     * @param facingRight Flag based on the projectile's direction, used to render the correct way
+     * @param projectile The projectile to be rendered
+     * @param texture    The projectile's texture
      */
-    protected SimpleProjectileView(final SimpleProjectile projectile, final Texture texture, final boolean facingRight) {
+    protected SimpleProjectileView(final SimpleProjectile projectile, final Texture texture) {
         this.projectile = projectile;
         this.texture = texture;
         this.width = this.projectile.getWidth();
         this.height = this.projectile.getHeight();
-        this.facingRight = facingRight;
     }
 
     /**
@@ -38,7 +35,7 @@ abstract class SimpleProjectileView implements GameObjectView {
     public void render(final Graphics g) {
         int colLeft = 0;
         int colRight = this.width;
-        if (!this.facingRight) {
+        if (this.projectile.getVel().getX() < 0) {
             colLeft = this.width;
             colRight = 0;
         }

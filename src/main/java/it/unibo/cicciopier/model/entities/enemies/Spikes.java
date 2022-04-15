@@ -19,14 +19,7 @@ public class Spikes extends SimpleProjectile {
      */
     public Spikes(final World world) {
         super(EntityType.SPIKES, world, MindPineapple.ATTACK_DURATION_TICKS);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void createView() {
-        this.view = new SpikesView(this, this.getDir() == 1);
+        this.view = new SpikesView(this);
     }
 
     /**
@@ -44,5 +37,4 @@ public class Spikes extends SimpleProjectile {
     public void tick(final long ticks) {
         super.tick(ticks);
     }
-
 }

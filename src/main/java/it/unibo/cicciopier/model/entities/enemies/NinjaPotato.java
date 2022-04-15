@@ -17,9 +17,8 @@ public class NinjaPotato extends SimpleEnemy {
     private static final int STAMINA_VALUE = 50;
     private static final int ATTACK_RANGE = 6 * Block.SIZE;
     private static final int IDLE_DURATION = 4 * GameLoop.TPS;
-
     private static final int ATTACK_COOLDOWN = 3 * GameLoop.TPS;
-    private static final double ATTACK_SPEED = 15d * Block.SIZE / GameLoop.TPS;
+    public static final double PROJECTILE_SPEED = 15d * Block.SIZE / GameLoop.TPS;
     public static final int PROJECTILE_DURATION_TICKS = 30;
     private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
     public static final int SLASH_OUT_TICK_DURATION = 20;
@@ -71,10 +70,6 @@ public class NinjaPotato extends SimpleEnemy {
     public int getStaminaValue() {
         return STAMINA_VALUE;
     }
-
-
-
-
 
     /**
      * {@inheritDoc}
@@ -144,7 +139,7 @@ public class NinjaPotato extends SimpleEnemy {
             if (this.localTicks == SLASH_OUT_TICK_DURATION) {
                 this.localTicks = 0;
                 this.checkSpecular();
-                this.shoot(ATTACK_SPEED, EntityType.SLASH);
+                this.shoot(PROJECTILE_SPEED, EntityType.SLASH);
                 this.resetCurrentState(EnemyState.SLASH_IN);
             }
         } else if (EnemyState.SLASH_IN.equals(this.getCurrentState())) {

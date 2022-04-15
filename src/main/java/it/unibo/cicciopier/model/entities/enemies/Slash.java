@@ -19,6 +19,7 @@ public class Slash extends SimpleProjectile {
      */
     public Slash(final World world) {
         super(EntityType.SLASH, world, NinjaPotato.PROJECTILE_DURATION_TICKS);
+        this.view = new SlashView(this);
     }
 
     /**
@@ -27,14 +28,6 @@ public class Slash extends SimpleProjectile {
     @Override
     public GameObjectView getView() {
         return this.view;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void createView() {
-        this.view = new SlashView(this, this.getDir() == 1);
     }
 
     /**

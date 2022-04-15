@@ -149,7 +149,7 @@ public class RollingPeach extends SimplePathEnemy {
         if (opt.isPresent()) {
             SimpleProjectile e = ((SimpleProjectile) opt.get());
             e.setPos(this.getPos().addVector(new Vector2d(0, this.getType().getHeight() - type.getHeight())));
-            e.setDirAndSpeed(this.isFacingRight() ? 1 : -1,projectileSpeed);
+            e.getVel().setX(projectileSpeed);
             this.getWorld().addEntity(e);
         }
     }

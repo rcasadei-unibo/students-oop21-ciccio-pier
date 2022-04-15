@@ -20,6 +20,7 @@ public class Nut extends SimpleProjectile {
      */
     public Nut(final World world) {
         super(EntityType.NUT, world, 0);
+        this.view = new NutView(this);
     }
 
     /**
@@ -28,14 +29,6 @@ public class Nut extends SimpleProjectile {
     @Override
     public GameObjectView getView() {
         return this.view;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void createView() {
-        this.view = new NutView(this, this.getDir() == 1);
     }
 
     /**

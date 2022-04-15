@@ -19,7 +19,7 @@ public class ShootingPea extends SimplePathEnemy {
     private static final int ATTACK_RANGE = 7 * Block.SIZE;
     private static final int IDLE_DURATION = 2 * GameLoop.TPS;
     private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
-    private static final double ATTACK_SPEED = 9d * Block.SIZE / GameLoop.TPS;
+    public static final double PROJECTILE_SPEED = 9d * Block.SIZE / GameLoop.TPS;
     private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
     public static final int ATTACK_DURATION_TICKS = 90;
     private static final double MOVEMENT_SPEED = (0.7 * Block.SIZE) / GameLoop.TPS;
@@ -48,7 +48,6 @@ public class ShootingPea extends SimplePathEnemy {
     public GameObjectView getView() {
         return this.view;
     }
-
 
     /**
      * {@inheritDoc}
@@ -106,9 +105,6 @@ public class ShootingPea extends SimplePathEnemy {
         return MAX_RIGHT_OFFSET;
     }
 
-
-
-
     /**
      * {@inheritDoc}
      */
@@ -127,7 +123,7 @@ public class ShootingPea extends SimplePathEnemy {
             this.attackDurationTicks = 0;
             this.resetCurrentState(EntityState.IDLE);
         } else if (this.attackDurationTicks >= ATTACK_DURATION / 2 && !this.shot) {
-            this.shoot(ATTACK_SPEED, EntityType.PEA);
+            this.shoot(PROJECTILE_SPEED, EntityType.PEA);
             this.shot = true;
             this.setShootingCooldownTicks(ATTACK_COOLDOWN);
         }

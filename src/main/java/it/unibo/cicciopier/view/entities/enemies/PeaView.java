@@ -12,9 +12,8 @@ public class PeaView extends SimpleProjectileView {
      * Constructor for this class
      *
      * @param pea         The Pea of this view
-     * @param facingRight Flag regarding the direction of this projectile
      */
-    public PeaView(final Pea pea, final boolean facingRight) {
-        super(pea, Texture.PEA, facingRight);
+    public PeaView(final Pea pea) {
+        super(pea, Texture.PEA);
     }
 }
