@@ -39,11 +39,6 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         this.vel = vel;
     }
 
-    /**
-     * Create a rectangle with the position of the entity plus his velocity
-     *
-     * @return a rectangle with offset of the velocity
-     */
     protected Rectangle rectangleOffset() {
         //get the entity pos with the offset of the velocity
         final Vector2d entityOffset = this.getPos().addVector(this.getVel());
@@ -63,6 +58,9 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      */
     protected int upCollision() {
         //create rectangle with offset of velocity
+        //final Vector2d v = this.getPos().clone();
+        //v.setY(this.getPos().getY() + this.getVel().getY());
+        //final Rectangle entityHitBox = this.rectangleOffset(v);
         final Rectangle entityHitBox = this.rectangleOffset();
 
         //check if the player collides with the beginning of the map
@@ -77,7 +75,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxY() - this.getPos().getY());
-            } else if(block.getType() != BlockType.AIR && !block.isSolid()) {
+            } else if (block.getType() != BlockType.AIR && !block.isSolid()) {
                 ShapelessBlock shapeless = (ShapelessBlock) block;
                 shapeless.onCollision(this);
             }
@@ -93,6 +91,9 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      */
     protected int rightCollision() {
         //create rectangle with offset of velocity
+        //final Vector2d v = this.getPos().clone();
+        //v.setX(this.getPos().getX() + this.getVel().getX());
+        //final Rectangle entityHitBox = this.rectangleOffset(v);
         final Rectangle entityHitBox = this.rectangleOffset();
         final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
         //check if the player collide with the end of the map
@@ -107,7 +108,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getX() - this.getBounds().getMaxX());
-            } else if(block.getType() != BlockType.AIR && !block.isSolid()) {
+            } else if (block.getType() != BlockType.AIR && !block.isSolid()) {
                 ShapelessBlock shapeless = (ShapelessBlock) block;
                 shapeless.onCollision(this);
             }
@@ -123,6 +124,9 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      */
     protected int leftCollision() {
         //create rectangle with offset of velocity
+        //final Vector2d v = this.getPos().clone();
+        //v.setX(this.getPos().getX() + this.getVel().getX());
+        //final Rectangle entityHitBox = this.rectangleOffset(v);
         final Rectangle entityHitBox = this.rectangleOffset();
         //check if the player collides with the beginning of the map
         if (entityHitBox.getX() <= 0) {
@@ -136,7 +140,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxX() - this.getPos().getX());
-            } else if(block.getType() != BlockType.AIR && !block.isSolid()) {
+            } else if (block.getType() != BlockType.AIR && !block.isSolid()) {
                 ShapelessBlock shapeless = (ShapelessBlock) block;
                 shapeless.onCollision(this);
             }
@@ -152,8 +156,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      */
     protected int bottomCollision() {
         //create rectangle with offset of velocity
-        final Rectangle entityHitBox = this.rectangleOffset();
-
+        Rectangle entityHitBox  = this.rectangleOffset();
         final int worldEndY = this.getWorld().getHeight() * Block.SIZE;
         //check if the player collide with the end of the map
         if (entityHitBox.getMaxY() >= worldEndY) {
@@ -167,7 +170,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getY() - this.getBounds().getMaxY());
-            } else if(block.getType() != BlockType.AIR && !block.isSolid()) {
+            } else if (block.getType() != BlockType.AIR && !block.isSolid()) {
                 ShapelessBlock shapeless = (ShapelessBlock) block;
                 shapeless.onCollision(this);
             }
