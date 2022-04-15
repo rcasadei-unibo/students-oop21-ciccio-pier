@@ -73,6 +73,10 @@ public enum Buttons {
      */
     RESUME(new BufferedImage[]{Texture.RESUME_BUTTON.getTexture(), Texture.RESUME_BUTTON_PRESSED.getTexture(), Texture.RESUME_BUTTON_HOVER.getTexture()}, true),
     /**
+     * An implementation of the Texture {@link Texture#TUTORIAL_BUTTON} for the tutorial view
+     */
+    TUTORIAL(new BufferedImage[]{Texture.TUTORIAL_BUTTON.getTexture(), Texture.TUTORIAL_BUTTON_PRESSED.getTexture(), Texture.TUTORIAL_BUTTON_HOVER.getTexture()}, true),
+    /**
      * An implementation of the Texture {@link Texture#RESTART_BUTTON} for the music audio
      */
     RESTART(new BufferedImage[]{Texture.RESTART_BUTTON.getTexture(), Texture.RESTART_BUTTON_PRESSED.getTexture(), Texture.RESTART_BUTTON_HOVER.getTexture()}, true);

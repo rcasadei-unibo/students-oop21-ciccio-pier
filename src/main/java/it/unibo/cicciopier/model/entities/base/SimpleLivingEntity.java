@@ -9,7 +9,7 @@ import it.unibo.cicciopier.utility.Vector2d;
  */
 public abstract class SimpleLivingEntity extends SimpleMovingEntity implements LivingEntity {
     private static final int MAX_GRAVITY = 20;
-    private static final int JUMP_FORCE = 15;
+    private static final int JUMP_FORCE = 16;
     private static final int MAX_TIME = 35;
 
     private final Vector2d gravity;
@@ -210,6 +210,48 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * Method that check collisions and moves the entity
      */
     protected void move() {
+        /*if (this.getVel().getY() > 0) {
+            //check bottom collision
+            final int bottomOffset = this.bottomCollision(true);
+            if (bottomOffset == 0) {
+                this.getVel().setY(0);
+                this.ground = true;
+                if (this.getCurrentState() == EntityState.JUMPING) {
+                    this.resetCurrentState(EntityState.IDLE);
+                }
+                this.onCollision(Collision.COLLIDING_DOWN);
+            } else if (bottomOffset > 0) {
+                this.getVel().setY(bottomOffset);
+                this.onCollision(Collision.NEAR_COLLIDING_DOWN);
+            } else if (bottomOffset == -1) {
+                this.ground = false;
+            } else if (bottomOffset == -2) {
+                this.onCollision(Collision.FALLING);
+            }
+        }*/
+        if (this.getVel().getX() > 0) {
+            this.facingRight = true;
+            //check right collision
+            final int rightOffset = this.rightCollision();
+            if (rightOffset == 0) {
+                this.getVel().setX(0);
+                this.onCollision(Collision.COLLIDING_RIGHT);
+            } else if (rightOffset > 0) {
+                this.getVel().setX(rightOffset);
+                this.onCollision(Collision.NEAR_COLLIDING_RIGHT);
+            }
+        } else if (this.getVel().getX() < 0) {
+            this.facingRight = false;
+            //check left collision
+            final int leftOffset = this.leftCollision();
+            if (leftOffset == 0) {
+                this.getVel().setX(0);
+                this.onCollision(Collision.COLLIDING_LEFT);
+            } else if (leftOffset < 0) {
+                this.getVel().setX(leftOffset);
+                this.onCollision(Collision.NEAR_COLLIDING_LEFT);
+            }
+        }
         if (this.getVel().getY() > 0) {
             //check bottom collision
             final int bottomOffset = this.bottomCollision();
@@ -240,33 +282,19 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
             }
             this.ground = false;
         }
-        if (this.getVel().getX() > 0) {
-            this.facingRight = true;
-            //check right collision
-            final int rightOffset = this.rightCollision();
-            if (rightOffset == 0) {
-                this.getVel().setX(0);
-                this.onCollision(Collision.COLLIDING_RIGHT);
-            } else if (rightOffset > 0) {
-                this.getVel().setX(rightOffset);
-                this.onCollision(Collision.NEAR_COLLIDING_RIGHT);
-            }
-        } else if (this.getVel().getX() < 0) {
-            this.facingRight = false;
-            //check left collision
-            final int leftOffset = this.leftCollision();
-            if (leftOffset == 0) {
-                this.getVel().setX(0);
-                this.onCollision(Collision.COLLIDING_LEFT);
-            } else if (leftOffset < 0) {
-                this.getVel().setX(leftOffset);
-                this.onCollision(Collision.NEAR_COLLIDING_LEFT);
-            }
-        }
         this.getPos().add(this.getVel());
         //add gravity to the entity
         if (this.getVel().getDoubleY() < SimpleLivingEntity.MAX_GRAVITY) {
             this.getVel().add(gravity);
+            //check bottom collision
+            if (this.bottomCollision() == 0) {
+                this.getVel().setY(0);
+                this.ground = true;
+                if (this.getCurrentState() == EntityState.JUMPING) {
+                    this.resetCurrentState(EntityState.IDLE);
+                }
+                this.onCollision(Collision.COLLIDING_DOWN);
+            }
         }
     }
 }

@@ -10,15 +10,15 @@ import it.unibo.cicciopier.controller.GameEngine;
 import it.unibo.cicciopier.controller.GameState;
 import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.Music;
-import it.unibo.cicciopier.model.User;
+import it.unibo.cicciopier.model.settings.User;
 import it.unibo.cicciopier.model.settings.CustomFont;
 import it.unibo.cicciopier.model.settings.Screen;
+import it.unibo.cicciopier.model.settings.UsersFile;
 import it.unibo.cicciopier.view.menu.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
@@ -32,7 +32,6 @@ public final class MainMenuController implements MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainMenuController.class);
     private static final int MAX_VOLUME = 1;
     private static final int MIN_VOLUME = 0;
-    private final Timer timer;
     private final Gson gson;
     private final MenuManagerView menu;
     private final File usersFile;
@@ -67,9 +66,13 @@ public final class MainMenuController implements MenuController {
             LOGGER.error("Error loading font!", e);
         }
         this.menu = new MenuManagerView(this);
-        this.show(ViewPanels.LOGIN);
-        this.timer = new Timer(1000 / 60, e -> menu.updateAnimations());
-        this.timer.start();
+        if (this.player == null){
+            this.show(ViewPanels.LOGIN);
+        } else {
+            this.loadPlayer();
+            this.show(ViewPanels.HOME);
+        }
+
     }
 
     /**
@@ -125,18 +128,10 @@ public final class MainMenuController implements MenuController {
                 if (!menu.getLoginView().getUsername().isBlank() && menu.getLoginView().getUsername().length() < 15) {
                     this.username = menu.getLoginView().getUsername().toLowerCase().trim();
                     this.player = this.users.stream().filter(user -> user.getUsername().equals(this.username)).findFirst().orElseGet(this::createUser);
-
                     MainMenuController.LOGGER.info("User logged in: " + this.player.getUsername());
-
-                    menu.getSettingsView().getList().setSelectedValue(player.getResolution(),true);
-                    LOGGER.info("" + player.getResolution());
-                    Screen.setCurrentDimension(player.getResolution());
-                    AudioController.getInstance().setSoundVolume((float) this.player.getSoundVolume() / 100);
-                    this.menu.getSettingsView().updateGameAudioText();
-                    AudioController.getInstance().setMusicVolume((float) this.player.getMusicVolume() / 100);
-                    this.menu.getSettingsView().updateMusicAudioText();
-
-                    this.show(ViewPanels.MAIN_MENU);
+                    this.loadPlayer();
+                    this.show(ViewPanels.HOME);
+                    this.updateUsers();
                     break;
                 }
             }
@@ -149,6 +144,7 @@ public final class MainMenuController implements MenuController {
                 Screen.setCurrentDimension(Screen.getScreenMaxSize());
                 this.show(ViewPanels.LOGIN);
                 this.player = null;
+                this.updateUsers();
                 break;
             }
             case CHANGE_RESOLUTION: {
@@ -179,7 +175,10 @@ public final class MainMenuController implements MenuController {
      */
     private void updateUsers() {
         try (FileWriter writer = new FileWriter(this.usersFile); JsonWriter jsonWriter = new JsonWriter(writer)) {
-            this.gson.toJson(users, List.class, jsonWriter);
+            final UsersFile usersFile = new UsersFile();
+            usersFile.setUsers(this.users);
+            usersFile.setLastUser(this.username);
+            this.gson.toJson(usersFile, UsersFile.class, jsonWriter);
             System.out.println("Successfully updated json object to file...!!");
         } catch (IOException e) {
             e.printStackTrace();
@@ -223,8 +222,10 @@ public final class MainMenuController implements MenuController {
         }
         if (!isCreated) {
             try (FileReader reader = new FileReader(this.usersFile); JsonReader jsonReader = new JsonReader(reader)) {
-                this.users = this.gson.fromJson(jsonReader, new TypeToken<List<User>>() {
-                }.getType());
+                UsersFile usersFile = this.gson.fromJson(jsonReader, UsersFile.class);
+                this.users = usersFile.getUsers();
+                this.username = usersFile.getLastUser();
+                this.player = this.users.stream().filter(user -> user.getUsername().equals(this.username)).findFirst().orElse(null);
                 System.out.println("Successfully loaded users...!!");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -299,5 +300,15 @@ public final class MainMenuController implements MenuController {
      */
     public MenuManagerView getMenu() {
         return this.menu;
+    }
+
+    @Override
+    public void loadPlayer() {
+        this.menu.getSettingsView().getList().setSelectedValue(this.player.getResolution(),true);
+        Screen.setCurrentDimension(this.player.getResolution());
+        AudioController.getInstance().setSoundVolume((float) this.player.getSoundVolume() / 100);
+        this.menu.getSettingsView().updateGameAudioText();
+        AudioController.getInstance().setMusicVolume((float) this.player.getMusicVolume() / 100);
+        this.menu.getSettingsView().updateMusicAudioText();
     }
 }

@@ -50,6 +50,10 @@ public class EntityFactoryImpl implements EntityFactory {
                 return Optional.of(new Coin(this.world));
             case CHICKEN:
                 return Optional.of(new Chicken(this.world));
+            case BURGER:
+                return Optional.of(new Burger(this.world));
+            case POTATOES:
+                return Optional.of(new Potato(this.world));
             case EXPLOSION:
                 return Optional.of(new Explosion(this.world));
             case SHOOTING_PEA:

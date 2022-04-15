@@ -2,6 +2,7 @@ package it.unibo.cicciopier.view.entities;
 
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.enemies.boss.Laser;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
@@ -35,10 +36,11 @@ public class LaserView extends SimpleEntityView {
         final Stroke defaultStroke = g2d.getStroke();
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(4F));
-        g2d.drawLine(this.laser.getStartLine().getX(),
-                this.laser.getStartLine().getY(),
-                this.laser.getEndLine().getX(),
-                this.laser.getEndLine().getY());
+        g2d.drawLine(Screen.scale(this.laser.getStartLine().getX()),
+                Screen.scale(this.laser.getStartLine().getY()),
+                Screen.scale(this.laser.getEndLine().getX()),
+                Screen.scale(this.laser.getEndLine().getY())
+        );
         g2d.setStroke(defaultStroke);
         super.render(g);
     }

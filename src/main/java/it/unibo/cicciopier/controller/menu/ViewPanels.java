@@ -3,7 +3,8 @@ package it.unibo.cicciopier.controller.menu;
 public enum ViewPanels {
     LEVEL_SELECTION,
     LOGIN,
-    MAIN_MENU,
+    HOME,
     SETTINGS,
-    LEADERBOARD
+    LEADERBOARD,
+    TUTORIAL;
 }

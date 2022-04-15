@@ -22,7 +22,7 @@ public class Missile extends SimpleMovingEntity {
     private static final int MAX_DISTANCE = 250;
     private static final int MAX_ANGLE = 46; //in degree
     private static final int MAX_SPEED = 8;
-    private static final double MAX_STEERING = 0.8;
+    private static final double MAX_STEERING = 0.4;
 
     private final MissileView missileView;
     private final Vector2d accel;

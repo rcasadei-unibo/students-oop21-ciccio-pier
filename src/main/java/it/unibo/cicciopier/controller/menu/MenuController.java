@@ -2,7 +2,7 @@ package it.unibo.cicciopier.controller.menu;
 
 import it.unibo.cicciopier.controller.GameState;
 import it.unibo.cicciopier.model.Level;
-import it.unibo.cicciopier.model.User;
+import it.unibo.cicciopier.model.settings.User;
 import it.unibo.cicciopier.view.menu.MenuManagerView;
 import it.unibo.cicciopier.view.menu.buttons.MenuActionButton;
 
@@ -75,4 +75,9 @@ public interface MenuController {
      * @return The {@link MenuManagerView} of this {@link MainMenuController}
      */
     MenuManagerView getMenu();
+
+    /**
+     * This function load the players settings
+     */
+    void loadPlayer();
 }

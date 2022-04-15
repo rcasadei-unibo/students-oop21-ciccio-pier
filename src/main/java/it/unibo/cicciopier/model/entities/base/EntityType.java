@@ -1,5 +1,7 @@
 package it.unibo.cicciopier.model.entities.base;
 
+import it.unibo.cicciopier.model.entities.Stamina;
+
 /**
  * Represents a type of Entity with its details
  */
@@ -7,11 +9,11 @@ public enum EntityType {
     /**
      * Represents the Player
      */
-    PLAYER(32, 64, 500, 60),
+    PLAYER(32, 64, 1000, 60),
     /**
      * Represents the Missile that the enemy will launch
      */
-    MISSILE(10, 10, 0, 15),
+    MISSILE(10, 10, 0, 20),
     /**
      * Represents a meteor from boss attack
      */
@@ -19,7 +21,7 @@ public enum EntityType {
     /**
      * Represents the laser that the Boss will shoot
      */
-    LASER(0, 0, 0, 1),
+    LASER(0, 0, 0, 2),
     /**
      * Represents a coin
      */
@@ -27,7 +29,15 @@ public enum EntityType {
     /**
      * Represents a fried chicken, an unhealthy food
      */
-    CHICKEN(32, 32, 0, 0),
+    CHICKEN(32, 32, 0, Stamina.JUNK_FOOD_DAMAGE),
+    /**
+     * Represents potatoes chips, an unhealthy food
+     */
+    POTATOES(32, 32, 0, Stamina.JUNK_FOOD_DAMAGE),
+    /**
+     * Represents a burger, an unhealthy food
+     */
+    BURGER(32, 32, 0, Stamina.JUNK_FOOD_DAMAGE),
     /**
      * Represents jumping power-up
      */
@@ -83,7 +93,7 @@ public enum EntityType {
     /**
      * Represents the boss of the game
      */
-    BROCCOLI(96, 320, 4000, 10);
+    BROCCOLI(96, 320, 100, 10);
 
     private final int width;
     private final int height;

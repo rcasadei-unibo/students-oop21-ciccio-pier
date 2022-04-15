@@ -12,11 +12,10 @@ import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.PlayerView;
 
 public class PlayerImpl extends SimpleLivingEntity implements Player {
-    private static final int SPEED = 7;
     private static final int ATTACK_RANGE = 5 * Block.SIZE;
-    private static final int ATTACK_COOLDOWN = 1 * GameLoop.TPS;
-    private static final int MAX_STAMINA = 100;
-    private static final int ATTACK_DURATION = 18;
+    private static final int ATTACK_COOLDOWN = GameLoop.TPS;
+    private static final int ATTACK_DURATION = 20;
+    private static final int SPEED = 7;
     private final PlayerView playerView;
     private int attackCooldownTicks;
     private int stamina;
@@ -27,6 +26,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private int coin;
     private boolean won;
     private int attackTimer;
+    private int takenDamage;
 
     /**
      * Constructor for this class
@@ -44,6 +44,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         this.coin = 0;
         this.attackTimer = 0;
         this.won = false;
+        this.takenDamage = 0;
     }
 
 
@@ -60,6 +61,9 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public int getSpeed() {
+        if (this.getStamina() <= Stamina.FATIGUE) {
+            return (int) ((SPEED + speedModifier) * Stamina.FATIGUE_SPEED_DEBUFF);
+        }
         return SPEED + speedModifier;
     }
 
@@ -108,7 +112,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public int getMaxStamina() {
-        return MAX_STAMINA;
+        return Stamina.MAX_PLAYER;
     }
 
     /**
@@ -130,6 +134,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         this.stamina -= amount;
         if (this.stamina < 0) {
             this.stamina = 0;
+            this.damage(Stamina.HEALTH_DECREASE);
         }
     }
 
@@ -138,6 +143,9 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public int getJumpForce() {
+        if (this.getStamina() <= Stamina.FATIGUE) {
+            return (int) ((super.getJumpForce() + this.jumpModifier) * Stamina.FATIGUE_JUMP_DEBUFF);
+        }
         return super.getJumpForce() + this.jumpModifier;
     }
 
@@ -201,6 +209,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public void tick(final long ticks) {
+
         super.tick(ticks);
         this.updateAttackCooldown();
         this.move();
@@ -209,6 +218,12 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
             this.setCurrentState(EntityState.RUNNING);
         } else {
             this.setCurrentState(EntityState.IDLE);
+        }
+        if (this.takenDamage > 0) {
+            this.takenDamage++;
+        }
+        if (this.takenDamage >= 3) {
+            this.takenDamage = 0;
         }
     }
 
@@ -219,10 +234,19 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     public boolean jump() {
         final boolean jumped = super.jump();
         if (jumped) {
-            this.decreaseStamina(5);
+            this.decreaseStamina(Stamina.JUMP_DECREASE);
             AudioController.getInstance().playSound(Sound.JUMP);
         }
         return jumped;
+    }
+
+    /**
+     * Get if the player is taking damage
+     *
+     * @return true if is taking damage else false
+     */
+    public boolean hasTakenDamage() {
+        return this.takenDamage > 0;
     }
 
     /**
@@ -237,6 +261,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     public void damage(int amount) {
         if (!isInvulnerable) {
             super.damage(amount);
+            this.takenDamage = 1;
         }
     }
 

@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.entities;
 
 import it.unibo.cicciopier.model.settings.DeveloperMode;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 
@@ -67,9 +68,12 @@ public abstract class SimpleEntityView implements EntityView {
     public void render(final Graphics g) {
         final Animation animation = getAnimation();
         g.drawImage(animation.getSprite(this.getAnimationTicks() / animation.getSpeed()),
-                this.getObject().getPos().getX() + this.getTextureOffSet().getX(),
-                this.getObject().getPos().getY() + this.getTextureOffSet().getY(),
-                null);
+                Screen.scale(this.getObject().getPos().getX() + this.getTextureOffSet().getX()),
+                Screen.scale(this.getObject().getPos().getY() + this.getTextureOffSet().getY()),
+                Screen.scale(animation.getWidth()),
+                Screen.scale(animation.getHeight()),
+                null
+        );
         this.renderBounds(g);
         this.increaseAnimationTicks();
     }
@@ -82,10 +86,11 @@ public abstract class SimpleEntityView implements EntityView {
     public void renderBounds(final Graphics g) {
         if (DeveloperMode.isActive()) {
             g.setColor(Color.BLACK);
-            g.drawRect(this.getObject().getPos().getX(),
-                    this.getObject().getPos().getY(),
-                    this.getObject().getWidth() - 1,
-                    this.getObject().getHeight() - 1);
+            g.drawRect(Screen.scale(this.getObject().getPos().getX()),
+                    Screen.scale(this.getObject().getPos().getY()),
+                    Screen.scale(this.getObject().getWidth() - 1),
+                    Screen.scale(this.getObject().getHeight() - 1)
+            );
         }
     }
 }

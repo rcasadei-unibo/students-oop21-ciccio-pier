@@ -3,6 +3,8 @@ package it.unibo.cicciopier.view;
 import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.controller.Input;
 import it.unibo.cicciopier.model.blocks.base.Block;
+import it.unibo.cicciopier.model.settings.DeveloperMode;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.level.*;
 
 import javax.swing.*;
@@ -43,34 +45,35 @@ public class GameView extends JFrame implements View, KeyListener {
      */
     @Override
     public void load() throws Exception {
-        final int h = engine.getWorld().getHeight() * Block.SIZE;
         // Setup pane
-        this.pane.setPreferredSize(new Dimension(h * 16 / 9, h));
+        Dimension size = Screen.getCurrentDimension();
+        this.pane.setPreferredSize(size);
         this.pane.setLayout(null);
         // Setup level
-        this.level.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.level.setPreferredSize(size);
         this.level.load();
         this.pane.add(this.level, Integer.valueOf(0));
         // Setup hud
-        this.hud.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.hud.setPreferredSize(size);
         this.hud.load();
         this.pane.add(this.hud, Integer.valueOf(1));
         // Setup paused view
-        this.paused.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.paused.setPreferredSize(size);
         this.paused.load();
         this.pane.add(this.paused, Integer.valueOf(2));
         // Setup over view
-        this.over.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.over.setPreferredSize(size);
         this.over.load();
         this.pane.add(this.over, Integer.valueOf(3));
         // Setup won view
-        this.won.setPreferredSize(new Dimension(h * 16 / 9, h));
+        this.won.setPreferredSize(size);
         this.won.load();
         this.pane.add(this.won, Integer.valueOf(4));
         // Setup JFrame
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addKeyListener(this);
+        this.setUndecorated(true);
         this.setResizable(false);
         this.add(this.pane);
         this.pack();

@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.items;
 
 import it.unibo.cicciopier.model.items.Chicken;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 
@@ -26,6 +27,12 @@ public class ChickenView implements GameObjectView {
      */
     @Override
     public void render(Graphics g) {
-        g.drawImage(Texture.CHICKEN.getTexture(), this.chicken.getPos().getX(), this.chicken.getPos().getY(), null);
+        g.drawImage(Texture.CHICKEN.getTexture(),
+                Screen.scale(this.chicken.getPos().getX()),
+                Screen.scale(this.chicken.getPos().getY()),
+                Screen.scale(Texture.CHICKEN.getTexture().getWidth()),
+                Screen.scale(Texture.CHICKEN.getTexture().getHeight()),
+                null
+        );
     }
 }

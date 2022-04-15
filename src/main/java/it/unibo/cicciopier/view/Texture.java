@@ -22,6 +22,10 @@ public enum Texture {
      */
     PLAYER("/textures/entities/player.png"),
     /**
+     * Represents the texture of the blood particle.
+     */
+    BLOOD_PARTICLE("/textures/entities/blood.png"),
+    /**
      * Represents the texture of the boss.
      */
     BROCCOLI("/textures/entities/enemies/boss/broccoli.png"),
@@ -114,6 +118,14 @@ public enum Texture {
      */
     CHICKEN("/textures/entities/items/chicken.png"),
     /**
+     * Represents the texture of the potatoes
+     */
+    POTATOES("/textures/entities/items/potatoes.png"),
+    /**
+     * Represents the texture of the burger
+     */
+    BURGER("/textures/entities/items/burger.png"),
+    /**
      * Represents the texture of an explosion.
      */
     EXPLOSION("/textures/entities/explosion.png"),
@@ -141,6 +153,10 @@ public enum Texture {
      * Represents the background of the login view
      */
     SETTINGS_BACKGROUND("/textures/backgrounds/settings.png"),
+    /**
+     * Represents the background of the tutorial view
+     */
+    TUTORIAL_BACKGROUND("/textures/backgrounds/tutorial.png"),
     /**
      * Represents the background shown when you win a level
      */
@@ -242,6 +258,18 @@ public enum Texture {
      */
     HOME_BUTTON_HOVER("/textures/buttons/home/home_hover.png"),
     /**
+     * Represents the button used to access the tutorial menu
+     */
+    TUTORIAL_BUTTON("/textures/buttons/tutorial/tutorial.png"),
+    /**
+     * Represents the button used to access the tutorial while pressed
+     */
+    TUTORIAL_BUTTON_PRESSED("/textures/buttons/tutorial/tutorial_pressed.png"),
+    /**
+     * Represents the button used to access the tutorial while hover it
+     */
+    TUTORIAL_BUTTON_HOVER("/textures/buttons/tutorial/tutorial_hover.png"),
+    /**
      * Represents the level restart button
      */
     RESTART_BUTTON("/textures/buttons/restart/restart.png"),
@@ -317,11 +345,17 @@ public enum Texture {
 
     /**
      * Load the specific texture.
+     *
+     * @throws IOException              error while reading image
+     * @throws IllegalArgumentException if the file is null
+     * @throws NullPointerException     if the given file is null
      */
-    public void load() throws IOException, IllegalArgumentException {
+    public void load() throws IOException, IllegalArgumentException, NullPointerException {
         LOGGER.info("Loading texture {} from file {}...", this.name(), this.fileName);
         final InputStream is = getClass().getResourceAsStream(this.fileName);
-        assert is != null;
+        if (is == null) {
+            throw new NullPointerException("File " + this.fileName + " does not exists!");
+        }
         this.img = ImageIO.read(is);
         is.close();
     }

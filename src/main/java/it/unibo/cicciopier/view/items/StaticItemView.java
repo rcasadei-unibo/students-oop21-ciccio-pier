@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.items;
 
 import it.unibo.cicciopier.model.entities.base.Entity;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 
@@ -26,7 +27,12 @@ public class StaticItemView implements GameObjectView {
      */
     @Override
     public void render(final Graphics g) {
-        g.drawImage(this.texture.getTexture(), this.entity.getPos().getX(),
-                this.entity.getPos().getY(), null);
+        g.drawImage(this.texture.getTexture(),
+                Screen.scale(this.entity.getPos().getX()),
+                Screen.scale(this.entity.getPos().getY()),
+                Screen.scale(this.texture.getTexture().getWidth()),
+                Screen.scale(this.texture.getTexture().getHeight()),
+                null
+        );
     }
 }
