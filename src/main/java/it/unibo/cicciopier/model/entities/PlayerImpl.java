@@ -159,7 +159,8 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
                     return 1;
                 }
                 return -1;
-            }).findFirst().ifPresent(t -> t.damage(this.getType().getAttackDamage()));
+            }).filter(t -> this.isFacingRight() ? t.getPos().getX() > this.getPos().getX() : t.getPos().getX() < this.getPos().getX())
+                    .findFirst().ifPresent(t -> t.damage(this.getType().getAttackDamage()));
             this.attackCooldownTicks = 0;
         }
     }
