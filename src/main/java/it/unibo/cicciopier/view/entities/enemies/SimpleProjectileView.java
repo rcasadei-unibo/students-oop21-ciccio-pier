@@ -12,8 +12,6 @@ import java.awt.*;
 abstract class SimpleProjectileView implements GameObjectView {
     private final SimpleProjectile projectile;
     private final Texture texture;
-    private final int width;
-    private final int height;
 
     /**
      * Constructor for a generic Projectile render
@@ -24,8 +22,6 @@ abstract class SimpleProjectileView implements GameObjectView {
     protected SimpleProjectileView(final SimpleProjectile projectile, final Texture texture) {
         this.projectile = projectile;
         this.texture = texture;
-        this.width = this.projectile.getWidth();
-        this.height = this.projectile.getHeight();
     }
 
     /**
@@ -34,16 +30,16 @@ abstract class SimpleProjectileView implements GameObjectView {
     @Override
     public void render(final Graphics g) {
         int colLeft = 0;
-        int colRight = this.width;
+        int colRight = this.projectile.getWidth();
         if (this.projectile.getVel().getX() < 0) {
-            colLeft = this.width;
+            colLeft = this.projectile.getWidth();
             colRight = 0;
         }
         g.drawImage(this.texture.getTexture(),
                 this.projectile.getPos().getX(),
                 this.projectile.getPos().getY(),
-                this.projectile.getPos().getX() + this.width,
-                this.projectile.getPos().getY() + this.height,
-                colLeft, 0, colRight, this.height, null);
+                this.projectile.getPos().getX() + this.projectile.getWidth(),
+                this.projectile.getPos().getY() + this.projectile.getHeight(),
+                colLeft, 0, colRight, this.projectile.getHeight(), null);
     }
 }

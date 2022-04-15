@@ -31,8 +31,8 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
      * Method to check if projectile hit something, eventually destroying it
      */
     private void checkCollisionsHit() {
-        if (this.upCollision() != 1 || this.leftCollision() != 1 ||
-                this.bottomCollision() != -1 || this.rightCollision() != -1) {
+        if (this.getVel().getX() < 0 && this.leftCollision() <= 0 ||
+                this.getVel().getX() > 0 && this.rightCollision() >= 0) {
             this.createExplosion();
             this.remove();
         }
@@ -70,7 +70,7 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         if (this.localTicks > this.durationTicks) {
             this.remove();
         }
-        this.setPos(this.getPos().addVector(this.getVel()));
+        this.getPos().add(this.getVel());
         this.checkPlayerHit();
         this.checkCollisionsHit();
     }

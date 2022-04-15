@@ -1,6 +1,8 @@
 package it.unibo.cicciopier.model.entities.enemies;
 
+import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.enemies.NutView;
@@ -20,6 +22,7 @@ public class Nut extends SimpleProjectile {
      */
     public Nut(final World world) {
         super(EntityType.NUT, world, 0);
+        this.getVel().setY(5d * Block.SIZE/ GameLoop.TPS);
         this.view = new NutView(this);
     }
 
@@ -29,6 +32,12 @@ public class Nut extends SimpleProjectile {
     @Override
     public GameObjectView getView() {
         return this.view;
+    }
+
+    private void checkGravity(){
+        if (this.bottomCollision() == -1){
+            this.getPos().add(this.getVel());
+        }
     }
 
     /**
@@ -41,5 +50,6 @@ public class Nut extends SimpleProjectile {
             this.createExplosion();
             this.getWorld().getPlayer().damage(this.getType().getAttackDamage());
         }
+        this.checkGravity();
     }
 }
