@@ -24,7 +24,7 @@ public class ShootingPea extends SimplePathEnemy {
     public static final double PROJECTILE_SPEED = 9d * Block.SIZE / GameLoop.TPS;
     private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
     public static final int ATTACK_DURATION_TICKS = 90;
-    private static final double MOVEMENT_SPEED = (0.7 * Block.SIZE) / GameLoop.TPS;
+    private static final double MOVEMENT_SPEED = 0.5;
     public static final int ATTACK_DURATION = 2 * GameLoop.TPS;
 
     private final ShootingPeaView view;

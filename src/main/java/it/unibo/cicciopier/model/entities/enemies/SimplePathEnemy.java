@@ -104,7 +104,6 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
             this.currentDest = this.currentDest == this.leftPathfurthest ? this.rightPathfurthest : this.leftPathfurthest;
             this.idleTicks = 0;
             this.resetCurrentState(EnemyState.RUNNING);
-            this.setFacingRight(!this.isFacingRight());
         } else {
             this.getVel().setX(this.currentDest == this.leftPathfurthest ? -movementSpeed : movementSpeed);
             this.resetCurrentState(EntityState.RUNNING);

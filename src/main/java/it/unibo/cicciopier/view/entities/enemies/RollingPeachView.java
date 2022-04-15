@@ -31,7 +31,7 @@ public class RollingPeachView extends SimpleLivingEntityView {
             put(EnemyState.RUNNING, new Animation(texture, 6, 20, new Pair<>(0, h), w, h));
             put(EnemyState.ANGERED, new Animation(texture, 4, 10, new Pair<>(0, h * 2), w, h));
             put(EnemyState.ANGERED_RUNNING, new Animation(texture, 4, 10, new Pair<>(0, h * 3), w, h));
-            put(EnemyState.DEAD, new Animation(texture, 8, (int)Math.ceil(SimpleEnemy.DEATH_DURATION / 8d), new Pair<>(0, h * 4), w, h));
+            put(EnemyState.DEAD, new Animation(texture, 9, (int)Math.ceil(SimpleEnemy.DEATH_DURATION / 9d), new Pair<>(0, h * 4), w, h));
         }
     };
     private final RollingPeach rollingPeach;

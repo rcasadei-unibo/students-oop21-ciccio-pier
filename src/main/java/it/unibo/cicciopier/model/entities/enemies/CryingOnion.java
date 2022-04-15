@@ -18,7 +18,7 @@ public class CryingOnion extends SimplePathEnemy {
     private static final int STAMINA_VALUE = 50;
     private static final int ATTACK_RANGE = 5 * Block.SIZE;
     private static final double IDLE_DURATION = 2 * GameLoop.TPS;
-    private static final double MOVEMENT_SPEED = (0.8d * Block.SIZE) / GameLoop.TPS;
+    private static final double MOVEMENT_SPEED = 0.6;
     private static final double RUNNING_SPEED = (10d * Block.SIZE) / GameLoop.TPS;
     private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
     private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
