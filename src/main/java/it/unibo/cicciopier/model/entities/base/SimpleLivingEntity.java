@@ -210,25 +210,6 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * Method that check collisions and moves the entity
      */
     protected void move() {
-        /*if (this.getVel().getY() > 0) {
-            //check bottom collision
-            final int bottomOffset = this.bottomCollision(true);
-            if (bottomOffset == 0) {
-                this.getVel().setY(0);
-                this.ground = true;
-                if (this.getCurrentState() == EntityState.JUMPING) {
-                    this.resetCurrentState(EntityState.IDLE);
-                }
-                this.onCollision(Collision.COLLIDING_DOWN);
-            } else if (bottomOffset > 0) {
-                this.getVel().setY(bottomOffset);
-                this.onCollision(Collision.NEAR_COLLIDING_DOWN);
-            } else if (bottomOffset == -1) {
-                this.ground = false;
-            } else if (bottomOffset == -2) {
-                this.onCollision(Collision.FALLING);
-            }
-        }*/
         if (this.getVel().getX() > 0) {
             this.facingRight = true;
             //check right collision

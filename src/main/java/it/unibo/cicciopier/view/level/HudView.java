@@ -70,7 +70,6 @@ public class HudView extends JPanel {
                     null);
         }
         //draw score counter
-        // TODO scale score string
         g.setFont(CustomFont.getInstance().getFontOrDefault());
         g.drawString("Score: " + p.getScore(), Screen.scale(20), Screen.scale(110));
         //draw coin
@@ -82,7 +81,6 @@ public class HudView extends JPanel {
                 null
         );
         //draw coin counter
-        // TODO scale coin string
         g.setFont(CustomFont.getInstance().getFontOrDefault());
         g.drawString("x" + p.getCoin(), Screen.scale(50), Screen.scale(147));
     }
