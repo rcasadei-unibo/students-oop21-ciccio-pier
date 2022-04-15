@@ -3,6 +3,7 @@ package it.unibo.cicciopier.view.entities;
 import it.unibo.cicciopier.model.entities.EntityState;
 import it.unibo.cicciopier.model.entities.PlayerImpl;
 import it.unibo.cicciopier.model.entities.base.LivingEntity;
+import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
@@ -60,11 +61,13 @@ public class PlayerView extends SimpleLivingEntityView {
             this.bloodAnimationTicks = 0;
         }
         if (this.bloodAnimationTicks != -1) {
-            g.drawImage(
-                    BLOOD_ANIMATION.getSprite(bloodAnimationTicks / BLOOD_ANIMATION.getSpeed()),
-                    this.player.getPos().getX() + this.player.getWidth() / 2 - BLOOD_ANIMATION.getWidth() / 2,
-                    this.player.getPos().getY() + this.player.getHeight() / 4,
-                    null);
+            g.drawImage(BLOOD_ANIMATION.getSprite(bloodAnimationTicks / BLOOD_ANIMATION.getSpeed()),
+                    Screen.scale(this.player.getPos().getX() + this.player.getWidth() * 0.5 - BLOOD_ANIMATION.getWidth() * 0.5),
+                    Screen.scale(this.player.getPos().getY() + this.player.getHeight() * 0.25),
+                    Screen.scale(BLOOD_ANIMATION.getWidth()),
+                    Screen.scale(BLOOD_ANIMATION.getHeight()),
+                    null
+            );
             this.bloodAnimationTicks++;
             if (this.bloodAnimationTicks >= BLOOD_PARTICLE_DURATION) {
                 this.bloodAnimationTicks = -1;

@@ -1,5 +1,6 @@
 package it.unibo.cicciopier;
 
+import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameEngine;
 import it.unibo.cicciopier.controller.GameLoader;
 import it.unibo.cicciopier.model.Level;
@@ -29,6 +30,7 @@ public final class LevelMain {
             DeveloperMode.setActive(true);
             GameEngine e = new GameEngine(null, Level.FIRST_LEVEL);
             e.load();
+            e.getMusic().ifPresent(m -> AudioController.getInstance().playMusic(m));
             e.start();
         } catch (Exception e) {
             LOGGER.error("Error starting game...", e);

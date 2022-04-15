@@ -28,6 +28,7 @@ public class GameLoader {
         this.loadAudio();
         this.loadTextures();
         this.loadAnimations(PlayerView.ANIMATIONS.values());
+        this.loadAnimation(PlayerView.BLOOD_ANIMATION);
         this.loadAnimations(ShootingPeaView.ANIMATIONS.values());
         this.loadAnimations(NinjaPotatoView.ANIMATIONS.values());
         this.loadAnimations(RollingPeachView.ANIMATIONS.values());

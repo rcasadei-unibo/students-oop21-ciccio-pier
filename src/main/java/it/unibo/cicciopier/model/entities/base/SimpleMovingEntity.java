@@ -58,11 +58,7 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      */
     protected int upCollision() {
         //create rectangle with offset of velocity
-        //final Vector2d v = this.getPos().clone();
-        //v.setY(this.getPos().getY() + this.getVel().getY());
-        //final Rectangle entityHitBox = this.rectangleOffset(v);
         final Rectangle entityHitBox = this.rectangleOffset();
-
         //check if the player collides with the beginning of the map
         if (entityHitBox.getY() <= 0) {
             return -this.getPos().getY();
@@ -91,9 +87,6 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      */
     protected int rightCollision() {
         //create rectangle with offset of velocity
-        //final Vector2d v = this.getPos().clone();
-        //v.setX(this.getPos().getX() + this.getVel().getX());
-        //final Rectangle entityHitBox = this.rectangleOffset(v);
         final Rectangle entityHitBox = this.rectangleOffset();
         final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
         //check if the player collide with the end of the map
@@ -124,9 +117,6 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
      */
     protected int leftCollision() {
         //create rectangle with offset of velocity
-        //final Vector2d v = this.getPos().clone();
-        //v.setX(this.getPos().getX() + this.getVel().getX());
-        //final Rectangle entityHitBox = this.rectangleOffset(v);
         final Rectangle entityHitBox = this.rectangleOffset();
         //check if the player collides with the beginning of the map
         if (entityHitBox.getX() <= 0) {
@@ -157,6 +147,12 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
     protected int bottomCollision() {
         //create rectangle with offset of velocity
         Rectangle entityHitBox  = this.rectangleOffset();
+        final int worldEndX = this.getWorld().getWidth() * Block.SIZE;
+        //check if the player collide with the end of the map
+        if (entityHitBox.getMaxX() >= worldEndX) {
+            this.getVel().setX(worldEndX - (this.getPos().getX() + this.getWidth()));
+        }
+        entityHitBox  = this.rectangleOffset();
         final int worldEndY = this.getWorld().getHeight() * Block.SIZE;
         //check if the player collide with the end of the map
         if (entityHitBox.getMaxY() >= worldEndY) {
