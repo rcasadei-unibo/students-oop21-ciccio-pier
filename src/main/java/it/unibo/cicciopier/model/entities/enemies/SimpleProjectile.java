@@ -71,7 +71,6 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
             this.remove();
         }
         this.getPos().add(this.getVel());
-        //this.setPos(this.getPos().addVector(this.getVel()));
         this.checkPlayerHit();
         this.checkCollisionsHit();
     }
