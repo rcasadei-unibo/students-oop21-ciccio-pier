@@ -2,6 +2,7 @@ package it.unibo.cicciopier.view.level;
 
 import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.model.entities.Player;
+import it.unibo.cicciopier.model.settings.CustomFont;
 import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.Texture;
 
@@ -70,9 +71,10 @@ public class HudView extends JPanel {
         }
         //draw score counter
         // TODO scale score string
-        g.drawString("Score: " + p.getScore(), 20, 110);
+        g.setFont(CustomFont.getInstance().getFontOrDefault());
+        g.drawString("Score: " + p.getScore(), Screen.scale(20), Screen.scale(110));
         //draw coin
-        g.drawImage(Texture.COIN.getTexture().getSubimage(0, 0, 20, 20),
+        g.drawImage(Texture.COIN.getTexture().getSubimage(0, 0, Texture.COIN.getTexture().getHeight(), Texture.COIN.getTexture().getHeight()),
                 Screen.scale(20),
                 Screen.scale(130),
                 Screen.scale(Texture.COIN.getTexture().getHeight()),
@@ -81,7 +83,8 @@ public class HudView extends JPanel {
         );
         //draw coin counter
         // TODO scale coin string
-        g.drawString(String.valueOf(p.getCoin()), 20 + 38, 144);
+        g.setFont(CustomFont.getInstance().getFontOrDefault());
+        g.drawString("x" + p.getCoin(), Screen.scale(50), Screen.scale(147));
     }
 
     /**
