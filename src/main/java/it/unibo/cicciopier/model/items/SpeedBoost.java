@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public final class SpeedBoost extends SimpleItem implements Boost {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeedBoost.class);
     private static final int DURATION = 10 * GameLoop.TPS;
-    private static final int BOOST_STRENGTH = 4;
+    private static final int BOOST_STRENGTH = 2;
     private boolean active;
     private long startOfBoost;
 

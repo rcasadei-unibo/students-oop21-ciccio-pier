@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public final class JumpBoost extends SimpleItem implements Boost {
     private static final Logger LOGGER = LoggerFactory.getLogger(JumpBoost.class);
     private static final int DURATION = 10 * GameLoop.TPS;
-    private static final int BOOST_STRENGTH = 5;
+    private static final int BOOST_STRENGTH = 3;
     private boolean active;
     private long startOfBoost;
 

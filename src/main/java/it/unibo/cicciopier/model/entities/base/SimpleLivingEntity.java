@@ -9,7 +9,7 @@ import it.unibo.cicciopier.utility.Vector2d;
  */
 public abstract class SimpleLivingEntity extends SimpleMovingEntity implements LivingEntity {
     private static final int MAX_GRAVITY = 20;
-    private static final int JUMP_FORCE = 15;
+    private static final int JUMP_FORCE = 16;
     private static final int MAX_TIME = 35;
 
     private final Vector2d gravity;
