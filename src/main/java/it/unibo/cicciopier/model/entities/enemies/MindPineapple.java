@@ -18,13 +18,10 @@ import java.util.Optional;
  * a short wall of spikes.
  */
 public class MindPineapple extends SimplePathEnemy {
-    private static final int SCORE_VALUE = 50;
-    private static final int HEALTH_VALUE = 50;
-    private static final int STAMINA_VALUE = 50;
     private final int ATTACK_RANGE = this.getWorld().getPlayer().getAttackRange() + Block.SIZE;
     private static final double IDLE_DURATION = 4 * GameLoop.TPS;
     private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
-    private static final double MOVEMENT_SPEED = 0.5;
+    private static final double MOVEMENT_SPEED = 0.7;
     private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
     public static final double PROJECTILE_SPEED = 2d * Block.SIZE / GameLoop.TPS;
     public static final int ATTACK_DURATION_TICKS = 60;
@@ -52,30 +49,6 @@ public class MindPineapple extends SimplePathEnemy {
     @Override
     public GameObjectView getView() {
         return this.view;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getHealValue() {
-        return HEALTH_VALUE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getStaminaValue() {
-        return STAMINA_VALUE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getScoreValue() {
-        return SCORE_VALUE;
     }
 
     /**

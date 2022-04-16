@@ -14,9 +14,6 @@ import it.unibo.cicciopier.view.entities.enemies.NinjaPotatoView;
  * when it gets too close.
  */
 public class NinjaPotato extends SimpleEnemy {
-    private static final int SCORE_VALUE = 50;
-    private static final int HEALTH_VALUE = 50;
-    private static final int STAMINA_VALUE = 50;
     private static final int ATTACK_RANGE = 6 * Block.SIZE;
     private static final int IDLE_DURATION = 4 * GameLoop.TPS;
     private static final int ATTACK_COOLDOWN = 3 * GameLoop.TPS;
@@ -47,30 +44,6 @@ public class NinjaPotato extends SimpleEnemy {
     @Override
     public GameObjectView getView() {
         return this.view;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getScoreValue() {
-        return SCORE_VALUE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getHealValue() {
-        return HEALTH_VALUE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getStaminaValue() {
-        return STAMINA_VALUE;
     }
 
     /**

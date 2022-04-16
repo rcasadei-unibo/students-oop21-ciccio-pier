@@ -2,20 +2,24 @@ package it.unibo.cicciopier.model.entities.enemies;
 
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.Stamina;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
 
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * Abstract class for a generic basic Enemy
  */
 public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
+    private static final int SCORE_VALUE = 50;
     private static final int HIT_COOLDOWN = 2 * GameLoop.TPS;
     public static final int DEATH_DURATION = 2 * GameLoop.TPS;
     private final int attackDamage;
+    private Random rand;
     private int shootingCooldownTicks;
     private int hitTicks;
     private int deathTicks;
@@ -35,7 +39,23 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
         this.shootingCooldownTicks = 0;
         this.hitTicks = 0;
         this.attacking = false;
+        this.rand = new Random();
         this.setFacingRight(false);
+    }
+
+    @Override
+    public int getScoreValue() {
+        return SCORE_VALUE;
+    }
+
+    @Override
+    public int getHealValue() {
+        return Stamina.HEALTHY_FOOD_HEAL;
+    }
+
+    @Override
+    public int getStaminaValue() {
+        return rand.nextInt(Stamina.MAX_HEALTHY_FOOD - Stamina.MIN_HEALTHY_FOOD + 1) + Stamina.MIN_HEALTHY_FOOD;
     }
 
     /**

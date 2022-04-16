@@ -17,9 +17,6 @@ import java.util.Optional;
  * towards the player.
  */
 public class RollingPeach extends SimplePathEnemy {
-    private final int SCORE_VALUE = 50;
-    private static final int HEALTH_VALUE = 50;
-    private static final int STAMINA_VALUE = 50;
     private final int ATTACK_RANGE = 5 * Block.SIZE;
     private final double IDLE_DURATION = 3 * GameLoop.TPS;
     private final double MOVEMENT_SPEED = 0.6;
@@ -65,7 +62,7 @@ public class RollingPeach extends SimplePathEnemy {
         if (this.suicidal) {
             return 0;
         }
-        return HEALTH_VALUE;
+        return super.getHealValue();
     }
 
     /**
@@ -76,7 +73,7 @@ public class RollingPeach extends SimplePathEnemy {
         if (this.suicidal) {
             return 0;
         }
-        return STAMINA_VALUE;
+        return super.getStaminaValue();
     }
 
     /**
@@ -87,7 +84,7 @@ public class RollingPeach extends SimplePathEnemy {
         if (this.suicidal) {
             return 0;
         }
-        return SCORE_VALUE;
+        return super.getScoreValue();
     }
 
     /**

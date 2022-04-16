@@ -4,6 +4,7 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
+import it.unibo.cicciopier.utility.Vector2d;
 
 import java.util.Optional;
 
@@ -56,7 +57,9 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
         if (opt.isPresent()) {
             Entity e = opt.get();
-            e.setPos(this.getPos());
+            Vector2d vec = this.getPos().clone();
+            vec.add(new Vector2d(-e.getWidth() / 2d, -e.getHeight() / 2d));
+            e.setPos(vec);
             this.getWorld().addEntity(e);
         }
     }

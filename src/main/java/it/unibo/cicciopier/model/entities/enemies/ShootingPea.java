@@ -15,16 +15,13 @@ import it.unibo.cicciopier.view.entities.enemies.ShootingPeaView;
  * peas bursting from the pod's bottom.
  */
 public class ShootingPea extends SimplePathEnemy {
-    private static final int SCORE_VALUE = 50;
-    private static final int HEALTH_VALUE = 50;
-    private static final int STAMINA_VALUE = 50;
     private static final int ATTACK_RANGE = 7 * Block.SIZE;
     private static final int IDLE_DURATION = 2 * GameLoop.TPS;
     private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
     public static final double PROJECTILE_SPEED = 9d * Block.SIZE / GameLoop.TPS;
     private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
     public static final int ATTACK_DURATION_TICKS = 90;
-    private static final double MOVEMENT_SPEED = 0.5;
+    private static final double MOVEMENT_SPEED = 0.7;
     public static final int ATTACK_DURATION = 2 * GameLoop.TPS;
 
     private final ShootingPeaView view;
@@ -49,30 +46,6 @@ public class ShootingPea extends SimplePathEnemy {
     @Override
     public GameObjectView getView() {
         return this.view;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getHealValue() {
-        return HEALTH_VALUE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getStaminaValue() {
-        return STAMINA_VALUE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getScoreValue() {
-        return SCORE_VALUE;
     }
 
     /**

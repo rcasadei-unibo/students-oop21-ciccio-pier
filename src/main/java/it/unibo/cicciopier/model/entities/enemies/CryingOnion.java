@@ -13,9 +13,6 @@ import it.unibo.cicciopier.view.entities.enemies.CryingOnionView;
  * whenever the player gets too near and then running into him.
  */
 public class CryingOnion extends SimplePathEnemy {
-    private static final int SCORE_VALUE = 50;
-    private static final int HEALTH_VALUE = 50;
-    private static final int STAMINA_VALUE = 50;
     private static final int ATTACK_RANGE = 5 * Block.SIZE;
     private static final double IDLE_DURATION = 2 * GameLoop.TPS;
     private static final double MOVEMENT_SPEED = 0.6;
@@ -62,7 +59,7 @@ public class CryingOnion extends SimplePathEnemy {
         if (this.suicidal) {
             return 0;
         }
-        return HEALTH_VALUE;
+        return super.getHealValue();
     }
 
     /**
@@ -73,7 +70,7 @@ public class CryingOnion extends SimplePathEnemy {
         if (this.suicidal) {
             return 0;
         }
-        return STAMINA_VALUE;
+        return super.getStaminaValue();
     }
 
     /**
@@ -84,7 +81,7 @@ public class CryingOnion extends SimplePathEnemy {
         if (this.suicidal) {
             return 0;
         }
-        return SCORE_VALUE;
+        return super.getScoreValue();
     }
 
     /**
@@ -185,7 +182,7 @@ public class CryingOnion extends SimplePathEnemy {
     @Override
     protected void onCollision(Collision collision) {
         super.onCollision(collision);
-        if (this.angered){
+        if (this.angered) {
             if ((this.isFacingRight() && collision == Collision.COLLIDING_RIGHT) ||
                     (!this.isFacingRight() && collision == Collision.COLLIDING_LEFT)) {
                 this.suicidal = true;

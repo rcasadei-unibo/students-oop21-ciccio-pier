@@ -53,7 +53,7 @@ public enum EntityType {
     /**
      * Represents an explosion
      */
-    EXPLOSION(1, 1, 0, 0),
+    EXPLOSION(64, 64, 0, 0),
     /**
      * Represents a ShootingPea
      */
