@@ -20,7 +20,7 @@ public final class App {
         try {
             LOGGER.error("Starting the game...");
             new GameLoader().load();
-            new MainMenuController();
+            new MainMenuController().load();
         } catch (Exception e) {
             LOGGER.error("Error starting game...", e);
             System.exit(1);
