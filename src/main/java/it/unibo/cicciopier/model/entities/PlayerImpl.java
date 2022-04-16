@@ -8,6 +8,7 @@ import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.LivingEntity;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
+import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.PlayerView;
 
@@ -160,14 +161,14 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         }
         if (this.attackCooldownTicks == ATTACK_COOLDOWN) {
             this.setCurrentState(EntityState.ATTACKING);
-            this.getWorld().getEntitiesInRange(this.getPos(), ATTACK_RANGE).stream()
+            this.getWorld().getEntitiesInRange(this.getPos().addVector(new Vector2d(this.getWidth() / 2d, this.getHeight() / 2d)), ATTACK_RANGE).stream()
                     .filter(t -> t instanceof LivingEntity)
                     .map(LivingEntity.class::cast).sorted((o1, o2) -> {
-                if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
-                    return 1;
-                }
-                return -1;
-            }).filter(t -> this.isFacingRight() ? t.getPos().getX() > this.getPos().getX() : t.getPos().getX() < this.getPos().getX())
+                        if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
+                            return 1;
+                        }
+                        return -1;
+                    }).filter(t -> this.isFacingRight() ? t.getPos().getX() > this.getPos().getX() : t.getPos().getX() < this.getPos().getX())
                     .findFirst().ifPresent(t -> t.damage(this.getType().getAttackDamage()));
             this.attackCooldownTicks = 0;
         }
