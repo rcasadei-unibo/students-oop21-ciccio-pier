@@ -7,7 +7,6 @@ import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.settings.CustomFont;
 import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;
-import it.unibo.cicciopier.view.ManagerView;
 import it.unibo.cicciopier.view.menu.buttons.Buttons;
 import it.unibo.cicciopier.view.menu.buttons.ViewPanelButton;
 import org.slf4j.Logger;

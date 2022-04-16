@@ -178,7 +178,7 @@ public final class MainMenuController implements MenuController {
             usersFile.setUsers(this.users);
             usersFile.setLastUser(this.username);
             this.gson.toJson(usersFile, UsersFile.class, jsonWriter);
-            System.out.println("Successfully updated json object to file...!!");
+            MainMenuController.LOGGER.info("Successfully updated json object to file...!!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -225,7 +225,7 @@ public final class MainMenuController implements MenuController {
                 this.users = usersFile.getUsers();
                 this.username = usersFile.getLastUser();
                 this.player = this.users.stream().filter(user -> user.getUsername().equals(this.username)).findFirst().orElse(null);
-                System.out.println("Successfully loaded users...!!");
+                MainMenuController.LOGGER.info("Successfully loaded users...!!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
