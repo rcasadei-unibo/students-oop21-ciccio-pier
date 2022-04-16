@@ -2,6 +2,7 @@ package it.unibo.cicciopier.model.entities.enemies;
 
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.EntityState;
+import it.unibo.cicciopier.model.entities.base.Collision;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 
 /**
@@ -86,6 +87,22 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
      * It is left empty to be overridden
      */
     protected void notAttacking() {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onCollision(Collision collision) {
+        super.onCollision(collision);
+        if (collision == Collision.COLLIDING_RIGHT) {
+            this.rightPathfurthest = this.getPos().getX();
+            this.currentDest = rightPathfurthest;
+        }
+        if (collision == Collision.COLLIDING_LEFT) {
+            this.leftPathfurthest = this.getPos().getX();
+            this.currentDest = leftPathfurthest;
+        }
     }
 
     /**
