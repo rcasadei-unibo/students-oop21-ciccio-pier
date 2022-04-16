@@ -2,6 +2,7 @@ package it.unibo.cicciopier.model.entities.enemies;
 
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.Score;
 import it.unibo.cicciopier.model.entities.Stamina;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
@@ -43,16 +44,25 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
         this.setFacingRight(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getScoreValue() {
-        return SCORE_VALUE;
+        return rand.nextInt(Score.MAX_HEALTHY_FOOD - Score.MIN_HEALTHY_FOOD + 1) + Score.MIN_HEALTHY_FOOD;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getHealValue() {
         return Stamina.HEALTHY_FOOD_HEAL;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getStaminaValue() {
         return rand.nextInt(Stamina.MAX_HEALTHY_FOOD - Stamina.MIN_HEALTHY_FOOD + 1) + Stamina.MIN_HEALTHY_FOOD;
