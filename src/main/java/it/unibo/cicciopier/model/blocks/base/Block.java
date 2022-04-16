@@ -51,6 +51,17 @@ public interface Block extends GameObject {
      *
      * @return true if solid, false otherwise
      */
-    boolean isSolid();
+    default boolean isSolid() {
+        return this.getType().isSolid();
+    }
+
+    /**
+     * Check if this type of block can be interacted with
+     *
+     * @return true if you can interact with it, false otherwise
+     */
+    default boolean canInteract() {
+        return this.getType().canInteract();
+    }
 
 }

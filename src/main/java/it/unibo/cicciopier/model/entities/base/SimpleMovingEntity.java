@@ -81,8 +81,8 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxY() - this.getPos().getY());
-            } else if (block.getType() != BlockType.AIR && !block.isSolid()) {
-                ShapelessBlock shapeless = (ShapelessBlock) block;
+            } else if (block.canInteract()) {
+                final ShapelessBlock shapeless = (ShapelessBlock) block;
                 shapeless.onCollision(this);
             }
         }
@@ -114,8 +114,8 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getX() - this.getBounds().getMaxX());
-            } else if (block.getType() != BlockType.AIR && !block.isSolid()) {
-                ShapelessBlock shapeless = (ShapelessBlock) block;
+            } else if (block.canInteract()) {
+                final ShapelessBlock shapeless = (ShapelessBlock) block;
                 shapeless.onCollision(this);
             }
         }
@@ -146,8 +146,8 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getBounds().getMaxX() - this.getPos().getX());
-            } else if (block.getType() != BlockType.AIR && !block.isSolid()) {
-                ShapelessBlock shapeless = (ShapelessBlock) block;
+            } else if (block.canInteract()) {
+                final ShapelessBlock shapeless = (ShapelessBlock) block;
                 shapeless.onCollision(this);
             }
         }
@@ -179,8 +179,8 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
             //check if they collide
             if (block.isSolid() && entityHitBox.intersects(block.getBounds())) {
                 return (int) (block.getPos().getY() - this.getBounds().getMaxY());
-            } else if (block.getType() != BlockType.AIR && !block.isSolid()) {
-                ShapelessBlock shapeless = (ShapelessBlock) block;
+            } else if (block.canInteract()) {
+                final ShapelessBlock shapeless = (ShapelessBlock) block;
                 shapeless.onCollision(this);
             }
         }

@@ -25,10 +25,12 @@ public final class LevelMain {
         try {
             LOGGER.error("Starting the game...");
             new GameLoader().load();
+            AudioController.getInstance().setMusicVolume(0.2F);
+            AudioController.getInstance().setSoundVolume(0.2F);
             Screen.setCurrentDimension(Screen.getScreenMaxSize());
             CustomFont.getInstance().load();
             DeveloperMode.setActive(true);
-            GameEngine e = new GameEngine(null, Level.FIRST_LEVEL);
+            GameEngine e = new GameEngine(null, Level.SECOND_LEVEL);
             e.load();
             e.getMusic().ifPresent(m -> AudioController.getInstance().playMusic(m));
             e.start();
