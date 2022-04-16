@@ -13,7 +13,7 @@ import it.unibo.cicciopier.view.entities.ExplosionView;
  */
 public class Explosion extends SimpleEntity {
     private static final int DURATION = 48;
-    private final ExplosionView explosionView;
+    private ExplosionView explosionView;
     private long start;
 
     /**
@@ -23,9 +23,7 @@ public class Explosion extends SimpleEntity {
      */
     public Explosion(final World world) {
         super(EntityType.EXPLOSION, world);
-        this.explosionView = new ExplosionView(this);
         this.start = -1;
-        AudioController.getInstance().playSound(Sound.EXPLOSION);
     }
 
     /**
@@ -40,9 +38,19 @@ public class Explosion extends SimpleEntity {
      * {@inheritDoc}
      */
     @Override
+    public void load() {
+        AudioController.getInstance().playSound(Sound.EXPLOSION);
+        this.explosionView = new ExplosionView(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void tick(final long ticks) {
         if (this.start == -1) {
             this.start = ticks;
+            this.load();
         }
         if (ticks - this.start >= DURATION) {
             this.remove();

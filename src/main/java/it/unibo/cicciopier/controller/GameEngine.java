@@ -6,6 +6,7 @@ import it.unibo.cicciopier.model.Level;
 import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
+import it.unibo.cicciopier.model.entities.enemies.boss.Boss;
 import it.unibo.cicciopier.view.GameView;
 import it.unibo.cicciopier.view.View;
 import org.slf4j.Logger;
@@ -117,24 +118,28 @@ public class GameEngine implements Engine {
     @Override
     public void update() {
         if (this.getState() == GameState.RUNNING) {
-            // check if player is dead, the game is over
+            // check if player is dead
             if (this.getWorld().getPlayer().isDead()) {
                 this.state = GameState.OVER;
                 return;
             }
-            // check if player has won, the game has ended
+            // check if player has won
             if (this.getWorld().getPlayer().hasWon()) {
                 this.state = GameState.WON;
                 return;
             }
-            // for every entity check if it has to be removed, update it otherwise
-            for (Entity e : this.getWorld().getEntities()) {
-                if (e.isRemoved()) {
-                    this.getWorld().removeEntity(e);
-                    continue;
-                }
-                e.tick(this.ticks);
-            }
+            // check if the player killed the boss
+            this.getWorld().getEntities().stream()
+                    .filter(Entity::isRemoved)
+                    .filter(Boss.class::isInstance)
+                    .findFirst()
+                    .ifPresent(e -> this.getWorld().getPlayer().win());
+            // remove entities marked as removed
+            this.getWorld().getEntities().stream()
+                    .filter(Entity::isRemoved)
+                    .forEach(this.getWorld()::removeEntity);
+            // update every entity
+            this.getWorld().getEntities().forEach(e -> e.tick(this.ticks));
             // update player
             this.getWorld().getPlayer().tick(this.ticks);
             // process input

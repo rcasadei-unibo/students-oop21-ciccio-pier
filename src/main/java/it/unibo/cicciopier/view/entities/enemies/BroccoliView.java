@@ -81,7 +81,7 @@ public class BroccoliView extends SimpleEntityView {
                             .getSubimage(0, 0, currentHealth, Texture.ENTITY_HEALTH_BAR.getTexture().getHeight()),
                     Screen.scale(this.broccoli.getPos().getX() - 30),
                     Screen.scale(this.broccoli.getPos().getY() - 60),
-                    Screen.scale(Texture.ENTITY_HEALTH_BAR.getTexture().getWidth()),
+                    Screen.scale(currentHealth),
                     Screen.scale(Texture.ENTITY_HEALTH_BAR.getTexture().getHeight()),
                     null
             );
