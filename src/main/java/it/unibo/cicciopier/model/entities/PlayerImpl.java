@@ -168,14 +168,16 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
             this.getWorld().getEntitiesInRange(playerCenter, ATTACK_RANGE).stream()
                     .filter(t -> t instanceof LivingEntity)
                     .map(LivingEntity.class::cast)
+                    .filter(t -> !t.isDead())
                     .sorted((o1, o2) -> {
                         if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
-                            return 1;
-                        } else if (Math.abs(getPos().getX() - o1.getPos().getX()) > Math.abs(getPos().getX() - o2.getPos().getX())) {
                             return -1;
+                        } else if (Math.abs(getPos().getX() - o1.getPos().getX()) > Math.abs(getPos().getX() - o2.getPos().getX())) {
+                            return 1;
                         }
                         return 0;
-                    }).filter(t -> {
+                    })
+                    .filter(t -> {
                         Vector2d enemyCenter = t.getPos().addVector(new Vector2d(t.getWidth() / 2d, t.getHeight() / 2d));
                         if (this.isFacingRight()) {
                             return enemyCenter.getX() > playerCenter.getX();
