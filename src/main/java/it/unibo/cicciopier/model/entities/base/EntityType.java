@@ -41,15 +41,15 @@ public enum EntityType {
     /**
      * Represents jumping power-up
      */
-    JUMP_BOOST(32, 32, 0, 0),
+    JUMP_BOOST(14, 32, 0, 0),
     /**
      * Represents jumping power-up
      */
-    SPEED_BOOST(32, 32, 0, 0),
+    SPEED_BOOST(14, 32, 0, 0),
     /**
      * Represents jumping power-up
      */
-    INVULNERABILITY_BOOST(32, 32, 0, 0),
+    INVULNERABILITY_BOOST(14, 32, 0, 0),
     /**
      * Represents an explosion
      */

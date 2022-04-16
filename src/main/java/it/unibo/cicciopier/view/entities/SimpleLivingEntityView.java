@@ -15,6 +15,9 @@ public abstract class SimpleLivingEntityView extends SimpleEntityView implements
      */
     @Override
     public void render(final Graphics g) {
+        if (this.getObject().isRemoved()) {
+            return;
+        }
         //if the entity state changed, reset the counter
         if (this.getObject().getOldState() != this.getObject().getCurrentState()) {
             this.resetAnimationTicks();
