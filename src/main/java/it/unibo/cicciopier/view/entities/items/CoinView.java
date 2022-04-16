@@ -1,7 +1,7 @@
-package it.unibo.cicciopier.view.items;
+package it.unibo.cicciopier.view.entities.items;
 
 import it.unibo.cicciopier.model.entities.base.Entity;
-import it.unibo.cicciopier.model.items.Coin;
+import it.unibo.cicciopier.model.entities.items.Coin;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;

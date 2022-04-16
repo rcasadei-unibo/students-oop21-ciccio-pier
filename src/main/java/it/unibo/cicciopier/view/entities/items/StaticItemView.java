@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.view.items;
+package it.unibo.cicciopier.view.entities.items;
 
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.settings.DeveloperMode;

@@ -135,6 +135,15 @@ public class AudioController {
     }
 
     /**
+     * Restart the music
+     */
+    public void restartMusic() {
+        if (this.enabled && this.musicClip.isOpen()) {
+            this.musicClip.setFramePosition(0);
+        }
+    }
+
+    /**
      * Stop the music from loop
      */
     public void stopMusic() {

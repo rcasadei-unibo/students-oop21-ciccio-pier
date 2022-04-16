@@ -8,7 +8,7 @@ import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.entities.MissileView;
+import it.unibo.cicciopier.view.entities.enemies.boss.MissileView;
 
 
 import java.util.Optional;
@@ -22,8 +22,9 @@ public class Missile extends SimpleMovingEntity {
     private static final int MAX_DISTANCE = 250;
     private static final int MAX_ANGLE = 46; //in degree
     private static final int MAX_SPEED = 8;
-    private static final double MAX_STEERING = 0.4;
+    private static final double MAX_STEERING = 0.1;
 
+    private final Random random;
     private final MissileView missileView;
     private final Vector2d accel;
     private final int maxTravelDistance;
@@ -39,15 +40,15 @@ public class Missile extends SimpleMovingEntity {
         super(EntityType.MISSILE, world);
         this.setVel(new Vector2d(0, -6));
         this.accel = new Vector2d();
-        this.maxTravelDistance = new Random().
-                nextInt(Missile.MAX_DISTANCE - Missile.MIN_DISTANCE) + Missile.MIN_DISTANCE;
+        this.random = new Random();
+        this.maxTravelDistance = this.random.nextInt(Missile.MAX_DISTANCE - Missile.MIN_DISTANCE) +
+                Missile.MIN_DISTANCE;
         //rotate by a random number
         this.getVel().rotateInDegree(this.randAngleInRange());
         this.playerCollision = false;
         this.currentDistance = 0;
         this.missileView = new MissileView(this);
         AudioController.getInstance().playSound(Sound.LAUNCH);
-
     }
 
     /**
@@ -56,10 +57,9 @@ public class Missile extends SimpleMovingEntity {
      * @return angle in degree
      */
     private double randAngleInRange() {
-        final double randNum = 0.5d;
-        final double randAngleInDegree = Math.random() * Missile.MAX_ANGLE;
+        final double randAngleInDegree = this.random.nextInt(MAX_ANGLE);
 
-        if (Math.random() >= randNum) {
+        if (this.random.nextBoolean()) {
             return randAngleInDegree;
         } else {
             return -randAngleInDegree;

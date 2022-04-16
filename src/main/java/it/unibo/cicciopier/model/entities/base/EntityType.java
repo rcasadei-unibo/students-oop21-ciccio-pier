@@ -55,6 +55,10 @@ public enum EntityType {
      */
     EXPLOSION(64, 64, 0, 0),
     /**
+     * Represents a bite attack
+     */
+    BITE(128, 128, 0, 0),
+    /**
      * Represents a ShootingPea
      */
     SHOOTING_PEA(32, 64, 100, 50),
@@ -93,7 +97,7 @@ public enum EntityType {
     /**
      * Represents the boss of the game
      */
-    BROCCOLI(96, 320, 100, 10);
+    BROCCOLI(96, 320, 600, 10);
 
     private final int width;
     private final int height;

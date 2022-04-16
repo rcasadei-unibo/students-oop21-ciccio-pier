@@ -3,9 +3,11 @@ package it.unibo.cicciopier.model.entities;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
+import it.unibo.cicciopier.model.entities.effects.Bite;
+import it.unibo.cicciopier.model.entities.effects.Explosion;
 import it.unibo.cicciopier.model.entities.enemies.*;
 import it.unibo.cicciopier.model.entities.enemies.boss.*;
-import it.unibo.cicciopier.model.items.*;
+import it.unibo.cicciopier.model.entities.items.*;
 
 import java.util.Optional;
 
@@ -53,9 +55,11 @@ public class EntityFactoryImpl implements EntityFactory {
             case BURGER:
                 return Optional.of(new Burger(this.world));
             case POTATOES:
-                return Optional.of(new Potato(this.world));
+                return Optional.of(new Potatoes(this.world));
             case EXPLOSION:
                 return Optional.of(new Explosion(this.world));
+            case BITE:
+                return Optional.of(new Bite(this.world));
             case SHOOTING_PEA:
                 return Optional.of(new ShootingPea(this.world));
             case NINJA_POTATO:

@@ -10,10 +10,9 @@ import it.unibo.cicciopier.model.entities.Score;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
-import it.unibo.cicciopier.model.entities.enemies.BossState;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.entities.enemies.BroccoliView;
+import it.unibo.cicciopier.view.entities.enemies.boss.BroccoliView;
 
 import java.util.*;
 
@@ -75,7 +74,7 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
      */
     private void seek(final long ticks) {
         //wait before seeking the player
-        if (ticks - this.start <= SEEK_WAITING) {
+        if (ticks - this.start <= (long) SEEK_WAITING * this.getHp() / this.getMaxHp()) {
             return;
         }
         //if seeking take too long go to missile state

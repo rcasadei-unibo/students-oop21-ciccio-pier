@@ -15,7 +15,7 @@ public class CustomFont {
      * This function loads the font from the resources
      */
     public void load() throws IOException, FontFormatException {
-        final InputStream is = getClass().getResourceAsStream("/font/font.ttf");
+        final InputStream is = getClass().getResourceAsStream("/fonts/font.ttf");
         if (is == null) {
             throw new NullPointerException("Font not found");
         }

@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.model.items;
+package it.unibo.cicciopier.model.entities.items;
 
 import it.unibo.cicciopier.model.entities.base.Entity;
 

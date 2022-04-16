@@ -10,47 +10,59 @@ public enum Sound {
     /**
      * Represents the audio of a coin
      */
-    COIN("/audios/coin.wav"),
+    COIN("/audios/entities/items/coin.wav"),
     /**
      * Represents the audio for player jump
      */
-    JUMP("/audios/jump.wav"),
+    JUMP("/audios/entities/jump.wav"),
     /**
      * Represents the audio for the explosion
      */
-    EXPLOSION("/audios/explosion.wav"),
+    EXPLOSION("/audios/entities/effects/explosion.wav"),
+    /**
+     * Represents the audio for the bite of the player
+     */
+    BITE("/audios/entities/effects/bite.wav"),
+    /**
+     * Represents the audio when the player picks up a boost
+     */
+    BOOST_PICKUP("/audios/entities/items/boost_pickup.wav"),
+    /**
+     * Represents the audio when the player takes damage
+     */
+    DAMAGE("/audios/entities/effects/damage.wav"),
     /**
      * Represents the audio for the laser
      */
-    LASER("/audios/laser.wav"),
+    LASER("/audios/entities/enemies/boss/laser.wav"),
     /**
      * Represents the audio for the meteor
      */
-    METEOR("/audios/meteor.wav"),
+    METEOR("/audios/entities/enemies/boss/meteor.wav"),
     /**
      * Represents the audio when the missile get launched
      */
-    LAUNCH("/audios/launch.wav"),
+    LAUNCH("/audios/entities/enemies/boss/missile_launch.wav"),
     /**
      * Represent the audio when you pick an item
      */
-    ITEM("/audios/item.wav"),
+    FOOD_PICKUP("/audios/entities/items/food_pickup.wav"),
     /**
      * Represents the audio for the click in main buttons
      */
-    MAIN_BUTTON("/audios/menu/mainButton.wav"),
+    MAIN_BUTTON("/audios/menu/main_button.wav"),
     /**
      * Represents the audio for the hover action
      */
-    HOVER_BUTTON("/audios/menu/hoverButton.wav"),
+    HOVER_BUTTON("/audios/menu/hover_button.wav"),
     /**
      * Represents the audio for the click of starting the game
      */
-    GAME_HOVER("/audios/menu/gameButton.wav"),
+    GAME_HOVER("/audios/menu/game_button.wav"),
     /**
      * Represents the audio for the click in side buttons
      */
-    SIDE_BUTTON("/audios/menu/sideButton.wav"),
+    SIDE_BUTTON("/audios/menu/side_button.wav"),
     /**
      * Represents the audio for the typing
      */
@@ -58,15 +70,15 @@ public enum Sound {
     /**
      * Represents the sound of the ShootingPea attacking
      */
-    POP("/audios/pop.wav"),
+    POP("/audios/entities/enemies/pop.wav"),
     /**
      * Represents the sound of the NinjaPotato attacking
      */
-    SLASH("/audios/slash.wav"),
+    SLASH("/audios/entities/enemies/slash.wav"),
     /**
      * Represents the MindPineapple attacking
      */
-    SPIKES("/audios/spikes.wav");
+    SPIKES("/audios/entities/enemies/spikes.wav");
 
     private final String fileName;
     private byte[] bytes;

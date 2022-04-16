@@ -4,11 +4,13 @@ import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.entities.ExplosionView;
-import it.unibo.cicciopier.view.entities.LaserView;
+import it.unibo.cicciopier.view.entities.effects.BiteView;
+import it.unibo.cicciopier.view.entities.effects.ExplosionView;
+import it.unibo.cicciopier.view.entities.enemies.boss.LaserView;
 import it.unibo.cicciopier.view.entities.PlayerView;
 import it.unibo.cicciopier.view.entities.enemies.*;
-import it.unibo.cicciopier.view.items.CoinView;
+import it.unibo.cicciopier.view.entities.enemies.boss.BroccoliView;
+import it.unibo.cicciopier.view.entities.items.CoinView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,7 @@ public class GameLoader {
         this.loadAnimation(CoinView.ANIMATION);
         this.loadAnimation(ExplosionView.ANIMATION);
         this.loadAnimation(LaserView.ANIMATION);
+        this.loadAnimation(BiteView.ANIMATION);
     }
 
     /**

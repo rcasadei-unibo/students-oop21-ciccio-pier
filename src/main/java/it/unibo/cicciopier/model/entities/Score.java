@@ -7,7 +7,7 @@ public class Score {
     /**
      * Represents how much the coin gives as a score
      */
-    public static final int COIN = 50;
+    public static final int COIN = 35;
     /**
      * Represents how much the boss gives as a score
      */
@@ -15,7 +15,7 @@ public class Score {
     /**
      * Represents minimum score that healthy food can give
      */
-    public static final int MIN_HEALTHY_FOOD = 300;
+    public static final int MIN_HEALTHY_FOOD = 200;
     /**
      * Represents maximum score that the healthy food can give
      */
@@ -24,4 +24,8 @@ public class Score {
      * Represents how much the food gives as a score
      */
     public static final int FOOD = 100;
+    /**
+     * Represents how much the boost pickups gives as a score
+     */
+    public static final int BOOST = 60;
 }

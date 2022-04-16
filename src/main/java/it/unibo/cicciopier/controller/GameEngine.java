@@ -97,6 +97,7 @@ public class GameEngine implements Engine {
     public synchronized void restart() {
         LOGGER.info("Restarting game...");
         this.getWorldLoader().create();
+        this.getMusic().ifPresent(m -> AudioController.getInstance().restartMusic());
         this.state = GameState.RUNNING;
         this.ticks = 0;
     }

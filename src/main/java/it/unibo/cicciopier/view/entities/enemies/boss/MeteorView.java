@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.view.entities;
+package it.unibo.cicciopier.view.entities.enemies.boss;
 
 import it.unibo.cicciopier.model.entities.enemies.boss.Meteor;
 import it.unibo.cicciopier.model.settings.Screen;
