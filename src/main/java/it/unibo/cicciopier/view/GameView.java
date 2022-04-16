@@ -30,7 +30,6 @@ public class GameView extends JFrame implements View, KeyListener {
      * @param engine the game engine
      */
     public GameView(final Engine engine) {
-        super("Level");
         this.engine = engine;
         this.pane = new JLayeredPane();
         this.level = new LevelView(engine);
@@ -72,6 +71,7 @@ public class GameView extends JFrame implements View, KeyListener {
         // Setup JFrame
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("CICCIO PIER THE GAME!");
         this.addKeyListener(this);
         this.setUndecorated(true);
         this.setResizable(false);
