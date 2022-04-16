@@ -11,6 +11,11 @@ import java.util.List;
 public interface MenuController {
 
     /**
+     * This function loads the main menu controller
+     */
+    void load();
+
+    /**
      * This function sets visible a given {@link ViewPanels} by calling {@link MenuManagerView}
      *
      * @param viewPanels the {@link ViewPanels} that will be showed

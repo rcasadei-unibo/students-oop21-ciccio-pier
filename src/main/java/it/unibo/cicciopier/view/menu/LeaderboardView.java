@@ -121,7 +121,7 @@ public class LeaderboardView extends JPanel implements MenuPanel {
         this.panel.setPreferredSize(
                 new Dimension(
                         Screen.scale(500),
-                         Screen.scale(270)
+                        Screen.scale(270)
                 )
         );
         this.jScrollPane.setPreferredSize(
@@ -171,7 +171,6 @@ public class LeaderboardView extends JPanel implements MenuPanel {
                 this.level2.getPreferredSize().width,
                 this.level2.getPreferredSize().height
         );
-
         this.level3.setBounds(
                 level3Pos.getX(),
                 level3Pos.getY(),

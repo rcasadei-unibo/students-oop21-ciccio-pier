@@ -37,23 +37,21 @@ public class CustomAnimationView extends JComponent {
     protected void paintComponent(final Graphics g) {
         if (this.facing) {
             g.drawImage(this.animationPlayer.getSprite(this.frames / this.animationPlayer.getSpeed()),
-                    (int) (this.getPreferredSize().getWidth() / 38.4 + Screen.scale(this.x + this.animationPlayer.getWidth())),
+                    (int) (this.getPreferredSize().getWidth() / 38.4 + this.x + Screen.scale(this.animationPlayer.getWidth())),
                     this.getPreferredSize().height - Screen.scale((this.animationPlayer.getHeight() * 1.25)),
                     -Screen.scale((this.animationPlayer.getWidth() * 1.25)),
                     Screen.scale((this.animationPlayer.getHeight() * 1.25)),
                     null);
         } else {
-            g.drawImage(this.animationPlayer.getSprite(
-                            this.frames / this.animationPlayer.getSpeed()),
-                    (int) (this.getPreferredSize().getWidth() / 38.4 + Screen.scale(this.x)),
+            g.drawImage(this.animationPlayer.getSprite(this.frames / this.animationPlayer.getSpeed()),
+                    (int) (this.getPreferredSize().getWidth() / 38.4 + this.x),
                     this.getPreferredSize().height - Screen.scale((this.animationPlayer.getHeight() * 1.25)),
                     Screen.scale((this.animationPlayer.getWidth() * 1.25)),
                     Screen.scale((this.animationPlayer.getHeight() * 1.25)),
                     null);
         }
-        g.drawImage(this.animationBroccoli.getSprite(
-                        this.frames / this.animationBroccoli.getSpeed()),
-                (int) (-(this.animationBroccoli.getWidth() / 1.75) + Screen.scale(this.x)),
+        g.drawImage(this.animationBroccoli.getSprite(this.frames / this.animationBroccoli.getSpeed()),
+                -Screen.scale(this.animationBroccoli.getWidth() / 1.75) + this.x,
                 0,
                 Screen.scale((this.animationBroccoli.getWidth() / 1.75)),
                 Screen.scale((this.animationBroccoli.getHeight() / 1.75)),
@@ -69,7 +67,7 @@ public class CustomAnimationView extends JComponent {
             }
         } else {
             this.x += Screen.scale(5);
-            if (this.x >= Screen.getCurrentDimension().width) {
+            if (this.x >= this.getPreferredSize().width) {
                 this.facing = true;
             }
         }

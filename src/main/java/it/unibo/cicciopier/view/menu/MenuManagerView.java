@@ -74,6 +74,7 @@ public class MenuManagerView extends JFrame implements ManagerView {
     @Override
     public void update() {
         this.setPreferredSize(Screen.getCurrentDimension());
+        this.customAnimationView.setPreferredSize(new Dimension(this.getPreferredSize().width,  Screen.scale((384 / 1.75))));
         this.loggedUser.setFont(CustomFont.getInstance().getFontOrDefault());
         this.loggedUser.setText("Logged user: " + controller.getUsername());
         this.loggedUser.setForeground(Color.WHITE);
@@ -97,22 +98,31 @@ public class MenuManagerView extends JFrame implements ManagerView {
                 settingsPos.getX(),
                 settingsPos.getY(),
                 this.settingsButton.getPreferredSize().width,
-                this.settingsButton.getPreferredSize().height);
+                this.settingsButton.getPreferredSize().height
+        );
         this.homeButton.setBounds(
                 homePos.getX(),
                 homePos.getY(),
                 this.homeButton.getPreferredSize().width,
-                this.homeButton.getPreferredSize().height);
+                this.homeButton.getPreferredSize().height
+        );
         this.tutorialButton.setBounds(
                 tutorialPos.getX(),
                 tutorialPos.getY(),
                 this.tutorialButton.getPreferredSize().width,
-                this.tutorialButton.getPreferredSize().height);
+                this.tutorialButton.getPreferredSize().height
+        );
         this.loggedUser.setBounds(
                 loggedUserPos.getX(),
                 loggedUserPos.getY(),
                 this.loggedUser.getPreferredSize().width,
                 this.loggedUser.getPreferredSize().height
+        );
+        this.customAnimationView.setBounds(
+                0,
+                this.getPreferredSize().height - this.customAnimationView.getPreferredSize().height,
+                this.customAnimationView.getPreferredSize().width,
+                this.customAnimationView.getPreferredSize().height
         );
         this.repaint();
     }
@@ -199,7 +209,5 @@ public class MenuManagerView extends JFrame implements ManagerView {
 
     public void updateAnimations() {
         this.customAnimationView.repaint();
-        this.customAnimationView.setPreferredSize(new Dimension(this.getPreferredSize().width,  Screen.scale((384 / 1.75))));
-        this.customAnimationView.setBounds(0, this.getPreferredSize().height - this.customAnimationView.getPreferredSize().height, this.customAnimationView.getPreferredSize().width, this.customAnimationView.getPreferredSize().height);
     }
 }

@@ -1,7 +1,6 @@
 package it.unibo.cicciopier.controller.menu;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
@@ -46,17 +45,24 @@ public final class MainMenuController implements MenuController {
      */
     public MainMenuController() {
         MainMenuController.LOGGER.info("Initializing MainMenuController... ");
-        AudioController.getInstance().playMusic(Music.BACKGROUND);
         this.gson = new Gson().newBuilder().serializeNulls().create();
         this.users = new ArrayList<>();
         try {
             this.jarFolder = new File(MainMenuController.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
-            LOGGER.info("JarPath : " + this.jarFolder.getPath());
+            MainMenuController.LOGGER.info("JarPath : " + this.jarFolder.getPath());
         } catch (URISyntaxException e) {
-            LOGGER.error("Jar folder not found!!!", e);
+            MainMenuController.LOGGER.error("Jar folder not found!!!", e);
             System.exit(1);
         }
-        this.usersFile = new File(jarFolder, "users.json");
+        this.usersFile = new File(this.jarFolder, "users.json");
+        this.menu = new MenuManagerView(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void load() {
         this.loadUsers();
         try {
             LOGGER.info("Loading font...");
@@ -65,13 +71,13 @@ public final class MainMenuController implements MenuController {
         } catch (IOException | FontFormatException e) {
             LOGGER.error("Error loading font!", e);
         }
-        this.menu = new MenuManagerView(this);
         if (this.player == null) {
             this.show(ViewPanels.LOGIN);
         } else {
             this.loadPlayer();
             this.show(ViewPanels.HOME);
         }
+        AudioController.getInstance().playMusic(Music.BACKGROUND);
     }
 
     /**
