@@ -66,13 +66,12 @@ public final class MainMenuController implements MenuController {
             LOGGER.error("Error loading font!", e);
         }
         this.menu = new MenuManagerView(this);
-        if (this.player == null){
+        if (this.player == null) {
             this.show(ViewPanels.LOGIN);
         } else {
             this.loadPlayer();
             this.show(ViewPanels.HOME);
         }
-
     }
 
     /**
@@ -270,8 +269,6 @@ public final class MainMenuController implements MenuController {
         }
         AudioController.getInstance().playMusic(Music.BACKGROUND);
         this.menu.setVisible(true);
-
-
     }
 
     /**
@@ -302,9 +299,12 @@ public final class MainMenuController implements MenuController {
         return this.menu;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadPlayer() {
-        this.menu.getSettingsView().getList().setSelectedValue(this.player.getResolution(),true);
+        this.menu.getSettingsView().getList().setSelectedValue(this.player.getResolution(), true);
         Screen.setCurrentDimension(this.player.getResolution());
         AudioController.getInstance().setSoundVolume((float) this.player.getSoundVolume() / 100);
         this.menu.getSettingsView().updateGameAudioText();

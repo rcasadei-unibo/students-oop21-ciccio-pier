@@ -1,15 +1,22 @@
 package it.unibo.cicciopier.model.settings;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ *  This class identify a resolution treated as a {@link Dimension}
+ */
 public class Resolution extends Dimension {
 
-    public Resolution(int width, int height) {
+    /**
+     *  This constructor generates a new resolution by calling  a {@link Dimension} constructor
+     */
+    public Resolution(final int width, final int height) {
         super(width,height);
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public String toString() {
         return this.width + " x " + this.height;

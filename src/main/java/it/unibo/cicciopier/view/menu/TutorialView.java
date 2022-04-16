@@ -22,7 +22,7 @@ public class TutorialView extends JPanel implements MenuPanel {
      * {@inheritDoc}
      */
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(
                 Texture.TUTORIAL_BACKGROUND.getTexture(),
@@ -34,11 +34,17 @@ public class TutorialView extends JPanel implements MenuPanel {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void load() {
         this.setLayout(null);

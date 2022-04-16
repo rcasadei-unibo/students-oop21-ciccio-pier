@@ -29,7 +29,7 @@ public class LevelSelectionView extends JPanel implements MenuPanel {
      *
      * @param mainMenuController the instance of the {@link MainMenuController}
      */
-    public LevelSelectionView(MainMenuController mainMenuController) {
+    public LevelSelectionView(final MainMenuController mainMenuController) {
         LevelSelectionView.LOGGER.info("Initializing the class... ");
         this.level1 = new PlayLevelButton(
                 mainMenuController,
@@ -113,7 +113,7 @@ public class LevelSelectionView extends JPanel implements MenuPanel {
      * {@inheritDoc}
      */
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(
                 Texture.LEVEL_SELECTION_BACKGROUND.getTexture(),

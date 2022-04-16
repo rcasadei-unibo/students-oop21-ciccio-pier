@@ -29,15 +29,15 @@ public class CustomCheckBox extends JCheckBox {
             g.drawImage(this.selected,
                     0,
                     0,
-                    (int) (this.selected.getWidth() * Screen.getScale()),
-                    (int) (this.selected.getHeight() * Screen.getScale()),
+                    Screen.scale(this.selected.getWidth()),
+                    Screen.scale(this.selected.getHeight()),
                     null);
         } else {
             g.drawImage(this.unSelected,
                     0,
                     0,
-                    (int) (this.unSelected.getWidth() * Screen.getScale()),
-                    (int) (this.unSelected.getHeight() * Screen.getScale()),
+                    Screen.scale(this.unSelected.getWidth()),
+                    Screen.scale(this.unSelected.getHeight()),
                     null);
         }
     }

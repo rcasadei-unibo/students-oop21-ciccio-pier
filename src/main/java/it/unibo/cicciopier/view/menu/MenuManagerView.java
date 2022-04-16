@@ -200,7 +200,7 @@ public class MenuManagerView extends JFrame implements ManagerView {
 
     public void updateAnimations() {
         this.customAnimationView.repaint();
-        this.customAnimationView.setPreferredSize(new Dimension(this.getPreferredSize().width, (int) ((384 / 1.75) * Screen.getScale())));
+        this.customAnimationView.setPreferredSize(new Dimension(this.getPreferredSize().width,  Screen.scale((384 / 1.75))));
         this.customAnimationView.setBounds(0, this.getPreferredSize().height - this.customAnimationView.getPreferredSize().height, this.customAnimationView.getPreferredSize().width, this.customAnimationView.getPreferredSize().height);
     }
 }

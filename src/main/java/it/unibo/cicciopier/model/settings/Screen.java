@@ -1,17 +1,18 @@
 package it.unibo.cicciopier.model.settings;
 
-import it.unibo.cicciopier.controller.menu.MainMenuController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+/**
+ * This class represents the screen and define his resolutions and handle the screen sizing and the scale that is used
+ * to adjust the size of every component showed on the screen
+ */
 public class Screen {
     private static final Logger LOGGER = LoggerFactory.getLogger(Screen.class);
-    private static final GraphicsDevice DEVICE = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
     private static final Dimension DEFAULT_DIMENSION = new Dimension(1366, 768);
     private static final Dimension CURRENT_DIMENSION = new Dimension(1366, 768);
     private static Dimension MAX_DIMENSION = null;
@@ -25,17 +26,23 @@ public class Screen {
             new Resolution(1280, 720),
             new Resolution(854, 480))
     );
-
     private static double SCALE = 1;
 
-    public static Dimension getDefaultDimension() {
-        return new Dimension(Screen.DEFAULT_DIMENSION);
-    }
-
+    /**
+     *  This function returns the current resolution of the app
+     *
+     * @return the current resolution of the app
+     */
     public static Dimension getCurrentDimension() {
         return new Dimension(Screen.CURRENT_DIMENSION);
     }
 
+    /**
+     * This function sets the current resolution to a given resolution if and only if the resolution given is not bigger
+     * than your screen, if it is it will set the resolution to the max resolution possible for your screen
+     *
+     * @param dimension the resolution that you want to change the current resolution to
+     */
     public static void setCurrentDimension(final Dimension dimension) {
         if (dimension.width > getScreenMaxSize().width || dimension.height > getScreenMaxSize().height) {
             LOGGER.error("The dimension selected is bigger than your screen!! ");
@@ -46,14 +53,21 @@ public class Screen {
         Screen.SCALE = CURRENT_DIMENSION.getHeight() / DEFAULT_DIMENSION.getHeight();
     }
 
-    public static double getScale() {
-        return Screen.SCALE;
-    }
-
+    /**
+     * This function scale a given value using the scale based on the current size of the screen
+     *
+     * @param value is the value that will be scaled
+     * @return the value scaled
+     */
     public static int scale(final double value) {
         return (int) (Screen.SCALE * value);
     }
 
+    /**
+     * This function returns the closest max resolution in 16:9 ration based on the screen
+     *
+     * @return the max resolution
+     */
     public static Dimension getScreenMaxSize() {
         if (Screen.MAX_DIMENSION == null) {
             Dimension maxDimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -68,6 +82,11 @@ public class Screen {
         return new Dimension(Screen.MAX_DIMENSION);
     }
 
+    /**
+     * Returns the list of resolutions available
+     *
+     * @return the list of resolutions
+     */
     public static List<Resolution> getResolutions() {
         return new ArrayList<>(Screen.RESOLUTIONS);
     }

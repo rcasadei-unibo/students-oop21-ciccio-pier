@@ -44,7 +44,7 @@ public class SettingsView extends JPanel implements MenuPanel {
      *
      * @param mainMenuController the instance of the {@link MainMenuController}
      */
-    public SettingsView(MainMenuController mainMenuController) {
+    public SettingsView(final MainMenuController mainMenuController) {
         SettingsView.LOGGER.info("Initializing the class...");
         this.plusSound = new MenuActionButton(
                 mainMenuController,
@@ -125,72 +125,108 @@ public class SettingsView extends JPanel implements MenuPanel {
     public void update() {
         SettingsView.LOGGER.info("Updating the class...");
         this.setPreferredSize(Screen.getCurrentDimension());
-
-        this.panel.setPreferredSize(new Dimension((int) (225 * Screen.getScale()), (int) (105 * Screen.getScale())));
+        this.panel.setPreferredSize(new Dimension(Screen.scale(225 ), Screen.scale(105)));
         this.jList.setFixedCellWidth(this.panel.getPreferredSize().width);
         this.jScrollPane.setPreferredSize(new Dimension(this.panel.getPreferredSize().width,
                 this.panel.getPreferredSize().height));
         this.jList.setFont(CustomFont.getInstance().getFontOrDefault());
         this.gameAudio.setFont(CustomFont.getInstance().getFontOrDefault());
         this.musicAudio.setFont(CustomFont.getInstance().getFontOrDefault());
-        this.gameAudio.setPreferredSize(new Dimension((int) (70 * Screen.getScale()), (int) (60 * Screen.getScale())));
-        this.musicAudio.setPreferredSize(new Dimension((int) (70 * Screen.getScale()), (int) (60 * Screen.getScale())));
+        this.gameAudio.setPreferredSize(new Dimension(Screen.scale(70), Screen.scale(60)));
+        this.musicAudio.setPreferredSize(new Dimension(Screen.scale(70), Screen.scale(60)));
         final int audioWidthOffset = this.getPreferredSize().width / 2 - plusMusic.getPreferredSize().width;
         final int audioHeightOffset = (int) (this.getPreferredSize().height / 2 - minusMusic.getPreferredSize().height + this.getPreferredSize().height / 15.36);
+        final Pair<Integer> plusSoundPos = new Pair<>(
+                audioWidthOffset,
+                audioHeightOffset
+        );
+        final Pair<Integer> plusMusicPos = new Pair<>(
+                audioWidthOffset,
+                (int) (audioHeightOffset + this.getPreferredSize().height / 12.8)
+        );
+        final Pair<Integer> minusSoundPos = new Pair<>(
+                (int) (audioWidthOffset + this.getPreferredSize().width / 10.24),
+                audioHeightOffset
+        );
+        final Pair<Integer> minusMusicPos = new Pair<>(
+                (int) (audioWidthOffset + this.getPreferredSize().width / 10.24),
+                (int) (audioHeightOffset + this.getPreferredSize().height / 12.8)
+        );
+        final Pair<Integer> logoutPos = new Pair<>(
+                this.getPreferredSize().width / 2 + logout.getPreferredSize().width,
+                (int) (audioHeightOffset + this.getPreferredSize().height / 3.66)
+        );
+        final Pair<Integer> panelPos = new Pair<>(
+                this.getPreferredSize().width / 2 - this.panel.getPreferredSize().width / 2,
+                (int) (audioHeightOffset + this.getPreferredSize().height / 4.10)
+        );
+        final Pair<Integer> gameAudioPos = new Pair<>(
+                (int) (plusSoundPos.getX() + (minusSoundPos.getX() - plusSoundPos.getX()) / 2 + plusSound.getPreferredSize().width - (musicAudio.getPreferredSize().width / 1.5)),
+                audioHeightOffset
+        );
 
-        final Pair<Integer> plusSoundPos = new Pair<>(audioWidthOffset, audioHeightOffset);
-
-        final Pair<Integer> plusMusicPos = new Pair<>(audioWidthOffset, (int) (audioHeightOffset + this.getPreferredSize().height / 12.8));
-
-        final Pair<Integer> minusSoundPos = new Pair<>((int) (audioWidthOffset + this.getPreferredSize().width / 10.24), audioHeightOffset);
-
-        final Pair<Integer> minusMusicPos = new Pair<>((int) (audioWidthOffset + this.getPreferredSize().width / 10.24),
-                (int) (audioHeightOffset + this.getPreferredSize().height / 12.8));
-
-        final Pair<Integer> logoutPos = new Pair<>(this.getPreferredSize().width / 2 + logout.getPreferredSize().width,
-                (int) (audioHeightOffset + this.getPreferredSize().height / 3.66));
-
-        final Pair<Integer> panelPos = new Pair<>(this.getPreferredSize().width / 2 - this.panel.getPreferredSize().width / 2,
-                (int) (audioHeightOffset + this.getPreferredSize().height / 4.10));
-
-        final Pair<Integer> gameAudioPos = new Pair<>((int) (plusSoundPos.getX() + (minusSoundPos.getX() - plusSoundPos.getX()) / 2 + plusSound.getPreferredSize().width - (musicAudio.getPreferredSize().width / 1.5)),
-                audioHeightOffset);
-
-        final Pair<Integer> musicAudioPos = new Pair<>(gameAudioPos.getX(),
-                (int) (audioHeightOffset + this.getPreferredSize().height / 12.8));
-
-        final Pair<Integer> developerModePos = new Pair<>(audioWidthOffset + this.getPreferredSize().width / 100,
-                (int) (audioHeightOffset + this.getPreferredSize().height / 5.65));
-
-
-        this.plusSound.setBounds(plusSoundPos.getX(), plusSoundPos.getY(), plusSound.getPreferredSize().width,
-                plusSound.getPreferredSize().height);
-
-        this.plusMusic.setBounds(plusMusicPos.getX(), plusMusicPos.getY(), plusSound.getPreferredSize().width,
-                plusSound.getPreferredSize().height);
-
-        this.minusSound.setBounds(minusSoundPos.getX(), minusSoundPos.getY(), plusSound.getPreferredSize().width,
-                plusSound.getPreferredSize().height);
-
-        this.minusMusic.setBounds(minusMusicPos.getX(), minusMusicPos.getY(), plusSound.getPreferredSize().width,
-                plusSound.getPreferredSize().height);
-
-        this.gameAudio.setBounds(gameAudioPos.getX(), gameAudioPos.getY(), this.gameAudio.getPreferredSize().width,
-                this.gameAudio.getPreferredSize().height);
-
-        this.musicAudio.setBounds(musicAudioPos.getX(), musicAudioPos.getY(), this.musicAudio.getPreferredSize().width,
-                this.musicAudio.getPreferredSize().height);
-
-        this.logout.setBounds(logoutPos.getX(), logoutPos.getY(), logout.getPreferredSize().width,
-                logout.getPreferredSize().height);
-
-        this.developerMode.setBounds(developerModePos.getX(), developerModePos.getY(),
-                (int) (this.developerMode.getPreferredSize().width * Screen.getScale()),
-                (int) (this.developerMode.getPreferredSize().height * Screen.getScale()));
-
-        this.panel.setBounds(panelPos.getX(), panelPos.getY(), this.panel.getPreferredSize().width,
-                this.panel.getPreferredSize().height);
-
+        final Pair<Integer> musicAudioPos = new Pair<>(
+                gameAudioPos.getX(),
+                (int) (audioHeightOffset + this.getPreferredSize().height / 12.8)
+        );
+        final Pair<Integer> developerModePos = new Pair<>(
+                audioWidthOffset + this.getPreferredSize().width / 100,
+                (int) (audioHeightOffset + this.getPreferredSize().height / 5.65)
+        );
+        this.plusSound.setBounds(
+                plusSoundPos.getX(),
+                plusSoundPos.getY(),
+                plusSound.getPreferredSize().width,
+                plusSound.getPreferredSize().height
+        );
+        this.plusMusic.setBounds(
+                plusMusicPos.getX(),
+                plusMusicPos.getY(),
+                plusSound.getPreferredSize().width,
+                plusSound.getPreferredSize().height
+        );
+        this.minusSound.setBounds(
+                minusSoundPos.getX(),
+                minusSoundPos.getY(),
+                plusSound.getPreferredSize().width,
+                plusSound.getPreferredSize().height
+        );
+        this.minusMusic.setBounds(
+                minusMusicPos.getX(),
+                minusMusicPos.getY(),
+                plusSound.getPreferredSize().width,
+                plusSound.getPreferredSize().height
+        );
+        this.gameAudio.setBounds(
+                gameAudioPos.getX(),
+                gameAudioPos.getY(),
+                this.gameAudio.getPreferredSize().width,
+                this.gameAudio.getPreferredSize().height
+        );
+        this.musicAudio.setBounds(
+                musicAudioPos.getX(),
+                musicAudioPos.getY(),
+                this.musicAudio.getPreferredSize().width,
+                this.musicAudio.getPreferredSize().height
+        );
+        this.logout.setBounds(
+                logoutPos.getX(),
+                logoutPos.getY(),
+                this.logout.getPreferredSize().width,
+                this.logout.getPreferredSize().height
+        );
+        this.developerMode.setBounds(
+                developerModePos.getX(),
+                developerModePos.getY(),
+                Screen.scale(this.developerMode.getPreferredSize().width),
+                Screen.scale(this.developerMode.getPreferredSize().height)
+        );
+        this.panel.setBounds(
+                panelPos.getX(),
+                panelPos.getY(),
+                this.panel.getPreferredSize().width,
+                this.panel.getPreferredSize().height
+        );
         this.repaint();
     }
 

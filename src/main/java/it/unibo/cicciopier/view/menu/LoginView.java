@@ -33,7 +33,7 @@ public class LoginView extends JPanel implements MenuPanel {
      *
      * @param mainMenuController the instance of the {@link MainMenuController}
      */
-    public LoginView(MainMenuController mainMenuController) {
+    public LoginView(final MainMenuController mainMenuController) {
         LoginView.LOGGER.info("Initializing the class...");
         this.mainMenuController = mainMenuController;
         this.submitButton = new MenuActionButton(
@@ -94,7 +94,7 @@ public class LoginView extends JPanel implements MenuPanel {
         LoginView.LOGGER.info("Updating the class...");
         this.setPreferredSize(Screen.getCurrentDimension());
         this.textField.setFont(CustomFont.getInstance().getFontOrDefault());
-        this.textField.setPreferredSize(new Dimension((int) (225 * Screen.getScale()), (int) (35 * Screen.getScale())));
+        this.textField.setPreferredSize(new Dimension(Screen.scale(225), 35 * Screen.scale(225)));
         this.setPreferredSize(Screen.getCurrentDimension());
         final Pair<Integer> submitPos = new Pair<>(
                 Screen.getCurrentDimension().width / 2 - this.submitButton.getPreferredSize().width / 2,
@@ -122,7 +122,7 @@ public class LoginView extends JPanel implements MenuPanel {
      * {@inheritDoc}
      */
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(
                 Texture.LOGIN_BACKGROUND.getTexture(),

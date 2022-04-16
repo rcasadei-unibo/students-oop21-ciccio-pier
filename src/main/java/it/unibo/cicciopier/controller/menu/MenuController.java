@@ -77,7 +77,7 @@ public interface MenuController {
     MenuManagerView getMenu();
 
     /**
-     * This function load the players settings
+     * This function loads  the players settings
      */
     void loadPlayer();
 }

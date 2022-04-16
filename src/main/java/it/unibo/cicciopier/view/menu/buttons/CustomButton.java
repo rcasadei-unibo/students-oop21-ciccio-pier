@@ -41,8 +41,8 @@ public abstract class CustomButton extends JComponent implements MouseListener {
         g.drawImage(this.button.getTextures()[this.buttonStatus],
                 0,
                 0,
-                (int) (this.button.getTextures()[this.buttonStatus].getWidth() * Screen.getScale()),
-                (int) (this.button.getTextures()[this.buttonStatus].getHeight() * Screen.getScale()),
+                Screen.scale(this.button.getTextures()[this.buttonStatus].getWidth()),
+                Screen.scale(this.button.getTextures()[this.buttonStatus].getHeight()),
                 null);
     }
 
@@ -51,7 +51,7 @@ public abstract class CustomButton extends JComponent implements MouseListener {
      */
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension((int) (this.dimension.width * Screen.getScale()), (int) (this.dimension.height * Screen.getScale()));
+        return new Dimension(Screen.scale(this.dimension.width), Screen.scale(this.dimension.height));
     }
 
     /**

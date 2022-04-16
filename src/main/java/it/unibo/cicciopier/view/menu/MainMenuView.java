@@ -31,7 +31,7 @@ public class MainMenuView extends JPanel implements MenuPanel {
      *
      * @param mainMenuController the instance of the {@link MainMenuController}
      */
-    public MainMenuView(MainMenuController mainMenuController) {
+    public MainMenuView(final MainMenuController mainMenuController) {
         MainMenuView.LOGGER.info("Initializing the class...");
         this.loggedUser = new JLabel();
         this.animationView = new CustomAnimationView();
@@ -104,20 +104,20 @@ public class MainMenuView extends JPanel implements MenuPanel {
         this.play.setBounds(
                 playPos.getX(),
                 playPos.getY(),
-                play.getPreferredSize().width,
-                play.getPreferredSize().height
+                this.play.getPreferredSize().width,
+                this.play.getPreferredSize().height
         );
         this.leaderboard.setBounds(
                 leaderboardPos.getX(),
                 leaderboardPos.getY(),
-                leaderboard.getPreferredSize().width,
-                leaderboard.getPreferredSize().height
+                this.leaderboard.getPreferredSize().width,
+                this.leaderboard.getPreferredSize().height
         );
         this.quit.setBounds(
                 quitPos.getX(),
                 quitPos.getY(),
-                quit.getPreferredSize().width,
-                quit.getPreferredSize().height
+                this.quit.getPreferredSize().width,
+                this.quit.getPreferredSize().height
         );
         this.loggedUser.setBounds(
                 loggedUserPos.getX(),
@@ -132,7 +132,7 @@ public class MainMenuView extends JPanel implements MenuPanel {
      * {@inheritDoc}
      */
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(
                 Texture.MENU_BACKGROUND.getTexture(),

@@ -6,5 +6,5 @@ public enum ViewPanels {
     HOME,
     SETTINGS,
     LEADERBOARD,
-    TUTORIAL;
+    TUTORIAL
 }

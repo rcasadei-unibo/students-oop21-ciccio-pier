@@ -41,7 +41,7 @@ public class LeaderboardView extends JPanel implements MenuPanel {
      *
      * @param mainMenuController the instance of the {@link MainMenuController}
      */
-    public LeaderboardView(MainMenuController mainMenuController) {
+    public LeaderboardView(final MainMenuController mainMenuController) {
         LeaderboardView.LOGGER.info("Initializing the class... ");
         this.mainMenuController = mainMenuController;
         this.panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -120,8 +120,8 @@ public class LeaderboardView extends JPanel implements MenuPanel {
         this.jList.setFixedCellWidth(this.panel.getPreferredSize().width);
         this.panel.setPreferredSize(
                 new Dimension(
-                        (int) (500 * Screen.getScale()),
-                        (int) (270 * Screen.getScale())
+                        Screen.scale(500),
+                         Screen.scale(270)
                 )
         );
         this.jScrollPane.setPreferredSize(
@@ -191,7 +191,7 @@ public class LeaderboardView extends JPanel implements MenuPanel {
      * {@inheritDoc}
      */
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(
                 Texture.LEADERBOARD_BACKGROUND.getTexture(),
@@ -208,7 +208,7 @@ public class LeaderboardView extends JPanel implements MenuPanel {
      *
      * @param level the {@link Level} which you want to see the leaderboard of
      */
-    public void updateLeaderboard(Level level) {
+    public void updateLeaderboard(final Level level) {
         List<User> leaderboard = mainMenuController
                 .getUsers()
                 .stream()

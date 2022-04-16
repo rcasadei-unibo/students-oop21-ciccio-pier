@@ -30,41 +30,45 @@ public class CustomAnimationView extends JComponent {
         this.frames = 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void paintComponent(final Graphics g) {
-
         if (this.facing) {
             g.drawImage(this.animationPlayer.getSprite(this.frames / this.animationPlayer.getSpeed()),
-                    (int) (this.getPreferredSize().getWidth() / 38.4 + (this.x + this.animationPlayer.getWidth()) * Screen.getScale()),
-                    (int) (this.getPreferredSize().height - this.animationPlayer.getHeight() * 1.25 * Screen.getScale()),
-                    (int) (-(this.animationPlayer.getWidth() * 1.25) * Screen.getScale()),
-                    (int) ((this.animationPlayer.getHeight() * 1.25) * Screen.getScale()),
+                    (int) (this.getPreferredSize().getWidth() / 38.4 + Screen.scale(this.x + this.animationPlayer.getWidth())),
+                    this.getPreferredSize().height - Screen.scale((this.animationPlayer.getHeight() * 1.25)),
+                    -Screen.scale((this.animationPlayer.getWidth() * 1.25)),
+                    Screen.scale((this.animationPlayer.getHeight() * 1.25)),
                     null);
         } else {
-            g.drawImage(this.animationPlayer.getSprite(this.frames / this.animationPlayer.getSpeed()),
-                    (int) (this.getPreferredSize().getWidth() / 38.4 + this.x * Screen.getScale()),
-                    (int) (this.getPreferredSize().height - this.animationPlayer.getHeight() * 1.25 * Screen.getScale()),
-                    (int) ((this.animationPlayer.getWidth() * 1.25) * Screen.getScale()),
-                    (int) ((this.animationPlayer.getHeight() * 1.25) * Screen.getScale()),
+            g.drawImage(this.animationPlayer.getSprite(
+                            this.frames / this.animationPlayer.getSpeed()),
+                    (int) (this.getPreferredSize().getWidth() / 38.4 + Screen.scale(this.x)),
+                    this.getPreferredSize().height - Screen.scale((this.animationPlayer.getHeight() * 1.25)),
+                    Screen.scale((this.animationPlayer.getWidth() * 1.25)),
+                    Screen.scale((this.animationPlayer.getHeight() * 1.25)),
                     null);
         }
-        g.drawImage(this.animationBroccoli.getSprite(this.frames / this.animationBroccoli.getSpeed()),
-                (int) (-((this.animationBroccoli.getWidth() / 1.75) * Screen.getScale()) + this.x * Screen.getScale()),
+        g.drawImage(this.animationBroccoli.getSprite(
+                        this.frames / this.animationBroccoli.getSpeed()),
+                (int) (-(this.animationBroccoli.getWidth() / 1.75) + Screen.scale(this.x)),
                 0,
-                (int) ((this.animationBroccoli.getWidth() / 1.75) * Screen.getScale()),
-                (int) ((this.animationBroccoli.getHeight() / 1.75) * Screen.getScale()),
+                Screen.scale((this.animationBroccoli.getWidth() / 1.75)),
+                Screen.scale((this.animationBroccoli.getHeight() / 1.75)),
                 null);
         this.frames++;
         if (this.frames == Integer.MAX_VALUE) {
             this.frames = 0;
         }
         if (this.facing) {
-            this.x -= 3 * Screen.getScale();
+            this.x -= Screen.scale(3);
             if (this.x <= -this.getPreferredSize().getWidth() / 38.4) {
                 this.facing = false;
             }
         } else {
-            this.x += 5 * Screen.getScale();
+            this.x += Screen.scale(5);
             if (this.x >= Screen.getCurrentDimension().width) {
                 this.facing = true;
             }
