@@ -24,7 +24,7 @@ public enum Texture {
     /**
      * Represents the texture of the blood particle.
      */
-    BLOOD_PARTICLE("/textures/entities/blood.png"),
+    BLOOD_PARTICLE("/textures/entities/effects/blood.png"),
     /**
      * Represents the texture of the boss.
      */
@@ -32,7 +32,7 @@ public enum Texture {
     /**
      * Represents the meteor texture
      */
-    METEOR("/textures/entities/meteor.png"),
+    METEOR("/textures/entities/enemies/boss/meteor.png"),
     /**
      * Represents the texture entity health bar decoration
      */
@@ -90,13 +90,17 @@ public enum Texture {
      */
     SLASH("/textures/entities/enemies/slash.png"),
     /**
+     * Represents the texture of the bite
+     */
+    BITE("/textures/entities/effects/bite.png"),
+    /**
      * Represents the texture of the spikes
      */
     SPIKES("/textures/entities/enemies/spikes.png"),
     /**
      * Represents the texture of the Missile.
      */
-    MISSILE("/textures/entities/missile.png"),
+    MISSILE("/textures/entities/enemies/boss/missile.png"),
     /**
      * Represents the texture of the coin.
      */
@@ -128,11 +132,11 @@ public enum Texture {
     /**
      * Represents the texture of an explosion.
      */
-    EXPLOSION("/textures/entities/explosion.png"),
+    EXPLOSION("/textures/entities/effects/explosion.png"),
     /**
      * Represents the texture of the fire.
      */
-    FIRE("/textures/entities/fire.png"),
+    FIRE("/textures/entities/effects/fire.png"),
     /**
      * Represents the background of the menu
      */

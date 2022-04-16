@@ -6,7 +6,7 @@ import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.entities.LaserView;
+import it.unibo.cicciopier.view.entities.enemies.boss.LaserView;
 
 import java.awt.geom.Line2D;
 

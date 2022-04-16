@@ -1,13 +1,14 @@
-package it.unibo.cicciopier.model.items;
+package it.unibo.cicciopier.model.entities.items;
 
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.Score;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.items.SimpleItem;
+import it.unibo.cicciopier.view.entities.items.SimpleItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,7 @@ public final class SpeedBoost extends SimpleItem implements Boost {
         super.tick(ticks);
         if (ticks - this.startOfBoost >= SpeedBoost.DURATION && isActive()) {
             this.getWorld().getPlayer().setSpeedModifier(-SpeedBoost.BOOST_STRENGTH);
-            LOGGER.info("End of the speed boost");
+            LOGGER.debug("End of the speed boost");
             this.remove();
         }
     }
@@ -50,12 +51,13 @@ public final class SpeedBoost extends SimpleItem implements Boost {
     @Override
     public void onPickup(final long ticks) {
         if (!this.active) {
-            AudioController.getInstance().playSound(Sound.ITEM);
+            AudioController.getInstance().playSound(Sound.BOOST_PICKUP);
             //activate the boost
             this.active = true;
             this.startOfBoost = ticks;
+            this.getWorld().getPlayer().addScore(Score.BOOST);
             this.getWorld().getPlayer().setSpeedModifier(SpeedBoost.BOOST_STRENGTH);
-            LOGGER.info("Speed boost Activated");
+            LOGGER.debug("Speed boost Activated");
         }
     }
 
@@ -72,7 +74,7 @@ public final class SpeedBoost extends SimpleItem implements Boost {
      */
     @Override
     public GameObjectView getView() {
-        if(this.isActive()) {
+        if (this.isActive()) {
             return null;
         }
         return super.getView();

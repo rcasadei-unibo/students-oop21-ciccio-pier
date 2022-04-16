@@ -1,10 +1,11 @@
-package it.unibo.cicciopier.view.entities;
+package it.unibo.cicciopier.view.entities.effects;
 
 import it.unibo.cicciopier.model.entities.base.Entity;
-import it.unibo.cicciopier.model.entities.enemies.boss.Explosion;
+import it.unibo.cicciopier.model.entities.effects.Explosion;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.entities.SimpleEntityView;
 
 /**
  * Simple class to render an explosion

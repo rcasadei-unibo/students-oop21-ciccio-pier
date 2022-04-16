@@ -1,8 +1,8 @@
-package it.unibo.cicciopier.view.entities.enemies;
+package it.unibo.cicciopier.view.entities.enemies.boss;
 
 import it.unibo.cicciopier.model.entities.EntityState;
 import it.unibo.cicciopier.model.entities.base.LivingEntity;
-import it.unibo.cicciopier.model.entities.enemies.BossState;
+import it.unibo.cicciopier.model.entities.enemies.boss.BossState;
 import it.unibo.cicciopier.model.entities.enemies.boss.Broccoli;
 import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;

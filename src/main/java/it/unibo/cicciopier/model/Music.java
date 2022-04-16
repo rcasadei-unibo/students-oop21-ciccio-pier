@@ -11,15 +11,15 @@ public enum Music {
     /**
      * Music for the main menu
      */
-    BACKGROUND("/audios/menu.wav"),
+    BACKGROUND("/musics/menu.wav"),
     /**
      * Music for the normal game levels
      */
-    GAME("/audios/game.wav"),
+    GAME("/musics/game.wav"),
     /**
      * Music for the boss levels
      */
-    BOSS("/audios/boss_music.wav");
+    BOSS("/musics/boss.wav");
 
     private final String fileName;
     private byte[] bytes;

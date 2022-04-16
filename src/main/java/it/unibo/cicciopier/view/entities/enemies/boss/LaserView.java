@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.view.entities;
+package it.unibo.cicciopier.view.entities.enemies.boss;
 
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.enemies.boss.Laser;
@@ -6,6 +6,7 @@ import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.entities.SimpleEntityView;
 
 import java.awt.*;
 

@@ -16,11 +16,10 @@ import java.util.Random;
  * Abstract class for a generic basic Enemy
  */
 public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
-    private static final int SCORE_VALUE = 50;
     private static final int HIT_COOLDOWN = 2 * GameLoop.TPS;
     public static final int DEATH_DURATION = 2 * GameLoop.TPS;
     private final int attackDamage;
-    private Random rand;
+    private final Random rand;
     private int shootingCooldownTicks;
     private int hitTicks;
     private int deathTicks;
@@ -49,7 +48,7 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
      */
     @Override
     public int getScoreValue() {
-        return rand.nextInt(Score.MAX_HEALTHY_FOOD - Score.MIN_HEALTHY_FOOD + 1) + Score.MIN_HEALTHY_FOOD;
+        return this.rand.nextInt(Score.MAX_HEALTHY_FOOD - Score.MIN_HEALTHY_FOOD + 1) + Score.MIN_HEALTHY_FOOD;
     }
 
     /**
@@ -65,7 +64,7 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
      */
     @Override
     public int getStaminaValue() {
-        return rand.nextInt(Stamina.MAX_HEALTHY_FOOD - Stamina.MIN_HEALTHY_FOOD + 1) + Stamina.MIN_HEALTHY_FOOD;
+        return this.rand.nextInt(Stamina.MAX_HEALTHY_FOOD - Stamina.MIN_HEALTHY_FOOD + 1) + Stamina.MIN_HEALTHY_FOOD;
     }
 
     /**
@@ -105,7 +104,7 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     /**
      * Method used to start the cooldown after the Enemy has shot
      *
-     * @param ticks
+     * @param ticks ticks
      */
     public void setShootingCooldownTicks(final int ticks) {
         this.shootingCooldownTicks = ticks;

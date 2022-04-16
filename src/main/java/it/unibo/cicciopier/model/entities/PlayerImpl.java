@@ -83,7 +83,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public int getCoin() {
-        return coin;
+        return this.coin;
     }
 
     /**
@@ -186,7 +186,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
                     .findFirst()
                     .ifPresent(t -> {
                         t.damage(this.getType().getAttackDamage());
-                        Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
+                        Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.BITE);
                         if (opt.isPresent()) {
                             Entity e = opt.get();
                             e.setPos(t.getPos().addVector(new Vector2d(-e.getWidth() / 2d + t.getWidth() / 2d, -e.getHeight() / 2d + t.getHeight() / 2d)));
@@ -233,7 +233,6 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public void tick(final long ticks) {
-
         super.tick(ticks);
         this.updateAttackCooldown();
         this.move();
@@ -283,9 +282,10 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
 
     @Override
     public void damage(int amount) {
-        if (!isInvulnerable) {
+        if (!this.isInvulnerable) {
             super.damage(amount);
             this.takenDamage = 1;
+            AudioController.getInstance().playSound(Sound.DAMAGE);
         }
     }
 

@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.model.entities.enemies.boss;
+package it.unibo.cicciopier.model.entities.effects;
 
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.model.Sound;
@@ -6,7 +6,7 @@ import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.entities.ExplosionView;
+import it.unibo.cicciopier.view.entities.effects.ExplosionView;
 
 /**
  * Create a simple explosion animation

@@ -5,7 +5,7 @@ import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleMovingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
-import it.unibo.cicciopier.view.entities.MeteorView;
+import it.unibo.cicciopier.view.entities.enemies.boss.MeteorView;
 
 /**
  * Simple class to create a meteor for the boss attack

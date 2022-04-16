@@ -1,9 +1,9 @@
-package it.unibo.cicciopier.view.items;
+package it.unibo.cicciopier.view.entities.items;
 
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleEntity;
-import it.unibo.cicciopier.model.items.Item;
+import it.unibo.cicciopier.model.entities.items.Item;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 

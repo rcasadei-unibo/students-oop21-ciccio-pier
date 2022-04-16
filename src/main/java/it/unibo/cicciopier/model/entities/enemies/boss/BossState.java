@@ -1,4 +1,4 @@
-package it.unibo.cicciopier.model.entities.enemies;
+package it.unibo.cicciopier.model.entities.enemies.boss;
 
 import it.unibo.cicciopier.model.entities.EntityState;
 

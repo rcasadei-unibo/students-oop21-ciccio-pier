@@ -1,13 +1,14 @@
-package it.unibo.cicciopier.model.items;
+package it.unibo.cicciopier.model.entities.items;
 
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.Score;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.items.SimpleItem;
+import it.unibo.cicciopier.view.entities.items.SimpleItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,7 @@ public final class JumpBoost extends SimpleItem implements Boost {
         super.tick(ticks);
         if (ticks - this.startOfBoost >= JumpBoost.DURATION && isActive()) {
             this.getWorld().getPlayer().setJumpModifier(-JumpBoost.BOOST_STRENGTH);
-            LOGGER.info("End of jump boost");
+            LOGGER.debug("End of jump boost");
             this.remove();
         }
     }
@@ -50,12 +51,13 @@ public final class JumpBoost extends SimpleItem implements Boost {
     @Override
     public void onPickup(final long ticks) {
         if (!this.active) {
-            AudioController.getInstance().playSound(Sound.ITEM);
+            AudioController.getInstance().playSound(Sound.BOOST_PICKUP);
             //activate the boost
             this.active = true;
             this.startOfBoost = ticks;
+            this.getWorld().getPlayer().addScore(Score.BOOST);
             this.getWorld().getPlayer().setJumpModifier(JumpBoost.BOOST_STRENGTH);
-            LOGGER.info("Jump boost Activated");
+            LOGGER.debug("Jump boost Activated");
         }
     }
 
