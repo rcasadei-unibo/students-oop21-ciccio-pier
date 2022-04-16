@@ -3,6 +3,7 @@ package it.unibo.cicciopier.model.items;
 import it.unibo.cicciopier.controller.AudioController;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.Score;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.view.GameObjectView;
@@ -12,7 +13,6 @@ import it.unibo.cicciopier.view.items.CoinView;
  * Create a coin object
  */
 public class Coin extends SimpleEntity {
-    private static final int SCORE = 20;
     private final CoinView coinView;
 
     /**
@@ -35,7 +35,7 @@ public class Coin extends SimpleEntity {
             //remove the coin
             this.remove();
             this.getWorld().getPlayer().addCoin();
-            this.getWorld().getPlayer().addScore(SCORE);
+            this.getWorld().getPlayer().addScore(Score.COIN);
         }
     }
 

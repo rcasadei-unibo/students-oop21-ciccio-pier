@@ -6,6 +6,7 @@ import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.EntityState;
+import it.unibo.cicciopier.model.entities.Score;
 import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
@@ -221,6 +222,7 @@ public class Broccoli extends SimpleLivingEntity implements Boss {
     private void death() {
         getVel().setX(0);
         this.getWorld().getEntities().stream().filter(Laser.class::isInstance).forEach(Entity::remove);
+        this.getWorld().getPlayer().addScore(Score.BOSS);
         this.remove();
     }
 

@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.model.items;
 
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.entities.Score;
 import it.unibo.cicciopier.model.entities.Stamina;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.view.Texture;
@@ -12,7 +13,6 @@ import java.util.Random;
  * Class to create a simple chicken item for the player
  */
 public class Chicken extends SimpleItem {
-    private static final int SCORE = 15;
     private final Random random;
 
     /**
@@ -31,9 +31,9 @@ public class Chicken extends SimpleItem {
     @Override
     public void onPickup(final long ticks) {
         this.remove();
-        this.getWorld().getPlayer().addScore(SCORE);
+        this.getWorld().getPlayer().addScore(Score.FOOD);
         this.getWorld().getPlayer().addStamina(this.random.
-                nextInt(Stamina.MAX_JUNK_FOOD -Stamina.MIN_JUNK_FOOD)+Stamina.MIN_JUNK_FOOD);
+                nextInt(Stamina.MAX_JUNK_FOOD - Stamina.MIN_JUNK_FOOD) + Stamina.MIN_JUNK_FOOD);
         this.getWorld().getPlayer().damage(EntityType.CHICKEN.getAttackDamage());
     }
 }

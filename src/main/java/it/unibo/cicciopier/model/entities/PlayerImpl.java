@@ -51,7 +51,6 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         this.takenDamage = 0;
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -76,7 +75,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      */
     @Override
     public int getScore() {
-        return score;
+        return this.score;
     }
 
     /**
