@@ -30,7 +30,7 @@ public class MindPineappleView extends SimpleLivingEntityView {
             put(EnemyState.IDLE, new Animation(texture, 5, 40, new Pair<>(0, 0), w, h));
             put(EnemyState.RUNNING, new Animation(texture, 5, 20, new Pair<>(0, 0), w, h));
             put(EnemyState.ANGERED, new Animation(texture, 5, MindPineapple.ANGERED_TICKS / 5, new Pair<>(0, h * 2), w, h));
-            put(EnemyState.ATTACKING, new Animation(texture, 5, 30, new Pair<>(0, h * 1), w, h));
+            put(EnemyState.ATTACKING, new Animation(texture, 5, 30, new Pair<>(0, h), w, h));
             put(EnemyState.DEAD, new Animation(texture, 8, (int)Math.ceil(SimpleEnemy.DEATH_DURATION / 8d), new Pair<>(0, h * 3), w, h));
         }
     };

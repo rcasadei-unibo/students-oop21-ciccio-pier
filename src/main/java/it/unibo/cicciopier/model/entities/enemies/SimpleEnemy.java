@@ -13,14 +13,13 @@ import java.util.Optional;
 import java.util.Random;
 
 /**
- * Abstract class for a generic basic Enemy
+ * Abstract class representing a generic Enemy
  */
 public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
-    private static final int SCORE_VALUE = 50;
-    private static final int HIT_COOLDOWN = 2 * GameLoop.TPS;
     public static final int DEATH_DURATION = 2 * GameLoop.TPS;
+    private static final int HIT_COOLDOWN = 2 * GameLoop.TPS;
+    private final Random rand;
     private final int attackDamage;
-    private Random rand;
     private int shootingCooldownTicks;
     private int hitTicks;
     private int deathTicks;
@@ -203,11 +202,15 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     private boolean checkDyingBehaviour() {
         if (this.isDead()) {
             this.resetCurrentState(EnemyState.DEAD);
+            this.setVel(new Vector2d(0,5));
         }
         if (this.getCurrentState() == EnemyState.DEAD) {
             this.deathTicks++;
             if (this.deathTicks == DEATH_DURATION) {
                 this.remove();
+            }
+            if (this.bottomCollision() == -1){
+                this.getPos().add(this.getVel());
             }
             return true;
         }

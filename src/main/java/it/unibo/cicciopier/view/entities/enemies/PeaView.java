@@ -11,7 +11,7 @@ public class PeaView extends SimpleProjectileView {
     /**
      * Constructor for this class
      *
-     * @param pea         The Pea of this view
+     * @param pea The Pea of this view
      */
     public PeaView(final Pea pea) {
         super(pea, Texture.PEA);

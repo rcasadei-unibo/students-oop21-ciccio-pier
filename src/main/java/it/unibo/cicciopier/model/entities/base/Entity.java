@@ -10,6 +10,7 @@ public interface Entity extends GameObject {
 
     /**
      * Returns the type of the Entity
+     *
      * @return Entity's type
      */
     EntityType getType();
@@ -21,14 +22,16 @@ public interface Entity extends GameObject {
 
     /**
      * Checks if Entity was removed
+     *
      * @return If removed
      */
     boolean isRemoved();
 
     /**
      * Checks the collision between Entity and another GameObject
+     *
      * @param object The GameObject to check
-     * @return If they are colliding
+     * @return True, if they are colliding
      */
     boolean checkCollision(final GameObject object);
 

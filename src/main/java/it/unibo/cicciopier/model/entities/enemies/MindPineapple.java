@@ -111,7 +111,6 @@ public class MindPineapple extends SimplePathEnemy {
         }
     }
 
-
     /**
      * {@inheritDoc}
      */

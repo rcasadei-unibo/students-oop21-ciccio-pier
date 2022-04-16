@@ -26,14 +26,22 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void load() {
+        this.initializePath(this.getMaxRightOffset());
+    }
+
+    /**
      * Method used to set up the path and assign the X-axis extremes of the path
      * This can't be done in the constructor due to having the initial position assigned
-     * after being created, therefore this method gets called once the first tick
-     * and takes the initial position as the left extreme of the path
+     * after being created, therefore this method gets called by the load function, called
+     * once for each entity after being spawned in the game world
      *
      * @param maxRightOffset The offset for the right extreme of this path
      */
-    protected void initializePath(final int maxRightOffset) {
+    private void initializePath(final int maxRightOffset) {
         this.leftPathfurthest = this.getPos().getX();
         this.rightPathfurthest = this.leftPathfurthest + maxRightOffset;
         this.currentDest = this.leftPathfurthest;
@@ -126,11 +134,6 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
             this.resetCurrentState(EntityState.RUNNING);
         }
         this.move();
-    }
-
-    @Override
-    public void load() {
-        this.initializePath(this.getMaxRightOffset());
     }
 
     /**

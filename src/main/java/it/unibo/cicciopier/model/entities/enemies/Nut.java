@@ -34,6 +34,10 @@ public class Nut extends SimpleProjectile {
         return this.view;
     }
 
+    /**
+     * Method to make the nut fall on the ground in case the peach
+     * was killed midair
+     */
     private void checkGravity(){
         if (this.bottomCollision() == -1){
             this.getPos().add(this.getVel());

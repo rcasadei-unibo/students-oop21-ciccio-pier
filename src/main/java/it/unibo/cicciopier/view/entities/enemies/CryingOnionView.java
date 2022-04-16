@@ -29,8 +29,8 @@ public class CryingOnionView extends SimpleLivingEntityView {
             final int h = EntityType.CRYING_ONION.getHeight();
             put(EnemyState.IDLE, new Animation(texture, 5, 20, new Pair<>(0, 0), w, h));
             put(EnemyState.ANGERED, new Animation(texture, 8, 10, new Pair<>(0, h * 3), w, h));
-            put(EnemyState.RUNNING, new Animation(texture, 9, 15, new Pair<>(0, h), w, h));
-            put(EnemyState.ANGERED_RUNNING, new Animation(texture, 9, 10, new Pair<>(0, h * 2), w, h));
+            put(EnemyState.RUNNING, new Animation(texture, 9, 10, new Pair<>(0, h), w, h));
+            put(EnemyState.ANGERED_RUNNING, new Animation(texture, 9, 5, new Pair<>(0, h * 2), w, h));
             put(EnemyState.DEAD, new Animation(texture, 9, (int)Math.ceil(SimpleEnemy.DEATH_DURATION / 9d), new Pair<>(0, h * 4), w, h));
         }
     };

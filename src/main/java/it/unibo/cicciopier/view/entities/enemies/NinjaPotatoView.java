@@ -28,14 +28,12 @@ public class NinjaPotatoView extends SimpleLivingEntityView {
             final Texture texture = Texture.NINJA_POTATO;
             final int w = EntityType.NINJA_POTATO.getWidth();
             final int h = EntityType.NINJA_POTATO.getHeight();
-            final int hidden = 2 * GameLoop.TPS / 5;
-            final int idle = 2 * GameLoop.TPS / 5;
-            put(EnemyState.HIDDEN, new Animation(texture, 5, hidden, new Pair<>(0, 0), w, h));
-            put(EnemyState.IDLE, new Animation(texture, 5, idle, new Pair<>(0, h), w, h));
-            put(EnemyState.JUMPING_OUT, new Animation(texture, 6, NinjaPotato.JUMP_TICKS / 6, new Pair<>(0, h * 2), w, h));
-            put(EnemyState.JUMPING_IN, new Animation(texture, 6, NinjaPotato.JUMP_TICKS / 6, new Pair<>(0, h * 3), w, h));
-            put(EnemyState.SLASH_OUT, new Animation(texture, 10, NinjaPotato.SLASH_OUT_TICK_DURATION / 10, new Pair<>(0, h * 4), w, h));
-            put(EnemyState.SLASH_IN, new Animation(texture, 10, NinjaPotato.SLASH_IN_TICK_DURATION / 10, new Pair<>(0, h * 5), w, h));
+            put(EnemyState.HIDDEN, new Animation(texture, 5, 25, new Pair<>(0, 0), w, h));
+            put(EnemyState.IDLE, new Animation(texture, 5, 25, new Pair<>(0, h), w, h));
+            put(EnemyState.JUMPING_OUT, new Animation(texture, 6, (int)Math.ceil(NinjaPotato.JUMP_TICKS / 6d), new Pair<>(0, h * 2), w, h));
+            put(EnemyState.JUMPING_IN, new Animation(texture, 6, (int)Math.ceil(NinjaPotato.JUMP_TICKS / 6d), new Pair<>(0, h * 3), w, h));
+            put(EnemyState.SLASH_OUT, new Animation(texture, 10, (int)Math.ceil(NinjaPotato.SLASH_OUT_TICK_DURATION / 10d), new Pair<>(0, h * 4), w, h));
+            put(EnemyState.SLASH_IN, new Animation(texture, 10, (int)Math.ceil(NinjaPotato.SLASH_IN_TICK_DURATION / 10d), new Pair<>(0, h * 5), w, h));
             put(EnemyState.DEAD, new Animation(texture, 11, (int)Math.ceil(SimpleEnemy.DEATH_DURATION / 11d), new Pair<>(0, h * 6), w, h));
         }
     };

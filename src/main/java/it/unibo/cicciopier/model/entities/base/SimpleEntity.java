@@ -4,15 +4,18 @@ import it.unibo.cicciopier.model.GameObject;
 import it.unibo.cicciopier.model.SimpleGameObject;
 import it.unibo.cicciopier.model.World;
 
+/**
+ * Abstract class that generalizes all basic traits of any kind of Entity
+ */
 public abstract class SimpleEntity extends SimpleGameObject implements Entity {
-
     private final World world;
     private final EntityType type;
     private boolean removed;
 
     /**
      * Constructor for this class
-     * @param type The Entity's type
+     *
+     * @param type  The Entity's type
      * @param world The game's world
      */
     protected SimpleEntity(final EntityType type, final World world) {
@@ -80,9 +83,10 @@ public abstract class SimpleEntity extends SimpleGameObject implements Entity {
 
     /**
      * World's getter
+     *
      * @return The game's world
      */
-    protected World getWorld(){
+    protected World getWorld() {
         return this.world;
     }
 }

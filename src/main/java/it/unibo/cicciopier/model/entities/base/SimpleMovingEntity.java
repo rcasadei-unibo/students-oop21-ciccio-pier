@@ -8,8 +8,10 @@ import it.unibo.cicciopier.utility.Vector2d;
 
 import java.awt.*;
 
+/**
+ * Abstract class that generalizes the movement model of Entities
+ */
 public abstract class SimpleMovingEntity extends SimpleEntity implements MovingEntity {
-
     private Vector2d vel;
 
     /**
@@ -39,8 +41,13 @@ public abstract class SimpleMovingEntity extends SimpleEntity implements MovingE
         this.vel = vel;
     }
 
+    /**
+     * Utility method to obtain a reference of the location the Entity
+     * will be when velocity will be applied
+     *
+     * @return The Entity position with the current velocity applied
+     */
     protected Rectangle rectangleOffset() {
-        //get the entity pos with the offset of the velocity
         final Vector2d entityOffset = this.getPos().addVector(this.getVel());
         return new Rectangle(
                 entityOffset.getX(),

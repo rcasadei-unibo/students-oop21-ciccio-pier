@@ -22,7 +22,7 @@ public class NinjaPotato extends SimpleEnemy {
     private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
     public static final int SLASH_OUT_TICK_DURATION = 20;
     public static final int SLASH_IN_TICK_DURATION = 60;
-    public static final int JUMP_TICKS = 30;
+    public static final int JUMP_TICKS = 20;
 
     private final NinjaPotatoView view;
     private int localTicks;
@@ -50,7 +50,7 @@ public class NinjaPotato extends SimpleEnemy {
      * {@inheritDoc}
      */
     @Override
-    public void damage(int amount) {
+    public void damage(final int amount) {
         if (this.getCurrentState() != EnemyState.HIDDEN) {
             super.damage(amount);
         }
