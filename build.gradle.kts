@@ -16,15 +16,22 @@ plugins {
 
 repositories {
     mavenCentral()
+    jcenter()
+    maven("https://maven.imagej.net/content/repositories/public/")
 }
 
+// Maven dependencies are composed by a group name, a name and a version, separated by colons
 dependencies {
-    // Maven dependencies are composed by a group name, a name and a version, separated by colons
+    // Tmx map
     implementation("javax.xml.bind:jaxb-api:2.3.1")
     implementation("com.sun.xml.bind:jaxb-core:2.3.0.1")
     implementation("com.sun.xml.bind:jaxb-impl:2.3.1")
     implementation("org.mapeditor:libtiled:1.4.2")
+    // Json
     implementation("com.google.code.gson:gson:2.9.0")
+    // Controller
+    implementation("uk.co.electronstudio.sdl2gdx:sdl2gdx:1.0.4")
+    implementation("com.github.WilliamAHartman:Jamepad:1.3.2")
 
 
     /*

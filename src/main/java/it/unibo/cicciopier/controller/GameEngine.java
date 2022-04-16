@@ -1,5 +1,7 @@
 package it.unibo.cicciopier.controller;
 
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
 import it.unibo.cicciopier.controller.menu.MenuController;
 import it.unibo.cicciopier.model.GameWorld;
 import it.unibo.cicciopier.model.Level;
@@ -22,6 +24,7 @@ public class GameEngine implements Engine {
     private final MenuController menu;
     private final Level level;
     private final InputController input;
+    private final ControllerManager controllers;
     private final WorldLoader loader;
     private final World world;
     private final View view;
@@ -40,6 +43,7 @@ public class GameEngine implements Engine {
         this.menu = menu;
         this.level = level;
         this.input = new InputController();
+        this.controllers = new ControllerManager();
         this.world = new GameWorld();
         this.loader = new TmxWorldLoader(this.getWorld(), this.level.getFileName());
         this.view = new GameView(this);
@@ -62,6 +66,8 @@ public class GameEngine implements Engine {
         } catch (IllegalArgumentException | NullPointerException e) {
             LOGGER.error("Invalid music id {}, ignoring it...", this.getWorldLoader().getMusic());
         }
+        // Init controllers
+        this.controllers.initSDLGamepad();
     }
 
     /**
@@ -143,20 +149,23 @@ public class GameEngine implements Engine {
             this.getWorld().getEntities().forEach(e -> e.tick(this.ticks));
             // update player
             this.getWorld().getPlayer().tick(this.ticks);
-            // process input
+            // process keyboard
             this.processInput();
             // update ticks
             this.ticks++;
         }
+        // process controllers
+        this.processControllers();
         // update view
         this.view.render();
     }
 
     /**
-     * Process the input handling.
+     * Process the input from keyboard.
      */
     private void processInput() {
         int velX = 0;
+        // Handle movements
         if (this.getInput().isPressed(Input.RIGHT)) {
             velX += this.getWorld().getPlayer().getSpeed();
         }
@@ -164,11 +173,59 @@ public class GameEngine implements Engine {
             velX -= this.getWorld().getPlayer().getSpeed();
         }
         this.getWorld().getPlayer().getVel().setX(velX);
+        // Handle jump
         if (this.getInput().isPressed(Input.JUMP)) {
             this.getWorld().getPlayer().jump();
         }
+        // Handle attack
         if (this.getInput().isPressed(Input.ATTACK)) {
             this.getWorld().getPlayer().attackNearest();
+        }
+    }
+
+    /**
+     * Process the input from controllers.
+     */
+    private void processControllers() {
+        final ControllerState state = this.controllers.getState(0);
+        if(!state.isConnected) {
+            return;
+        }
+        // Handle movements
+        if (this.getState() == GameState.RUNNING) {
+            int velX = 0;
+            if (state.dpadRight || state.leftStickX > 0.5) {
+                velX += this.getWorld().getPlayer().getSpeed();
+            }
+            if (state.dpadLeft || state.leftStickX < -0.5) {
+                velX -= this.getWorld().getPlayer().getSpeed();
+            }
+            this.getWorld().getPlayer().getVel().setX(velX);
+            // Handle jump
+            if (state.a) {
+                this.getWorld().getPlayer().jump();
+            }
+            // Handle attack
+            if (state.x) {
+                this.getWorld().getPlayer().attackNearest();
+            }
+        }
+        // Press start to enter and exit paused menu
+        if (state.startJustPressed) {
+            this.pause();
+        }
+        // Press back to return to menu from paused/over/won menus
+        if ((this.getState() == GameState.PAUSED ||
+                this.getState() == GameState.OVER ||
+                this.getState() == GameState.WON) &&
+                state.backJustPressed) {
+            this.action(LevelMenuAction.HOME);
+        }
+        // Press A to restart level in paused/over menus
+        if ((this.getState() == GameState.PAUSED ||
+                this.getState() == GameState.OVER) &&
+                state.aJustPressed) {
+            this.action(LevelMenuAction.RESTART);
         }
     }
 
