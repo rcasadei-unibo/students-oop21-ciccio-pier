@@ -57,9 +57,7 @@ public abstract class SimpleProjectile extends SimpleMovingEntity {
         Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
         if (opt.isPresent()) {
             Entity e = opt.get();
-            Vector2d vec = this.getPos().clone();
-            vec.add(new Vector2d(-e.getWidth() / 2d, -e.getHeight() / 2d));
-            e.setPos(vec);
+            e.setPos(this.getPos().addVector(new Vector2d(-e.getWidth() / 2d, -e.getHeight() / 2d)));
             this.getWorld().addEntity(e);
         }
     }

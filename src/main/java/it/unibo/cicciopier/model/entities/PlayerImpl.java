@@ -5,12 +5,15 @@ import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
+import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.LivingEntity;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.PlayerView;
+
+import java.util.Optional;
 
 public class PlayerImpl extends SimpleLivingEntity implements Player {
     private static final int ATTACK_RANGE = 5 * Block.SIZE;
@@ -161,15 +164,34 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         }
         if (this.attackCooldownTicks == ATTACK_COOLDOWN) {
             this.setCurrentState(EntityState.ATTACKING);
-            this.getWorld().getEntitiesInRange(this.getPos().addVector(new Vector2d(this.getWidth() / 2d, this.getHeight() / 2d)), ATTACK_RANGE).stream()
+            Vector2d playerCenter = this.getPos().addVector(new Vector2d(this.getWidth() / 2d, this.getHeight() / 2d));
+            this.getWorld().getEntitiesInRange(playerCenter, ATTACK_RANGE).stream()
                     .filter(t -> t instanceof LivingEntity)
-                    .map(LivingEntity.class::cast).sorted((o1, o2) -> {
+                    .map(LivingEntity.class::cast)
+                    .sorted((o1, o2) -> {
                         if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
                             return 1;
+                        } else if (Math.abs(getPos().getX() - o1.getPos().getX()) > Math.abs(getPos().getX() - o2.getPos().getX())) {
+                            return -1;
                         }
-                        return -1;
-                    }).filter(t -> this.isFacingRight() ? t.getPos().getX() > this.getPos().getX() : t.getPos().getX() < this.getPos().getX())
-                    .findFirst().ifPresent(t -> t.damage(this.getType().getAttackDamage()));
+                        return 0;
+                    }).filter(t -> {
+                        Vector2d enemyCenter = t.getPos().addVector(new Vector2d(t.getWidth() / 2d, t.getHeight() / 2d));
+                        if (this.isFacingRight()) {
+                            return enemyCenter.getX() > playerCenter.getX();
+                        }
+                        return enemyCenter.getX() < playerCenter.getX();
+                    })
+                    .findFirst()
+                    .ifPresent(t -> {
+                        t.damage(this.getType().getAttackDamage());
+                        Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(EntityType.EXPLOSION);
+                        if (opt.isPresent()) {
+                            Entity e = opt.get();
+                            e.setPos(t.getPos().addVector(new Vector2d(-e.getWidth() / 2d + t.getWidth() / 2d, -e.getHeight() / 2d + t.getHeight() / 2d)));
+                            this.getWorld().addEntity(e);
+                        }
+                    });
             this.attackCooldownTicks = 0;
         }
     }
