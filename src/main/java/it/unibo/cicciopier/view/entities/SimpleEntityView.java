@@ -66,6 +66,9 @@ public abstract class SimpleEntityView implements EntityView {
      */
     @Override
     public void render(final Graphics g) {
+        if (this.getObject().isRemoved()) {
+            return;
+        }
         final Animation animation = getAnimation();
         g.drawImage(animation.getSprite(this.getAnimationTicks() / animation.getSpeed()),
                 Screen.scale(this.getObject().getPos().getX() + this.getTextureOffSet().getX()),

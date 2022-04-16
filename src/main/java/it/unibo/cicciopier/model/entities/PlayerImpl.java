@@ -15,7 +15,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     private static final int ATTACK_RANGE = 5 * Block.SIZE;
     private static final int ATTACK_COOLDOWN = GameLoop.TPS;
     private static final int ATTACK_DURATION = 20;
-    private static final int SPEED = 7;
+    private static final int SPEED = 4;
     private final PlayerView playerView;
     private int attackCooldownTicks;
     private int stamina;
