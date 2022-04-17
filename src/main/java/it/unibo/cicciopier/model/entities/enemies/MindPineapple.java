@@ -19,7 +19,7 @@ import java.util.Optional;
  */
 public class MindPineapple extends SimplePathEnemy {
     private final int ATTACK_RANGE = this.getWorld().getPlayer().getAttackRange() + Block.SIZE;
-    private static final double IDLE_DURATION = 4 * GameLoop.TPS;
+    private static final double IDLE_DURATION = 2 * GameLoop.TPS;
     private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
     private static final double MOVEMENT_SPEED = 0.7;
     private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;

@@ -17,11 +17,11 @@ import java.util.Optional;
  * towards the player.
  */
 public class RollingPeach extends SimplePathEnemy {
-    private final int ATTACK_RANGE = 5 * Block.SIZE;
-    private final double IDLE_DURATION = 3 * GameLoop.TPS;
-    private final double MOVEMENT_SPEED = 0.6;
+    private final int ATTACK_RANGE = 4 * Block.SIZE;
+    private final double IDLE_DURATION = 1.5* GameLoop.TPS;
+    private final double MOVEMENT_SPEED = 1;
     private static final double ROLLING_SPEED = (8.5d * Block.SIZE) / GameLoop.TPS;
-    private final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
+    private final int MAX_RIGHT_OFFSET = 5 * Block.SIZE;
     private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
 
     private final RollingPeachView view;

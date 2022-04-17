@@ -9,6 +9,7 @@ import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.LivingEntity;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
+import it.unibo.cicciopier.model.entities.enemies.EnemyState;
 import it.unibo.cicciopier.model.entities.enemies.SimpleEnemy;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
@@ -204,12 +205,13 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         if (this.attackCooldownTicks == ATTACK_COOLDOWN) {
             this.setCurrentState(EntityState.ATTACKING);
             Vector2d playerCenter = this.getPos().addVector(new Vector2d(this.getWidth() / 2d, this.getHeight() / 2d));
+            System.out.println(this.getWorld().getEntitiesInRange(playerCenter, ATTACK_RANGE));
             this.getWorld().getEntitiesInRange(playerCenter, ATTACK_RANGE).stream()
                     .filter(t -> t instanceof LivingEntity)
                     .map(LivingEntity.class::cast)
                     .filter(t -> {
                         Vector2d enemyCenter = t.getPos().addVector(new Vector2d(t.getWidth() / 2d, t.getHeight() / 2d));
-                        if (t.isDead()) {
+                        if (t.isDead() || t.getCurrentState() == EnemyState.HIDDEN) {
                             return false;
                         }
                         if (this.blockControl(enemyCenter.getX())) {
