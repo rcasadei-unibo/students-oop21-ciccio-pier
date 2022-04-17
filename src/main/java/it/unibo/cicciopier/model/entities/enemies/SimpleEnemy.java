@@ -2,6 +2,7 @@ package it.unibo.cicciopier.model.entities.enemies;
 
 import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.World;
+import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.Score;
 import it.unibo.cicciopier.model.entities.Stamina;
 import it.unibo.cicciopier.model.entities.base.Entity;
@@ -132,6 +133,33 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     }
 
     /**
+     * Method to check if there are blocks between the player and this Enemy
+     *
+     * @return True, if there are blocks in the way
+     */
+    private boolean blockControl() {
+        int startX = (int) (this.getPos().getX() / Block.SIZE);
+        int endX = (int) (this.getWorld().getPlayer().getPos().getX() / Block.SIZE);
+        int y = this.getPos().getY() / Block.SIZE;
+        if (this.isFacingRight()) {
+            for (int i = startX; i <= endX; i++) {
+                Block block = this.getWorld().getBlock(i, y);
+                if (block.isSolid()) {
+                    return true;
+                }
+            }
+        } else {
+            for (int i = startX; i >= endX; i--) {
+                Block block = this.getWorld().getBlock(i, y);
+                if (block.isSolid()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Utility method to check if the player is inside the enemy range and on his same height
      *
      * @param range The enemy range to detect the player
@@ -140,7 +168,8 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     protected boolean startAggro(final int range) {
         return this.playerInAggroRange(range) &&
                 this.getPos().getY() + this.getType().getHeight()
-                        == getWorld().getPlayer().getPos().getY() + getWorld().getPlayer().getHeight();
+                        == getWorld().getPlayer().getPos().getY() + getWorld().getPlayer().getHeight()
+                            && !this.blockControl();
     }
 
     /**
@@ -202,14 +231,14 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
     private boolean checkDyingBehaviour() {
         if (this.isDead()) {
             this.resetCurrentState(EnemyState.DEAD);
-            this.setVel(new Vector2d(0,5));
+            this.setVel(new Vector2d(0, 5));
         }
         if (this.getCurrentState() == EnemyState.DEAD) {
             this.deathTicks++;
             if (this.deathTicks == DEATH_DURATION) {
                 this.remove();
             }
-            if (this.bottomCollision() == -1){
+            if (this.bottomCollision() == -1) {
                 this.getPos().add(this.getVel());
             }
             return true;
