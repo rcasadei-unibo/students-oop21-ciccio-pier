@@ -9,6 +9,7 @@ import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.LivingEntity;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
+import it.unibo.cicciopier.model.entities.enemies.SimpleEnemy;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.PlayerView;
@@ -16,7 +17,7 @@ import it.unibo.cicciopier.view.entities.PlayerView;
 import java.util.Optional;
 
 public class PlayerImpl extends SimpleLivingEntity implements Player {
-    private static final int ATTACK_RANGE = 5 * Block.SIZE;
+    private static final int ATTACK_RANGE = 3 * Block.SIZE;
     private static final int ATTACK_COOLDOWN = GameLoop.TPS;
     private static final int ATTACK_DURATION = 20;
     private static final int SPEED = 4;
@@ -153,6 +154,45 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     }
 
     /**
+     * Method to check if there are blocks in front of the player
+     *
+     * @param enemyX The x-value of the Enemy position
+     * @return True, if there are blocks in the way
+     */
+    private boolean blockControl(final int enemyX) {
+        int startX = (int) (this.getPos().getX() / Block.SIZE);
+        int endX = (int) (enemyX / Block.SIZE);
+        int y = this.getPos().getY() / Block.SIZE;
+        if (this.isFacingRight()) {
+            for (int i = startX; i <= endX; i++) {
+                Block block = this.getWorld().getBlock(i, y);
+                if (block.isSolid()) {
+                    return true;
+                }
+            }
+        } else {
+            for (int i = startX; i >= endX; i--) {
+                Block block = this.getWorld().getBlock(i, y);
+                if (block.isSolid()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Method to check if the player can see part of the Enemy
+     *
+     * @param enemy        The Enemy to consider
+     * @param playerCenter The central position of the player
+     * @return True if the player can actually see the Enemy
+     */
+    private boolean canSeeEnemy(final LivingEntity enemy, final Vector2d playerCenter) {
+        return playerCenter.getY() >= enemy.getPos().getY() && playerCenter.getY() <= (enemy.getPos().getY() + enemy.getHeight());
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -167,21 +207,29 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
             this.getWorld().getEntitiesInRange(playerCenter, ATTACK_RANGE).stream()
                     .filter(t -> t instanceof LivingEntity)
                     .map(LivingEntity.class::cast)
-                    .filter(t -> !t.isDead())
-                    .sorted((o1, o2) -> {
-                        if (Math.abs(getPos().getX() - o1.getPos().getX()) < Math.abs(getPos().getX() - o2.getPos().getX())) {
-                            return -1;
-                        } else if (Math.abs(getPos().getX() - o1.getPos().getX()) > Math.abs(getPos().getX() - o2.getPos().getX())) {
-                            return 1;
-                        }
-                        return 0;
-                    })
                     .filter(t -> {
                         Vector2d enemyCenter = t.getPos().addVector(new Vector2d(t.getWidth() / 2d, t.getHeight() / 2d));
+                        if (t.isDead()) {
+                            return false;
+                        }
+                        if (this.blockControl(enemyCenter.getX())) {
+                            return false;
+                        }
+                        if (!this.canSeeEnemy(t, playerCenter)) {
+                            return false;
+                        }
                         if (this.isFacingRight()) {
                             return enemyCenter.getX() > playerCenter.getX();
                         }
                         return enemyCenter.getX() < playerCenter.getX();
+                    })
+                    .sorted((t1, t2) -> {
+                        if (Math.abs(playerCenter.getX() - t1.getPos().getX()) < Math.abs(playerCenter.getX() - t2.getPos().getX())) {
+                            return -1;
+                        } else if (Math.abs(playerCenter.getX() - t1.getPos().getX()) > Math.abs(playerCenter.getX() - t2.getPos().getX())) {
+                            return 1;
+                        }
+                        return 0;
                     })
                     .findFirst()
                     .ifPresent(t -> {
