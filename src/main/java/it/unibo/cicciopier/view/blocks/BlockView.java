@@ -3,7 +3,6 @@ package it.unibo.cicciopier.view.blocks;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.blocks.base.BlockType;
 import it.unibo.cicciopier.model.settings.Screen;
-import it.unibo.cicciopier.utility.Pair;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
 
@@ -13,8 +12,10 @@ import java.awt.*;
  * Simple implementation of the interface {@link GameObjectView} for rendering {@link Block} instances.
  */
 public class BlockView implements GameObjectView {
+    private static int BLOCKS_PER_ROW;
     private final Block block;
-    private final Pair<Integer> coordinates;
+    private final int x;
+    private final int y;
 
     /**
      * Constructor for this class.
@@ -23,7 +24,12 @@ public class BlockView implements GameObjectView {
      */
     public BlockView(final Block block) {
         this.block = block;
-        this.coordinates = BlockTexture.getCoordinates(block.getType());
+        this.x = block.getType().ordinal() % BLOCKS_PER_ROW * Block.SIZE;
+        this.y = block.getType().ordinal() / BLOCKS_PER_ROW * Block.SIZE;
+    }
+
+    public static void load() {
+        BLOCKS_PER_ROW = Texture.BLOCK.getTexture().getWidth() / Block.SIZE;
     }
 
     /**
@@ -39,10 +45,10 @@ public class BlockView implements GameObjectView {
                 Screen.scale(this.block.getPos().getY()),
                 Screen.scale(this.block.getPos().getX() + Block.SIZE),
                 Screen.scale(this.block.getPos().getY() + Block.SIZE),
-                this.coordinates.getX(),
-                this.coordinates.getY(),
-                this.coordinates.getX() + Block.SIZE,
-                this.coordinates.getY() + Block.SIZE,
+                this.x,
+                this.y,
+                this.x + Block.SIZE,
+                this.y + Block.SIZE,
                 null
         );
     }
