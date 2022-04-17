@@ -4,6 +4,7 @@ import it.unibo.cicciopier.model.Music;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.view.Animation;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.blocks.BlockView;
 import it.unibo.cicciopier.view.entities.effects.BiteView;
 import it.unibo.cicciopier.view.entities.effects.ExplosionView;
 import it.unibo.cicciopier.view.entities.enemies.boss.LaserView;
@@ -29,6 +30,7 @@ public class GameLoader {
         this.loadMusics();
         this.loadAudio();
         this.loadTextures();
+        BlockView.load();
         this.loadAnimations(PlayerView.ANIMATIONS.values());
         this.loadAnimation(PlayerView.BLOOD_ANIMATION);
         this.loadAnimations(ShootingPeaView.ANIMATIONS.values());

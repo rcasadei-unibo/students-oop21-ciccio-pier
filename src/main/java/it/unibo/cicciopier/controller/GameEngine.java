@@ -188,12 +188,12 @@ public class GameEngine implements Engine {
      */
     private void processControllers() {
         final ControllerState state = this.controllers.getState(0);
-        if(!state.isConnected) {
+        if (!state.isConnected) {
             return;
         }
-        // Handle movements
         if (this.getState() == GameState.RUNNING) {
             int velX = 0;
+            // Handle movements
             if (state.dpadRight || state.leftStickX > 0.5) {
                 velX += this.getWorld().getPlayer().getSpeed();
             }
@@ -210,11 +210,11 @@ public class GameEngine implements Engine {
                 this.getWorld().getPlayer().attackNearest();
             }
         }
-        // Press start to enter and exit paused menu
+        // Press Start to enter and exit paused menu
         if (state.startJustPressed) {
             this.pause();
         }
-        // Press back to return to menu from paused/over/won menus
+        // Press Back to return to menu from paused/over/won menus
         if ((this.getState() == GameState.PAUSED ||
                 this.getState() == GameState.OVER ||
                 this.getState() == GameState.WON) &&
