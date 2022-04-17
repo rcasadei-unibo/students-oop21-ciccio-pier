@@ -25,7 +25,7 @@ public class MindPineapple extends SimplePathEnemy {
     private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
     public static final double PROJECTILE_SPEED = 2d * Block.SIZE / GameLoop.TPS;
     public static final int ATTACK_DURATION_TICKS = 60;
-    public static final int ANGERED_TICKS = 90;
+    public static final int ANGERED_TICKS = 50;
 
     private final MindPineappleView view;
     private int localTicks;

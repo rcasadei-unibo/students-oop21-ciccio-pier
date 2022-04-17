@@ -61,39 +61,39 @@ public enum EntityType {
     /**
      * Represents a ShootingPea
      */
-    SHOOTING_PEA(32, 64, 100, 50),
+    SHOOTING_PEA(32, 64, 100, 100),
     /**
      * Represents a NinjaPotato
      */
-    NINJA_POTATO(64, 64, 100, 50),
+    NINJA_POTATO(64, 64, 100, 100),
     /**
      * Represents a RollingPeach
      */
-    ROLLING_PEACH(64, 64, 100, 50),
+    ROLLING_PEACH(64, 64, 100, 100),
     /**
      * Represents a CryingPotato
      */
-    CRYING_ONION(64, 64, 100, 50),
+    CRYING_ONION(64, 64, 100, 100),
     /**
      * Represents a MindPineapple
      */
-    MIND_PINEAPPLE(64, 96, 100, 50),
+    MIND_PINEAPPLE(64, 96, 100, 100),
     /**
      * Represents a Nut
      */
-    NUT(32, 32, 0, 50),
+    NUT(32, 32, 0, 450),
     /**
      * Represents a Pea
      */
-    PEA(16, 16, 0, 50),
+    PEA(16, 16, 0, 200),
     /**
      * Represents a Slash
      */
-    SLASH(16, 32, 0, 50),
+    SLASH(16, 32, 0, 150),
     /**
      * Represents a Spikes
      */
-    SPIKES(32, 64, 0, 50),
+    SPIKES(32, 64, 0, 300),
     /**
      * Represents the boss of the game
      */
