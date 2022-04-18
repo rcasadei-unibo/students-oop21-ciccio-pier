@@ -99,7 +99,7 @@ public enum BlockType {
     /**
      * Represents a red nether brick block.
      */
-    RED_NETHER_BRICK,
+    RED_NETHER_BRICK(false),
     /**
      * Represents a nether brick block.
      */
@@ -243,7 +243,11 @@ public enum BlockType {
     /**
      * Represents a mausoleum block.
      */
-    MAUSOLEUM_BOTTOM_RIGHT(false, true);
+    MAUSOLEUM_BOTTOM_RIGHT(false, true),
+    /**
+     * Represents a fire block.
+     */
+    FIRE(false);
 
     private final boolean solid;
     private final boolean interact;

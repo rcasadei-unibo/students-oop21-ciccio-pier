@@ -63,7 +63,7 @@ public class GameEngine implements Engine {
         // Get sound
         try {
             this.music = Music.valueOf(this.getWorldLoader().getMusic());
-        } catch (IllegalArgumentException | NullPointerException e) {
+        } catch (Exception e) {
             LOGGER.error("Invalid music id {}, ignoring it...", this.getWorldLoader().getMusic());
         }
         // Init controllers

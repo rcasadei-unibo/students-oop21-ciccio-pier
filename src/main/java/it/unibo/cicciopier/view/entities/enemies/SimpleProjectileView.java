@@ -1,6 +1,7 @@
 package it.unibo.cicciopier.view.entities.enemies;
 
 import it.unibo.cicciopier.model.entities.enemies.SimpleProjectile;
+import it.unibo.cicciopier.model.settings.DeveloperMode;
 import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
@@ -42,6 +43,22 @@ abstract class SimpleProjectileView implements GameObjectView {
                 Screen.scale(this.projectile.getPos().getX() + this.projectile.getWidth()),
                 Screen.scale(this.projectile.getPos().getY() + this.projectile.getHeight()),
                 colLeft, 0, colRight, this.projectile.getHeight(), null);
+        this.renderBounds(g);
+    }
 
+    /**
+     * Render the bounds
+     *
+     * @param g graphic context
+     */
+    public void renderBounds(final Graphics g) {
+        if (DeveloperMode.isActive()) {
+            g.setColor(Color.BLACK);
+            g.drawRect(Screen.scale(this.projectile.getPos().getX()),
+                    Screen.scale(this.projectile.getPos().getY()),
+                    Screen.scale(this.projectile.getWidth() - 1),
+                    Screen.scale(this.projectile.getHeight() - 1)
+            );
+        }
     }
 }

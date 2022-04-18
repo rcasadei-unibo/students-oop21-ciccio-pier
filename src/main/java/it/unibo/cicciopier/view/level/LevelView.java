@@ -4,7 +4,6 @@ import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.model.settings.DeveloperMode;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.Player;
-import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.Texture;
 import org.slf4j.Logger;
@@ -48,10 +47,18 @@ public class LevelView extends JPanel {
         // Get background texture
         try {
             this.background = Texture.valueOf(this.engine.getWorldLoader().getBackground());
-        } catch (IllegalArgumentException | NullPointerException e) {
+            LOGGER.info("Displaying background image {}", this.background);
+        } catch (Exception e) {
             LOGGER.error("Invalid background id {}, ignoring it...", this.engine.getWorldLoader().getBackground());
-            // Set background color if no valid background has been declared
-            this.setBackground(Color.CYAN);
+        }
+        // Set background color if no valid texture has been declared
+        if (this.background == null) {
+            try {
+                this.setBackground(Color.decode(this.engine.getWorldLoader().getBackground()));
+                LOGGER.info("Displaying background color {}", this.getBackground());
+            } catch (Exception e) {
+                LOGGER.error("Invalid background color {}, ignoring it...", this.engine.getWorldLoader().getBackground());
+            }
         }
     }
 
@@ -70,8 +77,6 @@ public class LevelView extends JPanel {
                 g.drawImage(this.background.getTexture(), x, 0, w, (int) this.getPreferredSize().getHeight(), null);
             }
         }
-        // render blocks
-        this.engine.getWorld().forEach(b -> b.getView().render(g));
         // render entities
         this.engine.getWorld().getEntities().stream()
                 .filter(e -> e.getView() != null)
@@ -90,6 +95,8 @@ public class LevelView extends JPanel {
                         );
                     });
         }
+        // render blocks
+        this.engine.getWorld().forEach(b -> b.getView().render(g));
         // render player
         if (p.getView() != null) {
             p.getView().render(g);

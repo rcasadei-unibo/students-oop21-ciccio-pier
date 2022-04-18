@@ -76,6 +76,7 @@ public class GameView extends JFrame implements View, KeyListener {
         this.setResizable(false);
         this.add(this.pane);
         this.pack();
+        this.setLocationRelativeTo(null);
     }
 
     /**
