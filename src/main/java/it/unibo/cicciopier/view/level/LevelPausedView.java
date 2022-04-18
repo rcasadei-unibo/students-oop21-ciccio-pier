@@ -12,7 +12,7 @@ import java.awt.*;
 /**
  * Class for rendering a menu when the game is {@link GameState#PAUSED}
  */
-public class LevelPausedView extends LevelStateView {
+public final class LevelPausedView extends LevelStateView {
     private final LevelMenuButton restartButton;
     private final LevelMenuButton resumeButton;
     private final LevelMenuButton homeButton;

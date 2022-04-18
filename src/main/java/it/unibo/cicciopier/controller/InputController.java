@@ -6,8 +6,12 @@ import java.util.Set;
 /**
  * Class for input handling.
  */
-public class InputController {
-    private final Set<Input> inputs = new HashSet<>();
+public final class InputController {
+    private final Set<Input> inputs;
+
+    public InputController() {
+        this.inputs = new HashSet<>();
+    }
 
     /**
      * Check if an input is currently active.

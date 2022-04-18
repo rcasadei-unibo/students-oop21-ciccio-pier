@@ -18,7 +18,10 @@ import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.Collection;
 
-public class GameLoader {
+/**
+ * Simple class for loading game resources.
+ */
+public final class GameLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameLoader.class);
 
     /**

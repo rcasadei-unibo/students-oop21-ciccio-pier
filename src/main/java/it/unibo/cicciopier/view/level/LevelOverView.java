@@ -12,7 +12,7 @@ import java.awt.*;
 /**
  * Class for rendering a menu when the game is {@link GameState#OVER}
  */
-public class LevelOverView extends LevelStateView {
+public final class LevelOverView extends LevelStateView {
     private final LevelMenuButton restartButton;
     private final LevelMenuButton homeButton;
 

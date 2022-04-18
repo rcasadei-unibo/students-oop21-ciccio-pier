@@ -9,7 +9,7 @@ import it.unibo.cicciopier.view.Texture;
 import javax.swing.*;
 import java.awt.*;
 
-public class HudView extends JPanel {
+public final class HudView extends JPanel {
     private final Engine engine;
 
     public HudView(final Engine engine) {

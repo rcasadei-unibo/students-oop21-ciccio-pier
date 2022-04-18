@@ -14,7 +14,7 @@ import java.awt.*;
 /**
  * Class for rendering a menu when the game is {@link GameState#WON}
  */
-public class LevelWonView extends LevelStateView {
+public final class LevelWonView extends LevelStateView {
     private final LevelMenuButton homeButton;
 
     /**

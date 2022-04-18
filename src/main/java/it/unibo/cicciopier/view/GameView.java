@@ -12,7 +12,7 @@ import java.awt.event.KeyListener;
 /**
  * Simple implementation of the interface {@link View}.
  */
-public class GameView extends JLayeredPane implements View, KeyListener {
+public final class GameView extends JLayeredPane implements View, KeyListener {
     private final Engine engine;
     private final LevelView level;
     private final HudView hud;

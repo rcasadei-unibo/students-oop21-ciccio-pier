@@ -19,7 +19,7 @@ import java.util.Optional;
 /**
  * Simple implementation of the interface {@link Engine}.
  */
-public class GameEngine implements Engine {
+public final class GameEngine implements Engine {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameEngine.class);
     private final MenuController menu;
     private final Level level;

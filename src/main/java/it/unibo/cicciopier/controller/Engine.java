@@ -16,7 +16,7 @@ public interface Engine {
     /**
      * Load game resources and window.
      *
-     * @throws Exception error
+     * @throws Exception if an error occurred while loading the game
      */
     void load() throws Exception;
 

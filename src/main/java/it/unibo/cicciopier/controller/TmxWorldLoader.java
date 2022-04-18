@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * Simple implementation of the interface {@link WorldLoader} for tmx files.
  */
-public class TmxWorldLoader implements WorldLoader {
+public final class TmxWorldLoader implements WorldLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(TmxWorldLoader.class);
     private final World world;
     private final String level;
@@ -42,15 +42,15 @@ public class TmxWorldLoader implements WorldLoader {
      */
     @Override
     public void load() throws Exception {
-        TMXMapReader reader = new TMXMapReader();
-        URL url = App.class.getResource("/levels/" + this.getLevelName());
+        final TMXMapReader reader = new TMXMapReader();
+        final URL url = App.class.getResource("/levels/" + this.getLevelName());
         LOGGER.info("Loading file {}", url);
         // read height and width from map.
         this.map = reader.readMap(url);
         this.getWorld().setHeight(this.map.getHeight());
         this.getWorld().setWidth(this.map.getWidth());
         LOGGER.info("Loading map - height: {} - width: {}", this.getWorld().getHeight(), this.getWorld().getWidth());
-        Properties properties = map.getProperties();
+        final Properties properties = map.getProperties();
         // read background from map proprieties.
         this.background = properties.getProperty("background");
         LOGGER.info("Map background: {}", background);
@@ -64,15 +64,15 @@ public class TmxWorldLoader implements WorldLoader {
      */
     @Override
     public void loadBlocks() {
-        TileLayer layer = (TileLayer) this.map.getLayer(0);
+        final TileLayer layer = (TileLayer) this.map.getLayer(0);
         LOGGER.info("Level {} - {}", layer.getId(), layer.getName());
         // get every tile and create a block from its id, then set it at its position and add it to the world.
         for (int ty = 0; ty < this.getWorld().getHeight(); ty++) {
             for (int tx = 0; tx < this.getWorld().getWidth(); tx++) {
-                Tile tile = layer.getTileAt(tx, ty);
+                final Tile tile = layer.getTileAt(tx, ty);
                 BlockType type = BlockType.AIR;
                 if (tile != null) {
-                    int id = tile.getId();
+                    final int id = tile.getId();
                     try {
                         type = BlockType.values()[id];
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -80,16 +80,15 @@ public class TmxWorldLoader implements WorldLoader {
                         continue;
                     }
                 }
-                Optional<Block> opt = this.getWorld().getBlockFactory().createBlock(type);
+                final Optional<Block> opt = this.getWorld().getBlockFactory().createBlock(type);
                 if (opt.isEmpty()) {
                     LOGGER.error("Error creating block of type {} in {} at coordinates {} {}, skipping...",
                             type.name(), this.getLevelName(), tx, ty);
                     continue;
                 }
-                Block b = opt.get();
+                final Block b = opt.get();
                 b.setPos(new Vector2d(tx * Block.SIZE, ty * Block.SIZE));
                 this.getWorld().setBlock(tx, ty, b);
-                //LOGGER.info("  * Block - type: {} - x: {} - y: {}", type, tx, ty);
             }
         }
     }
@@ -99,11 +98,11 @@ public class TmxWorldLoader implements WorldLoader {
      */
     @Override
     public void loadEntities() {
-        ObjectGroup layer = (ObjectGroup) this.map.getLayer(1);
+        final ObjectGroup layer = (ObjectGroup) this.map.getLayer(1);
         LOGGER.info("Level {} - {}", layer.getId(), layer.getName());
         // get every object and create an entity from its type, then teleport it and add it to the world.
-        for (MapObject object : layer) {
-            String id = object.getType();
+        for (final MapObject object : layer) {
+            final String id = object.getType();
             EntityType type;
             try {
                 type = EntityType.valueOf(id);
@@ -111,17 +110,16 @@ public class TmxWorldLoader implements WorldLoader {
                 LOGGER.error("Invalid entity type {} in {}, skipping...", id, this.getLevelName());
                 continue;
             }
-            Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(type);
+            final Optional<Entity> opt = this.getWorld().getEntityFactory().createEntity(type);
             if (opt.isEmpty()) {
                 LOGGER.error("Error creating entity of type {} in {} at coordinates {} {}, skipping...",
                         type.name(), this.getLevelName(), object.getX(), object.getY());
                 continue;
             }
-            Entity e = opt.get();
+            final Entity e = opt.get();
             e.setPos(new Vector2d(object.getX(), object.getY()));
             e.load();
             this.getWorld().addEntity(e);
-            //LOGGER.info("  * Entity - type: {} - x: {} - y: {}", type, object.getX(), object.getY());
         }
     }
 
@@ -130,10 +128,10 @@ public class TmxWorldLoader implements WorldLoader {
      */
     @Override
     public void loadPlayer() {
-        ObjectGroup layer = (ObjectGroup) this.map.getLayer(2);
+        final ObjectGroup layer = (ObjectGroup) this.map.getLayer(2);
         LOGGER.info("Level {} - {}", layer.getId(), layer.getName());
         // get the first object and teleport the player there.
-        MapObject object = layer.iterator().next();
+        final MapObject object = layer.iterator().next();
         this.getWorld().getPlayer().setPos(new Vector2d(object.getX(), object.getY()));
     }
 

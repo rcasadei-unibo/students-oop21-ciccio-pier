@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Simple implementation of the interface {@link Loop}.
  */
-public class GameLoop extends Thread implements Loop {
+public final class GameLoop extends Thread implements Loop {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameLoop.class);
     /**
      * Tick per second.
@@ -61,7 +61,7 @@ public class GameLoop extends Thread implements Loop {
                     deltaTime = System.currentTimeMillis() - lastLoopTime;
                 }
             } else if (lastLoopTime != 0 && deltaTime > LAPSE) {
-                long behind = deltaTime - LAPSE;
+                final long behind = deltaTime - LAPSE;
                 LOGGER.warn("Can't keep up! Did the system time change, or is the game overloaded? Running {}ms behind, skipping {} tick(s)", behind, behind / TPS);
             }
             lastLoopTime = System.currentTimeMillis();

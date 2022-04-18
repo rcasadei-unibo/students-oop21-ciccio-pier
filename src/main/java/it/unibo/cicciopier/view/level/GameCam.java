@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Represents the game cam.
  */
-public class GameCam {
+public final class GameCam {
     private int viewportWidth;
     private int viewportHeight;
     private int offsetMax;

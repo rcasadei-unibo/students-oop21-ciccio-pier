@@ -15,7 +15,7 @@ import java.awt.*;
 /**
  * Custom {@link JPanel} class for game rendering.
  */
-public class LevelView extends JPanel {
+public final class LevelView extends JPanel {
     private static final Logger LOGGER = LoggerFactory.getLogger(LevelView.class);
     private final Engine engine;
     private final GameCam cam;
