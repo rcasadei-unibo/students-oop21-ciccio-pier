@@ -29,7 +29,7 @@ public class NinjaPotatoView extends SimpleLivingEntityView {
             final int w = EntityType.NINJA_POTATO.getWidth();
             final int h = EntityType.NINJA_POTATO.getHeight();
             put(EnemyState.HIDDEN, new Animation(texture, 5, 25, new Pair<>(0, 0), w, h));
-            put(EnemyState.IDLE, new Animation(texture, 5, 25, new Pair<>(0, h), w, h));
+            put(EnemyState.IDLE, new Animation(texture, 5, 20, new Pair<>(0, h), w, h));
             put(EnemyState.JUMPING_OUT, new Animation(texture, 6, (int)Math.ceil(NinjaPotato.JUMP_TICKS / 6d), new Pair<>(0, h * 2), w, h));
             put(EnemyState.JUMPING_IN, new Animation(texture, 6, (int)Math.ceil(NinjaPotato.JUMP_TICKS / 6d), new Pair<>(0, h * 3), w, h));
             put(EnemyState.SLASH_OUT, new Animation(texture, 10, (int)Math.ceil(NinjaPotato.SLASH_OUT_TICK_DURATION / 10d), new Pair<>(0, h * 4), w, h));

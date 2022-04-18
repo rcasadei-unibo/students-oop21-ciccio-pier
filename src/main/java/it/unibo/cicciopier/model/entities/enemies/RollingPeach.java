@@ -17,11 +17,12 @@ import java.util.Optional;
  * towards the player.
  */
 public class RollingPeach extends SimplePathEnemy {
-    private final int ATTACK_RANGE = 4 * Block.SIZE;
-    private final double IDLE_DURATION = 1.5* GameLoop.TPS;
-    private final double MOVEMENT_SPEED = 1;
-    private static final double ROLLING_SPEED = (8.5d * Block.SIZE) / GameLoop.TPS;
-    private final int MAX_RIGHT_OFFSET = 5 * Block.SIZE;
+    public final int ATTACK_RANGE = 4 * Block.SIZE;
+    public final double IDLE_DURATION = 1.5* GameLoop.TPS;
+    public final double MOVEMENT_SPEED = 1;
+    public static final double ROLLING_SPEED = (8.5d * Block.SIZE) / GameLoop.TPS;
+    public static final int ANGER_DURATION_TICKS = 40;
+    public final int MAX_RIGHT_OFFSET = 5 * Block.SIZE;
     private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
 
     private final RollingPeachView view;
@@ -168,7 +169,7 @@ public class RollingPeach extends SimplePathEnemy {
     private void anger() {
         this.resetCurrentState(EnemyState.ANGERED);
         this.updateLocalTicks();
-        if (this.localTicks == 40) {
+        if (this.localTicks == ANGER_DURATION_TICKS) {
             this.localTicks = 0;
             this.angered = true;
         }

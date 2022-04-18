@@ -13,13 +13,14 @@ import it.unibo.cicciopier.view.entities.enemies.CryingOnionView;
  * whenever the player gets too near and then running into him.
  */
 public class CryingOnion extends SimplePathEnemy {
-    private static final int ATTACK_RANGE = 5 * Block.SIZE;
-    private static final double IDLE_DURATION = 2 * GameLoop.TPS;
-    private static final double MOVEMENT_SPEED = 1.5;
-    private static final double RUNNING_SPEED = (10d * Block.SIZE) / GameLoop.TPS;
-    private static final int MAX_RIGHT_OFFSET = 4 * Block.SIZE;
+    public static final int ATTACK_RANGE = 5 * Block.SIZE;
+    public static final double IDLE_DURATION = 2 * GameLoop.TPS;
+    public static final double MOVEMENT_SPEED = 1.5;
+    public static final double RUNNING_SPEED = (10d * Block.SIZE) / GameLoop.TPS;
+    public static final int MAX_RIGHT_OFFSET = 4 * Block.SIZE;
+    public static final int ANGER_DURATION_TICKS = 80;
     private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
-    private static final int JUMP_FORCE = 9;
+    public static final int JUMP_FORCE = 9;
 
     private final CryingOnionView view;
     private boolean suicidal;
@@ -139,7 +140,7 @@ public class CryingOnion extends SimplePathEnemy {
     private void startCrying() {
         this.resetCurrentState(EnemyState.ANGERED);
         this.updateLocalTicks();
-        if (this.localTicks == 80) {
+        if (this.localTicks == ANGER_DURATION_TICKS) {
             this.localTicks = 0;
             this.angered = true;
         }

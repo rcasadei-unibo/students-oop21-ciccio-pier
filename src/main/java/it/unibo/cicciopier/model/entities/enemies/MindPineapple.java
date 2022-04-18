@@ -18,11 +18,11 @@ import java.util.Optional;
  * a short wall of spikes.
  */
 public class MindPineapple extends SimplePathEnemy {
-    private final int ATTACK_RANGE = this.getWorld().getPlayer().getAttackRange() + Block.SIZE;
-    private static final double IDLE_DURATION = 2 * GameLoop.TPS;
-    private static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
-    private static final double MOVEMENT_SPEED = 0.7;
-    private static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
+    public final int ATTACK_RANGE = this.getWorld().getPlayer().getAttackRange() + Block.SIZE;
+    public static final double IDLE_DURATION = 2 * GameLoop.TPS;
+    public static final int ATTACK_COOLDOWN = 2 * GameLoop.TPS;
+    public static final double MOVEMENT_SPEED = 0.7;
+    public static final int MAX_RIGHT_OFFSET = 3 * Block.SIZE;
     public static final double PROJECTILE_SPEED = 2d * Block.SIZE / GameLoop.TPS;
     public static final int ATTACK_DURATION_TICKS = 60;
     public static final int ANGERED_TICKS = 50;

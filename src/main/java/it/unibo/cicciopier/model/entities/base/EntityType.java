@@ -61,23 +61,23 @@ public enum EntityType {
     /**
      * Represents a ShootingPea
      */
-    SHOOTING_PEA(32, 64, 100, 100),
+    SHOOTING_PEA(32, 64, 130, 100),
     /**
      * Represents a NinjaPotato
      */
-    NINJA_POTATO(64, 64, 100, 100),
+    NINJA_POTATO(64, 64, 120, 100),
     /**
      * Represents a RollingPeach
      */
-    ROLLING_PEACH(64, 64, 100, 100),
+    ROLLING_PEACH(64, 64, 120, 100),
     /**
      * Represents a CryingPotato
      */
-    CRYING_ONION(64, 64, 100, 100),
+    CRYING_ONION(64, 64, 60, 100),
     /**
      * Represents a MindPineapple
      */
-    MIND_PINEAPPLE(64, 96, 100, 100),
+    MIND_PINEAPPLE(64, 96, 240, 100),
     /**
      * Represents a Nut
      */

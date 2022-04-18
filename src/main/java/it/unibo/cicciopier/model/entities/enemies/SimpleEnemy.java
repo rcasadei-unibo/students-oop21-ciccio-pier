@@ -17,10 +17,10 @@ import java.util.Random;
  * Abstract class representing a generic Enemy
  */
 public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
-    private static final int HIT_COOLDOWN = 2 * GameLoop.TPS;
+    public static final int HIT_COOLDOWN = 2 * GameLoop.TPS;
     public static final int DEATH_DURATION = 2 * GameLoop.TPS;
-    private final Random rand;
     private final int attackDamage;
+    private final Random rand;
     private int shootingCooldownTicks;
     private int hitTicks;
     private int deathTicks;

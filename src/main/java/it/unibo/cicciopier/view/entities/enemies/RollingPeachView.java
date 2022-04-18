@@ -29,7 +29,7 @@ public class RollingPeachView extends SimpleLivingEntityView {
             final int h = EntityType.ROLLING_PEACH.getHeight();
             put(EnemyState.IDLE, new Animation(texture, 6, 20, new Pair<>(0, 0), w, h));
             put(EnemyState.RUNNING, new Animation(texture, 6, 10, new Pair<>(0, h), w, h));
-            put(EnemyState.ANGERED, new Animation(texture, 4, 10, new Pair<>(0, h * 2), w, h));
+            put(EnemyState.ANGERED, new Animation(texture, 4, (int)Math.ceil(RollingPeach.ANGER_DURATION_TICKS / 4d), new Pair<>(0, h * 2), w, h));
             put(EnemyState.ANGERED_RUNNING, new Animation(texture, 4, 5, new Pair<>(0, h * 3), w, h));
             put(EnemyState.DEAD, new Animation(texture, 9, (int)Math.ceil(SimpleEnemy.DEATH_DURATION / 9d), new Pair<>(0, h * 4), w, h));
         }

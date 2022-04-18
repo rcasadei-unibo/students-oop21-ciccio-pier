@@ -15,15 +15,15 @@ import it.unibo.cicciopier.view.entities.enemies.NinjaPotatoView;
  * when it gets too close.
  */
 public class NinjaPotato extends SimpleEnemy {
-    private static final int ATTACK_RANGE = 6 * Block.SIZE;
-    private static final int IDLE_DURATION = 4 * GameLoop.TPS;
-    private static final int ATTACK_COOLDOWN = 3 * GameLoop.TPS;
+    public static final int ATTACK_RANGE = 6 * Block.SIZE;
+    public static final int IDLE_DURATION = 4 * GameLoop.TPS;
+    public static final int ATTACK_COOLDOWN = 3 * GameLoop.TPS;
     public static final double PROJECTILE_SPEED = 15d * Block.SIZE / GameLoop.TPS;
     public static final int PROJECTILE_DURATION_TICKS = 30;
-    private static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
     public static final int SLASH_OUT_TICK_DURATION = 20;
     public static final int SLASH_IN_TICK_DURATION = 60;
     public static final int JUMP_TICKS = 20;
+    public static final int LOCAL_TICK_COUNT_DELIMITER = 3000;
 
     private final NinjaPotatoView view;
     private int localTicks;
