@@ -29,7 +29,7 @@ public class ShootingPeaView extends SimpleLivingEntityView {
             final int w = EntityType.SHOOTING_PEA.getWidth();
             final int h = EntityType.SHOOTING_PEA.getHeight();
             put(EnemyState.IDLE, new Animation(texture, 5, 10, new Pair<>(0, 0), w, h));
-            put(EnemyState.RUNNING, new Animation(texture, 13, 5, new Pair<>(0, h), w, h));
+            put(EnemyState.RUNNING, new Animation(texture, 13, 2, new Pair<>(0, h), w, h));
             put(EnemyState.ATTACKING, new Animation(texture, 9, ShootingPea.ATTACK_DURATION / 9, new Pair<>(0, h * 2), w, h));
             put(EnemyState.DEAD, new Animation(texture, 11, (int)Math.ceil(SimpleEnemy.DEATH_DURATION / 11d), new Pair<>(0, h * 3), w, h));
         }
