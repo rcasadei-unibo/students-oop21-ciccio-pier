@@ -204,7 +204,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         }
         if (this.attackCooldownTicks == ATTACK_COOLDOWN) {
             this.setCurrentState(EntityState.ATTACKING);
-            Vector2d playerCenter = this.getPos().addVector(new Vector2d(this.getWidth() / 2d, this.getHeight() / 2d));
+            final Vector2d playerCenter = this.getPos().addVector(new Vector2d(this.getWidth() / 2d, this.getHeight() / 2d));
             this.getWorld().getEntitiesInRange(playerCenter, ATTACK_RANGE).stream()
                     .filter(t -> t instanceof LivingEntity)
                     .map(LivingEntity.class::cast)
