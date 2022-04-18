@@ -12,7 +12,6 @@ import java.awt.*;
  * Simple implementation of the interface {@link GameObjectView} for rendering {@link Block} instances.
  */
 public class BlockView implements GameObjectView {
-    private static int BLOCKS_PER_ROW;
     private final Block block;
 
     /**
@@ -24,10 +23,6 @@ public class BlockView implements GameObjectView {
         this.block = block;
     }
 
-    public static void load() {
-        BLOCKS_PER_ROW = Texture.BLOCK.getTexture().getWidth() / Block.SIZE;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -36,8 +31,9 @@ public class BlockView implements GameObjectView {
         if (this.block.getType() == BlockType.AIR) {
             return;
         }
-        final int x = block.getType().ordinal() % BLOCKS_PER_ROW * Block.SIZE;
-        final int y = block.getType().ordinal() / BLOCKS_PER_ROW * Block.SIZE;
+        final int blockPerRow = Texture.BLOCK.getTexture().getWidth() / Block.SIZE;
+        final int x = block.getType().ordinal() % blockPerRow * Block.SIZE;
+        final int y = block.getType().ordinal() / blockPerRow * Block.SIZE;
         g.drawImage(Texture.BLOCK.getTexture(),
                 Screen.scale(this.block.getPos().getX()),
                 Screen.scale(this.block.getPos().getY()),
