@@ -32,7 +32,7 @@ public class User {
         this.username = username;
         this.soundVolume = 50;
         this.musicVolume = 50;
-        Level.getLevels().forEach(level -> this.levelScores.put(level.getJsonId(), 34));
+        Level.getLevels().forEach(level -> this.levelScores.put(level.getJsonId(), -1));
         this.resolution = Screen.getScreenMaxSize();
     }
 

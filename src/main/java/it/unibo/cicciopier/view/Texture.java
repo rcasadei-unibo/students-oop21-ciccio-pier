@@ -170,13 +170,17 @@ public enum Texture {
      */
     PAUSE_BACKGROUND("/textures/backgrounds/pause.png"),
     /**
-     * Represents the background shown when you pause a level
+     * Represents the background shown on loosing a level
      */
     GAMEOVER_BACKGROUND("/textures/backgrounds/gameover.png"),
     /**
-     * Represents the background shown when you pause a level
+     * Represents the background shown in a level
      */
     BRICKS_BACKGROUND("/textures/backgrounds/bricks.png"),
+    /**
+     * Represents the background shown in the boss level
+     */
+    BOSS_BACKGROUND("/textures/backgrounds/boss.png"),
     /**
      * Represents the button used to access the first level
      */

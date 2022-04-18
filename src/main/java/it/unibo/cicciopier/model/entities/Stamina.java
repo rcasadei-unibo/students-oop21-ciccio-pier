@@ -31,8 +31,7 @@ public class Stamina {
     /**
      * Represents how much the healthy food will heal the player
      */
-    public static final int HEALTHY_FOOD_HEAL = 40;
-
+    public static final int HEALTHY_FOOD_HEAL = 100;
     /**
      * Represents the minimum stamina needed to not get fatigued
      */
@@ -48,7 +47,7 @@ public class Stamina {
     /**
      * Represents how much the stamina will be decreased when the player jumps
      */
-    public static final int JUMP_DECREASE = 2;
+    public static final int JUMP_DECREASE = 10;
     /**
      * Represents how much the health will be decreased if the stamina is 0
      */
