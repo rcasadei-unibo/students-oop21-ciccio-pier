@@ -53,6 +53,5 @@ public class LevelOverView extends LevelStateView {
                 (int) this.getPreferredSize().getWidth(),
                 (int) this.getPreferredSize().getHeight(),
                 null);
-        // TODO render score
     }
 }
