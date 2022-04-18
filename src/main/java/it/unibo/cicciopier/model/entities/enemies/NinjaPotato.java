@@ -5,6 +5,7 @@ import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
+import it.unibo.cicciopier.model.entities.EntityState;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.enemies.NinjaPotatoView;
@@ -54,6 +55,17 @@ public class NinjaPotato extends SimpleEnemy {
         if (this.getCurrentState() != EnemyState.HIDDEN) {
             super.damage(amount);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void checkPlayerCollision() {
+        if (this.getCurrentState() == EnemyState.HIDDEN){
+            return;
+        }
+        super.checkPlayerCollision();
     }
 
     /**
