@@ -71,26 +71,38 @@ public class LevelView extends JPanel {
             }
         }
         // render blocks
-        for (Block b : this.engine.getWorld()) {
-            b.getView().render(g);
-        }
+        this.engine.getWorld().forEach(b -> b.getView().render(g));
         // render entities
-        for (Entity e : this.engine.getWorld().getEntities()) {
-            if (e.getView() != null) {
-                e.getView().render(g);
-            } else if (DeveloperMode.isActive()) {
-                // Render even if the view is null - developing purposes
-                g.setColor(Color.RED);
-                g.drawRect(Screen.scale(e.getPos().getX()), Screen.scale(e.getPos().getY()), Screen.scale(e.getWidth() - 1), Screen.scale(e.getHeight() - 1));
-            }
+        this.engine.getWorld().getEntities().stream()
+                .filter(e -> e.getView() != null)
+                .forEach(e -> e.getView().render(g));
+        // render even if the view is null - developing purposes
+        if (DeveloperMode.isActive()) {
+            this.engine.getWorld().getEntities().stream()
+                    .filter(e -> e.getView() == null)
+                    .forEach(e -> {
+                        g.setColor(Color.RED);
+                        g.drawRect(
+                                Screen.scale(e.getPos().getX()),
+                                Screen.scale(e.getPos().getY()),
+                                Screen.scale(e.getWidth() - 1),
+                                Screen.scale(e.getHeight() - 1)
+                        );
+                    });
         }
         // render player
         if (p.getView() != null) {
             p.getView().render(g);
-        } else if (DeveloperMode.isActive()) {
-            // Render even if the view is null - developing purposes
+        }
+        // render even if the view is null - developing purposes
+        else if (DeveloperMode.isActive()) {
             g.setColor(Color.BLACK);
-            g.drawRect(Screen.scale(p.getPos().getX()), Screen.scale(p.getPos().getY()), Screen.scale(p.getWidth() - 1), Screen.scale(p.getHeight() - 1));
+            g.drawRect(
+                    Screen.scale(p.getPos().getX()),
+                    Screen.scale(p.getPos().getY()),
+                    Screen.scale(p.getWidth() - 1),
+                    Screen.scale(p.getHeight() - 1)
+            );
         }
         // dispose
         g.dispose();

@@ -46,27 +46,26 @@ public class GameView extends JFrame implements View, KeyListener {
     @Override
     public void load() throws Exception {
         // Setup pane
-        Dimension size = Screen.getCurrentDimension();
-        this.pane.setPreferredSize(size);
+        this.pane.setPreferredSize(Screen.getCurrentDimension());
         this.pane.setLayout(null);
         // Setup level
-        this.level.setPreferredSize(size);
+        this.level.setPreferredSize(Screen.getCurrentDimension());
         this.level.load();
         this.pane.add(this.level, Integer.valueOf(0));
         // Setup hud
-        this.hud.setPreferredSize(size);
+        this.hud.setPreferredSize(Screen.getCurrentDimension());
         this.hud.load();
         this.pane.add(this.hud, Integer.valueOf(1));
         // Setup paused view
-        this.paused.setPreferredSize(size);
+        this.paused.setPreferredSize(Screen.getCurrentDimension());
         this.paused.load();
         this.pane.add(this.paused, Integer.valueOf(2));
         // Setup over view
-        this.over.setPreferredSize(size);
+        this.over.setPreferredSize(Screen.getCurrentDimension());
         this.over.load();
         this.pane.add(this.over, Integer.valueOf(3));
         // Setup won view
-        this.won.setPreferredSize(size);
+        this.won.setPreferredSize(Screen.getCurrentDimension());
         this.won.load();
         this.pane.add(this.won, Integer.valueOf(4));
         // Setup JFrame
