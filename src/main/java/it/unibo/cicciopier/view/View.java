@@ -13,14 +13,9 @@ public interface View {
     void load() throws Exception;
 
     /**
-     * Open the game window.
+     * Show the game window.
      */
     void start();
-
-    /**
-     * Close game window.
-     */
-    void close();
 
     /**
      * Update the game window one time.

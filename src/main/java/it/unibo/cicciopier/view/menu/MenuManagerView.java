@@ -1,5 +1,6 @@
 package it.unibo.cicciopier.view.menu;
 
+import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.controller.menu.MainMenuController;
 import it.unibo.cicciopier.controller.menu.MenuAction;
 import it.unibo.cicciopier.controller.menu.ViewPanels;
@@ -74,7 +75,7 @@ public class MenuManagerView extends JFrame implements ManagerView {
     @Override
     public void update() {
         this.setPreferredSize(Screen.getCurrentDimension());
-        this.customAnimationView.setPreferredSize(new Dimension(this.getPreferredSize().width,  Screen.scale((384 / 1.75))));
+        this.customAnimationView.setPreferredSize(new Dimension(this.getPreferredSize().width, Screen.scale((384 / 1.75))));
         this.loggedUser.setFont(CustomFont.getInstance().getFontOrDefault());
         this.loggedUser.setText("Logged user: " + controller.getUsername());
         this.loggedUser.setForeground(Color.WHITE);
@@ -180,7 +181,7 @@ public class MenuManagerView extends JFrame implements ManagerView {
                 this.leaderboardView.updateLeaderboard(Level.FIRST_LEVEL);
                 break;
             }
-            case TUTORIAL:{
+            case TUTORIAL: {
                 this.tutorialView.add(this.homeButton);
                 this.tutorialView.add(this.settingsButton);
                 this.tutorialView.add(this.loggedUser);
@@ -193,6 +194,12 @@ public class MenuManagerView extends JFrame implements ManagerView {
         this.update();
         this.pack();
         this.setLocationRelativeTo(null);
+    }
+
+    public void setVisible(final Engine engine) {
+        this.getContentPane().removeAll();
+        this.getContentPane().add((Component) engine.getView());
+        this.pack();
     }
 
     public SettingsView getSettingsView() {

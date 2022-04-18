@@ -96,6 +96,13 @@ public interface Engine {
     World getWorld();
 
     /**
+     * Get the game view for the current level.
+     *
+     * @return the view
+     */
+    View getView();
+
+    /**
      * Get the level currently playing
      *
      * @return the level

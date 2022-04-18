@@ -197,9 +197,10 @@ public final class MainMenuController implements MenuController {
         LOGGER.info("Starting level...");
 
         try {
-            this.menu.setVisible(false);
+            //this.menu.setVisible(false);
             GameEngine gameEngine = new GameEngine(this, level);
             gameEngine.load();
+            this.menu.setVisible(gameEngine);
             AudioController.getInstance().stopMusic();
             gameEngine.getMusic().ifPresent(m -> AudioController.getInstance().playMusic(m));
             gameEngine.start();
@@ -274,7 +275,7 @@ public final class MainMenuController implements MenuController {
             updateUsers();
         }
         AudioController.getInstance().playMusic(Music.BACKGROUND);
-        this.menu.setVisible(true);
+        this.show(ViewPanels.LEVEL_SELECTION);
     }
 
     /**

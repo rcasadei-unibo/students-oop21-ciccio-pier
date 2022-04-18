@@ -2,22 +2,18 @@ package it.unibo.cicciopier.view;
 
 import it.unibo.cicciopier.controller.Engine;
 import it.unibo.cicciopier.controller.Input;
-import it.unibo.cicciopier.model.blocks.base.Block;
-import it.unibo.cicciopier.model.settings.DeveloperMode;
 import it.unibo.cicciopier.model.settings.Screen;
 import it.unibo.cicciopier.view.level.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
  * Simple implementation of the interface {@link View}.
  */
-public class GameView extends JFrame implements View, KeyListener {
+public class GameView extends JLayeredPane implements View, KeyListener {
     private final Engine engine;
-    private final JLayeredPane pane;
     private final LevelView level;
     private final HudView hud;
     private final LevelPausedView paused;
@@ -30,9 +26,7 @@ public class GameView extends JFrame implements View, KeyListener {
      * @param engine the game engine
      */
     public GameView(final Engine engine) {
-        super("CICCIO PIER THE GAME!");
         this.engine = engine;
-        this.pane = new JLayeredPane();
         this.level = new LevelView(engine);
         this.hud = new HudView(engine);
         this.paused = new LevelPausedView(engine);
@@ -46,46 +40,30 @@ public class GameView extends JFrame implements View, KeyListener {
     @Override
     public void load() throws Exception {
         // Setup pane
-        this.pane.setPreferredSize(Screen.getCurrentDimension());
-        this.pane.setLayout(null);
+        this.setPreferredSize(Screen.getCurrentDimension());
+        this.setLayout(null);
         // Setup level
         this.level.setPreferredSize(Screen.getCurrentDimension());
         this.level.load();
-        this.pane.add(this.level, Integer.valueOf(0));
+        this.add(this.level, Integer.valueOf(0));
         // Setup hud
         this.hud.setPreferredSize(Screen.getCurrentDimension());
         this.hud.load();
-        this.pane.add(this.hud, Integer.valueOf(1));
+        this.add(this.hud, Integer.valueOf(1));
         // Setup paused view
         this.paused.setPreferredSize(Screen.getCurrentDimension());
         this.paused.load();
-        this.pane.add(this.paused, Integer.valueOf(2));
+        this.add(this.paused, Integer.valueOf(2));
         // Setup over view
         this.over.setPreferredSize(Screen.getCurrentDimension());
         this.over.load();
-        this.pane.add(this.over, Integer.valueOf(3));
+        this.add(this.over, Integer.valueOf(3));
         // Setup won view
         this.won.setPreferredSize(Screen.getCurrentDimension());
         this.won.load();
-        this.pane.add(this.won, Integer.valueOf(4));
-        // Setup JFrame
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.add(this.won, Integer.valueOf(4));
+        // Setup key listener
         this.addKeyListener(this);
-        this.setUndecorated(true);
-        this.setResizable(false);
-        this.add(this.pane);
-        this.pack();
-        this.setLocationRelativeTo(null);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void close() {
-        this.setVisible(false);
-        this.dispose();
     }
 
     /**
@@ -93,7 +71,7 @@ public class GameView extends JFrame implements View, KeyListener {
      */
     @Override
     public void start() {
-        this.setVisible(true);
+        this.requestFocus();
     }
 
     /**
@@ -101,7 +79,7 @@ public class GameView extends JFrame implements View, KeyListener {
      */
     @Override
     public void render() {
-        this.pane.repaint();
+        this.repaint();
     }
 
     /**

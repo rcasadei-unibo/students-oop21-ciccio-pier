@@ -116,7 +116,6 @@ public class GameEngine implements Engine {
         LOGGER.info("Stopping game...");
         this.getLoop().stopLoop();
         this.menu.endOfLevel(this.getWorld().getPlayer().getScore(), this.getState(), this.getLevel());
-        this.view.close();
     }
 
     /**
@@ -293,6 +292,14 @@ public class GameEngine implements Engine {
     @Override
     public World getWorld() {
         return this.world;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public View getView() {
+        return this.view;
     }
 
     /**
