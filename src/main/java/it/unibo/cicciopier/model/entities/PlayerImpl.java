@@ -10,7 +10,6 @@ import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.LivingEntity;
 import it.unibo.cicciopier.model.entities.base.SimpleLivingEntity;
 import it.unibo.cicciopier.model.entities.enemies.EnemyState;
-import it.unibo.cicciopier.model.entities.enemies.SimpleEnemy;
 import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.PlayerView;
@@ -161,19 +160,19 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
      * @return True, if there are blocks in the way
      */
     private boolean blockControl(final int enemyX) {
-        int startX = (int) (this.getPos().getX() / Block.SIZE);
-        int endX = (int) (enemyX / Block.SIZE);
-        int y = this.getPos().getY() / Block.SIZE;
+        final int startX = this.getPos().getX() / Block.SIZE;
+        final int endX = enemyX / Block.SIZE;
+        final int y = this.getPos().getY() / Block.SIZE;
         if (this.isFacingRight()) {
             for (int i = startX; i <= endX; i++) {
-                Block block = this.getWorld().getBlock(i, y);
+                final Block block = this.getWorld().getBlock(i, y);
                 if (block.isSolid()) {
                     return true;
                 }
             }
         } else {
             for (int i = startX; i >= endX; i--) {
-                Block block = this.getWorld().getBlock(i, y);
+                final Block block = this.getWorld().getBlock(i, y);
                 if (block.isSolid()) {
                     return true;
                 }
@@ -329,6 +328,9 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         return this.playerView;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void damage(int amount) {
         if (!this.isInvulnerable) {
@@ -338,26 +340,41 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setJumpModifier(final int modifier) {
         this.jumpModifier += modifier;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSpeedModifier(final int modifier) {
         this.speedModifier += modifier;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setInvulnerability(final boolean active) {
         this.isInvulnerable = active;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean hasWon() {
         return won;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void win() {
         this.won = true;

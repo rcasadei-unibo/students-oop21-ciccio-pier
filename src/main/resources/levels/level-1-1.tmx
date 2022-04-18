@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="left-up" width="256" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="211">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="left-up" width="256" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="211">
  <properties>
   <property name="background" value="#00FFFF"/>
-  <property name="music" value="GAME"/>
+  <property name="music" value="FIRST_LEVEL"/>
  </properties>
- <tileset firstgid="1" name="pack" tilewidth="32" tileheight="32" tilecount="60" columns="10">
-  <image source="../textures/blocks.png" trans="ff00ff" width="320" height="192"/>
+ <tileset firstgid="1" name="pack" tilewidth="32" tileheight="32" tilecount="70" columns="10">
+  <image source="../textures/blocks.png" trans="ff00ff" width="320" height="224"/>
  </tileset>
  <layer id="1" name="Terrain" width="256" height="24">
   <data encoding="csv">

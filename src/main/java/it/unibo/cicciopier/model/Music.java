@@ -11,11 +11,19 @@ public enum Music {
     /**
      * Music for the main menu
      */
-    BACKGROUND("/musics/menu.wav"),
+    MENU("/musics/menu.wav"),
     /**
-     * Music for the normal game levels
+     * Music for the the first level
      */
-    GAME("/musics/game.wav"),
+    FIRST_LEVEL("/musics/first_level.wav"),
+    /**
+     * Music for the the second level
+     */
+    SECOND_LEVEL("/musics/second_level.wav"),
+    /**
+     * Music for the the third level
+     */
+    THIRD_LEVEL("/musics/third_level.wav"),
     /**
      * Music for the boss levels
      */
@@ -48,15 +56,6 @@ public enum Music {
     }
 
     /**
-     * Get the sound file name
-     *
-     * @return file name
-     */
-    public String getFileName() {
-        return this.fileName;
-    }
-
-    /**
      * Get the byte code of the audio
      *
      * @return byte array
@@ -64,5 +63,4 @@ public enum Music {
     public byte[] getBytes() {
         return Arrays.copyOf(this.bytes, this.bytes.length);
     }
-
 }

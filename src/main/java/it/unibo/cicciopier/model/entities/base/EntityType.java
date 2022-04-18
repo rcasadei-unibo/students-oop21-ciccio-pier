@@ -13,15 +13,15 @@ public enum EntityType {
     /**
      * Represents the Missile that the enemy will launch
      */
-    MISSILE(10, 10, 0, 20),
+    MISSILE(10, 10, 0, 60),
     /**
      * Represents a meteor from boss attack
      */
-    METEOR(64, 64, 0, 25),
+    METEOR(64, 64, 0, 50),
     /**
      * Represents the laser that the Boss will shoot
      */
-    LASER(0, 0, 0, 2),
+    LASER(0, 0, 0, 5),
     /**
      * Represents a coin
      */
@@ -97,7 +97,7 @@ public enum EntityType {
     /**
      * Represents the boss of the game
      */
-    BROCCOLI(96, 320, 600, 10);
+    BROCCOLI(96, 320, 2000, 10);
 
     private final int width;
     private final int height;

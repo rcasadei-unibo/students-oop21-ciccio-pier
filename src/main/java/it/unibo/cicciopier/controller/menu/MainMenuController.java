@@ -41,7 +41,7 @@ public final class MainMenuController implements MenuController {
 
     /**
      * This constructor initializes the controller loading the users from json, initialize his variables,
-     * starts the actual game by reproducing the {@link Music#BACKGROUND} and showing the initial login view
+     * starts the actual game by reproducing the {@link Music#MENU} and showing the initial login view
      */
     public MainMenuController() {
         MainMenuController.LOGGER.info("Initializing MainMenuController... ");
@@ -77,7 +77,7 @@ public final class MainMenuController implements MenuController {
             this.loadPlayer();
             this.show(ViewPanels.HOME);
         }
-        AudioController.getInstance().playMusic(Music.BACKGROUND);
+        AudioController.getInstance().playMusic(Music.MENU);
     }
 
     /**
@@ -274,7 +274,7 @@ public final class MainMenuController implements MenuController {
             player.setLevelScore(level.getJsonId(), score);
             updateUsers();
         }
-        AudioController.getInstance().playMusic(Music.BACKGROUND);
+        AudioController.getInstance().playMusic(Music.MENU);
         this.show(ViewPanels.LEVEL_SELECTION);
     }
 

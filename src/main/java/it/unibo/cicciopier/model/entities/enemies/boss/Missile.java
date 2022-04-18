@@ -10,7 +10,6 @@ import it.unibo.cicciopier.utility.Vector2d;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.enemies.boss.MissileView;
 
-
 import java.util.Optional;
 import java.util.Random;
 
@@ -18,11 +17,11 @@ import java.util.Random;
  * Create a simple missile that chase the player
  */
 public class Missile extends SimpleMovingEntity {
-    private static final int MIN_DISTANCE = 100;
-    private static final int MAX_DISTANCE = 250;
-    private static final int MAX_ANGLE = 46; //in degree
+    private static final int MIN_DISTANCE = 70;
+    private static final int MAX_DISTANCE = 150;
+    private static final int MAX_ANGLE = 45; //in degree
     private static final int MAX_SPEED = 8;
-    private static final double MAX_STEERING = 0.1;
+    private static final double MAX_STEERING = 0.2;
 
     private final Random random;
     private final MissileView missileView;

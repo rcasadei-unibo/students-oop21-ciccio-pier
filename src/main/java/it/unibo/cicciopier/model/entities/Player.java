@@ -80,16 +80,22 @@ public interface Player extends LivingEntity {
 
     /**
      * Sets the jump modifier
+     *
+     * @param modifier how much it has to change
      */
     void setJumpModifier(final int modifier);
 
     /**
      * Sets the speed modifier
+     *
+     * @param modifier how much it has to change
      */
     void setSpeedModifier(final int modifier);
 
     /**
-     * Sets the speed modifier
+     * Set if the player is invulnerable or not
+     *
+     * @param active true if you want to activate it or else false
      */
     void setInvulnerability(final boolean active);
 
