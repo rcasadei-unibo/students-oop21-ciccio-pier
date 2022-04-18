@@ -121,8 +121,8 @@ public class GameWorld implements World {
         return this.entities.stream()
                 .filter(e -> Math.abs(e.getPos().getX() - pos.getX()) < radius ||
                         Math.abs(e.getBounds().getMaxX() - pos.getX()) < radius)
-                .filter(e -> Math.abs(e.getPos().getY() - pos.getY()) < radius ||
-                        Math.abs(e.getBounds().getMaxY() - pos.getY()) < radius)
+                //.filter(e -> Math.abs(e.getPos().getY() - pos.getY()) < radius ||
+                //        Math.abs(e.getBounds().getMaxY() - pos.getY()) < radius)
                 .collect(Collectors.toList());
     }
 

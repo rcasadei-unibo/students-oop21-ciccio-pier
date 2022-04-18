@@ -14,8 +14,6 @@ import java.awt.*;
 public class BlockView implements GameObjectView {
     private static int BLOCKS_PER_ROW;
     private final Block block;
-    private final int x;
-    private final int y;
 
     /**
      * Constructor for this class.
@@ -24,8 +22,6 @@ public class BlockView implements GameObjectView {
      */
     public BlockView(final Block block) {
         this.block = block;
-        this.x = block.getType().ordinal() % BLOCKS_PER_ROW * Block.SIZE;
-        this.y = block.getType().ordinal() / BLOCKS_PER_ROW * Block.SIZE;
     }
 
     public static void load() {
@@ -40,15 +36,17 @@ public class BlockView implements GameObjectView {
         if (this.block.getType() == BlockType.AIR) {
             return;
         }
+        final int x = block.getType().ordinal() % BLOCKS_PER_ROW * Block.SIZE;
+        final int y = block.getType().ordinal() / BLOCKS_PER_ROW * Block.SIZE;
         g.drawImage(Texture.BLOCK.getTexture(),
                 Screen.scale(this.block.getPos().getX()),
                 Screen.scale(this.block.getPos().getY()),
                 Screen.scale(this.block.getPos().getX() + Block.SIZE),
                 Screen.scale(this.block.getPos().getY() + Block.SIZE),
-                this.x,
-                this.y,
-                this.x + Block.SIZE,
-                this.y + Block.SIZE,
+                x,
+                y,
+                x + Block.SIZE,
+                y + Block.SIZE,
                 null
         );
     }
