@@ -19,5 +19,5 @@ public enum Input {
     /**
      * Attack action.
      */
-    ATTACK;
+    ATTACK
 }

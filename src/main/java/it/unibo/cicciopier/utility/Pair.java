@@ -8,8 +8,8 @@ import java.util.Objects;
  * @param <T> the type
  */
 public class Pair<T> {
-    private T x;
-    private T y;
+    private final T x;
+    private final T y;
 
     /**
      * Creates a new pair given X and Y values.
@@ -28,7 +28,7 @@ public class Pair<T> {
      * @return the X
      */
     public T getX() {
-        return x;
+        return this.x;
     }
 
     /**
@@ -37,7 +37,7 @@ public class Pair<T> {
      * @return the Y
      */
     public T getY() {
-        return y;
+        return this.y;
     }
 
     /**

@@ -135,19 +135,6 @@ public class Vector2d {
     }
 
     /**
-     * Rotate the vector by x radiant
-     *
-     * @param radiant how much the vector need to rotate
-     */
-    public void rotate(final double radiant) {
-        final double x0 = this.x;
-        final double y0 = this.y;
-
-        this.x = x0 * Math.cos(radiant) - y0 * Math.sin(radiant);
-        this.y = x0 * Math.sin(radiant) + y0 * Math.cos(radiant);
-    }
-
-    /**
      * Rotate the vector by x degree
      *
      * @param degree how much the vector need to rotate
@@ -192,29 +179,6 @@ public class Vector2d {
      */
     public Vector2d directionVector(final Vector2d v2) {
         return new Vector2d(v2.getX() - this.x, v2.getY() - this.y);
-    }
-
-    /**
-     * Get a vector with  length scaled by x times
-     *
-     * @param scalar input scalar
-     * @return a vector
-     */
-    public Vector2d scaleVector(final double scalar) {
-        final double x = this.x * scalar;
-        final double y = this.y * scalar;
-
-        return new Vector2d(x, y);
-    }
-
-    /**
-     * Get the dot product between current and passed vector
-     *
-     * @param v2 second vector
-     * @return the dot product
-     */
-    public double dot(final Vector2d v2) {
-        return this.x * v2.getX() + this.y * v2.getY();
     }
 
     /**

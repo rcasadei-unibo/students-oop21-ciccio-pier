@@ -31,7 +31,6 @@ public class Laser extends SimpleMovingEntity {
         super(EntityType.LASER, world);
         this.currentDistance = 0;
         this.isOnce = false;
-        //this.startLine = new Vector2d(0, 0);
         this.laserView = new LaserView(this);
     }
 

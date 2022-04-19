@@ -52,15 +52,6 @@ public class Animation {
     }
 
     /**
-     * Get the number of frames
-     *
-     * @return frames number
-     */
-    public int getFrames() {
-        return this.frames;
-    }
-
-    /**
      * Get the frame height
      *
      * @return height

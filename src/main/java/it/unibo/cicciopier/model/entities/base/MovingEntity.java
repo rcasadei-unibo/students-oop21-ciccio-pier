@@ -1,6 +1,5 @@
 package it.unibo.cicciopier.model.entities.base;
 
-import it.unibo.cicciopier.model.GameObject;
 import it.unibo.cicciopier.utility.Vector2d;
 
 /**

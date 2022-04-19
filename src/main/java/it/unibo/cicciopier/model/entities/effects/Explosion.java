@@ -56,5 +56,4 @@ public class Explosion extends SimpleEntity {
             this.remove();
         }
     }
-
 }
