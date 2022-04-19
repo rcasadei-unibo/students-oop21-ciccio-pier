@@ -9,8 +9,7 @@ import it.unibo.cicciopier.view.entities.enemies.SlashView;
  * Class representing the Slash projectile
  */
 public class Slash extends SimpleProjectile {
-
-    private SlashView view;
+    private final SlashView view;
 
     /**
      * Constructor for this class

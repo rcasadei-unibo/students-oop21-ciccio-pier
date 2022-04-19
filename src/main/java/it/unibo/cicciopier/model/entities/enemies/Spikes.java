@@ -9,8 +9,7 @@ import it.unibo.cicciopier.view.entities.enemies.SpikesView;
  * Class representing the Spikes projectile
  */
 public class Spikes extends SimpleProjectile {
-
-    private SpikesView view;
+    private final SpikesView view;
 
     /**
      * Constructor for this class

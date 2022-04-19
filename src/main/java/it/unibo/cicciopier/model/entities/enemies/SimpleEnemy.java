@@ -138,8 +138,8 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
      * @return True, if there are blocks in the way
      */
     private boolean blockControl() {
-        int startX = (int) (this.getPos().getX() / Block.SIZE);
-        int endX = (int) (this.getWorld().getPlayer().getPos().getX() / Block.SIZE);
+        int startX = this.getPos().getX() / Block.SIZE;
+        int endX = this.getWorld().getPlayer().getPos().getX() / Block.SIZE;
         int y = this.getPos().getY() / Block.SIZE;
         if (this.isFacingRight()) {
             for (int i = startX; i <= endX; i++) {
@@ -169,7 +169,7 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
         return this.playerInAggroRange(range) &&
                 this.getPos().getY() + this.getType().getHeight()
                         == getWorld().getPlayer().getPos().getY() + getWorld().getPlayer().getHeight()
-                            && !this.blockControl();
+                && !this.blockControl();
     }
 
     /**

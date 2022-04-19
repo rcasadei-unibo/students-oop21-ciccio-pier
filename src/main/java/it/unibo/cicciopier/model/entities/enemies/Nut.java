@@ -12,8 +12,7 @@ import it.unibo.cicciopier.view.entities.enemies.NutView;
  * The nut is a special projectile, since it does not move.
  */
 public class Nut extends SimpleProjectile {
-
-    private NutView view;
+    private final NutView view;
 
     /**
      * Constructor for this class

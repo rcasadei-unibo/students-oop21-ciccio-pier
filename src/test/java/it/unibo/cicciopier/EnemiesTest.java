@@ -6,13 +6,17 @@ import it.unibo.cicciopier.model.GameWorld;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
 import it.unibo.cicciopier.model.entities.EntityState;
+import it.unibo.cicciopier.model.entities.base.Entity;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.enemies.*;
 import it.unibo.cicciopier.utility.Vector2d;
 import org.junit.jupiter.api.*;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EnemiesTest {
     private static World world;
     private int ticks;
@@ -20,7 +24,7 @@ public class EnemiesTest {
     @BeforeAll
     private static void init() {
         world = new GameWorld();
-        WorldLoader loader = new TmxWorldLoader(world, "level-test.tmx");
+        WorldLoader loader = new TmxWorldLoader(world, "level-test-enemies.tmx");
         try {
             loader.load();
             loader.create();
@@ -34,8 +38,12 @@ public class EnemiesTest {
     @DisplayName("ShootingPea test")
     public void shootingPeaTest() {
         this.ticks = 0;
-        ShootingPea shootingPea = (ShootingPea) world.getEntities().stream()
-                .filter(e -> e.getType() == EntityType.SHOOTING_PEA).findFirst().get();
+        Optional<Entity> ent = world.getEntities().stream()
+                .filter(e -> e.getType() == EntityType.SHOOTING_PEA).findFirst();
+        if (ent.isEmpty()) {
+            fail("Entity non creata");
+        }
+        ShootingPea shootingPea = (ShootingPea) ent.get();
         assertEquals(544, shootingPea.getPos().getX(), "Coordinate X is wrong for SHOOTING_PEA.");
         assertEquals(128, shootingPea.getPos().getY(), "Coordinate Y is wrong for SHOOTING_PEA.");
         assertSame(EnemyState.IDLE, shootingPea.getCurrentState());
@@ -52,8 +60,12 @@ public class EnemiesTest {
     @DisplayName("NinjaPotato test")
     public void ninjaPotatoTest() {
         this.ticks = 0;
-        NinjaPotato ninjaPotato = (NinjaPotato) world.getEntities().stream()
-                .filter(e -> e.getType() == EntityType.NINJA_POTATO).findFirst().get();
+        Optional<Entity> ent = world.getEntities().stream()
+                .filter(e -> e.getType() == EntityType.NINJA_POTATO).findFirst();
+        if (ent.isEmpty()) {
+            fail("Entity non creata");
+        }
+        NinjaPotato ninjaPotato = (NinjaPotato) ent.get();
         assertEquals(1024, ninjaPotato.getPos().getX(), "Coordinate X is wrong for NINJA_POTATO.");
         assertEquals(128, ninjaPotato.getPos().getY(), "Coordinate Y is wrong for NINJA_POTATO.");
         world.getPlayer().setPos(ninjaPotato.getPos().addVector(new Vector2d(-Block.SIZE * 2, 0)));
@@ -75,8 +87,12 @@ public class EnemiesTest {
     @DisplayName("RollingPeach test")
     public void rollingPeachTest() {
         this.ticks = 0;
-        RollingPeach rollingPeach = (RollingPeach) world.getEntities().stream()
-                .filter(e -> e.getType() == EntityType.ROLLING_PEACH).findFirst().get();
+        Optional<Entity> ent = world.getEntities().stream()
+                .filter(e -> e.getType() == EntityType.ROLLING_PEACH).findFirst();
+        if (ent.isEmpty()) {
+            fail("Entity non creata");
+        }
+        RollingPeach rollingPeach = (RollingPeach) ent.get();
         assertEquals(1600, rollingPeach.getPos().getX(), "Coordinate X is wrong for ROLLING_PEACH.");
         assertEquals(128, rollingPeach.getPos().getY(), "Coordinate Y is wrong for ROLLING_PEACH.");
         world.getPlayer().setPos(rollingPeach.getPos().addVector(new Vector2d(-Block.SIZE * 2, 0)));
@@ -93,8 +109,12 @@ public class EnemiesTest {
     @DisplayName("CryingOnion test")
     public void cryingOnionTest() {
         this.ticks = 0;
-        CryingOnion cryingOnion = (CryingOnion) world.getEntities().stream()
-                .filter(e -> e.getType() == EntityType.CRYING_ONION).findFirst().get();
+        Optional<Entity> ent = world.getEntities().stream()
+                .filter(e -> e.getType() == EntityType.CRYING_ONION).findFirst();
+        if (ent.isEmpty()) {
+            fail("Entity non creata");
+        }
+        CryingOnion cryingOnion = (CryingOnion) ent.get();
         assertEquals(416, cryingOnion.getPos().getX(), "Coordinate X is wrong for CRYING_ONION.");
         assertEquals(352, cryingOnion.getPos().getY(), "Coordinate Y is wrong for CRYING_ONION.");
         world.getPlayer().setPos(cryingOnion.getPos().addVector(new Vector2d(-Block.SIZE * 2, 0)));
@@ -111,8 +131,12 @@ public class EnemiesTest {
     @DisplayName("MindPineapple test")
     public void mindPineappleTest() {
         this.ticks = 0;
-        MindPineapple mindPineapple = (MindPineapple) world.getEntities().stream()
-                .filter(e -> e.getType() == EntityType.MIND_PINEAPPLE).findFirst().get();
+        Optional<Entity> ent = world.getEntities().stream()
+                .filter(e -> e.getType() == EntityType.MIND_PINEAPPLE).findFirst();
+        if (ent.isEmpty()) {
+            fail("Entity non creata");
+        }
+        MindPineapple mindPineapple = (MindPineapple) ent.get();
         assertEquals(832, mindPineapple.getPos().getX(), "Coordinate X is wrong for MIND_PINEAPPLE.");
         assertEquals(320, mindPineapple.getPos().getY(), "Coordinate Y is wrong for MIND_PINEAPPLE.");
         world.getPlayer().setPos(mindPineapple.getPos().addVector(new Vector2d(-Block.SIZE * 2, Block.SIZE)));
@@ -132,8 +156,12 @@ public class EnemiesTest {
     @DisplayName("Player's attack test")
     public void playerAttackTest() {
         this.ticks = 0;
-        ShootingPea shootingPea = (ShootingPea) world.getEntities().stream()
-                .filter(e -> e.getType() == EntityType.SHOOTING_PEA).findFirst().get();
+        Optional<Entity> ent = world.getEntities().stream()
+                .filter(e -> e.getType() == EntityType.SHOOTING_PEA).findFirst();
+        if (ent.isEmpty()) {
+            fail("Entity non creata");
+        }
+        ShootingPea shootingPea = (ShootingPea) ent.get();
         assertSame(EnemyState.IDLE, shootingPea.getCurrentState());
         world.getPlayer().setPos(shootingPea.getPos().addVector(new Vector2d(-Block.SIZE * 2, 0)));
         shootingPea.tick(++this.ticks);
@@ -141,32 +169,8 @@ public class EnemiesTest {
         world.getPlayer().attackNearest();
         assertSame(EntityType.SHOOTING_PEA.getMaxHp() - EntityType.PLAYER.getAttackDamage(), shootingPea.getHp());
         shootingPea.setPos(shootingPea.getPos().addVector(new Vector2d(-Block.SIZE * 2, 0)));
-        //assertEquals(480, shootingPea.getPos().getX(), "Coordinate X is wrong for SHOOTING_PEA.");
-        //assertEquals(128, shootingPea.getPos().getY(), "Coordinate Y is wrong for SHOOTING_PEA.");
-    }
-
-    /*
-
-            this.ticks = 0;
-        ShootingPea shootingPea = (ShootingPea) world.getEntityFactory().createEntity(EntityType.SHOOTING_PEA).get();
-        shootingPea.setPos(new Vector2d(544, 128));
-        assertSame(EnemyState.IDLE, shootingPea.getCurrentState());
-        world.getPlayer().setPos(shootingPea.getPos().addVector(new Vector2d(-Block.SIZE * 2, 0)));
+        world.getPlayer().setPos(shootingPea.getPos().addVector(new Vector2d(-Block.SIZE * 3, 0)));
         world.getPlayer().attackNearest();
-        assertSame(EntityType.SHOOTING_PEA.getMaxHp()-EntityType.PLAYER.getAttackDamage(),shootingPea.getHp()); ///????
-        shootingPea.setPos(shootingPea.getPos().addVector(new Vector2d(-Block.SIZE * 2, 0)));
-
-     */
-
-    /*
-
-    Test da fare:
-    creazione enemies
-    aggro enemies
-    danno enemies + invulnerability?
-    attacco player (in qualche modo)
-
-     */
-
-
+        assertSame(EntityType.SHOOTING_PEA.getMaxHp() - EntityType.PLAYER.getAttackDamage(), shootingPea.getHp());
+    }
 }

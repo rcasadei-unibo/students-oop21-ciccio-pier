@@ -9,8 +9,7 @@ import it.unibo.cicciopier.view.entities.enemies.PeaView;
  * Class representing the Pea projectile
  */
 public class Pea extends SimpleProjectile {
-
-    private PeaView view;
+    private final PeaView view;
 
     /**
      * Constructor for this class
