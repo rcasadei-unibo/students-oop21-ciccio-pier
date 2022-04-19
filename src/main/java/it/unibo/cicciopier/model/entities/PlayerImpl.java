@@ -314,7 +314,7 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     /**
      * Get if the player is taking damage
      *
-     * @return true if is taking damage else false
+     * @return true if it is taking damage else false
      */
     public boolean hasTakenDamage() {
         return this.takenDamage > 0;
@@ -362,6 +362,30 @@ public class PlayerImpl extends SimpleLivingEntity implements Player {
     @Override
     public void setInvulnerability(final boolean active) {
         this.isInvulnerable = active;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSpeedModifier() {
+        return this.speedModifier;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getJumpModifier() {
+        return this.jumpModifier;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isInvulnerable() {
+        return this.isInvulnerable;
     }
 
     /**

@@ -32,12 +32,11 @@ public final class MainMenuController implements MenuController {
     private static final int MAX_VOLUME = 1;
     private static final int MIN_VOLUME = 0;
     private final Gson gson;
-    private final MenuManagerView menu;
+    private MenuManagerView menu;
     private final File usersFile;
     private File jarFolder;
     private User player;
     private List<User> users;
-    private String username;
 
     /**
      * This constructor initializes the controller loading the users from json, initialize his variables,
@@ -55,7 +54,6 @@ public final class MainMenuController implements MenuController {
             System.exit(1);
         }
         this.usersFile = new File(this.jarFolder, "users.json");
-        this.menu = new MenuManagerView(this);
     }
 
     /**
@@ -63,6 +61,8 @@ public final class MainMenuController implements MenuController {
      */
     @Override
     public void load() {
+        this.menu = new MenuManagerView(this);
+        this.menu.load();
         this.loadUsers();
         try {
             LOGGER.info("Loading font...");
@@ -131,8 +131,8 @@ public final class MainMenuController implements MenuController {
             }
             case LOGIN: {
                 if (!menu.getLoginView().getUsername().isBlank() && menu.getLoginView().getUsername().length() < 15) {
-                    this.username = menu.getLoginView().getUsername().toLowerCase().trim();
-                    this.player = this.users.stream().filter(user -> user.getUsername().equals(this.username)).findFirst().orElseGet(this::createUser);
+                    String username = this.menu.getLoginView().getUsername();
+                    this.player = this.users.stream().filter(user -> user.getUsername().equals(username)).findFirst().orElseGet(() -> this.createUser(username));
                     MainMenuController.LOGGER.info("User logged in: " + this.player.getUsername());
                     this.loadPlayer();
                     this.show(ViewPanels.HOME);
@@ -142,7 +142,6 @@ public final class MainMenuController implements MenuController {
             }
             case LOGOUT: {
                 MainMenuController.LOGGER.info("Logging out...");
-                this.username = null;
                 this.menu.getLoginView().logout();
                 AudioController.getInstance().setMusicVolume(0.5F);
                 AudioController.getInstance().setSoundVolume(0.5F);
@@ -162,27 +161,26 @@ public final class MainMenuController implements MenuController {
     }
 
     /**
-     * This function creates a new {@link User} using default values and the username if is not found among the saved
-     * users
-     *
-     * @return The user that was just created
+     * {@inheritDoc}
      */
-    private User createUser() {
-        MainMenuController.LOGGER.info("Creating a new User: " + this.username);
-        User newUser = new User(this.username);
+    @Override
+    public User createUser(final String username) {
+        MainMenuController.LOGGER.info("Creating a new User: " + username);
+        User newUser = new User(username.toLowerCase().trim());
         this.users.add(newUser);
         this.updateUsers();
         return newUser;
     }
 
     /**
-     * This function is called whenever a change in a user is made and updates the json file with the new information
+     * {@inheritDoc}
      */
-    private void updateUsers() {
+    @Override
+    public void updateUsers() {
         try (FileWriter writer = new FileWriter(this.usersFile); JsonWriter jsonWriter = new JsonWriter(writer)) {
             final UsersFile usersFile = new UsersFile();
             usersFile.setUsers(this.users);
-            usersFile.setLastUser(this.username);
+            usersFile.setLastUser(this.player == null ? null : this.player.getUsername());
             this.gson.toJson(usersFile, UsersFile.class, jsonWriter);
             MainMenuController.LOGGER.info("Successfully updated json object to file...!!");
         } catch (IOException e) {
@@ -193,6 +191,7 @@ public final class MainMenuController implements MenuController {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void startLevel(final Level level) {
         LOGGER.info("Starting level...");
 
@@ -211,11 +210,10 @@ public final class MainMenuController implements MenuController {
     }
 
     /**
-     * This function is called to load the users from the json file and update their levels if they are missing using
-     * {@link User#updateLevels()} called after any update to the users and after the creation of
-     * {@link MainMenuController}
+     * {@inheritDoc}
      */
-    private void loadUsers() {
+    @Override
+    public void loadUsers() {
         LOGGER.info("Loading users file...");
         if (this.usersFile.getParentFile().mkdirs()) {
             LOGGER.info("Generated dir path for users file");
@@ -230,8 +228,7 @@ public final class MainMenuController implements MenuController {
             try (FileReader reader = new FileReader(this.usersFile); JsonReader jsonReader = new JsonReader(reader)) {
                 UsersFile usersFile = this.gson.fromJson(jsonReader, UsersFile.class);
                 this.users = usersFile.getUsers();
-                this.username = usersFile.getLastUser();
-                this.player = this.users.stream().filter(user -> user.getUsername().equals(this.username)).findFirst().orElse(null);
+                this.player = this.users.stream().filter(user -> user.getUsername().equals(usersFile.getLastUser())).findFirst().orElse(null);
                 MainMenuController.LOGGER.info("Successfully loaded users...!!");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -282,14 +279,14 @@ public final class MainMenuController implements MenuController {
      * {@inheritDoc}
      */
     public String getUsername() {
-        return username;
+        return this.player == null ? null : this.player.getUsername();
     }
 
     /**
      * {@inheritDoc}
      */
     public User getPlayer() {
-        return player;
+        return this.player;
     }
 
     /**

@@ -100,6 +100,27 @@ public interface Player extends LivingEntity {
     void setInvulnerability(final boolean active);
 
     /**
+     * Returns the speed modifier
+     *
+     * @return the speed modifier
+     */
+    int getSpeedModifier();
+
+    /**
+     * Returns the jump modifier
+     *
+     * @return the jump modifier
+     */
+    int getJumpModifier();
+
+    /**
+     * Returns if the player is invulnerable
+     *
+     * @return the current invulnerability
+     */
+    boolean isInvulnerable();
+
+    /**
      * Checks if the player has won
      *
      * @return true if the player has won, false otherwise

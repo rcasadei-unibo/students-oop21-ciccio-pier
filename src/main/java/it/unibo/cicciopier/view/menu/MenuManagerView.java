@@ -60,6 +60,13 @@ public class MenuManagerView extends JFrame implements ManagerView {
         this.loginView = new LoginView(mainMenuController);
         this.tutorialView = new TutorialView();
         this.customAnimationView = new CustomAnimationView();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void load(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(true);
         this.setResizable(false);
@@ -128,7 +135,10 @@ public class MenuManagerView extends JFrame implements ManagerView {
         this.repaint();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setVisible(ViewPanels viewPanels) {
         this.getContentPane().removeAll();
         if (this.activePanel == this.settingsView && !Objects.equals(this.settingsView.getList().getSelectedValue(), Screen.getCurrentDimension()) && viewPanels != ViewPanels.LOGIN) {
@@ -196,24 +206,44 @@ public class MenuManagerView extends JFrame implements ManagerView {
         this.setLocationRelativeTo(null);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setVisible(final Engine engine) {
         this.getContentPane().removeAll();
         this.getContentPane().add((Component) engine.getView());
         this.pack();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public SettingsView getSettingsView() {
-        return settingsView;
+        return this.settingsView;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public LoginView getLoginView() {
-        return loginView;
+        return this.loginView;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public LeaderboardView getLeaderboardView() {
-        return leaderboardView;
+        return this.leaderboardView;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void updateAnimations() {
         this.customAnimationView.repaint();
     }

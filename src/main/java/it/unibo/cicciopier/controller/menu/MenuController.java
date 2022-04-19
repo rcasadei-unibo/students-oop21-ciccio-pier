@@ -23,6 +23,26 @@ public interface MenuController {
     void show(final ViewPanels viewPanels);
 
     /**
+     * This function is called to load the users from the json file and update their levels if they are missing using
+     * {@link User#updateLevels()} called after any update to the users and after the creation of
+     * {@link MainMenuController}
+     */
+    void loadUsers();
+
+    /**
+     * This function is called whenever a change in a user is made and updates the json file with the new information
+     */
+    void updateUsers();
+
+    /**
+     * This function creates a new {@link User} using default values and the username if is not found among the saved
+     * users
+     *
+     * @return The user that was just created
+     */
+    User createUser(String username);
+
+    /**
      * This function is called by any {@link MenuActionButton} and it checks the button action and execute it
      *
      * @param menuAction Is the action that the button when pressed have to execute
