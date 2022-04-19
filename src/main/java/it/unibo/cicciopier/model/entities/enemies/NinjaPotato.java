@@ -5,7 +5,6 @@ import it.unibo.cicciopier.controller.GameLoop;
 import it.unibo.cicciopier.model.Sound;
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.blocks.base.Block;
-import it.unibo.cicciopier.model.entities.EntityState;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.enemies.NinjaPotatoView;
@@ -72,11 +71,7 @@ public class NinjaPotato extends SimpleEnemy {
      * Utility method to determine the NinjaPotato facing direction
      */
     private void checkSpecular() {
-        if (this.getWorld().getPlayer().getPos().getX() < this.getPos().getX()) {
-            this.setFacingRight(false);
-        } else {
-            this.setFacingRight(true);
-        }
+        this.setFacingRight(this.getWorld().getPlayer().getPos().getX() >= this.getPos().getX());
     }
 
     /**
