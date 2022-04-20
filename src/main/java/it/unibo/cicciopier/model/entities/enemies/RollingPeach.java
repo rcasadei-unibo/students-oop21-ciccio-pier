@@ -194,6 +194,14 @@ public class RollingPeach extends SimplePathEnemy {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void notAttacking() {
+        //do nothing
+    }
+
+    /**
      * Utility method used to spawn an explosion
      */
     private void createExplosion() {
