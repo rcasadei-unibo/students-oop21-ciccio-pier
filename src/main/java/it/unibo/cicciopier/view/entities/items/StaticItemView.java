@@ -8,6 +8,9 @@ import it.unibo.cicciopier.view.Texture;
 
 import java.awt.*;
 
+/**
+ * Simple class to render static items
+ */
 public class StaticItemView implements GameObjectView {
     private final Entity entity;
     private final Texture texture;

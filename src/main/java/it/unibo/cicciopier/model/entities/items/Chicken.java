@@ -7,7 +7,6 @@ import it.unibo.cicciopier.model.entities.Score;
 import it.unibo.cicciopier.model.entities.Stamina;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.view.Texture;
-import it.unibo.cicciopier.view.entities.items.SimpleItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

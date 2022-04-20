@@ -1,12 +1,15 @@
-package it.unibo.cicciopier.view.entities.items;
+package it.unibo.cicciopier.model.entities.items;
 
 import it.unibo.cicciopier.model.World;
 import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleEntity;
-import it.unibo.cicciopier.model.entities.items.Item;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.Texture;
+import it.unibo.cicciopier.view.entities.items.StaticItemView;
 
+/**
+ * Simple class to reunite all the items
+ */
 public abstract class SimpleItem extends SimpleEntity implements Item {
     private final GameObjectView view;
 
