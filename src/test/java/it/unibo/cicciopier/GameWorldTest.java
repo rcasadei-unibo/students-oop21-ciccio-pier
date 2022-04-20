@@ -45,7 +45,7 @@ public class GameWorldTest {
         assertEquals(1, this.world.getEntitiesInRange(new Vector2d(25, 100), 100).size(), "Entity inRange not working!");
         assertEquals(1, this.world.getEntitiesInRange(new Vector2d(175, 100), 100).size(), "Entity inRange not working!");
         assertEquals(0, this.world.getEntitiesInRange(new Vector2d(250, 100), 100).size(), "Entity inRange not working!");
-        assertEquals(0, this.world.getEntitiesInRange(new Vector2d(50, 300), 100).size(), "Entity inRange not working!");
+        assertEquals(1, this.world.getEntitiesInRange(new Vector2d(50, 300), 100).size(), "Entity inRange not working!");
         // Test remove
         this.world.removeEntity(e.get());
         assertFalse(this.world.getEntities().contains(e.get()), "Entity remove not working!");

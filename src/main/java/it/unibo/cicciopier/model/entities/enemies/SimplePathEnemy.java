@@ -87,15 +87,13 @@ public abstract class SimplePathEnemy extends SimpleEnemy implements PathEnemy {
      * Method called when then Enemy is attacking.
      * It is left empty to be overridden
      */
-    protected void attacking() {
-    }
+    protected abstract void attacking();
 
     /**
      * Method called when then Enemy is not attacking.
      * It is left empty to be overridden
      */
-    protected void notAttacking() {
-    }
+    protected abstract void notAttacking();
 
     /**
      * {@inheritDoc}

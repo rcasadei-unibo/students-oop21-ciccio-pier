@@ -181,6 +181,14 @@ public class CryingOnion extends SimplePathEnemy {
      * {@inheritDoc}
      */
     @Override
+    protected void notAttacking() {
+        //do nothing
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void onCollision(final Collision collision) {
         if (this.angered) {
             if ((this.isFacingRight() && collision == Collision.COLLIDING_RIGHT) ||
