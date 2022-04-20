@@ -86,14 +86,6 @@ public abstract class SimpleLivingEntity extends SimpleMovingEntity implements L
      * {@inheritDoc}
      */
     @Override
-    public boolean isGround() {
-        return this.ground;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean isFacingRight() {
         return this.facingRight;
     }

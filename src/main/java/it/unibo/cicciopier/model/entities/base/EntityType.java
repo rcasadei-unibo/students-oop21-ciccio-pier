@@ -13,15 +13,15 @@ public enum EntityType {
     /**
      * Represents the Missile that the enemy will launch
      */
-    MISSILE(10, 10, 0, 60),
+    MISSILE(10, 10, 0, 80),
     /**
      * Represents a meteor from boss attack
      */
-    METEOR(64, 64, 0, 50),
+    METEOR(64, 64, 0, 60),
     /**
      * Represents the laser that the Boss will shoot
      */
-    LASER(0, 0, 0, 5),
+    LASER(0, 0, 0, 10),
     /**
      * Represents a coin
      */

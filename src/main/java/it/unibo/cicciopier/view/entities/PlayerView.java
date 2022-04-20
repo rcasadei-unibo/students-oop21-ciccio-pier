@@ -33,7 +33,6 @@ public class PlayerView extends SimpleLivingEntityView {
     private int bloodAnimationTicks;
     private final PlayerImpl player;
 
-
     /**
      * Constructor for this class, create an instance to render the player
      *

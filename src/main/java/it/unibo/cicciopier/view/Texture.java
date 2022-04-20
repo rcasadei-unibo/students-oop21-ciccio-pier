@@ -369,15 +369,6 @@ public enum Texture {
     }
 
     /**
-     * Get the texture path.
-     *
-     * @return texture name
-     */
-    public String getFileName() {
-        return this.fileName;
-    }
-
-    /**
      * Get texture as a BufferImage.
      *
      * @return texture

@@ -49,7 +49,7 @@ public abstract class SimpleEnemy extends SimpleLivingEntity implements Enemy {
      */
     @Override
     public int getScoreValue() {
-        return this.rand.nextInt(Score.MAX_HEALTHY_FOOD - Score.MIN_HEALTHY_FOOD + 1) + Score.MIN_HEALTHY_FOOD;
+        return Score.HEALTHY_FOOD;
     }
 
     /**

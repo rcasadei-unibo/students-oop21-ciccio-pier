@@ -8,11 +8,14 @@ import it.unibo.cicciopier.model.entities.base.EntityType;
 import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.items.CoinView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Create a coin object
  */
 public class Coin extends SimpleEntity {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Coin.class);
     private final CoinView coinView;
 
     /**
@@ -36,6 +39,7 @@ public class Coin extends SimpleEntity {
             this.remove();
             this.getWorld().getPlayer().addCoin();
             this.getWorld().getPlayer().addScore(Score.COIN);
+            LOGGER.info("Coin picked up");
         }
     }
 

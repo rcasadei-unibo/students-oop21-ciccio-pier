@@ -40,7 +40,7 @@ public final class JumpBoost extends SimpleItem implements Boost {
         super.tick(ticks);
         if (ticks - this.startOfBoost >= JumpBoost.DURATION && isActive()) {
             this.getWorld().getPlayer().setJumpModifier(-JumpBoost.BOOST_STRENGTH);
-            LOGGER.debug("End of jump boost");
+            LOGGER.info("End of jump boost");
             this.remove();
         }
     }
@@ -57,7 +57,7 @@ public final class JumpBoost extends SimpleItem implements Boost {
             this.startOfBoost = ticks;
             this.getWorld().getPlayer().addScore(Score.BOOST);
             this.getWorld().getPlayer().setJumpModifier(JumpBoost.BOOST_STRENGTH);
-            LOGGER.debug("Jump boost Activated");
+            LOGGER.info("Jump boost Activated");
         }
     }
 

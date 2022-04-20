@@ -107,15 +107,6 @@ public enum Sound {
     }
 
     /**
-     * Get the sound file name
-     *
-     * @return file name
-     */
-    public String getFileName() {
-        return this.fileName;
-    }
-
-    /**
      * Get the byte code of the audio
      *
      * @return byte array

@@ -8,6 +8,9 @@ import it.unibo.cicciopier.model.entities.base.SimpleEntity;
 import it.unibo.cicciopier.view.GameObjectView;
 import it.unibo.cicciopier.view.entities.effects.BiteView;
 
+/**
+ * Simple class for visualizing player attack
+ */
 public class Bite extends SimpleEntity {
     private static final int DURATION = 12;
     private BiteView biteView;
@@ -40,6 +43,9 @@ public class Bite extends SimpleEntity {
         return this.biteView;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void tick(long ticks) {
         if (this.start == -1) {

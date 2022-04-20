@@ -50,13 +50,6 @@ public interface LivingEntity extends MovingEntity {
     boolean jump();
 
     /**
-     * Checks if the Entity is on the ground
-     *
-     * @return true if is on the ground else false
-     */
-    boolean isGround();
-
-    /**
      * Get the entity  old state
      *
      * @return entity old state
